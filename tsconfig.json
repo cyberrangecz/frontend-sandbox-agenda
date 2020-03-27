@@ -14,7 +14,21 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "kypo-sandbox-model": [
+        "dist/kypo-sandbox-model/kypo-sandbox-model",
+        "dist/kypo-sandbox-model"
+      ],
+      "kypo-sandbox-api": [
+        "dist/kypo-sandbox-api/kypo-sandbox-api",
+        "dist/kypo-sandbox-api"
+      ],
+      "kypo-sandbox-agenda": [
+        "dist/kypo-sandbox-agenda/kypo-sandbox-agenda",
+        "dist/kypo-sandbox-agenda"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

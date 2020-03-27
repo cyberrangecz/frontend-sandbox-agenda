@@ -2,5 +2,247 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1, 
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "kypo-sandbox-model": {
+      "projectType": "library",
+      "root": "projects/kypo-sandbox-model",
+      "sourceRoot": "projects/kypo-sandbox-model/src",
+      "prefix": "kypo",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/kypo-sandbox-model/tsconfig.lib.json",
+            "project": "projects/kypo-sandbox-model/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kypo-sandbox-model/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kypo-sandbox-model/src/test.ts",
+            "tsConfig": "projects/kypo-sandbox-model/tsconfig.spec.json",
+            "karmaConfig": "projects/kypo-sandbox-model/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kypo-sandbox-model/tsconfig.lib.json",
+              "projects/kypo-sandbox-model/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "kypo-sandbox-api": {
+      "projectType": "library",
+      "root": "projects/kypo-sandbox-api",
+      "sourceRoot": "projects/kypo-sandbox-api/src",
+      "prefix": "kypo",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/kypo-sandbox-api/tsconfig.lib.json",
+            "project": "projects/kypo-sandbox-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kypo-sandbox-api/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kypo-sandbox-api/src/test.ts",
+            "tsConfig": "projects/kypo-sandbox-api/tsconfig.spec.json",
+            "karmaConfig": "projects/kypo-sandbox-api/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kypo-sandbox-api/tsconfig.lib.json",
+              "projects/kypo-sandbox-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "kypo-sandbox-agenda": {
+      "projectType": "library",
+      "root": "projects/kypo-sandbox-agenda",
+      "sourceRoot": "projects/kypo-sandbox-agenda/src",
+      "prefix": "kypo",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/kypo-sandbox-agenda/tsconfig.lib.json",
+            "project": "projects/kypo-sandbox-agenda/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kypo-sandbox-agenda/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kypo-sandbox-agenda/src/test.ts",
+            "tsConfig": "projects/kypo-sandbox-agenda/tsconfig.spec.json",
+            "karmaConfig": "projects/kypo-sandbox-agenda/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kypo-sandbox-agenda/tsconfig.lib.json",
+              "projects/kypo-sandbox-agenda/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "kypo-sandbox-agenda-example": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/kypo-sandbox-agenda-example",
+      "sourceRoot": "projects/kypo-sandbox-agenda-example/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/kypo-sandbox-agenda-example",
+            "index": "projects/kypo-sandbox-agenda-example/src/index.html",
+            "main": "projects/kypo-sandbox-agenda-example/src/main.ts",
+            "polyfills": "projects/kypo-sandbox-agenda-example/src/polyfills.ts",
+            "tsConfig": "projects/kypo-sandbox-agenda-example/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/kypo-sandbox-agenda-example/src/favicon.ico",
+              "projects/kypo-sandbox-agenda-example/src/assets"
+            ],
+            "styles": [
+              "projects/kypo-sandbox-agenda-example/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/kypo-sandbox-agenda-example/src/environments/environment.ts",
+                  "with": "projects/kypo-sandbox-agenda-example/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "kypo-sandbox-agenda-example:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kypo-sandbox-agenda-example:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kypo-sandbox-agenda-example:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kypo-sandbox-agenda-example/src/test.ts",
+            "polyfills": "projects/kypo-sandbox-agenda-example/src/polyfills.ts",
+            "tsConfig": "projects/kypo-sandbox-agenda-example/tsconfig.spec.json",
+            "karmaConfig": "projects/kypo-sandbox-agenda-example/karma.conf.js",
+            "assets": [
+              "projects/kypo-sandbox-agenda-example/src/favicon.ico",
+              "projects/kypo-sandbox-agenda-example/src/assets"
+            ],
+            "styles": [
+              "projects/kypo-sandbox-agenda-example/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kypo-sandbox-agenda-example/tsconfig.app.json",
+              "projects/kypo-sandbox-agenda-example/tsconfig.spec.json",
+              "projects/kypo-sandbox-agenda-example/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/kypo-sandbox-agenda-example/e2e/protractor.conf.js",
+            "devServerTarget": "kypo-sandbox-agenda-example:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kypo-sandbox-agenda-example:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "kypo-sandbox-model"
 }
