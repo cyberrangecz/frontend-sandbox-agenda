@@ -1,5 +1,4 @@
 <ng-container *ngIf="(request$ | async) as request">
-  <h1>{{ request.type | titlecase}} Request {{ request.id }}</h1>
   <ng-container *ngIf="hasError$ | async">
     <mat-card class="error">
       <span>We had some trouble loading the data.</span>

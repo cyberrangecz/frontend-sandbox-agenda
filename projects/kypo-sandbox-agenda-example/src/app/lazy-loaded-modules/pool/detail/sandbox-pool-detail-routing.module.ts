@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {
-  POOL_ALLOCATION_REQUEST_PATH, POOL_CLEANUP_REQUEST_PATH, POOL_REQUEST_ID_SELECTOR, PoolRequestBreadcrumbResolver,
+  POOL_ALLOCATION_REQUEST_PATH, POOL_CLEANUP_REQUEST_PATH, POOL_DATA_ATTRIBUTE_NAME, POOL_REQUEST_ID_SELECTOR, PoolRequestBreadcrumbResolver,
   PoolResolver, SANDBOX_ALLOCATION_UNIT_ID_SELECTOR, SANDBOX_ALLOCATION_UNIT_PATH,
   SANDBOX_INSTANCE_ID_SELECTOR,
   SANDBOX_INSTANCE_PATH,
@@ -13,14 +13,17 @@ const routes: Routes = [
     path: '',
     component: SandboxPoolDetailComponent,
     resolve: {
-      pool: PoolResolver
+      [POOL_DATA_ATTRIBUTE_NAME]: PoolResolver
     }
   },
   {
     path: `${SANDBOX_INSTANCE_PATH}/:${SANDBOX_INSTANCE_ID_SELECTOR}/${SANDBOX_INSTANCE_TOPOLOGY_PATH}`,
     loadChildren: () => import('./sandbox-instance/sandbox-instance-topology.module').then(m => m.SandboxInstanceTopologyModule),
     resolve: {
-      breadcrumb: SandboxInstanceBreadcrumbResolver
+      breadcrumb: SandboxInstanceBreadcrumbResolver,
+    },
+    data: {
+      title: 'Sandbox Topology'
     }
   },
   {
@@ -28,6 +31,9 @@ const routes: Routes = [
     loadChildren: () => import('./request/pool-allocation-request-detail.module').then(m => m.PoolAllocationRequestDetailModule),
     resolve: {
       breadcrumb: PoolRequestBreadcrumbResolver,
+    },
+    data: {
+      title: 'Allocation Request Stages'
     }
   },
   {
@@ -35,6 +41,9 @@ const routes: Routes = [
     loadChildren: () => import('./request/pool-cleanup-request-detail.module').then(m => m.PoolCleanupRequestDetailModule),
     resolve: {
       breadcrumb: PoolRequestBreadcrumbResolver,
+    },
+    data: {
+      title: 'Cleanup Request Stages'
     }
   }
 ];

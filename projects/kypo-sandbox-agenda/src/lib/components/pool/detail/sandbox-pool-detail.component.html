@@ -1,8 +1,7 @@
 <div class="overview">
   <h3>Sandbox Instances</h3>
   <kypo-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></kypo-controls>
-  <kypo2-table
-                [data]="instances$ | async"
+  <kypo2-table [data]="instances$ | async"
                [hasError]="instancesTableHasError$ | async"
                (rowAction)="onTableAction($event)"
                (refresh)="onInstanceLoadEvent($event)">
@@ -12,8 +11,7 @@
   <div class="requests">
     <div class="request">
       <h3>Allocation Requests</h3>
-      <kypo2-table
-                    [data]="allocationRequests$ | async"
+      <kypo2-table [data]="allocationRequests$ | async"
                    [hasError]="allocationRequestsTableHasError$ | async"
                    (rowAction)="onTableAction($event)"
                    (refresh)="onAllocationRequestsLoadEvent($event)">
@@ -21,8 +19,7 @@
     </div>
     <div class="request">
       <h3>Cleanup Requests</h3>
-      <kypo2-table
-                   [data]="cleanupRequests$ | async"
+      <kypo2-table [data]="cleanupRequests$ | async"
                    [hasError]="cleanupRequestsTableHasError$ | async"
                    (rowAction)="onTableAction($event)"
                    (refresh)="onCleanupRequestsLoadEvent($event)">

@@ -33,7 +33,6 @@ export * from './lib/services/resolvers/pool-breadcrumb-resolver.service';
 export * from './lib/services/resolvers/pool-resolver.service';
 export * from './lib/services/resolvers/pool-request-breadcrumb-resolver.service';
 export * from './lib/services/resolvers/pool-request-resolver.service';
-export * from './lib/services/resolvers/pool-request-type-resolver.service';
 
 // ABSTRACT SERVICE PROVIDERS - COMPONENT RELATED
 export * from './lib/services/pool/pool-edit.service';
@@ -53,3 +52,4 @@ export * from './lib/services/stage/detail/stage-detail-polling.service';
 // OTHERS
 export * from './lib/model/client/default-paths';
 export * from './lib/model/client/sandbox-agenda-config';
+export * from './lib/model/client/activated-route-data-attributes';

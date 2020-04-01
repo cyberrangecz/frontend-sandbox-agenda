@@ -30,7 +30,7 @@ export class PoolEditConcreteService extends PoolEditService {
         tap(_ => this.notificationService.emit('success', 'Pool was created'),
           err => this.errorHandler.emit(err, 'Creating pool')),
         switchMap(_ => from(this.router.navigate([this.navigator.toPoolOverview()])))
-      )
+      );
   }
 
   selectDefinition(currSelected: SandboxDefinition): Observable<SandboxDefinition> {

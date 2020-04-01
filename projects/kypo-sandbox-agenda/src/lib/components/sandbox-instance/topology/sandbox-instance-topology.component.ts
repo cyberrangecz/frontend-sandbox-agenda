@@ -6,6 +6,7 @@ import {map, takeWhile} from 'rxjs/operators';
 import {KypoBaseComponent} from 'kypo-common';
 import {Observable} from 'rxjs';
 import {SandboxErrorHandler} from '../../../services/client/sandbox-error.handler';
+import {SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME} from '../../../model/client/activated-route-data-attributes';
 
 /**
  * Smart component of sandbox instance topology page
@@ -32,7 +33,7 @@ export class SandboxInstanceTopologyComponent extends KypoBaseComponent implemen
     this.sandboxInstance$ = this.activeRoute.data
       .pipe(
         takeWhile(_ => this.isAlive),
-        map(data => data.sandboxInstance)
+        map(data => data[SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME])
       );
     this.calculateTopologySize();
     this.subscribeToTopologyErrorHandler();

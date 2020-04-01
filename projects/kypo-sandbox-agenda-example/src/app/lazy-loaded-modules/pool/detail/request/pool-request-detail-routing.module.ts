@@ -1,15 +1,20 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PoolRequestDetailComponent, PoolRequestResolver, PoolRequestTypeResolver, PoolResolver} from 'kypo-sandbox-agenda';
+import {
+  PoolRequestDetailComponent,
+  PoolRequestResolver,
+  PoolResolver,
+  POOL_DATA_ATTRIBUTE_NAME,
+  POOL_REQUEST_DATA_ATTRIBUTE_NAME
+} from 'kypo-sandbox-agenda';
 
 const routes: Routes = [
   {
     path: '',
     component: PoolRequestDetailComponent,
     resolve: {
-      pool: PoolResolver,
-      poolRequest: PoolRequestResolver,
-      poolRequestType: PoolRequestTypeResolver
+      [POOL_DATA_ATTRIBUTE_NAME]: PoolResolver,
+      [POOL_REQUEST_DATA_ATTRIBUTE_NAME]: PoolRequestResolver,
     }
   }
   ];

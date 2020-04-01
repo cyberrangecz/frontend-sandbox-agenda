@@ -18,7 +18,14 @@ const routes: Routes = [
       title: 'Sandbox Definition Overview'
     }
   },
-
+  {
+    path: 'pool',
+    loadChildren: () => import('./lazy-loaded-modules/pool/sandbox-pool-overview.module').then(m => m.SandboxPoolOverviewModule),
+    data: {
+      breadcrumb: 'Pool',
+      title: 'Pool Overview'
+    }
+  },
   {
     path: 'login',
     component: Kypo2AuthProviderPickerComponent,

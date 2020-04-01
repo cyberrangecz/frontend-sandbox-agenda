@@ -9,7 +9,7 @@ import {SandboxPoolOverviewRoutingModule} from './sandbox-pool-overview-routing.
   imports: [
     SharedProvidersModule,
     KypoSandboxApiModule.forRoot(environment.sandboxApiConfig),
-    SandboxPoolOverviewComponentsModule,
+    SandboxPoolOverviewComponentsModule.forRoot(environment.sandboxAgendaConfig),
     SandboxPoolOverviewRoutingModule
   ]
 })

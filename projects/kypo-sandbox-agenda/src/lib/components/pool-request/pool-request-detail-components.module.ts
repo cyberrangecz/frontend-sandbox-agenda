@@ -11,7 +11,6 @@ import {OpenstackAllocationStageDetailComponent} from './stage/detail/openstack-
 import {CleanupStageDetailComponent} from './stage/detail/cleanup-stage-detail/cleanup-stage-detail.component';
 import {PoolResolver} from '../../services/resolvers/pool-resolver.service';
 import {PoolRequestResolver} from '../../services/resolvers/pool-request-resolver.service';
-import {PoolRequestTypeResolver} from '../../services/resolvers/pool-request-type-resolver.service';
 
 /**
  * Contains components and providers for pool request detail page
@@ -34,7 +33,6 @@ import {PoolRequestTypeResolver} from '../../services/resolvers/pool-request-typ
   providers: [
     PoolResolver,
     PoolRequestResolver,
-    PoolRequestTypeResolver,
   ],
 })
 export class PoolRequestDetailComponentsModule {

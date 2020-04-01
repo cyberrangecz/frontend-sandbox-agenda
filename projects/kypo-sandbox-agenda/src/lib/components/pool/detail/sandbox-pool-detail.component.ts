@@ -18,6 +18,7 @@ import {AllocationRequestTable} from '../../../model/tables/allocation-request-t
 import {CleanupRequestTable} from '../../../model/tables/cleanup-request-table';
 import {SandboxNavigator} from '../../../services/client/sandbox-navigator.service';
 import {SandboxAgendaContext} from '../../../services/internal/sandox-agenda-context.service';
+import {POOL_DATA_ATTRIBUTE_NAME} from '../../../model/client/activated-route-data-attributes';
 
 /**
  * Smart component of sandbox pool detail page
@@ -118,7 +119,7 @@ export class SandboxPoolDetailComponent extends KypoBaseComponent implements OnI
       .pipe(
         takeWhile(_ => this.isAlive),
       ).subscribe(data => {
-        this.pool = data.pool;
+        this.pool = data[POOL_DATA_ATTRIBUTE_NAME];
         this.onInstanceLoadEvent(initialLoadEvent);
         this.onAllocationRequestsLoadEvent(initialLoadEvent);
         this.onCleanupRequestsLoadEvent(initialLoadEvent);

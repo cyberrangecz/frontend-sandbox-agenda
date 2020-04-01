@@ -12,6 +12,9 @@ const routes: Routes = [
     loadChildren: () => import('./edit/sandbox-pool-edit.module').then(m => m.SandboxPoolEditModule),
     resolve: {
       breadcrumb: PoolBreadcrumbResolver,
+    },
+    data: {
+      title: 'Create Pool'
     }
   },
   {
@@ -19,6 +22,9 @@ const routes: Routes = [
     loadChildren: () => import('./detail/sandbox-pool-detail.module').then(m => m.SandboxPoolDetailModule),
     resolve: {
       breadcrumb: PoolBreadcrumbResolver,
+    },
+    data: {
+      title: 'Pool Detail'
     }
   }
 ];

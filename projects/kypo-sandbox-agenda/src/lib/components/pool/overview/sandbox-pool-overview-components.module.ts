@@ -8,6 +8,9 @@ import {PoolResolver} from '../../../services/resolvers/pool-resolver.service';
 import {PoolOverviewService} from '../../../services/pool/pool-overview.service';
 import {PoolOverviewConcreteService} from '../../../services/pool/pool-overview-concrete.service';
 import {SandboxAgendaConfig} from '../../../model/client/sandbox-agenda-config';
+import {SandboxNavigator} from '../../../services/client/sandbox-navigator.service';
+import {SandboxDefaultNavigator} from '../../../services/client/sandbox-default-navigator.service';
+import {SandboxAgendaContext} from '../../../services/internal/sandox-agenda-context.service';
 
 /**
  * Module containing components and providers for sandbox pool overview page
@@ -22,7 +25,9 @@ import {SandboxAgendaConfig} from '../../../model/client/sandbox-agenda-config';
   providers: [
     PoolResolver,
     PoolBreadcrumbResolver,
-    { provide: PoolOverviewService, useClass: PoolOverviewConcreteService }
+    SandboxAgendaContext,
+    {provide: SandboxNavigator, useClass: SandboxDefaultNavigator},
+    {provide: PoolOverviewService, useClass: PoolOverviewConcreteService}
   ]
 })
 export class SandboxPoolOverviewComponentsModule {

@@ -10,6 +10,7 @@ import {RequestStagesPollingService} from '../../services/stage/request-stages-p
 import {StageDetailService} from '../../services/stage/detail/stage-detail.service';
 import {StageDetailEvent} from '../../model/stage/stage-detail-event';
 import {StageDetailEventType} from '../../model/stage/stage-detail-event-type';
+import {POOL_REQUEST_DATA_ATTRIBUTE_NAME} from '../../model/client/activated-route-data-attributes';
 /**
  * Smart component for pool request detail page
  */
@@ -94,14 +95,14 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
     const data$ = this.activeRoute.data;
     this.request$ = data$.pipe(
       tap(data => {
-        this.request = data.poolRequest;
+        this.request = data[POOL_REQUEST_DATA_ATTRIBUTE_NAME];
       }),
-      map(data => data.poolRequest),
+      map(data => data[POOL_REQUEST_DATA_ATTRIBUTE_NAME]),
     );
     // We need to initialize polling with ids first
     data$
       .pipe(
-        tap(data => this.requestStagesService.startPolling(data.poolRequest)),
+        tap(data => this.requestStagesService.startPolling(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
         takeWhile(_ => this.isAlive)
       ).subscribe();
 
