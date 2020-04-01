@@ -32,12 +32,6 @@ import {SandboxAgendaContext} from '../../../services/internal/sandox-agenda-con
   ]
 })
 export class EditSandboxDefinitionComponentsModule {
-  constructor(@Optional() @SkipSelf() parentModule: EditSandboxDefinitionComponentsModule) {
-    if (parentModule) {
-      throw new Error(
-        'CreateSandboxDefinitionComponentsModule is already loaded. Import it only once');
-    }
-  }
 
   static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<EditSandboxDefinitionComponentsModule> {
     return {

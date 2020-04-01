@@ -14,7 +14,7 @@
       </mat-expansion-panel-header>
       <div *ngIf="!stageDetailIsLoading else stageOutputLoading">
         <div *ngIf="stageDetail?.hasError" class="error">
-          <p class="warn">We have some trouble loading the data. Please try again.</p>
+          <p class="error">We have some trouble loading the data. Please try again.</p>
           <button mat-icon-button color="primary" (click)="onStageDetailEvent(true)">
             <mat-icon>refresh</mat-icon>
           </button>

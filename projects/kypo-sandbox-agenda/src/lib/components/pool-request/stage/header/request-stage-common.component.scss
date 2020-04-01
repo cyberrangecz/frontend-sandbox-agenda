@@ -1,5 +1,3 @@
-@import "./src/variables.scss";
-
 .state {
   display: flex;
   flex-direction: row;
@@ -12,14 +10,10 @@
   margin: 0 0 0 5px;
 }
 
-.warn {
-  color: $warn;
+.error {
+  color: #f44336;
 }
 
 .success {
-  color: $success;
-}
-
-.primary {
-  color: $primary;
+  color: #6DF000;
 }

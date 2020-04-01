@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {SandboxInstanceResolver} from '../../../services/resolvers/sandbox-instance-resolvers/sandbox-instance-resolver.service';
-import {SandboxInstanceTopologyComponent} from './sandbox-instance-topology.component';
+import {SandboxInstanceTopologyComponent} from '../../../../kypo-sandbox-agenda/src/lib/components/sandbox-instance/topology/sandbox-instance-topology.component';
 
 const routes: Routes = [
   {

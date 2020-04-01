@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {Kypo2TableModule} from 'kypo2-table';
 
 import {SandboxPoolDetailMaterialModule} from './sandbox-pool-detail-material.module';
@@ -16,6 +16,8 @@ import {SandboxInstanceService} from '../../../services/sandbox-instance/sandbox
 import {SandboxInstanceConcreteService} from '../../../services/sandbox-instance/sandbox-instance-concrete.service';
 import {PoolCleanupRequestsConcreteService} from '../../../services/pool-request/cleanup/pool-cleanup-requests-concrete.service';
 import {PoolAllocationRequestsConcreteService} from '../../../services/pool-request/allocation/pool-allocation-requests-concrete.service';
+import {SandboxAgendaConfig} from '../../../model/client/sandbox-agenda-config';
+
 /**
  * Module containing component and providers for sandbox pool detail page
  */
@@ -38,4 +40,14 @@ import {PoolAllocationRequestsConcreteService} from '../../../services/pool-requ
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
   ]
 })
-export class SandboxInstanceOverviewModule { }
+export class SandboxPoolDetailComponentsModule {
+
+  static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<SandboxPoolDetailComponentsModule> {
+    return {
+      ngModule: SandboxPoolDetailComponentsModule,
+      providers: [
+        {provide: SandboxAgendaConfig, useValue: config},
+      ]
+    };
+  }
+}
