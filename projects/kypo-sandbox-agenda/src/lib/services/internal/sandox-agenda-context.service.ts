@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {SandboxAgendaConfig} from '../../model/sandbox-agenda-config';
+import {SandboxAgendaConfig} from '../../model/client/sandbox-agenda-config';
 
 @Injectable()
-export class KypoSandboxAgendaContext {
+export class SandboxAgendaContext {
 
   private readonly _config: SandboxAgendaConfig;
 

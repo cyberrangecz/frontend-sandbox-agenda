@@ -9,7 +9,7 @@ import {KypoRequestedPagination} from 'kypo-common';
 import {SandboxDefinitionOverviewControls} from './sandbox-definition-overview-controls';
 import {KypoControlItem} from 'kypo-controls';
 import {SandboxDefinitionTable} from '../../../model/tables/sandbox-definition-table';
-import {KypoSandboxAgendaContext} from '../../../services/internal/sandox-agenda-context.service';
+import {SandboxAgendaContext} from '../../../services/internal/sandox-agenda-context.service';
 
 @Component({
   selector: 'kypo-sandbox-definition-overview',
@@ -30,7 +30,7 @@ export class SandboxDefinitionOverviewComponent extends KypoBaseComponent implem
   private lastLoadEvent: LoadTableEvent;
 
   constructor(private sandboxDefinitionService: SandboxDefinitionOverviewService,
-              private context: KypoSandboxAgendaContext) {
+              private context: SandboxAgendaContext) {
     super();
   }
 

@@ -11,11 +11,11 @@ import {SandboxDefinition} from 'kypo-sandbox-model';
 import {MatDialog} from '@angular/material/dialog';
 import {RouterTestingModule} from '@angular/router/testing';
 import {SandboxNotificationService} from '../client/sandbox-notification.service';
-import {SandboxErrorHandlerService} from '../client/sandbox-error-handler.service';
+import {SandboxErrorHandler} from '../client/sandbox-error.handler';
 
 describe('SandboxDefinitionOverviewConcreteService', () => {
 
-  let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandlerService>;
+  let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let apiSpy: jasmine.SpyObj<SandboxDefinitionApi>;
   let alertHandlerSpy: jasmine.SpyObj<SandboxNotificationService>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
@@ -35,7 +35,7 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
         {provide: MatDialog, useValue: dialogSpy},
         {provide: SandboxDefinitionApi, useValue: apiSpy},
         {provide: SandboxNotificationService, useValue: alertHandlerSpy},
-        {provide: SandboxErrorHandlerService, useValue: errorHandlerSpy},
+        {provide: SandboxErrorHandler, useValue: errorHandlerSpy},
       ]
     });
     service = TestBed.inject(SandboxDefinitionOverviewConcreteService);

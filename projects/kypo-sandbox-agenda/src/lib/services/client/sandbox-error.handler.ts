@@ -3,7 +3,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 /**
  * Handles errors emitted from sandbox agenda services and components. Should be overridden by client
  */
-export abstract class SandboxErrorHandlerService {
+export abstract class SandboxErrorHandler {
 
   /**
    * Handles error and displays it in user friendly way

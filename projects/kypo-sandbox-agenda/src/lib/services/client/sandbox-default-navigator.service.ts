@@ -6,7 +6,7 @@ import {
   SANDBOX_INSTANCE_PATH, SANDBOX_INSTANCE_TOPOLOGY_PATH,
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH
-} from '../../model/default-paths';
+} from '../../model/client/default-paths';
 import {Injectable} from '@angular/core';
 
 @Injectable()

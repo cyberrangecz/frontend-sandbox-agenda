@@ -6,10 +6,10 @@ import {SandboxDefinitionOverviewConcreteService} from '../../../services/sandbo
 import {SandboxDefinitionDetailComponent} from './sandbox-definition-detail/sandbox-definition-detail.component';
 import {SandboxDefinitionOverviewComponent} from './sandbox-definition-overview.component';
 import {KypoControlsModule} from 'kypo-controls';
-import {SandboxAgendaConfig} from '../../../model/sandbox-agenda-config';
+import {SandboxAgendaConfig} from '../../../model/client/sandbox-agenda-config';
 import {SandboxNavigator} from '../../../services/client/sandbox-navigator.service';
 import {SandboxDefaultNavigator} from '../../../services/client/sandbox-default-navigator.service';
-import {KypoSandboxAgendaContext} from '../../../services/internal/sandox-agenda-context.service';
+import {SandboxAgendaContext} from '../../../services/internal/sandox-agenda-context.service';
 
 /**
  * Module containing components and services for sandbox definition overview page
@@ -25,7 +25,7 @@ import {KypoSandboxAgendaContext} from '../../../services/internal/sandox-agenda
     SandboxDefinitionDetailComponent
   ],
   providers: [
-    KypoSandboxAgendaContext,
+    SandboxAgendaContext,
     {provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService},
     {provide: SandboxNavigator, useClass: SandboxDefaultNavigator},
   ]

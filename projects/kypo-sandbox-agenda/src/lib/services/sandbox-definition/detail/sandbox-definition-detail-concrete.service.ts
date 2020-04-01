@@ -7,7 +7,7 @@ import {Injectable} from '@angular/core';
 import {SandboxDefinition} from 'kypo-sandbox-model';
 import {SandboxNavigator} from '../../client/sandbox-navigator.service';
 import {SandboxNotificationService} from '../../client/sandbox-notification.service';
-import {SandboxErrorHandlerService} from '../../client/sandbox-error-handler.service';
+import {SandboxErrorHandler} from '../../client/sandbox-error.handler';
 
 @Injectable()
 export class SandboxDefinitionDetailConcreteService extends SandboxDefinitionDetailService {
@@ -16,7 +16,7 @@ export class SandboxDefinitionDetailConcreteService extends SandboxDefinitionDet
               private router: Router,
               private navigator: SandboxNavigator,
               private alertService: SandboxNotificationService,
-              private errorHandler: SandboxErrorHandlerService) {
+              private errorHandler: SandboxErrorHandler) {
     super();
   }
 

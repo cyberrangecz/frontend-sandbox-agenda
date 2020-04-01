@@ -1,0 +1,12 @@
+<ng-container [ngSwitch]="stage?.type">
+  <kypo-ansible-allocation-stage-detail *ngSwitchCase="stageTypes.ANSIBLE_ALLOCATION"
+                                        [stageDetail]="stage"
+                                        (fetchAnsibleOutput)="onFetchAnsibleOutput($event)">
+  </kypo-ansible-allocation-stage-detail>
+  <kypo-openstack-allocation-stage-detail *ngSwitchCase="stageTypes.OPENSTACK_ALLOCATION"
+                                          [stageDetail]="stage">
+  </kypo-openstack-allocation-stage-detail>
+  <kypo-cleanup-stage-detail *ngSwitchCase="stageTypes.OPENSTACK_CLEANUP || stageTypes.ANSIBLE_CLEANUP"
+                             [stageDetail]="stage">
+  </kypo-cleanup-stage-detail>
+</ng-container>

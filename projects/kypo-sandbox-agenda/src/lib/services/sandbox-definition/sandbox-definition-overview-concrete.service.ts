@@ -14,9 +14,9 @@ import {
 } from 'csirt-mu-common';
 import {MatDialog} from '@angular/material/dialog';
 import {SandboxNotificationService} from '../client/sandbox-notification.service';
-import {SandboxErrorHandlerService} from '../client/sandbox-error-handler.service';
+import {SandboxErrorHandler} from '../client/sandbox-error.handler';
 import {SandboxNavigator} from '../client/sandbox-navigator.service';
-import {KypoSandboxAgendaContext} from '../internal/sandox-agenda-context.service';
+import {SandboxAgendaContext} from '../internal/sandox-agenda-context.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -29,8 +29,8 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
               private router: Router,
               private dialog: MatDialog,
               private alertService: SandboxNotificationService,
-              private errorHandler: SandboxErrorHandlerService,
-              private context: KypoSandboxAgendaContext,
+              private errorHandler: SandboxErrorHandler,
+              private context: SandboxAgendaContext,
               private navigator: SandboxNavigator) {
     super(context.config.defaultPaginationSize);
   }
