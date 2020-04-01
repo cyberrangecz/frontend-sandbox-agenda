@@ -8,6 +8,7 @@ import {SandboxNavigator} from '../../services/client/sandbox-navigator.service'
 
 /**
  * Helper class transforming paginated resource to class for common table component
+ * @dynamic
  */
 export class PoolTable extends Kypo2Table<Pool> {
 

@@ -7,6 +7,7 @@ import {SandboxInstanceService} from '../../services/sandbox-instance/sandbox-in
 
 /**
  * Helper class transforming paginated resource to class for common table component
+ * @dynamic
  */
 export class SandboxInstanceTable extends Kypo2Table<SandboxInstance> {
 

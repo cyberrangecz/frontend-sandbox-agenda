@@ -9,8 +9,8 @@ import {SandboxDefinition} from 'kypo-sandbox-model';
 import {PoolApi} from 'kypo-sandbox-api';
 import {SandboxErrorHandler} from '../client/sandbox-error.handler';
 import {SandboxNotificationService} from '../client/sandbox-notification.service';
-import {SandboxDefinitionSelectComponent} from '../../components/pool/pool-edit/sandbox-definition-select/sandbox-definition-select.component';
 import {SandboxNavigator} from '../client/sandbox-navigator.service';
+import {SandboxDefinitionSelectComponent} from '../../components/pool/edit/sandbox-definition-select/sandbox-definition-select.component';
 
 @Injectable()
 export class PoolEditConcreteService extends PoolEditService {

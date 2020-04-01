@@ -1,8 +1,7 @@
-@import "./src/variables.scss";
-
 mat-card {
   margin: 10px;
 }
+
 .loading {
   display: flex;
   flex-direction: row;
@@ -15,7 +14,6 @@ mat-card {
   align-items: baseline;
   justify-content: center;
 }
-
 
 mat-expansion-panel {
   margin: 10px;

@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Kypo2TopologyGraphModule} from 'kypo2-topology-graph';
+import {Kypo2TopologyGraphConfig, Kypo2TopologyGraphModule} from 'kypo2-topology-graph';
 import {SandboxInstanceTopologyComponent} from './sandbox-instance-topology.component';
 import {MatCardModule} from '@angular/material/card';
 import {SandboxInstanceResolver} from '../../../services/resolvers/sandbox-instance-resolver.service';
@@ -15,6 +15,7 @@ import {SandboxAgendaConfig} from '../../../model/client/sandbox-agenda-config';
   imports: [
     CommonModule,
     MatCardModule,
+    Kypo2TopologyGraphModule,
   ],
   providers: [
     SandboxInstanceResolver,
@@ -25,7 +26,7 @@ export class SandboxInstanceTopologyComponentsModule {
     return {
       ngModule: SandboxInstanceTopologyComponentsModule,
       providers: [
-        Kypo2TopologyGraphModule.forRoot(config.kypo2TopologyConfig).providers,
+        {provide: Kypo2TopologyGraphConfig, useValue: config.kypo2TopologyConfig},
         {provide: SandboxAgendaConfig, useValue: config},
       ]
     };

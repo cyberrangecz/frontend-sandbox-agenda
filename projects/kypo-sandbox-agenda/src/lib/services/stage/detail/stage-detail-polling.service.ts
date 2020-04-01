@@ -3,7 +3,7 @@ import {combineLatest, merge, Observable, Subject, timer} from 'rxjs';
 import {retryWhen, switchMap} from 'rxjs/operators';
 import {StageDetail} from '../../../model/stage/stage-detail-adapter';
 
-export abstract  class StageDetailPollingService extends StageDetailService {
+export abstract class StageDetailPollingService extends StageDetailService {
   protected retryPolling$: Subject<boolean> = new Subject();
 
   private pollPeriod: number;

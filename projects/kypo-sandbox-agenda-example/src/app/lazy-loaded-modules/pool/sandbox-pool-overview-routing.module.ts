@@ -1,8 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {PoolBreadcrumbResolver} from '../../../services/resolvers/sandbox-instance-resolvers/pool-breadcrumb-resolver.service';
-import {SANDBOX_POOL_NEW_PATH, SANDBOX_POOL_ID_SELECTOR} from './paths';
-import {SandboxPoolOverviewComponent} from './sandbox-pool-overview.component';
+import {PoolBreadcrumbResolver, SANDBOX_POOL_ID_SELECTOR, SANDBOX_POOL_NEW_PATH, SandboxPoolOverviewComponent} from 'kypo-sandbox-agenda';
 
 const routes: Routes = [
   {
@@ -11,14 +9,14 @@ const routes: Routes = [
   },
   {
     path: SANDBOX_POOL_NEW_PATH,
-    loadChildren: () => import('app/components/sandbox-instance/sandbox-pool-edit/sandbox-pool-edit.module').then(m => m.SandboxPoolEditModule),
+    loadChildren: () => import('./edit/sandbox-pool-edit.module').then(m => m.SandboxPoolEditModule),
     resolve: {
       breadcrumb: PoolBreadcrumbResolver,
     }
   },
   {
     path: `:${SANDBOX_POOL_ID_SELECTOR}`,
-    loadChildren: () => import('app/components/sandbox-instance/sandbox-pool-detail/sandbox-pool-detail.module').then(m => m.SandboxInstanceOverviewModule),
+    loadChildren: () => import('./detail/sandbox-pool-detail.module').then(m => m.SandboxPoolDetailModule),
     resolve: {
       breadcrumb: PoolBreadcrumbResolver,
     }

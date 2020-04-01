@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: SANDBOX_DEFINITION_NEW_PATH,
-    loadChildren: () => import('./create-sandbox-definition.module').then(m => m.CreateSandboxDefinitionModule),
+    loadChildren: () => import('./edit/edit-sandbox-definition.module').then(m => m.EditSandboxDefinitionModule),
     data: {
       breadcrumb: 'Create',
       title: 'Create Sandbox Definition'

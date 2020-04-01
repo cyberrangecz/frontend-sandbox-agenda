@@ -3,6 +3,9 @@ import {defer, of} from 'rxjs';
 import {KypoControlItem} from 'kypo-controls';
 import {SandboxInstanceService} from '../../../services/sandbox-instance/sandbox-instance.service';
 
+/**
+ * @dynamic
+ */
 export class SandboxPoolDetailControls {
   static readonly ALLOCATE_ACTION_ID = 'allocate';
 

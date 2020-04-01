@@ -1,11 +1,11 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {CreateSandboxDefinitionComponent} from 'kypo-sandbox-agenda';
+import {EditSandboxDefinitionComponent} from 'kypo-sandbox-agenda';
 
 const routes: Routes = [
   {
     path: '',
-    component: CreateSandboxDefinitionComponent,
+    component: EditSandboxDefinitionComponent,
   },
 ];
 
@@ -20,5 +20,5 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class CreateSandboxDefinitionRoutingModule {
+export class EditSandboxDefinitionRoutingModule {
 }

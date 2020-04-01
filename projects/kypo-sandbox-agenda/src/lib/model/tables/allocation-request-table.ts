@@ -5,6 +5,9 @@ import {AllocationRequest} from 'kypo-sandbox-model';
 import {PoolAllocationRequestsPollingService} from '../../services/pool-request/allocation/pool-allocation-requests-polling.service';
 import {SandboxNavigator} from '../../services/client/sandbox-navigator.service';
 
+/**
+ * @dynamic
+ */
 export class AllocationRequestTable extends Kypo2Table<AllocationRequest> {
 
   constructor(resource: KypoPaginatedResource<AllocationRequest>, poolId: number, service: PoolAllocationRequestsPollingService, navigator: SandboxNavigator) {

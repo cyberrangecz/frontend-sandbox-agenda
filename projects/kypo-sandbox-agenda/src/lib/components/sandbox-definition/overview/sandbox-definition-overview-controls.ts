@@ -2,11 +2,18 @@ import {SandboxDefinitionOverviewService} from '../../../services/sandbox-defini
 import {defer, of} from 'rxjs';
 import {KypoControlItem} from 'kypo-controls';
 
+/**
+ * @dynamic
+ */
 export class SandboxDefinitionOverviewControls {
 
   static readonly CREATE_ACTION_ID = 'create';
 
-  static create(service: SandboxDefinitionOverviewService) {
+  /**
+   *
+   * @param service
+   */
+  static create(service: SandboxDefinitionOverviewService): KypoControlItem[] {
     return [
       new KypoControlItem(
         this.CREATE_ACTION_ID,
