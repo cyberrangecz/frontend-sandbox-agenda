@@ -3,8 +3,6 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Server url
-import {Kypo2TopologyGraphConfig} from 'kypo2-topology-graph';
-
 export const baseURL = 'https://kypo-devel.ics.muni.cz';
 // Frontend url
 export const homeURL = 'https://localhost:4200';

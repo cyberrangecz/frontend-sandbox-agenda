@@ -25,6 +25,7 @@ export * from './lib/components/pool-request/pool-request-detail.component';
 export * from './lib/services/client/sandbox-notification.service';
 export * from './lib/services/client/sandbox-error.handler';
 export * from './lib/services/client/sandbox-navigator.service';
+export * from './lib/services/client/sandbox-default-navigator.service';
 
 // SERVICES - RESOLVERS
 export * from './lib/services/resolvers/sandbox-instance-breadcrumb-resolver.service';
