@@ -1,22 +1,22 @@
-import {SandboxDefinitionOverviewService} from './sandbox-definition-overview.service';
-import {EMPTY, Observable, of} from 'rxjs';
-import {KypoPaginatedResource} from 'kypo-common';
-import {KypoRequestedPagination} from 'kypo-common';
-import {switchMap, tap} from 'rxjs/operators';
-import {SandboxDefinitionApi} from 'kypo-sandbox-api';
-import {Injectable} from '@angular/core';
-import {SandboxDefinition} from 'kypo-sandbox-model';
-import {Router} from '@angular/router';
+import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import {
   CsirtMuConfirmationDialogComponent,
   CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum
+  CsirtMuDialogResultEnum,
 } from 'csirt-mu-common';
-import {MatDialog} from '@angular/material/dialog';
-import {SandboxNotificationService} from '../client/sandbox-notification.service';
-import {SandboxErrorHandler} from '../client/sandbox-error.handler';
-import {SandboxNavigator} from '../client/sandbox-navigator.service';
-import {SandboxAgendaContext} from '../internal/sandox-agenda-context.service';
+import { KypoRequestedPagination } from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { SandboxDefinitionApi } from 'kypo-sandbox-api';
+import { SandboxDefinition } from 'kypo-sandbox-model';
+import { EMPTY, Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
+import { SandboxErrorHandler } from '../client/sandbox-error.handler';
+import { SandboxNavigator } from '../client/sandbox-navigator.service';
+import { SandboxNotificationService } from '../client/sandbox-notification.service';
+import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
+import { SandboxDefinitionOverviewService } from './sandbox-definition-overview.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -24,14 +24,15 @@ import {SandboxAgendaContext} from '../internal/sandox-agenda-context.service';
  */
 @Injectable()
 export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionOverviewService {
-
-  constructor(private api: SandboxDefinitionApi,
-              private router: Router,
-              private dialog: MatDialog,
-              private alertService: SandboxNotificationService,
-              private errorHandler: SandboxErrorHandler,
-              private context: SandboxAgendaContext,
-              private navigator: SandboxNavigator) {
+  constructor(
+    private api: SandboxDefinitionApi,
+    private router: Router,
+    private dialog: MatDialog,
+    private alertService: SandboxNotificationService,
+    private errorHandler: SandboxErrorHandler,
+    private context: SandboxAgendaContext,
+    private navigator: SandboxNavigator
+  ) {
     super(context.config.defaultPaginationSize);
   }
 
@@ -44,15 +45,16 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
   getAll(pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<SandboxDefinition>> {
     this.hasErrorSubject$.next(false);
     this.lastPagination = pagination;
-    return this.api.getAll(pagination)
-      .pipe(
-        tap(paginatedResource => {
+    return this.api.getAll(pagination).pipe(
+      tap(
+        (paginatedResource) => {
           this.resourceSubject$.next(paginatedResource);
-          },
-            err => {
+        },
+        (err) => {
           this.errorHandler.emit(err, 'Fetching sandbox definitions');
           this.hasErrorSubject$.next(true);
-        })
+        }
+      )
     );
   }
 
@@ -65,13 +67,11 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
    * @param sandboxDefinition sandbox definition to be deleted
    */
   delete(sandboxDefinition: SandboxDefinition): Observable<KypoPaginatedResource<SandboxDefinition>> {
-    return this.displayDialogToDelete(sandboxDefinition)
-      .pipe(
-        switchMap(result => result === CsirtMuDialogResultEnum.CONFIRMED
-          ? this.callApiToDelete(sandboxDefinition)
-          : EMPTY
-        )
-      );
+    return this.displayDialogToDelete(sandboxDefinition).pipe(
+      switchMap((result) =>
+        result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxDefinition) : EMPTY
+      )
+    );
   }
 
   private displayDialogToDelete(sandboxDefinition: SandboxDefinition): Observable<CsirtMuDialogResultEnum> {
@@ -81,19 +81,18 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
         `Do you want to delete sandbox definition "${sandboxDefinition.title}"?`,
         'Cancel',
         'Delete'
-      )
+      ),
     });
     return dialogRef.afterClosed();
   }
 
   private callApiToDelete(sandboxDefinition: SandboxDefinition): Observable<KypoPaginatedResource<SandboxDefinition>> {
-    return this.api.delete(sandboxDefinition.id)
-      .pipe(
-        tap(
-          _ => this.alertService.emit('success', 'Sandbox definition was successfully deleted'),
-          err => this.errorHandler.emit(err, 'Removing sandbox definition')
-        ),
-        switchMap(() => this.getAll(this.lastPagination))
-      );
+    return this.api.delete(sandboxDefinition.id).pipe(
+      tap(
+        (_) => this.alertService.emit('success', 'Sandbox definition was successfully deleted'),
+        (err) => this.errorHandler.emit(err, 'Removing sandbox definition')
+      ),
+      switchMap(() => this.getAll(this.lastPagination))
+    );
   }
 }

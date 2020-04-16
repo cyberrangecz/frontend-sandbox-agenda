@@ -1,5 +1,5 @@
-import {RequestStage} from 'kypo-sandbox-model';
-import {StageDetailEventType} from './stage-detail-event-type';
+import { RequestStage } from 'kypo-sandbox-model';
+import { StageDetailEventType } from './stage-detail-event-type';
 
 /**
  * Event representing opening/closing of stage detil
@@ -13,4 +13,3 @@ export class StageDetailEvent {
     this.type = type;
   }
 }
-

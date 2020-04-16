@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SandboxDefinition} from 'kypo-sandbox-model';
+import { Component, Input, OnInit } from '@angular/core';
+import { SandboxDefinition } from 'kypo-sandbox-model';
 
 /**
  * Table detail of expanded row displaying sandbox definition details
@@ -7,15 +7,12 @@ import {SandboxDefinition} from 'kypo-sandbox-model';
 @Component({
   selector: 'kypo-sandbox-definition-detail',
   templateUrl: './sandbox-definition-detail.component.html',
-  styleUrls: ['./sandbox-definition-detail.component.scss']
+  styleUrls: ['./sandbox-definition-detail.component.scss'],
 })
 export class SandboxDefinitionDetailComponent implements OnInit {
-
   @Input() data: SandboxDefinition;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

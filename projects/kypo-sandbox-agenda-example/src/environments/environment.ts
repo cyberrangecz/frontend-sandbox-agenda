@@ -10,11 +10,11 @@ export const sandboxesURL = baseURL + ':8080/kypo-sandbox-service/api/v1/';
 export const userAngGroupURL = baseURL + ':8084/kypo2-rest-user-and-group/api/v1/';
 
 export const kypo2TopologyConfig = {
-    topologyRestUrl: sandboxesURL,
-    decoratorsRestUrl: '', // OBSOLETE
-    defaultDecoratorRefreshPeriodInSeconds: 3, // OBSOLETE
-    useRealTime: false, // OBSOLETE
-    useDecorators: false, // OBSOLETE
+  topologyRestUrl: sandboxesURL,
+  decoratorsRestUrl: '', // OBSOLETE
+  defaultDecoratorRefreshPeriodInSeconds: 3, // OBSOLETE
+  useRealTime: false, // OBSOLETE
+  useDecorators: false, // OBSOLETE
 };
 
 export const environment = {
@@ -22,20 +22,22 @@ export const environment = {
   sandboxAgendaConfig: {
     pollingPeriod: 5000,
     defaultPaginationSize: 10,
-    kypo2TopologyConfig: kypo2TopologyConfig
+    kypo2TopologyConfig,
   },
   sandboxApiConfig: {
-    sandboxRestBasePath: sandboxesURL
+    sandboxRestBasePath: sandboxesURL,
   },
   kypo2AuthConfig: {
     maxRetryAttempts: 3, // How many attempts to try to get user info from user and group service before emitting error
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
-    tokenInterceptorAllowedUrls: [ // all matching urls will have authorization token header
-      baseURL
+    tokenInterceptorAllowedUrls: [
+      // all matching urls will have authorization token header
+      baseURL,
     ],
     userInfoRestUri: userAngGroupURL,
-    providers: [ // OIDC providers
+    providers: [
+      // OIDC providers
       {
         label: 'Login with MUNI',
         textColor: 'white',
@@ -49,11 +51,11 @@ export const environment = {
           logoutUrl: 'https://oidc.muni.cz/oidc/endsession',
           postLogoutRedirectUri: homeURL + '/logout-confirmed/',
           silentRefreshRedirectUri: homeURL + '/silent-refresh.html',
-          clearHashAfterLogin: true // remove token and other info from url after login
+          clearHashAfterLogin: true, // remove token and other info from url after login
         },
       },
-    ]
-  }
+    ],
+  },
 };
 
 /*

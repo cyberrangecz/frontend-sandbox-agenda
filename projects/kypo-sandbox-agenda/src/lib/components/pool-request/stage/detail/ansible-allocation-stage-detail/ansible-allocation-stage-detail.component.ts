@@ -1,28 +1,36 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {KypoBaseComponent, KypoPaginatedResource, KypoPagination, KypoRequestedPagination} from 'kypo-common';
-import {AnsibleAllocationStage} from 'kypo-sandbox-model';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { KypoBaseComponent, KypoPaginatedResource, KypoPagination, KypoRequestedPagination } from 'kypo-common';
+import { AnsibleAllocationStage } from 'kypo-sandbox-model';
 
 @Component({
   selector: 'kypo-ansible-allocation-stage-detail',
   templateUrl: './ansible-allocation-stage-detail.component.html',
   styleUrls: ['./ansible-allocation-stage-detail.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnsibleAllocationStageDetailComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   @Input() stageDetail: AnsibleAllocationStage;
   @Output() fetchAnsibleOutput: EventEmitter<KypoRequestedPagination> = new EventEmitter();
 
-  @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
 
   isEnd = false;
   cachedPages: string[][] = [];
   flattenedPages: string[] = [];
   isLoading = false;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('stageDetail' in changes && this.stageDetail) {
@@ -37,7 +45,6 @@ export class AnsibleAllocationStageDetailComponent extends KypoBaseComponent imp
       this.isEnd = this.resolveIsEnd(this.stageDetail);
     }
   }
-
 
   /**
    * Scrolls to the end of virtual scroll
@@ -59,7 +66,7 @@ export class AnsibleAllocationStageDetailComponent extends KypoBaseComponent imp
   getNextPage() {
     this.isLoading = true;
     const requestedPage = this.stageDetail.output.pagination.page + 1;
-    this.fetchAnsibleOutput.emit(new KypoRequestedPagination(requestedPage, 200, '',''));
+    this.fetchAnsibleOutput.emit(new KypoRequestedPagination(requestedPage, 200, '', ''));
   }
 
   private isAlreadyCached(pagination: KypoPagination): boolean {

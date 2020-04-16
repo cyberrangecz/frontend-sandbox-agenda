@@ -1,9 +1,9 @@
-import {RequestStagesService} from './request-stages.service';
-import {merge, Observable, Subject, timer} from 'rxjs';
-import {KypoPaginatedResource} from 'kypo-common';
-import {RequestStage} from 'kypo-sandbox-model';
-import {retryWhen, switchMap} from 'rxjs/operators';
-import {Request} from 'kypo-sandbox-model';
+import { KypoPaginatedResource } from 'kypo-common';
+import { RequestStage } from 'kypo-sandbox-model';
+import { Request } from 'kypo-sandbox-model';
+import { merge, Observable, Subject, timer } from 'rxjs';
+import { retryWhen, switchMap } from 'rxjs/operators';
+import { RequestStagesService } from './request-stages.service';
 
 export abstract class RequestStagesPollingService extends RequestStagesService {
   protected request: Request;
@@ -29,12 +29,9 @@ export abstract class RequestStagesPollingService extends RequestStagesService {
   }
 
   protected createPoll(): Observable<KypoPaginatedResource<RequestStage>> {
-    return timer(0, this.pollPeriod)
-      .pipe(
-        switchMap(_ => this.repeatLastGetAllRequest()),
-        retryWhen(_ => this.retryPolling$),
-      );
+    return timer(0, this.pollPeriod).pipe(
+      switchMap((_) => this.repeatLastGetAllRequest()),
+      retryWhen((_) => this.retryPolling$)
+    );
   }
-
 }
-

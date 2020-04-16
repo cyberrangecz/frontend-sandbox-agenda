@@ -1,8 +1,8 @@
-import {Observable} from 'rxjs';
-import {Request} from 'kypo-sandbox-model';
-import {KypoPaginatedResource} from 'kypo-common';
-import {KypoPaginatedResourceService} from 'kypo-common';
-import {KypoRequestedPagination} from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoPaginatedResourceService } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { Request } from 'kypo-sandbox-model';
+import { Observable } from 'rxjs';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -10,7 +10,6 @@ import {KypoRequestedPagination} from 'kypo-common';
  * You can use get methods to get paginated requests and other operations to modify data.
  */
 export abstract class PoolRequestsService extends KypoPaginatedResourceService<Request> {
-
   /**
    * @param poolId id of a pool associated with requests
    * @param pagination requested pagination

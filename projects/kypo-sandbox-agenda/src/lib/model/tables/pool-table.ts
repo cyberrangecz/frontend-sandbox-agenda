@@ -1,24 +1,23 @@
-import {Column, Kypo2Table, Row, RowAction} from 'kypo2-table';
-import {defer, of} from 'rxjs';
-import {Pool} from 'kypo-sandbox-model';
-import {KypoPaginatedResource} from 'kypo-common';
-import {DeleteAction} from 'kypo2-table';
-import {PoolOverviewService} from '../../services/pool/pool-overview.service';
-import {SandboxNavigator} from '../../services/client/sandbox-navigator.service';
+import { KypoPaginatedResource } from 'kypo-common';
+import { Pool } from 'kypo-sandbox-model';
+import { Column, Kypo2Table, Row, RowAction } from 'kypo2-table';
+import { DeleteAction } from 'kypo2-table';
+import { defer, of } from 'rxjs';
+import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
+import { PoolOverviewService } from '../../services/pool/pool-overview.service';
 
 /**
  * Helper class transforming paginated resource to class for common table component
  * @dynamic
  */
 export class PoolTable extends Kypo2Table<Pool> {
-
   constructor(resource: KypoPaginatedResource<Pool>, service: PoolOverviewService, navigator: SandboxNavigator) {
-    const rows = resource.elements.map(element => PoolTable.createRow(element, service, navigator));
+    const rows = resource.elements.map((element) => PoolTable.createRow(element, service, navigator));
     const columns = [
       new Column('id', 'id', false),
       new Column('definitionId', 'definition id', false),
       new Column('lockState', 'state', false),
-      new Column('usedAndMaxSize', 'size', false)
+      new Column('usedAndMaxSize', 'size', false),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -53,8 +52,8 @@ export class PoolTable extends Kypo2Table<Pool> {
         'primary',
         'Allocate one sandbox',
         of(pool.isFull()),
-        defer(() => service.allocate(pool, 1)),
-        ),
+        defer(() => service.allocate(pool, 1))
+      ),
       new RowAction(
         'clear',
         'Clear',
@@ -64,7 +63,7 @@ export class PoolTable extends Kypo2Table<Pool> {
         of(false),
         defer(() => service.clear(pool))
       ),
-      this.createLockAction(pool, service)
+      this.createLockAction(pool, service),
     ];
   }
 

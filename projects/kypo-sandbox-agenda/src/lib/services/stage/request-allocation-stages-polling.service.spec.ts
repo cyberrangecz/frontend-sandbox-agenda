@@ -1,18 +1,17 @@
-import {RequestAllocationStagesPollingService} from './request-allocation-stages-polling.service';
-import {async, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {asyncData, KypoPaginatedResource, KypoPagination} from 'kypo-common';
-import {skip} from 'rxjs/operators';
-import {throwError} from 'rxjs';
-import {AllocationRequest, AllocationRequestStage} from 'kypo-sandbox-model';
-import {AnsibleAllocationStage} from 'kypo-sandbox-model';
-import {OpenStackAllocationStage} from 'kypo-sandbox-model';
-import {StagesApi} from 'kypo-sandbox-api';
-import {SandboxErrorHandlerService} from 'kypo-sandbox-agenda';
-import {SandboxAgendaContext} from '../internal/sandox-agenda-context.service';
-import {SandboxAgendaConfig} from '../../model/client/sandbox-agenda-config';
+import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { asyncData, KypoPaginatedResource, KypoPagination } from 'kypo-common';
+import { SandboxErrorHandlerService } from 'kypo-sandbox-agenda';
+import { StagesApi } from 'kypo-sandbox-api';
+import { AnsibleAllocationStage } from 'kypo-sandbox-model';
+import { AllocationRequest, AllocationRequestStage } from 'kypo-sandbox-model';
+import { OpenStackAllocationStage } from 'kypo-sandbox-model';
+import { throwError } from 'rxjs';
+import { skip } from 'rxjs/operators';
+import { SandboxAgendaConfig } from '../../model/client/sandbox-agenda-config';
+import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
+import { RequestAllocationStagesPollingService } from './request-allocation-stages-polling.service';
 
 describe('RequestStagesPollingService', () => {
-
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandlerService>;
   let apiSpy: jasmine.SpyObj<StagesApi>;
   let service: RequestAllocationStagesPollingService;
@@ -26,10 +25,10 @@ describe('RequestStagesPollingService', () => {
     TestBed.configureTestingModule({
       providers: [
         RequestAllocationStagesPollingService,
-        {provide: StagesApi, useValue: apiSpy},
-        {provide: SandboxErrorHandlerService, useValue: errorHandlerSpy},
-        {provide: SandboxAgendaContext, useValue: context}
-      ]
+        { provide: StagesApi, useValue: apiSpy },
+        { provide: SandboxErrorHandlerService, useValue: errorHandlerSpy },
+        { provide: SandboxAgendaContext, useValue: context },
+      ],
     });
     service = TestBed.inject(RequestAllocationStagesPollingService);
   }));
@@ -38,31 +37,33 @@ describe('RequestStagesPollingService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should load data from api (called once)', done => {
+  it('should load data from api (called once)', (done) => {
     apiSpy.getAllocationStages.and.returnValue(asyncData(createStages()));
     const request = new AllocationRequest();
     request.id = 1;
 
-    service.getAll(request).subscribe(_ => done(),
-      _ => fail);
+    service.getAll(request).subscribe(
+      (_) => done(),
+      (_) => fail
+    );
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(1);
   });
 
-
-  it('should call error handler on err', done => {
+  it('should call error handler on err', (done) => {
     apiSpy.getAllocationStages.and.returnValue(throwError(null));
     const request = new AllocationRequest();
     request.id = 1;
 
-    service.getAll(request)
-      .subscribe(_ => fail,
-        _ => {
+    service.getAll(request).subscribe(
+      (_) => fail,
+      (_) => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
-      });
+      }
+    );
   });
 
-  it('should emit hasError observable on err', done => {
+  it('should emit hasError observable on err', (done) => {
     apiSpy.getAllocationStages.and.returnValue(throwError(null));
     const request = new AllocationRequest();
     request.id = 1;
@@ -70,14 +71,17 @@ describe('RequestStagesPollingService', () => {
     service.hasError$
       .pipe(
         skip(2) // we ignore initial value and value emitted before the call is made
-      ).subscribe(hasError => {
-        expect(hasError).toBeTruthy();
-        done();
-      },
-      _ => fail);
+      )
+      .subscribe(
+        (hasError) => {
+          expect(hasError).toBeTruthy();
+          done();
+        },
+        (_) => fail
+      );
     service.getAll(request).subscribe(
-      _ => fail,
-      _ => done()
+      (_) => fail,
+      (_) => done()
     );
   });
 
@@ -104,7 +108,8 @@ describe('RequestStagesPollingService', () => {
       asyncData(stages),
       asyncData(stages),
       asyncData(stages),
-      throwError(null)); // throw error on fourth period call
+      throwError(null)
+    ); // throw error on fourth period call
 
     const request = new AllocationRequest();
     request.id = 1;
@@ -112,7 +117,7 @@ describe('RequestStagesPollingService', () => {
     service.startPolling(request);
     const subscription = service.resource$.subscribe();
     assertPoll(3);
-    tick(5 *  context.config.pollingPeriod);
+    tick(5 * context.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(4);
     subscription.unsubscribe();
   }));
@@ -139,7 +144,7 @@ describe('RequestStagesPollingService', () => {
     assertPoll(3);
     tick(context.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(4);
-    tick( 5 * context.config.pollingPeriod);
+    tick(5 * context.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(4);
     service.getAll(request).subscribe();
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(5);

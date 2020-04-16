@@ -1,26 +1,24 @@
-import {async, TestBed} from '@angular/core/testing';
-import {SandboxDefinitionOverviewConcreteService} from './sandbox-definition-overview-concrete.service';
-import {SandboxDefinitionApi} from 'kypo-sandbox-api';
-import {throwError} from 'rxjs';
-import {KypoRequestedPagination} from 'kypo-common';
-import {skip} from 'rxjs/operators';
-import {asyncData} from 'kypo-common';
-import {KypoPaginatedResource} from 'kypo-common';
-import {KypoPagination} from 'kypo-common';
-import {SandboxDefinition} from 'kypo-sandbox-model';
-import {MatDialog} from '@angular/material/dialog';
-import {RouterTestingModule} from '@angular/router/testing';
-import {SandboxNotificationService} from '../client/sandbox-notification.service';
-import {SandboxErrorHandler} from '../client/sandbox-error.handler';
+import { async, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { RouterTestingModule } from '@angular/router/testing';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { KypoPagination } from 'kypo-common';
+import { asyncData } from 'kypo-common';
+import { SandboxDefinitionApi } from 'kypo-sandbox-api';
+import { SandboxDefinition } from 'kypo-sandbox-model';
+import { throwError } from 'rxjs';
+import { skip } from 'rxjs/operators';
+import { SandboxErrorHandler } from '../client/sandbox-error.handler';
+import { SandboxNotificationService } from '../client/sandbox-notification.service';
+import { SandboxDefinitionOverviewConcreteService } from './sandbox-definition-overview-concrete.service';
 
 describe('SandboxDefinitionOverviewConcreteService', () => {
-
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let apiSpy: jasmine.SpyObj<SandboxDefinitionApi>;
   let alertHandlerSpy: jasmine.SpyObj<SandboxNotificationService>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
   let service: SandboxDefinitionOverviewConcreteService;
-
 
   beforeEach(async(() => {
     errorHandlerSpy = jasmine.createSpyObj('SandboxErrorHandlerService', ['emit']);
@@ -32,11 +30,11 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
       imports: [RouterTestingModule],
       providers: [
         SandboxDefinitionOverviewConcreteService,
-        {provide: MatDialog, useValue: dialogSpy},
-        {provide: SandboxDefinitionApi, useValue: apiSpy},
-        {provide: SandboxNotificationService, useValue: alertHandlerSpy},
-        {provide: SandboxErrorHandler, useValue: errorHandlerSpy},
-      ]
+        { provide: MatDialog, useValue: dialogSpy },
+        { provide: SandboxDefinitionApi, useValue: apiSpy },
+        { provide: SandboxNotificationService, useValue: alertHandlerSpy },
+        { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
+      ],
     });
     service = TestBed.inject(SandboxDefinitionOverviewConcreteService);
   }));
@@ -45,32 +43,30 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call error handler on err', done => {
+  it('should call error handler on err', (done) => {
     const pagination = createPagination();
     apiSpy.getAll.and.returnValue(throwError(null));
 
-    service.getAll(pagination).subscribe( _ => fail,
-      _ => {
+    service.getAll(pagination).subscribe(
+      (_) => fail,
+      (_) => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
-      });
+      }
+    );
     expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
   });
 
-  it('should emit next value on update (sandboxDefinitions)', done => {
+  it('should emit next value on update (sandboxDefinitions)', (done) => {
     const pagination = createPagination();
     const mockData = createMockData();
     apiSpy.getAll.and.returnValue(asyncData(mockData));
 
-    service.resource$.pipe(skip(1))
-      .subscribe(emitted => {
-          expect(emitted).toBe(mockData);
-          done();
-        },
-        fail);
-    service.getAll(pagination)
-      .subscribe( _ => done(),
-        fail);
+    service.resource$.pipe(skip(1)).subscribe((emitted) => {
+      expect(emitted).toBe(mockData);
+      done();
+    }, fail);
+    service.getAll(pagination).subscribe((_) => done(), fail);
   });
 
   function createPagination() {
@@ -82,8 +78,6 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
     sandbox1.id = 1;
     const sandbox2 = new SandboxDefinition();
     sandbox2.id = 2;
-    return new KypoPaginatedResource<SandboxDefinition>([sandbox1, sandbox2],
-      new KypoPagination(1, 2, 5, 2, 1));
+    return new KypoPaginatedResource<SandboxDefinition>([sandbox1, sandbox2], new KypoPagination(1, 2, 5, 2, 1));
   }
-
 });
