@@ -1,7 +1,7 @@
-import {StageDetailService} from './stage-detail.service';
-import {combineLatest, merge, Observable, Subject, timer} from 'rxjs';
-import {retryWhen, switchMap} from 'rxjs/operators';
-import {StageDetail} from '../../../model/stage/stage-detail-adapter';
+import { combineLatest, merge, Observable, Subject, timer } from 'rxjs';
+import { retryWhen, switchMap } from 'rxjs/operators';
+import { StageDetail } from '../../../model/stage/stage-detail-adapter';
+import { StageDetailService } from './stage-detail.service';
 
 export abstract class StageDetailPollingService extends StageDetailService {
   protected retryPolling$: Subject<boolean> = new Subject();
@@ -15,16 +15,18 @@ export abstract class StageDetailPollingService extends StageDetailService {
   }
 
   private createPoll(): Observable<StageDetail[]> {
-    return timer(this.pollPeriod, this.pollPeriod)
-      .pipe(
-        switchMap(_ => this.refreshSubscribed()),
-        retryWhen(_ => this.retryPolling$),
-      );
+    return timer(this.pollPeriod, this.pollPeriod).pipe(
+      switchMap((_) => this.refreshSubscribed()),
+      retryWhen((_) => this.retryPolling$)
+    );
   }
 
   private refreshSubscribed(): Observable<StageDetail[]> {
-    const stageDetails$ = this.subscribedStageDetails.values()
-      .map(stageDetail => this.getStageDetail(stageDetail.stage.id, stageDetail.stage.type, stageDetail.requestedPagination));
+    const stageDetails$ = this.subscribedStageDetails
+      .values()
+      .map((stageDetail) =>
+        this.getStageDetail(stageDetail.stage.id, stageDetail.stage.type, stageDetail.requestedPagination)
+      );
     return combineLatest(stageDetails$);
   }
 }

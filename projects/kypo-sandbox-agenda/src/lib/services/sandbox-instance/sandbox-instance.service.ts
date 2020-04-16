@@ -1,8 +1,8 @@
-import {Observable} from 'rxjs';
-import {KypoPaginatedResource} from 'kypo-common';
-import {SandboxInstance} from 'kypo-sandbox-model';
-import {KypoPaginatedResourceService} from 'kypo-common';
-import {KypoRequestedPagination} from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoPaginatedResourceService } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { SandboxInstance } from 'kypo-sandbox-model';
+import { Observable } from 'rxjs';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -10,12 +10,14 @@ import {KypoRequestedPagination} from 'kypo-common';
  * You can use get methods to get paginated sandbox instances and other operations to modify data.
  */
 export abstract class SandboxInstanceService extends KypoPaginatedResourceService<SandboxInstance> {
-
   /**
    * @param poolId id of a pool associated with sandbox instances
    * @param pagination requested pagination
    */
-  abstract getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<SandboxInstance>>;
+  abstract getAll(
+    poolId: number,
+    pagination: KypoRequestedPagination
+  ): Observable<KypoPaginatedResource<SandboxInstance>>;
 
   /**
    * Deletes a sandbox instance

@@ -1,5 +1,5 @@
-import {RequestStage} from 'kypo-sandbox-model';
-import {KypoRequestedPagination} from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { RequestStage } from 'kypo-sandbox-model';
 
 export class StageDetail {
   stage: RequestStage;

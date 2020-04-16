@@ -1,19 +1,17 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {Pool} from 'kypo-sandbox-model';
-import {PoolResolver} from './pool-resolver.service';
-import {SANDBOX_POOL_NEW_PATH} from '../../model/client/default-paths';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Pool } from 'kypo-sandbox-model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SANDBOX_POOL_NEW_PATH } from '../../model/client/default-paths';
+import { PoolResolver } from './pool-resolver.service';
 
 /**
  * Router breadcrumb title provider
  */
 @Injectable()
 export class PoolBreadcrumbResolver implements Resolve<string> {
-
-  constructor(private poolResolver: PoolResolver) {
-  }
+  constructor(private poolResolver: PoolResolver) {}
 
   /**
    * Retrieves a breadcrumb title based on provided url
@@ -25,6 +23,6 @@ export class PoolBreadcrumbResolver implements Resolve<string> {
       return 'Create';
     }
     const resolved = this.poolResolver.resolve(route, state) as Observable<Pool>;
-    return resolved.pipe(map(pool => `Pool ${pool.id}`));
+    return resolved.pipe(map((pool) => `Pool ${pool.id}`));
   }
 }

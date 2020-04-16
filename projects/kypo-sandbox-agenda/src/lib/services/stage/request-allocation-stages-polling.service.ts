@@ -1,15 +1,15 @@
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
-import {RequestStage} from 'kypo-sandbox-model';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {KypoRequestedPagination} from 'kypo-common';
-import {KypoPaginatedResource} from 'kypo-common';
-import {Request} from 'kypo-sandbox-model';
-import {RequestStagesPollingService} from './request-stages-polling.service';
-import {StagesApi} from 'kypo-sandbox-api';
-import {SandboxErrorHandler} from '../client/sandbox-error.handler';
-import {SandboxAgendaContext} from '../internal/sandox-agenda-context.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { StagesApi } from 'kypo-sandbox-api';
+import { RequestStage } from 'kypo-sandbox-model';
+import { Request } from 'kypo-sandbox-model';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { SandboxErrorHandler } from '../client/sandbox-error.handler';
+import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
+import { RequestStagesPollingService } from './request-stages-polling.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -17,10 +17,11 @@ import {SandboxAgendaContext} from '../internal/sandox-agenda-context.service';
  */
 @Injectable()
 export class RequestAllocationStagesPollingService extends RequestStagesPollingService {
-
-  constructor(private api: StagesApi,
-              private context: SandboxAgendaContext,
-              private errorHandler: SandboxErrorHandler) {
+  constructor(
+    private api: StagesApi,
+    private context: SandboxAgendaContext,
+    private errorHandler: SandboxErrorHandler
+  ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
   }
 
@@ -31,22 +32,20 @@ export class RequestAllocationStagesPollingService extends RequestStagesPollingS
   getAll(request: Request): Observable<KypoPaginatedResource<RequestStage>> {
     this.onManualGetAll(request);
     const fakePagination = new KypoRequestedPagination(0, 100, '', '');
-    return this.api.getAllocationStages(request.allocationUnitId, request.id, fakePagination)
-      .pipe(
-        tap(
-          stages => this.resourceSubject$.next(stages),
-          err => this.onGetAllError(err)
-        )
-      );
+    return this.api.getAllocationStages(request.allocationUnitId, request.id, fakePagination).pipe(
+      tap(
+        (stages) => this.resourceSubject$.next(stages),
+        (err) => this.onGetAllError(err)
+      )
+    );
   }
 
   protected repeatLastGetAllRequest(): Observable<KypoPaginatedResource<RequestStage>> {
     this.hasErrorSubject$.next(false);
     const fakePagination = new KypoRequestedPagination(0, 100, '', '');
-    return this.api.getAllocationStages(this.request.allocationUnitId, this.request.id, fakePagination)
-      .pipe(
-        tap({ error: err => this.onGetAllError(err)})
-      );
+    return this.api
+      .getAllocationStages(this.request.allocationUnitId, this.request.id, fakePagination)
+      .pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
 
   private onManualGetAll(request: Request) {

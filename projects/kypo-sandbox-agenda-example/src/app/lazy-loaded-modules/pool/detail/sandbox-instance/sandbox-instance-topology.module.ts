@@ -1,14 +1,12 @@
-import {NgModule} from '@angular/core';
-import {SandboxInstanceTopologyComponentsModule} from 'kypo-sandbox-agenda';
-import {SandboxInstanceTopologyRoutingModule} from './sandbox-instance-topology-routing.module';
-import {environment} from '../../../../../environments/environment';
+import { NgModule } from '@angular/core';
+import { SandboxInstanceTopologyComponentsModule } from 'kypo-sandbox-agenda';
+import { environment } from '../../../../../environments/environment';
+import { SandboxInstanceTopologyRoutingModule } from './sandbox-instance-topology-routing.module';
 
 @NgModule({
   imports: [
     SandboxInstanceTopologyComponentsModule.forRoot(environment.sandboxAgendaConfig),
-    SandboxInstanceTopologyRoutingModule
-  ]
+    SandboxInstanceTopologyRoutingModule,
+  ],
 })
-export class SandboxInstanceTopologyModule {
-
-}
+export class SandboxInstanceTopologyModule {}

@@ -6,19 +6,19 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
-import {KypoBaseComponent, KypoRequestedPagination} from 'kypo-common';
-import {RequestStage} from 'kypo-sandbox-model';
-import {OpenStackAllocationStage} from 'kypo-sandbox-model';
-import {AnsibleAllocationStage} from 'kypo-sandbox-model';
-import {OpenStackCleanupStage} from 'kypo-sandbox-model';
-import {AnsibleCleanupStage} from 'kypo-sandbox-model';
-import {CleanupRequestStage} from 'kypo-sandbox-model';
-import {StageDetail} from '../../../model/stage/stage-detail-adapter';
-import {StageDetailEvent} from '../../../model/stage/stage-detail-event';
-import {StageDetailEventType} from '../../../model/stage/stage-detail-event-type';
-import {ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC} from '../../../model/stage/stage-logos';
+import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
+import { RequestStage } from 'kypo-sandbox-model';
+import { OpenStackAllocationStage } from 'kypo-sandbox-model';
+import { AnsibleAllocationStage } from 'kypo-sandbox-model';
+import { OpenStackCleanupStage } from 'kypo-sandbox-model';
+import { AnsibleCleanupStage } from 'kypo-sandbox-model';
+import { CleanupRequestStage } from 'kypo-sandbox-model';
+import { StageDetail } from '../../../model/stage/stage-detail-adapter';
+import { StageDetailEvent } from '../../../model/stage/stage-detail-event';
+import { StageDetailEventType } from '../../../model/stage/stage-detail-event-type';
+import { ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC } from '../../../model/stage/stage-logos';
 
 /**
  * Component of request stage basic info
@@ -27,10 +27,9 @@ import {ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC} from '../../../model/stage/stage-l
   selector: 'kypo-request-stage',
   templateUrl: './request-stage.component.html',
   styleUrls: ['./request-stage.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequestStageComponent extends KypoBaseComponent implements OnInit, OnChanges {
-
   @Input() stage: RequestStage;
   @Input() stageDetail: StageDetail;
   @Output() stageDetailEvent: EventEmitter<StageDetailEvent> = new EventEmitter();
@@ -41,8 +40,7 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
   logoSrc: string;
   detailDisabled: boolean;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('stage' in changes) {
@@ -61,10 +59,7 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
   onStageDetailEvent(open: boolean) {
     this.stageDetailIsLoading = open;
     this.stageDetailEvent.emit(
-        new StageDetailEvent(
-            this.stage,
-          open ? StageDetailEventType.OPEN : StageDetailEventType.CLOSE
-        )
+      new StageDetailEvent(this.stage, open ? StageDetailEventType.OPEN : StageDetailEventType.CLOSE)
     );
   }
 

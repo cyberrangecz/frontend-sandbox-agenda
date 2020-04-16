@@ -1,10 +1,10 @@
-import {BehaviorSubject, Observable} from 'rxjs';
-import {RequestStage} from 'kypo-sandbox-model';
-import {Dictionary} from 'typescript-collections';
-import {tap} from 'rxjs/operators';
-import {RequestStageType} from 'kypo-sandbox-model';
-import {KypoRequestedPagination} from 'kypo-common';
-import {StageDetail} from '../../../model/stage/stage-detail-adapter';
+import { KypoRequestedPagination } from 'kypo-common';
+import { RequestStage } from 'kypo-sandbox-model';
+import { RequestStageType } from 'kypo-sandbox-model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Dictionary } from 'typescript-collections';
+import { StageDetail } from '../../../model/stage/stage-detail-adapter';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -12,7 +12,6 @@ import {StageDetail} from '../../../model/stage/stage-detail-adapter';
  * Subscribe to stageDetail$ to receive latest data updates.
  */
 export abstract class StageDetailService {
-
   protected subscribedStageDetails: Dictionary<number, StageDetail> = new Dictionary();
 
   protected stageDetailsSubject$: BehaviorSubject<StageDetail[]> = new BehaviorSubject([]);
@@ -28,17 +27,17 @@ export abstract class StageDetailService {
    * @param optional requested pagination if needed
    */
   add(stage: RequestStage, pagination?: KypoRequestedPagination): Observable<any> {
-    return this.getStageDetail(stage.id, stage.type, pagination)
-      .pipe(
-        tap(
-          stageDetail => {
-            this.subscribedStageDetails.setValue(stageDetail.stage.id, stageDetail);
-            return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
-          },
-          _ => {
-            return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
-          })
-      );
+    return this.getStageDetail(stage.id, stage.type, pagination).pipe(
+      tap(
+        (stageDetail) => {
+          this.subscribedStageDetails.setValue(stageDetail.stage.id, stageDetail);
+          return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
+        },
+        (_) => {
+          return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
+        }
+      )
+    );
   }
 
   /**
@@ -54,5 +53,9 @@ export abstract class StageDetailService {
    * @param stageType type of stage
    * @param pagination requested pagination
    */
-  abstract getStageDetail(stageId: number, stageType: RequestStageType, pagination?: KypoRequestedPagination): Observable<StageDetail>;
+  abstract getStageDetail(
+    stageId: number,
+    stageType: RequestStageType,
+    pagination?: KypoRequestedPagination
+  ): Observable<StageDetail>;
 }

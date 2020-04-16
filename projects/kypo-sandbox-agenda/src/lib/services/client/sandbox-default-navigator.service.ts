@@ -1,17 +1,19 @@
-import {SandboxNavigator} from './sandbox-navigator.service';
+import { Injectable } from '@angular/core';
 import {
-  POOL_ALLOCATION_REQUEST_PATH, POOL_CLEANUP_REQUEST_PATH, SANDBOX_ALLOCATION_UNIT_PATH,
+  POOL_ALLOCATION_REQUEST_PATH,
+  POOL_CLEANUP_REQUEST_PATH,
+  SANDBOX_ALLOCATION_UNIT_PATH,
   SANDBOX_DEFINITION_NEW_PATH,
   SANDBOX_DEFINITION_PATH,
-  SANDBOX_INSTANCE_PATH, SANDBOX_INSTANCE_TOPOLOGY_PATH,
+  SANDBOX_INSTANCE_PATH,
+  SANDBOX_INSTANCE_TOPOLOGY_PATH,
   SANDBOX_POOL_NEW_PATH,
-  SANDBOX_POOL_PATH
+  SANDBOX_POOL_PATH,
 } from '../../model/client/default-paths';
-import {Injectable} from '@angular/core';
+import { SandboxNavigator } from './sandbox-navigator.service';
 
 @Injectable()
 export class SandboxDefaultNavigator extends SandboxNavigator {
-
   /**
    * Returns route to sandbox definition page
    */
@@ -60,8 +62,15 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
    * @param sandboxAllocationUnitId id of the sandbox allocation unit associated with the request
    * @param requestId id of the request
    */
-  toAllocationRequest(poolId: number | string, sandboxAllocationUnitId: number | string,  requestId: number | string): string {
-    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_ALLOCATION_UNIT_PATH}/${sandboxAllocationUnitId}/${POOL_ALLOCATION_REQUEST_PATH}/${requestId}`;
+  toAllocationRequest(
+    poolId: number | string,
+    sandboxAllocationUnitId: number | string,
+    requestId: number | string
+  ): string {
+    return (
+      `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_ALLOCATION_UNIT_PATH}/${sandboxAllocationUnitId}` +
+      `/${POOL_ALLOCATION_REQUEST_PATH}/${requestId}`
+    );
   }
 
   /**
@@ -70,8 +79,14 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
    * @param sandboxAllocationUnitId id of the sandbox allocation unit associated with the request
    * @param requestId id of the request
    */
-  toCleanupRequest(poolId: number | string, sandboxAllocationUnitId: number | string, requestId: number | string): string {
-    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_ALLOCATION_UNIT_PATH}/${sandboxAllocationUnitId}/${POOL_CLEANUP_REQUEST_PATH}/${requestId}`;
+  toCleanupRequest(
+    poolId: number | string,
+    sandboxAllocationUnitId: number | string,
+    requestId: number | string
+  ): string {
+    return (
+      `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_ALLOCATION_UNIT_PATH}/${sandboxAllocationUnitId}` +
+      `/${POOL_CLEANUP_REQUEST_PATH}/${requestId}`
+    );
   }
-
 }

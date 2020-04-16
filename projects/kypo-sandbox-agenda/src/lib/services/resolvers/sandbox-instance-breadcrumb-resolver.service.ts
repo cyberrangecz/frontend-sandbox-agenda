@@ -1,19 +1,17 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {SandboxInstanceResolver} from './sandbox-instance-resolver.service';
-import {SandboxInstance} from 'kypo-sandbox-model';
-import {SANDBOX_INSTANCE_TOPOLOGY_PATH} from '../../model/client/default-paths';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { SandboxInstance } from 'kypo-sandbox-model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { SANDBOX_INSTANCE_TOPOLOGY_PATH } from '../../model/client/default-paths';
+import { SandboxInstanceResolver } from './sandbox-instance-resolver.service';
 
 /**
  * Router breadcrumb title provider
  */
 @Injectable()
 export class SandboxInstanceBreadcrumbResolver implements Resolve<string> {
-
-  constructor(private sandboxInstanceResolver: SandboxInstanceResolver) {
-  }
+  constructor(private sandboxInstanceResolver: SandboxInstanceResolver) {}
 
   /**
    * Retrieves a breadcrumb title based on provided url
@@ -25,6 +23,6 @@ export class SandboxInstanceBreadcrumbResolver implements Resolve<string> {
       return 'Topology';
     }
     const sandboxInstance$ = this.sandboxInstanceResolver.resolve(route, state) as Observable<SandboxInstance>;
-    return sandboxInstance$.pipe(map(sandboxInstance => `Sandbox ${sandboxInstance.id}`));
+    return sandboxInstance$.pipe(map((sandboxInstance) => `Sandbox ${sandboxInstance.id}`));
   }
 }

@@ -1,15 +1,14 @@
-import {PoolRequestsService} from './pool-requests.service';
-import {Observable, Subject, timer} from 'rxjs';
-import {KypoPaginatedResource} from 'kypo-common';
-import {Request} from 'kypo-sandbox-model';
-import {retryWhen, switchMap} from 'rxjs/operators';
-import {KypoRequestedPagination} from 'kypo-common';
+import { KypoPaginatedResource } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
+import { Request } from 'kypo-sandbox-model';
+import { Observable, Subject, timer } from 'rxjs';
+import { retryWhen, switchMap } from 'rxjs/operators';
+import { PoolRequestsService } from './pool-requests.service';
 
 /**
  * Service extending pool request service of polling behaviour
  */
 export abstract class PoolRequestsPollingService extends PoolRequestsService {
-
   /**
    * Must be set up before polling starts
    */
@@ -55,11 +54,9 @@ export abstract class PoolRequestsPollingService extends PoolRequestsService {
   }
 
   private createPoll(): Observable<KypoPaginatedResource<Request>> {
-    return timer(this.pollPeriod, this.pollPeriod)
-      .pipe(
-        switchMap(_ => this.repeatLastGetAllRequest()),
-        retryWhen(_ => this.retryPolling$),
-      );
+    return timer(this.pollPeriod, this.pollPeriod).pipe(
+      switchMap((_) => this.repeatLastGetAllRequest()),
+      retryWhen((_) => this.retryPolling$)
+    );
   }
-
 }

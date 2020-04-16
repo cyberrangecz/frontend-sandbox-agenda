@@ -1,12 +1,11 @@
-import {SandboxDefinitionOverviewService} from '../../../services/sandbox-definition/sandbox-definition-overview.service';
-import {defer, of} from 'rxjs';
-import {KypoControlItem} from 'kypo-controls';
+import { KypoControlItem } from 'kypo-controls';
+import { defer, of } from 'rxjs';
+import { SandboxDefinitionOverviewService } from '../../../services/sandbox-definition/sandbox-definition-overview.service';
 
 /**
  * @dynamic
  */
 export class SandboxDefinitionOverviewControls {
-
   static readonly CREATE_ACTION_ID = 'create';
 
   /**
@@ -21,7 +20,7 @@ export class SandboxDefinitionOverviewControls {
         'primary',
         of(false),
         defer(() => service.create())
-      )
+      ),
     ];
   }
 }

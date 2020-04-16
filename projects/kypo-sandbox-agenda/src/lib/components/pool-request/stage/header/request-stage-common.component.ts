@@ -1,20 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {RequestStage} from 'kypo-sandbox-model';
-import {RequestStageState} from 'kypo-sandbox-model';
+import { Component, Input, OnInit } from '@angular/core';
+import { RequestStage } from 'kypo-sandbox-model';
+import { RequestStageState } from 'kypo-sandbox-model';
 
 @Component({
   selector: 'kypo-request-stage-common',
   templateUrl: './request-stage-common.component.html',
-  styleUrls: ['./request-stage-common.component.scss']
+  styleUrls: ['./request-stage-common.component.scss'],
 })
 export class RequestStageCommonComponent implements OnInit {
-
   @Input() stage: RequestStage;
   stageStates = RequestStageState;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

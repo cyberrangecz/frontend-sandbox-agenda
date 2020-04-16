@@ -1,37 +1,36 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {EMPTY, Observable, of} from 'rxjs';
-import {Request} from 'kypo-sandbox-model';
-import {catchError, mergeMap, take} from 'rxjs/operators';
-import {PoolRequestApi} from 'kypo-sandbox-api';
-import {SandboxErrorHandler} from '../client/sandbox-error.handler';
-import {SandboxNavigator} from '../client/sandbox-navigator.service';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { PoolRequestApi } from 'kypo-sandbox-api';
+import { Request } from 'kypo-sandbox-model';
+import { EMPTY, Observable, of } from 'rxjs';
+import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
   POOL_ALLOCATION_REQUEST_PATH,
   POOL_REQUEST_ID_SELECTOR,
   SANDBOX_ALLOCATION_UNIT_ID_SELECTOR,
-  SANDBOX_POOL_ID_SELECTOR
+  SANDBOX_POOL_ID_SELECTOR,
 } from '../../model/client/default-paths';
+import { SandboxErrorHandler } from '../client/sandbox-error.handler';
+import { SandboxNavigator } from '../client/sandbox-navigator.service';
 
 /**
  * Router data provider
  */
 @Injectable()
 export class PoolRequestResolver implements Resolve<Request> {
-
-  constructor(private api: PoolRequestApi,
-              private errorHandler: SandboxErrorHandler,
-              private navigator: SandboxNavigator,
-              private router: Router) {
-  }
+  constructor(
+    private api: PoolRequestApi,
+    private errorHandler: SandboxErrorHandler,
+    private navigator: SandboxNavigator,
+    private router: Router
+  ) {}
 
   /**
    * Retrieves a specific resource based on id provided in url. Navigates to a resource overview if no resource with such id exists.
    * @param route route snapshot
    * @param state router state snapshot
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<Request> | Promise<Request> | Request {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Request> | Promise<Request> | Request {
     if (!route.paramMap.has(SANDBOX_POOL_ID_SELECTOR)) {
       return this.navigateToPoolOverview();
     }
@@ -53,16 +52,15 @@ export class PoolRequestResolver implements Resolve<Request> {
       ? this.api.getAllocationRequest(allocationUnitId)
       : this.api.getCleanupRequest(allocationUnitId, requestId);
 
-    return request$
-      .pipe(
-        take(1),
-        mergeMap(request => request ? of(request) : this.navigateToPool(poolId)),
-        catchError(err => {
-          this.errorHandler.emit(err, 'Pool request resolver');
-          this.navigateToPool(poolId);
-          return EMPTY;
-        })
-      );
+    return request$.pipe(
+      take(1),
+      mergeMap((request) => (request ? of(request) : this.navigateToPool(poolId))),
+      catchError((err) => {
+        this.errorHandler.emit(err, 'Pool request resolver');
+        this.navigateToPool(poolId);
+        return EMPTY;
+      })
+    );
   }
 
   private navigateToPool(poolId: number): Observable<never> {

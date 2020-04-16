@@ -42,7 +42,11 @@ export abstract class SandboxNavigator {
    * @param sandboxAllocationUnitId id of the sandbox allocation unit associated with the request
    * @param requestId id of the request
    */
-  abstract toAllocationRequest(poolId: number | string, sandboxAllocationUnitId: number | string, requestId: number | string): string;
+  abstract toAllocationRequest(
+    poolId: number | string,
+    sandboxAllocationUnitId: number | string,
+    requestId: number | string
+  ): string;
 
   /**
    * Returns path to cleanup request detail page
@@ -50,6 +54,9 @@ export abstract class SandboxNavigator {
    * @param sandboxAllocationUnitId id of the sandbox allocation unit associated with the request
    * @param requestId id of the request
    */
-  abstract toCleanupRequest(poolId: number | string, sandboxAllocationUnitId: number | string, requestId: number | string): string;
-
+  abstract toCleanupRequest(
+    poolId: number | string,
+    sandboxAllocationUnitId: number | string,
+    requestId: number | string
+  ): string;
 }
