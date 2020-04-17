@@ -10,6 +10,10 @@ import { Observable } from 'rxjs';
  * You can use get methods to get paginated requests and other operations to modify data.
  */
 export abstract class PoolRequestsService extends KypoPaginatedResourceService<Request> {
+  protected constructor(pageSize: number) {
+    super(pageSize);
+  }
+
   /**
    * @param poolId id of a pool associated with requests
    * @param pagination requested pagination
