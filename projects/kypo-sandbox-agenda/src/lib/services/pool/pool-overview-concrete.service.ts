@@ -8,6 +8,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
 import { SandboxNotificationService } from '../client/sandbox-notification.service';
+import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
 import { PoolOverviewService } from './pool-overview.service';
 
 /**
@@ -21,12 +22,13 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   constructor(
     private poolApi: PoolApi,
     private sandboxApi: SandboxInstanceApi,
+    private context: SandboxAgendaContext,
     private router: Router,
     private navigator: SandboxNavigator,
     private notificationService: SandboxNotificationService,
     private errorHandler: SandboxErrorHandler
   ) {
-    super();
+    super(context.config.defaultPaginationSize);
   }
 
   /**
@@ -50,7 +52,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   }
 
   /**
-   * Starts a sandbox instance allocation, informs about the result and updates list of pools or handles an error
+   * Starts a sandbox instance allocation, inforoms about the result and updates list of pools or handles an error
    * @param pool a pool to be allocated with sandbox instances
    * @param count number of sandbox instances to be allocated
    */

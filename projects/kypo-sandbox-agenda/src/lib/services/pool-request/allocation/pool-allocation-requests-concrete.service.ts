@@ -16,10 +16,7 @@ import { PoolAllocationRequestsPollingService } from './pool-allocation-requests
  */
 @Injectable()
 export class PoolAllocationRequestsConcreteService extends PoolAllocationRequestsPollingService {
-  private manuallyUpdatedRequests$: BehaviorSubject<KypoPaginatedResource<Request>> = new BehaviorSubject(
-    this.initSubject()
-  );
-
+  private manuallyUpdatedRequests$: BehaviorSubject<KypoPaginatedResource<Request>>;
   constructor(
     private api: PoolRequestApi,
     private context: SandboxAgendaContext,
@@ -27,6 +24,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
     private errorHandler: SandboxErrorHandler
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
+    this.manuallyUpdatedRequests$ = new BehaviorSubject(this.initSubject(context.config.defaultPaginationSize));
     this.resource$ = merge(this.poll$, this.manuallyUpdatedRequests$.asObservable());
   }
 

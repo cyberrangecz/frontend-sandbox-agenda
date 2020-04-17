@@ -10,6 +10,10 @@ import { Observable } from 'rxjs';
  * You can use get methods to get paginated sandbox instances and other operations to modify data.
  */
 export abstract class SandboxInstanceService extends KypoPaginatedResourceService<SandboxInstance> {
+  protected constructor(pageSize: number) {
+    super(pageSize);
+  }
+
   /**
    * @param poolId id of a pool associated with sandbox instances
    * @param pagination requested pagination
