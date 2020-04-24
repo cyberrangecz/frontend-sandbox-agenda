@@ -1,0 +1,21 @@
+cdk-virtual-scroll-viewport {
+  width: 100%;
+  background-color: black;
+  color: gainsboro;
+  font-family: 'Source Code Pro', monospace!important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.row {
+  height: 20px;
+  padding: 0 10px;
+  width: 100%;
+  margin: 0;
+}

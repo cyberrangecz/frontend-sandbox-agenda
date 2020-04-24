@@ -22,7 +22,7 @@ export class SandboxDefinitionSelectComponent extends KypoBaseComponent implemen
   isLoading$: Observable<boolean>;
   hasError$: Observable<boolean>;
 
-  selected: SandboxDefinition;
+  selected: SandboxDefinition[];
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public preselected: SandboxDefinition,
@@ -31,7 +31,7 @@ export class SandboxDefinitionSelectComponent extends KypoBaseComponent implemen
     private definitionService: SandboxDefinitionOverviewService
   ) {
     super();
-    this.selected = preselected;
+    this.selected = [preselected];
     this.PAGE_SIZE = this.context.config.defaultPaginationSize;
   }
 
@@ -54,7 +54,7 @@ export class SandboxDefinitionSelectComponent extends KypoBaseComponent implemen
   }
 
   confirm() {
-    this.dialogRef.close(this.selected);
+    this.dialogRef.close(this.selected[0]);
   }
 
   cancel() {
@@ -65,7 +65,7 @@ export class SandboxDefinitionSelectComponent extends KypoBaseComponent implemen
    * Updated selected sandbox definition
    * @param selected selected sandbox definition
    */
-  onSelectionChange(selected: SandboxDefinition) {
+  onSelectionChange(selected: SandboxDefinition[]) {
     this.selected = selected;
   }
 }
