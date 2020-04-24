@@ -53,7 +53,7 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private getAnsibleDetail(stageId: number, outputPagination: KypoRequestedPagination): Observable<StageDetail> {
     if (!outputPagination) {
-      outputPagination = new KypoRequestedPagination(0, 200, '', '');
+      outputPagination = new KypoRequestedPagination(0, 500, '', '');
     }
     return zip(
       this.api.getAnsibleAllocationStage(stageId),
