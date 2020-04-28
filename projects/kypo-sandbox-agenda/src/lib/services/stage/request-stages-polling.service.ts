@@ -2,7 +2,7 @@ import { KypoPaginatedResource } from 'kypo-common';
 import { RequestStage } from 'kypo-sandbox-model';
 import { Request } from 'kypo-sandbox-model';
 import { merge, Observable, Subject, timer } from 'rxjs';
-import { retryWhen, switchMap } from 'rxjs/operators';
+import { retryWhen, switchMap, takeWhile } from 'rxjs/operators';
 import { RequestStagesService } from './request-stages.service';
 
 export abstract class RequestStagesPollingService extends RequestStagesService {
@@ -31,7 +31,16 @@ export abstract class RequestStagesPollingService extends RequestStagesService {
   protected createPoll(): Observable<KypoPaginatedResource<RequestStage>> {
     return timer(0, this.pollPeriod).pipe(
       switchMap((_) => this.repeatLastGetAllRequest()),
-      retryWhen((_) => this.retryPolling$)
+      retryWhen((_) => this.retryPolling$),
+      takeWhile((data) => !this.stagesFinished(data.elements) && !this.stageFailed(data.elements))
     );
+  }
+
+  private stagesFinished(data: RequestStage[]): boolean {
+    return data.every((stage) => stage.hasFinished());
+  }
+
+  private stageFailed(data: RequestStage[]): boolean {
+    return data.some((stage) => stage.hasFailed()) && data.some((stage) => stage.isInQueue());
   }
 }
