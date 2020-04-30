@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import {
+  CsirtMuConfirmationDialogComponent,
+  CsirtMuConfirmationDialogConfig,
+  CsirtMuDialogResultEnum,
+} from 'csirt-mu-common';
 import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
 import { PoolApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { Pool } from 'kypo-sandbox-model';
-import { from, Observable } from 'rxjs';
+import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
@@ -21,6 +27,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
 
   constructor(
     private poolApi: PoolApi,
+    private dialog: MatDialog,
     private sandboxApi: SandboxInstanceApi,
     private context: SandboxAgendaContext,
     private router: Router,
@@ -77,12 +84,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    * @param pool a pool to be deleted
    */
   delete(pool: Pool): Observable<any> {
-    return this.poolApi.deletePool(pool.id).pipe(
-      tap(
-        (_) => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
-        (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`)
-      ),
-      switchMap((_) => this.getAll(this.lastPagination))
+    return this.displayConfirmationDialog(pool, 'Delete').pipe(
+      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool) : EMPTY))
     );
   }
 
@@ -91,12 +94,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    * @param pool a pool to be cleared
    */
   clear(pool: Pool): Observable<any> {
-    return this.poolApi.clearPool(pool.id).pipe(
-      tap(
-        (_) => this.notificationService.emit('success', `Pool ${pool.id} was cleared`),
-        (err) => this.errorHandler.emit(err, `Clearing pool ${pool.id}`)
-      ),
-      switchMap((_) => this.getAll(this.lastPagination))
+    return this.displayConfirmationDialog(pool, 'Clear').pipe(
+      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToClear(pool) : EMPTY))
     );
   }
 
@@ -115,6 +114,44 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   }
 
   unlock(pool: Pool): Observable<any> {
+    return this.displayConfirmationDialog(pool, 'Unlock').pipe(
+      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToUnlock(pool) : EMPTY))
+    );
+  }
+
+  private displayConfirmationDialog(pool: Pool, action: string): Observable<CsirtMuDialogResultEnum> {
+    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
+      data: new CsirtMuConfirmationDialogConfig(
+        `${action} Pool`,
+        `Do you want to ${action} pool "${pool.id}"?`,
+        'Cancel',
+        action
+      ),
+    });
+    return dialogRef.afterClosed();
+  }
+
+  private callApiToDelete(pool: Pool): Observable<any> {
+    return this.poolApi.deletePool(pool.id).pipe(
+      tap(
+        (_) => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
+        (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`)
+      ),
+      switchMap((_) => this.getAll(this.lastPagination))
+    );
+  }
+
+  private callApiToClear(pool: Pool): Observable<any> {
+    return this.poolApi.clearPool(pool.id).pipe(
+      tap(
+        (_) => this.notificationService.emit('success', `Pool ${pool.id} was cleared`),
+        (err) => this.errorHandler.emit(err, `Clearing pool ${pool.id}`)
+      ),
+      switchMap((_) => this.getAll(this.lastPagination))
+    );
+  }
+
+  private callApiToUnlock(pool: Pool): Observable<any> {
     return this.poolApi.unlockPool(pool.id, pool.lockId).pipe(
       tap(
         (_) => this.notificationService.emit('success', `Pool ${pool.id} was unlocked`),

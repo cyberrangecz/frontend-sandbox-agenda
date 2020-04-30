@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SandboxPoolOverviewComponent } from '../../../../../kypo-sandbox-agenda/src/lib/components/pool/overview/sandbox-pool-overview.component';
 import {
-  PoolBreadcrumbResolver,
   SANDBOX_POOL_ID_SELECTOR,
   SANDBOX_POOL_NEW_PATH,
-  SandboxPoolOverviewComponent,
-} from 'kypo-sandbox-agenda';
+} from '../../../../../kypo-sandbox-agenda/src/lib/model/client/default-paths';
+import { PoolBreadcrumbResolver } from '../../../../../kypo-sandbox-agenda/src/lib/services/resolvers/pool-breadcrumb-resolver.service';
 
 const routes: Routes = [
   {
