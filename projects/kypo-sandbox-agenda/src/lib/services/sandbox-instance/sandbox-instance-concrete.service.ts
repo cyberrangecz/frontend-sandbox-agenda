@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { KypoRequestedPagination } from 'kypo-common';
+import {
+  CsirtMuConfirmationDialogComponent,
+  CsirtMuConfirmationDialogConfig,
+  CsirtMuDialogResultEnum,
+} from 'csirt-mu-common';
 import { KypoPaginatedResource } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
 import { PoolRequestApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { SandboxInstance } from 'kypo-sandbox-model';
-import { from, Observable } from 'rxjs';
+import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
@@ -25,6 +31,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     private sandboxApi: SandboxInstanceApi,
     private requestApi: PoolRequestApi,
     private router: Router,
+    private dialog: MatDialog,
     private navigator: SandboxNavigator,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
@@ -60,12 +67,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param sandboxInstance a sandbox instance to be deleted
    */
   delete(sandboxInstance: SandboxInstance): Observable<any> {
-    return this.requestApi.createCleanupRequest(sandboxInstance.allocationUnitId).pipe(
-      tap(
-        (_) => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was deleted`),
-        (err) => this.errorHandler.emit(err, `Deleting sandbox ${sandboxInstance.id}`)
-      ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+    return this.displayConfirmationDialog(sandboxInstance, 'Delete').pipe(
+      switchMap((result) =>
+        result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxInstance) : EMPTY
+      )
     );
   }
 
@@ -89,12 +94,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param sandboxInstance a sandbox instance to be unlocked
    */
   unlock(sandboxInstance: SandboxInstance): Observable<any> {
-    return this.sandboxApi.unlockSandbox(sandboxInstance.id, sandboxInstance.lockId).pipe(
-      tap(
-        (_) => this.notificationService.emit('success', `Sandbox${sandboxInstance.id} was unlocked`),
-        (err) => this.errorHandler.emit(err, `Unlocking sandbox ${sandboxInstance.id}`)
-      ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+    return this.displayConfirmationDialog(sandboxInstance, 'Unlock').pipe(
+      switchMap((result) =>
+        result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToUnlock(sandboxInstance) : EMPTY
+      )
     );
   }
 
@@ -115,5 +118,40 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
 
   showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<any> {
     return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, sandboxInstance.id)]));
+  }
+
+  private displayConfirmationDialog(
+    sandboxInstance: SandboxInstance,
+    action: string
+  ): Observable<CsirtMuDialogResultEnum> {
+    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
+      data: new CsirtMuConfirmationDialogConfig(
+        `${action} sandbox`,
+        `Do you want to ${action} sandbox ${sandboxInstance.id}"?`,
+        'Cancel',
+        action
+      ),
+    });
+    return dialogRef.afterClosed();
+  }
+
+  private callApiToUnlock(sandboxInstance: SandboxInstance): Observable<any> {
+    return this.sandboxApi.unlockSandbox(sandboxInstance.id, sandboxInstance.lockId).pipe(
+      tap(
+        (_) => this.notificationService.emit('success', `Sandbox${sandboxInstance.id} was unlocked`),
+        (err) => this.errorHandler.emit(err, `Unlocking sandbox ${sandboxInstance.id}`)
+      ),
+      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+    );
+  }
+
+  private callApiToDelete(sandboxInstance: SandboxInstance): Observable<any> {
+    return this.requestApi.createCleanupRequest(sandboxInstance.allocationUnitId).pipe(
+      tap(
+        (_) => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was deleted`),
+        (err) => this.errorHandler.emit(err, `Deleting sandbox ${sandboxInstance.id}`)
+      ),
+      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+    );
   }
 }

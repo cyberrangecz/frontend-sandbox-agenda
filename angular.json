@@ -110,7 +110,6 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "kypo-sandbox-agenda-example:build",
-            "ssl": true
           },
           "configurations": {
             "production": {

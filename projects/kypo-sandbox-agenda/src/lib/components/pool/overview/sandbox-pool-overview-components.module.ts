@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { KypoControlsModule } from 'kypo-controls';
 import { Kypo2TableModule } from 'kypo2-table';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
@@ -17,7 +18,7 @@ import { SandboxPoolOverviewComponent } from './sandbox-pool-overview.component'
  */
 @NgModule({
   declarations: [SandboxPoolOverviewComponent],
-  imports: [CommonModule, Kypo2TableModule, KypoControlsModule],
+  imports: [CommonModule, Kypo2TableModule, KypoControlsModule, MatDialogModule],
   providers: [
     PoolResolver,
     PoolBreadcrumbResolver,

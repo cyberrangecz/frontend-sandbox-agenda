@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SandboxErrorHandler, SandboxNotificationService } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler } from '../../../../kypo-sandbox-agenda/src/lib/services/client/sandbox-error.handler';
+import { SandboxNotificationService } from '../../../../kypo-sandbox-agenda/src/lib/services/client/sandbox-notification.service';
 import { ClientErrorHandlerService } from '../services/client-error-handler.service';
 import { ClientNotificationService } from '../services/client-notification.service';
 
