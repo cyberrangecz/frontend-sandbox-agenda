@@ -55,7 +55,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
    * @param request a request to be cancelled
    */
   cancel(request: Request): Observable<any> {
-    return this.displayConfirmationDialog(request, 'Cancel').pipe(
+    return this.displayConfirmationDialog(request, 'Confirm').pipe(
       switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
     );
   }
