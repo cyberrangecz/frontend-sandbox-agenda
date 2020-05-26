@@ -1,6 +1,5 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { asyncData, KypoPaginatedResource, KypoPagination } from 'kypo-common';
-import { SandboxErrorHandlerService } from 'kypo-sandbox-agenda';
 import { StagesApi } from 'kypo-sandbox-api';
 import { AnsibleAllocationStage } from 'kypo-sandbox-model';
 import { AllocationRequest, AllocationRequestStage } from 'kypo-sandbox-model';
@@ -8,11 +7,12 @@ import { OpenStackAllocationStage } from 'kypo-sandbox-model';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { SandboxAgendaConfig } from '../../model/client/sandbox-agenda-config';
+import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
 import { RequestAllocationStagesPollingService } from './request-allocation-stages-polling.service';
 
-describe('RequestStagesPollingService', () => {
-  let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandlerService>;
+describe('RequestAllocationStagesPollingService', () => {
+  let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let apiSpy: jasmine.SpyObj<StagesApi>;
   let service: RequestAllocationStagesPollingService;
   const context = new SandboxAgendaContext(new SandboxAgendaConfig());
@@ -20,13 +20,13 @@ describe('RequestStagesPollingService', () => {
   context.config.defaultPaginationSize = 10;
 
   beforeEach(async(() => {
-    errorHandlerSpy = jasmine.createSpyObj('SandboxErrorHandlerService', ['emit']);
+    errorHandlerSpy = jasmine.createSpyObj('SandboxErrorHandler', ['emit']);
     apiSpy = jasmine.createSpyObj('StagesApi', ['getAllocationStages']);
     TestBed.configureTestingModule({
       providers: [
         RequestAllocationStagesPollingService,
         { provide: StagesApi, useValue: apiSpy },
-        { provide: SandboxErrorHandlerService, useValue: errorHandlerSpy },
+        { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
         { provide: SandboxAgendaContext, useValue: context },
       ],
     });
