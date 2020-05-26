@@ -32,7 +32,7 @@ export abstract class RequestStagesPollingService extends RequestStagesService {
     return timer(0, this.pollPeriod).pipe(
       switchMap((_) => this.repeatLastGetAllRequest()),
       retryWhen((_) => this.retryPolling$),
-      takeWhile((data) => !this.stagesFinished(data.elements) && !this.stageFailed(data.elements))
+      takeWhile((data) => !this.stagesFinished(data.elements) && !this.stageFailed(data.elements), true)
     );
   }
 
@@ -41,6 +41,6 @@ export abstract class RequestStagesPollingService extends RequestStagesService {
   }
 
   private stageFailed(data: RequestStage[]): boolean {
-    return data.some((stage) => stage.hasFailed()) && data.some((stage) => stage.isInQueue());
+    return data.some((stage) => stage.hasFailed());
   }
 }

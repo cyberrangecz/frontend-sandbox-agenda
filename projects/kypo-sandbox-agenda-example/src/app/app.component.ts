@@ -53,13 +53,8 @@ export class AppComponent {
   buildNav(user: User): AgendaContainer[] {
     const containers: AgendaContainer[] = [];
     const agendas: Agenda[] = [];
-    const roles = user.roles;
-    if (roles.some((role) => role.roleType === 'ROLE_KYPO.SANDBOX_SERVICE_PROJECT_DESIGNER')) {
-      agendas.push(new Agenda('Definition', 'sandbox-definition'));
-    }
-    if (roles.some((role) => role.roleType === 'ROLE_KYPO.SANDBOX_SERVICE_PROJECT_ORGANIZER')) {
-      agendas.push(new Agenda('Pool', 'pool'));
-    }
+    agendas.push(new Agenda('Definition', 'sandbox-definition'));
+    agendas.push(new Agenda('Pool', 'pool'));
     if (agendas.length > 0) {
       containers.push(new AgendaContainer('Sandboxes', agendas));
     }
