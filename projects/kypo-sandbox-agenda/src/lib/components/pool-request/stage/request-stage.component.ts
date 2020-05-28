@@ -45,7 +45,7 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
   ngOnChanges(changes: SimpleChanges): void {
     if ('stage' in changes) {
       this.resolveStageLogo();
-      this.resolveDetailDisabled();
+      this.resolveStageDetailPanelState();
     }
     if ('stageDetail' in changes) {
       this.stageDetailIsLoading = false;
@@ -76,13 +76,11 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
     }
   }
 
-  private resolveDetailDisabled() {
+  private resolveStageDetailPanelState() {
     if (this.stage.isInQueue()) {
       this.detailDisabled = true;
-      return;
-    }
-    if (this.stage instanceof CleanupRequestStage && this.stage.hasFinished()) {
-      this.detailDisabled = true;
+    } else {
+      this.detailDisabled = this.stage instanceof CleanupRequestStage && this.stage.hasFinished();
     }
   }
 }
