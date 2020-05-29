@@ -1,38 +1,59 @@
 import { async, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { KypoPaginatedResource } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
 import { KypoPagination } from 'kypo-common';
 import { asyncData } from 'kypo-common';
+import { KypoRequestedPagination } from 'kypo-common';
 import { SandboxDefinitionApi } from 'kypo-sandbox-api';
 import { SandboxDefinition } from 'kypo-sandbox-model';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
+import {
+  createContextSpy,
+  createDefinitionApiSpy,
+  createErrorHandlerSpy,
+  createMatDialogSpy,
+  createNavigatorSpy,
+  createNotificationSpy,
+  createRouterSpy,
+} from '../../testing/testing-commons';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
+import { SandboxNavigator } from '../client/sandbox-navigator.service';
 import { SandboxNotificationService } from '../client/sandbox-notification.service';
+import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
 import { SandboxDefinitionOverviewConcreteService } from './sandbox-definition-overview-concrete.service';
 
 describe('SandboxDefinitionOverviewConcreteService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let apiSpy: jasmine.SpyObj<SandboxDefinitionApi>;
-  let alertHandlerSpy: jasmine.SpyObj<SandboxNotificationService>;
+  let notificationSpy: jasmine.SpyObj<SandboxNotificationService>;
+  let navigatorSpy: jasmine.SpyObj<SandboxNavigator>;
+  let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let routerSpy: jasmine.SpyObj<Router>;
   let service: SandboxDefinitionOverviewConcreteService;
 
   beforeEach(async(() => {
-    errorHandlerSpy = jasmine.createSpyObj('SandboxErrorHandlerService', ['emit']);
-    alertHandlerSpy = jasmine.createSpyObj('SandboxAlertService', ['emit']);
-    dialogSpy = jasmine.createSpyObj('MatDialog', ['open']);
-    apiSpy = jasmine.createSpyObj('SandboxDefinitionApi', ['getAll', 'delete', 'add']);
+    errorHandlerSpy = createErrorHandlerSpy();
+    notificationSpy = createNotificationSpy();
+    navigatorSpy = createNavigatorSpy();
+    contextSpy = createContextSpy();
+    dialogSpy = createMatDialogSpy();
+    apiSpy = createDefinitionApiSpy();
+    routerSpy = createRouterSpy();
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       providers: [
         SandboxDefinitionOverviewConcreteService,
         { provide: MatDialog, useValue: dialogSpy },
+        { provide: Router, useValue: routerSpy },
         { provide: SandboxDefinitionApi, useValue: apiSpy },
-        { provide: SandboxNotificationService, useValue: alertHandlerSpy },
+        { provide: SandboxNotificationService, useValue: notificationSpy },
+        { provide: SandboxNavigator, useValue: navigatorSpy },
+        { provide: SandboxAgendaContext, useValue: contextSpy },
         { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
       ],
     });

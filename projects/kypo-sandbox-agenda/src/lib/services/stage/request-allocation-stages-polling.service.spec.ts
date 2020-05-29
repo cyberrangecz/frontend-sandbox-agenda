@@ -7,6 +7,7 @@ import { OpenStackAllocationStage } from 'kypo-sandbox-model';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { SandboxAgendaConfig } from '../../model/client/sandbox-agenda-config';
+import { createContextSpy, createErrorHandlerSpy, createStagesApiSpy } from '../../testing/testing-commons';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
 import { RequestAllocationStagesPollingService } from './request-allocation-stages-polling.service';
@@ -14,20 +15,19 @@ import { RequestAllocationStagesPollingService } from './request-allocation-stag
 describe('RequestAllocationStagesPollingService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let apiSpy: jasmine.SpyObj<StagesApi>;
+  let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
   let service: RequestAllocationStagesPollingService;
-  const context = new SandboxAgendaContext(new SandboxAgendaConfig());
-  context.config.pollingPeriod = 5000;
-  context.config.defaultPaginationSize = 10;
 
   beforeEach(async(() => {
-    errorHandlerSpy = jasmine.createSpyObj('SandboxErrorHandler', ['emit']);
-    apiSpy = jasmine.createSpyObj('StagesApi', ['getAllocationStages']);
+    errorHandlerSpy = createErrorHandlerSpy();
+    apiSpy = createStagesApiSpy();
+    contextSpy = createContextSpy();
     TestBed.configureTestingModule({
       providers: [
         RequestAllocationStagesPollingService,
         { provide: StagesApi, useValue: apiSpy },
         { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
-        { provide: SandboxAgendaContext, useValue: context },
+        { provide: SandboxAgendaContext, useValue: contextSpy },
       ],
     });
     service = TestBed.inject(RequestAllocationStagesPollingService);
@@ -86,7 +86,7 @@ describe('RequestAllocationStagesPollingService', () => {
   });
 
   it('should not start polling without calling startPolling', fakeAsync(() => {
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(0);
   }));
 
@@ -117,7 +117,7 @@ describe('RequestAllocationStagesPollingService', () => {
     service.startPolling(request);
     const subscription = service.resource$.subscribe();
     assertPoll(3);
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(4);
     subscription.unsubscribe();
   }));
@@ -142,9 +142,9 @@ describe('RequestAllocationStagesPollingService', () => {
     service.startPolling(request);
     const subscription = service.resource$.subscribe();
     assertPoll(3);
-    tick(context.config.pollingPeriod);
+    tick(contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(4);
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(4);
     service.getAll(request).subscribe();
     expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(5);
@@ -162,7 +162,7 @@ describe('RequestAllocationStagesPollingService', () => {
   function assertPoll(times: number, initialHaveBeenCalledTimes: number = 1) {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
-      tick(context.config.pollingPeriod);
+      tick(contextSpy.config.pollingPeriod);
       calledTimes = calledTimes + 1;
       expect(apiSpy.getAllocationStages).toHaveBeenCalledTimes(calledTimes);
     }

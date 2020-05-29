@@ -1,13 +1,21 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { KypoRequestedPagination } from 'kypo-common';
+import { MatDialog } from '@angular/material/dialog';
+import { CsirtMuDialogResultEnum } from 'csirt-mu-common';
 import { asyncData } from 'kypo-common';
 import { KypoPaginatedResource } from 'kypo-common';
 import { KypoPagination } from 'kypo-common';
 import { PoolRequestApi } from 'kypo-sandbox-api';
 import { AllocationRequest } from 'kypo-sandbox-model';
-import { throwError } from 'rxjs';
-import { skip } from 'rxjs/operators';
-import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
+import { of, throwError } from 'rxjs';
+import { skip, take } from 'rxjs/operators';
+import {
+  createContextSpy,
+  createErrorHandlerSpy,
+  createMatDialogSpy,
+  createNotificationSpy,
+  createPagination,
+  createRequestApiSpy,
+} from '../../../testing/testing-commons';
 import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
 import { SandboxNotificationService } from '../../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
@@ -17,22 +25,23 @@ describe('PoolAllocationRequestsPollingService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let notificationSpy: jasmine.SpyObj<SandboxNotificationService>;
   let apiSpy: jasmine.SpyObj<PoolRequestApi>;
+  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
+
   let service: PoolAllocationRequestsConcreteService;
 
-  const context = new SandboxAgendaContext(new SandboxAgendaConfig());
-  context.config.pollingPeriod = 5000;
-  context.config.defaultPaginationSize = 10;
-
   beforeEach(async(() => {
-    errorHandlerSpy = jasmine.createSpyObj('ErrorHandlerService', ['emit']);
-    notificationSpy = jasmine.createSpyObj('SandboxNotificationService', ['emit']);
-    apiSpy = jasmine.createSpyObj('PoolRequestApi', ['getAllocationRequests', 'cancelAllocationRequest']);
-
+    errorHandlerSpy = createErrorHandlerSpy();
+    notificationSpy = createNotificationSpy();
+    apiSpy = createRequestApiSpy();
+    contextSpy = createContextSpy();
+    dialogSpy = createMatDialogSpy();
     TestBed.configureTestingModule({
       providers: [
         PoolAllocationRequestsConcreteService,
         { provide: PoolRequestApi, useValue: apiSpy },
-        { provide: SandboxAgendaContext, useValue: context },
+        { provide: MatDialog, useValue: dialogSpy },
+        { provide: SandboxAgendaContext, useValue: contextSpy },
         { provide: SandboxNotificationService, useValue: notificationSpy },
         { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
       ],
@@ -44,83 +53,94 @@ describe('PoolAllocationRequestsPollingService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should load data from facade (called once)', (done) => {
+  it('should call api to get allocation requests', (done) => {
     const pagination = createPagination();
     apiSpy.getAllocationRequests.and.returnValue(asyncData(null));
 
-    service.getAll(0, pagination).subscribe((_) => done(), fail);
-    expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
-  });
-
-  it('should emit next value on update (requests)', (done) => {
-    const pagination = createPagination();
-    const mockData = createMock();
-    apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
-
-    service.resource$.pipe(skip(1)).subscribe((emitted) => {
-      expect(emitted).toBe(mockData);
-      done();
-    }, fail);
-    service.getAll(0, pagination).subscribe((_) => _, fail);
-  });
-
-  it('should call error handler on err', (done) => {
-    const pagination = createPagination();
-    apiSpy.getAllocationRequests.and.returnValue(throwError(null));
-
-    service.getAll(0, pagination).subscribe(
-      (_) => fail,
-      (_) => {
-        expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-        done();
-      }
-    );
-  });
-
-  it('should emit hasError observable on err', (done) => {
-    const pagination = createPagination();
-    apiSpy.getAllocationRequests.and.returnValue(throwError(null));
-    service.hasError$
-      .pipe(
-        skip(2) // we ignore initial value and value emitted before the call is made
-      )
+    service
+      .getAll(0, pagination)
+      .pipe(take(1))
       .subscribe(
-        (hasError) => {
-          expect(hasError).toBeTruthy();
+        (_) => {
+          expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
           done();
         },
         (_) => fail
       );
-    service.getAll(0, pagination).subscribe(
-      (_) => fail,
-      (_) => _
+  });
+
+  it('should emit next value when data received from api', (done) => {
+    const pagination = createPagination();
+    const mockData = createMock();
+    apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
+
+    service.resource$.pipe(skip(1), take(1)).subscribe(
+      (emitted) => {
+        expect(emitted).toBe(mockData);
+        done();
+      },
+      (_) => fail()
     );
+    service.getAll(0, pagination).subscribe();
   });
 
-  it('should call facade on cancel', (done) => {
+  it('should call error handler on err', (done) => {
+    const pagination = createPagination();
+    apiSpy.getAllocationRequests.and.returnValue(throwError({ status: 400 }));
+
+    service
+      .getAll(0, pagination)
+      .pipe(take(1))
+      .subscribe(
+        (_) => fail(),
+        (_) => {
+          expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
+          done();
+        }
+      );
+  });
+
+  it('should open dialog and call api if confirmed on cancel', (done) => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.CONFIRMED) } as any);
     const mockData = createMock();
     const request = new AllocationRequest();
     request.id = 0;
     apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
     apiSpy.cancelAllocationRequest.and.returnValue(asyncData(null));
 
-    service.cancel(request).subscribe((_) => {
-      expect(apiSpy.cancelAllocationRequest).toHaveBeenCalledTimes(1);
-      done();
-    });
+    service
+      .cancel(request)
+      .pipe(take(1))
+      .subscribe(
+        (_) => {
+          expect(dialogSpy.open).toHaveBeenCalledTimes(1);
+          expect(apiSpy.cancelAllocationRequest).toHaveBeenCalledTimes(1);
+          done();
+        },
+        (_) => fail()
+      );
   });
 
-  it('should update the data on cancel', (done) => {
+  it('should open dialog and not call api if dialog dismissed on cancel', (done) => {
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.DISMISSED) } as any);
     const mockData = createMock();
     const request = new AllocationRequest();
     request.id = 0;
     apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
     apiSpy.cancelAllocationRequest.and.returnValue(asyncData(null));
 
-    service.cancel(request).subscribe((_) => {
-      expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
-      done();
-    });
+    service
+      .cancel(request)
+      .pipe(take(1))
+      .subscribe(
+        (_) => fail(),
+        (_) => fail(),
+        () => {
+          expect(dialogSpy.open).toHaveBeenCalledTimes(1);
+          expect(apiSpy.cancelAllocationRequest).toHaveBeenCalledTimes(0);
+          done();
+        }
+      );
   });
 
   it('should start polling', fakeAsync(() => {
@@ -134,11 +154,15 @@ describe('PoolAllocationRequestsPollingService', () => {
 
   it('should stop polling on error', fakeAsync(() => {
     const mockData = createMock();
-    apiSpy.getAllocationRequests.and.returnValues(asyncData(mockData), asyncData(mockData), throwError(null)); // throw error on third call
+    apiSpy.getAllocationRequests.and.returnValues(
+      asyncData(mockData),
+      asyncData(mockData),
+      throwError({ status: 400 })
+    ); // throw error on third call
 
     const subscription = service.resource$.subscribe();
     assertPoll(3);
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
     subscription.unsubscribe();
   }));
@@ -149,7 +173,7 @@ describe('PoolAllocationRequestsPollingService', () => {
     apiSpy.getAllocationRequests.and.returnValues(
       asyncData(mockData),
       asyncData(mockData),
-      throwError(null),
+      throwError({ status: 400 }),
       asyncData(mockData),
       asyncData(mockData),
       asyncData(mockData)
@@ -158,19 +182,15 @@ describe('PoolAllocationRequestsPollingService', () => {
     const subscription = service.resource$.subscribe();
     expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(0);
     assertPoll(3);
-    tick(context.config.pollingPeriod);
+    tick(contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
     service.getAll(0, pagination).subscribe();
     expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(4);
     assertPoll(3, 4);
     subscription.unsubscribe();
   }));
-
-  function createPagination() {
-    return new KypoRequestedPagination(1, 5, '', '');
-  }
 
   function createMock() {
     return new KypoPaginatedResource([], new KypoPagination(1, 0, 5, 5, 1));
@@ -179,7 +199,7 @@ describe('PoolAllocationRequestsPollingService', () => {
   function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
-      tick(context.config.pollingPeriod);
+      tick(contextSpy.config.pollingPeriod);
       calledTimes = calledTimes + 1;
       expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(calledTimes);
     }
