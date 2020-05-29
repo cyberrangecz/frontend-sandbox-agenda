@@ -14,13 +14,13 @@ import { RequestStageType } from 'kypo-sandbox-model';
 })
 export class RequestStageDetailComponent extends KypoBaseComponent implements OnInit {
   @Input() stage: RequestStage;
-  @Output() fetchAnsibleOutput: EventEmitter<KypoRequestedPagination> = new EventEmitter();
+  @Output() fetchStageDetail: EventEmitter<KypoRequestedPagination> = new EventEmitter();
 
   stageTypes = RequestStageType;
 
   ngOnInit() {}
 
-  onFetchAnsibleOutput(pagination: KypoRequestedPagination) {
-    this.fetchAnsibleOutput.emit(pagination);
+  onFetchStageDetail(pagination: KypoRequestedPagination) {
+    this.fetchStageDetail.emit(pagination);
   }
 }

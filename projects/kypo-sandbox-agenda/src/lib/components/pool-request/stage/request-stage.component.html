@@ -12,7 +12,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>Stage detail</mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngIf="!stageDetailIsLoading else stageOutputLoading">
+      <div *ngIf="!stageDetailIsLoading else stageDetailLoading">
         <div *ngIf="stageDetail?.hasError" class="error">
           <p class="error">We have some trouble loading the data. Please try again.</p>
           <button mat-icon-button color="primary" (click)="onStageDetailEvent(true)">
@@ -20,22 +20,21 @@
           </button>
         </div>
         <div *ngIf="!stageDetail?.hasError">
-          <kypo-request-stage-detail *ngIf="stageDetail else noStageOutput"
+          <kypo-request-stage-detail *ngIf="stageDetail else noStageDetail"
                                      [stage]="stageDetail?.stage"
-                                     (fetchAnsibleOutput)="onFetchAnsibleOutput($event)">
+                                     (fetchStageDetail)="onFetchStageDetail($event)">
           </kypo-request-stage-detail>
-          <ng-template #noStageOutput>
-            <h3>Stage has no output</h3>
+          <ng-template #noStageDetail>
+            <h3>Stage has no detail</h3>
           </ng-template>
         </div>
 
       </div>
-      <ng-template #stageOutputLoading>
+      <ng-template #stageDetailLoading>
         <div class="loading">
           <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
         </div>
       </ng-template>
-
     </mat-expansion-panel>
   </mat-card-content>
 </mat-card>

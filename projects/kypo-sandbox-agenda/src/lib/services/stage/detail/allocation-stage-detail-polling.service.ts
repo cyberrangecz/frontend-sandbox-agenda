@@ -51,18 +51,18 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
     );
   }
 
-  private getAnsibleDetail(stageId: number, outputPagination: KypoRequestedPagination): Observable<StageDetail> {
-    if (!outputPagination) {
-      outputPagination = new KypoRequestedPagination(0, 500, '', '');
+  private getAnsibleDetail(stageId: number, pagination: KypoRequestedPagination): Observable<StageDetail> {
+    if (!pagination) {
+      pagination = new KypoRequestedPagination(0, 500, '', '');
     }
     return zip(
       this.api.getAnsibleAllocationStage(stageId),
-      this.api.getAnsibleAllocationStageOutput(stageId, outputPagination)
+      this.api.getAnsibleAllocationStageOutput(stageId, pagination)
     ).pipe(
       map((results) => {
         results[0].output = results[1];
         const stageDetail = new StageDetail(results[0]);
-        stageDetail.requestedPagination = outputPagination;
+        stageDetail.requestedPagination = pagination;
         return stageDetail;
       })
     );

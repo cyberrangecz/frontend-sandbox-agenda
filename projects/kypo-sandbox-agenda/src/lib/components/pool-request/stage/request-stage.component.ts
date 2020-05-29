@@ -34,7 +34,7 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
   @Input() stageDetail: StageDetail;
   @Output() stageDetailEvent: EventEmitter<StageDetailEvent> = new EventEmitter();
 
-  @Output() fetchAnsibleOutput: EventEmitter<StageDetail> = new EventEmitter();
+  @Output() fetchStageDetail: EventEmitter<StageDetail> = new EventEmitter();
 
   stageDetailIsLoading = false;
   logoSrc: string;
@@ -63,9 +63,9 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
     );
   }
 
-  onFetchAnsibleOutput(requestedPagination: KypoRequestedPagination) {
+  onFetchStageDetail(requestedPagination: KypoRequestedPagination) {
     this.stageDetail.requestedPagination = requestedPagination;
-    this.fetchAnsibleOutput.emit(this.stageDetail);
+    this.fetchStageDetail.emit(this.stageDetail);
   }
 
   private resolveStageLogo() {

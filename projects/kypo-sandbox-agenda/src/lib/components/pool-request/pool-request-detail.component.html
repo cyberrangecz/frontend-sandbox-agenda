@@ -9,9 +9,9 @@
     <div *ngIf="stages.length > 0 else noStages">
       <kypo-request-stage *ngFor="let stage of stages; trackBy: trackByFn; let i = index;"
                           [stage]="stage"
-                          [stageDetail]="getStageDetail(stage.id)"
+                          [stageDetail]="(stageDetails$ | async)[getStageDetailIndex(stage.id)]"
                           (stageDetailEvent)="onStageDetailEvent($event)"
-                          (fetchAnsibleOutput)="onFetchAnsibleOutput($event)">
+                          (fetchStageDetail)="onFetchStageDetail($event)">
       </kypo-request-stage>
     </div>
     <ng-template #noStages>

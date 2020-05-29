@@ -23,10 +23,11 @@ import { RequestStagesPollingService } from '../../services/stage/request-stages
 export class PoolRequestDetailComponent extends KypoBaseComponent implements OnInit {
   request$: Observable<Request>;
   stages$: Observable<RequestStage[]>;
+  stageDetails$: Observable<StageDetail[]>;
   hasError$: Observable<boolean>;
 
   private request: Request;
-  private stageDetails: StageDetail[];
+  private lastStageDetails: StageDetail[] = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -46,6 +47,10 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
    */
   trackByFn(index: number, item: RequestStage) {
     return item.id;
+  }
+
+  getStageDetailIndex(id: number): number {
+    return this.lastStageDetails.findIndex((stageDetail) => stageDetail.stage.id === id);
   }
 
   /**
@@ -73,19 +78,11 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
     }
   }
 
-  onFetchAnsibleOutput(stageDetail: StageDetail) {
+  onFetchStageDetail(stageDetail: StageDetail) {
     this.stageDetailService
       .add(stageDetail.stage, stageDetail.requestedPagination)
       .pipe(takeWhile((_) => this.isAlive))
       .subscribe();
-  }
-
-  /**
-   * Gets details for specified stage
-   * @param id id of stage which detail should be retrieved
-   */
-  getStageDetail(id: number): StageDetail {
-    return this.stageDetails.find((stageDetail) => stageDetail.stage.id === id);
   }
 
   private init() {
@@ -107,8 +104,7 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
     this.stages$ = this.requestStagesService.resource$.pipe(map((paginatedStages) => paginatedStages.elements));
 
     this.hasError$ = this.requestStagesService.hasError$;
-    this.stageDetailService.stageDetails$
-      .pipe(takeWhile((_) => this.isAlive))
-      .subscribe((stageDetails) => (this.stageDetails = stageDetails));
+    this.stageDetails$ = this.stageDetailService.stageDetails$.pipe(takeWhile((_) => this.isAlive));
+    this.stageDetails$.subscribe((stageDetails) => (this.lastStageDetails = stageDetails));
   }
 }
