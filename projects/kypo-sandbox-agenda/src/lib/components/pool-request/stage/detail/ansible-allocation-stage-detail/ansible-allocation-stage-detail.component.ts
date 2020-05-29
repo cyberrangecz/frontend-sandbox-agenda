@@ -19,7 +19,7 @@ import { AnsibleAllocationStage } from 'kypo-sandbox-model';
 })
 export class AnsibleAllocationStageDetailComponent extends KypoBaseComponent implements OnInit, OnChanges {
   @Input() stageDetail: AnsibleAllocationStage;
-  @Output() fetchAnsibleOutput: EventEmitter<KypoRequestedPagination> = new EventEmitter();
+  @Output() fetchStageDetail: EventEmitter<KypoRequestedPagination> = new EventEmitter();
 
   isLoading = false;
 
@@ -33,6 +33,6 @@ export class AnsibleAllocationStageDetailComponent extends KypoBaseComponent imp
 
   onFetch(requestedPagination: KypoRequestedPagination) {
     this.isLoading = true;
-    this.fetchAnsibleOutput.emit(requestedPagination);
+    this.fetchStageDetail.emit(requestedPagination);
   }
 }
