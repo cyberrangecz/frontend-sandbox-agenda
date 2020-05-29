@@ -1,34 +1,32 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { asyncData } from 'kypo-common';
 import { KypoPaginatedResource } from 'kypo-common';
 import { KypoPagination } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
+import { asyncData } from 'kypo-common';
 import { PoolRequestApi } from 'kypo-sandbox-api';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
-import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
+import { createContextSpy, createErrorHandlerSpy, createRequestApiSpy } from '../../../testing/testing-commons';
 import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
 import { PoolCleanupRequestsConcreteService } from './pool-cleanup-requests-concrete.service';
 
-describe('PoolCleanupRequestsPollingService', () => {
+describe('PoolCleanupRequestsConcreteService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
+  let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
   let api: jasmine.SpyObj<PoolRequestApi>;
   let service: PoolCleanupRequestsConcreteService;
 
-  const context = new SandboxAgendaContext(new SandboxAgendaConfig());
-  context.config.pollingPeriod = 5000;
-  context.config.defaultPaginationSize = 10;
-
   beforeEach(async(() => {
-    errorHandlerSpy = jasmine.createSpyObj('ErrorHandlerService', ['emit']);
-    api = jasmine.createSpyObj('PoolRequestApi', ['getCleanupRequests']);
+    errorHandlerSpy = createErrorHandlerSpy();
+    api = createRequestApiSpy();
+    contextSpy = createContextSpy();
     TestBed.configureTestingModule({
       providers: [
         PoolCleanupRequestsConcreteService,
         { provide: PoolRequestApi, useValue: api },
         { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
-        { provide: SandboxAgendaContext, useValue: context },
+        { provide: SandboxAgendaContext, useValue: contextSpy },
       ],
     });
     service = TestBed.inject(PoolCleanupRequestsConcreteService);
@@ -106,7 +104,7 @@ describe('PoolCleanupRequestsPollingService', () => {
 
     const subscription = service.resource$.subscribe();
     assertPoll(3);
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(api.getCleanupRequests).toHaveBeenCalledTimes(3);
     subscription.unsubscribe();
   }));
@@ -126,9 +124,9 @@ describe('PoolCleanupRequestsPollingService', () => {
     const subscription = service.resource$.subscribe();
     expect(api.getCleanupRequests).toHaveBeenCalledTimes(0);
     assertPoll(3);
-    tick(context.config.pollingPeriod);
+    tick(contextSpy.config.pollingPeriod);
     expect(api.getCleanupRequests).toHaveBeenCalledTimes(3);
-    tick(5 * context.config.pollingPeriod);
+    tick(5 * contextSpy.config.pollingPeriod);
     expect(api.getCleanupRequests).toHaveBeenCalledTimes(3);
     service.getAll(0, pagination).subscribe();
     expect(api.getCleanupRequests).toHaveBeenCalledTimes(4);
@@ -147,7 +145,7 @@ describe('PoolCleanupRequestsPollingService', () => {
   function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
-      tick(context.config.pollingPeriod);
+      tick(contextSpy.config.pollingPeriod);
       calledTimes = calledTimes + 1;
       expect(api.getCleanupRequests).toHaveBeenCalledTimes(calledTimes);
     }
