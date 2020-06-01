@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -10,22 +11,21 @@ import { KypoPaginatedResource } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
 import { PoolRequestApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { SandboxInstance } from 'kypo-sandbox-model';
-import { EMPTY, from, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, from, merge, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
 import { SandboxNotificationService } from '../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
-import { SandboxInstanceService } from './sandbox-instance.service';
+import { SandboxInstancePollingService } from './sandbox-instance-polling.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Can get sandbox instances and perform various operations to modify them.
  */
 @Injectable()
-export class SandboxInstanceConcreteService extends SandboxInstanceService {
-  private lastPagination: KypoRequestedPagination;
-  private lastPoolId: number;
+export class SandboxInstanceConcreteService extends SandboxInstancePollingService {
+  private manuallyUpdatedInstances$: BehaviorSubject<KypoPaginatedResource<SandboxInstance>>;
 
   constructor(
     private sandboxApi: SandboxInstanceApi,
@@ -37,7 +37,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     private notificationService: SandboxNotificationService,
     private errorHandler: SandboxErrorHandler
   ) {
-    super(context.config.defaultPaginationSize);
+    super(context.config.defaultPaginationSize, context.config.pollingPeriod);
+    this.manuallyUpdatedInstances$ = new BehaviorSubject(this.initSubject(context.config.defaultPaginationSize));
+    this.resource$ = merge(this.poll$, this.manuallyUpdatedInstances$.asObservable());
   }
 
   /**
@@ -46,18 +48,13 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param pagination requested pagination
    */
   getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<SandboxInstance>> {
-    this.hasErrorSubject$.next(false);
-    this.lastPoolId = poolId;
-    this.lastPagination = pagination;
+    this.onManualGetAll(poolId, pagination);
     return this.sandboxApi.getSandboxes(poolId, pagination).pipe(
       tap(
         (paginatedInstances) => {
-          this.resourceSubject$.next(paginatedInstances);
+          this.manuallyUpdatedInstances$.next(paginatedInstances);
         },
-        (err) => {
-          this.errorHandler.emit(err, 'Fetching sandbox instances');
-          this.hasErrorSubject$.next(true);
-        }
+        (err) => this.onGetAllError(err)
       )
     );
   }
@@ -120,6 +117,13 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, sandboxInstance.id)]));
   }
 
+  protected repeatLastGetAll(): Observable<KypoPaginatedResource<SandboxInstance>> {
+    this.hasErrorSubject$.next(false);
+    return this.sandboxApi
+      .getSandboxes(this.lastPoolId, this.lastPagination)
+      .pipe(tap({ error: (err) => this.onGetAllError(err) }));
+  }
+
   private displayConfirmationDialog(
     sandboxInstance: SandboxInstance,
     action: string
@@ -153,5 +157,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
       ),
       switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
     );
+  }
+
+  private onGetAllError(err: HttpErrorResponse) {
+    this.errorHandler.emit(err, 'Fetching sandbox instances');
+    this.hasErrorSubject$.next(true);
   }
 }
