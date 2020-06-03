@@ -3,7 +3,7 @@ import { AllocationRequest } from 'kypo-sandbox-model';
 import { Column, DeleteAction, Kypo2Table, Row, RowAction } from 'kypo2-table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
-import { PoolAllocationRequestsPollingService } from '../../services/pool-request/allocation/pool-allocation-requests-polling.service';
+import { PoolAllocationRequestsService } from '../../services/pool-request/allocation/pool-allocation-requests.service';
 
 /**
  * @dynamic
@@ -12,7 +12,7 @@ export class AllocationRequestTable extends Kypo2Table<AllocationRequest> {
   constructor(
     resource: KypoPaginatedResource<AllocationRequest>,
     poolId: number,
-    service: PoolAllocationRequestsPollingService,
+    service: PoolAllocationRequestsService,
     navigator: SandboxNavigator
   ) {
     const columns = [new Column('id', 'id', false), new Column('createdAtFormatted', 'created', false)];
@@ -26,7 +26,7 @@ export class AllocationRequestTable extends Kypo2Table<AllocationRequest> {
   private static createRow(
     request: AllocationRequest,
     poolId: number,
-    service: PoolAllocationRequestsPollingService,
+    service: PoolAllocationRequestsService,
     navigator: SandboxNavigator
   ): Row<AllocationRequest> {
     const row = new Row(request, this.createActions(request, service));
@@ -34,7 +34,7 @@ export class AllocationRequestTable extends Kypo2Table<AllocationRequest> {
     return row;
   }
 
-  private static createActions(request: AllocationRequest, service: PoolAllocationRequestsPollingService): RowAction[] {
+  private static createActions(request: AllocationRequest, service: PoolAllocationRequestsService): RowAction[] {
     return [
       new RowAction(
         'cancel',

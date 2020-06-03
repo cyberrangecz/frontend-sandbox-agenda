@@ -4,13 +4,13 @@ import { KypoBaseComponent } from 'kypo-common';
 import { Request } from 'kypo-sandbox-model';
 import { RequestStage } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
-import { map, takeWhile, tap } from 'rxjs/operators';
+import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '../../model/client/activated-route-data-attributes';
 import { StageDetail } from '../../model/stage/stage-detail-adapter';
 import { StageDetailEvent } from '../../model/stage/stage-detail-event';
 import { StageDetailEventType } from '../../model/stage/stage-detail-event-type';
 import { StageDetailService } from '../../services/stage/detail/stage-detail.service';
-import { RequestStagesPollingService } from '../../services/stage/request-stages-polling.service';
+import { RequestStagesService } from '../../services/stage/request-stages.service';
 /**
  * Smart component for pool request detail page
  */
@@ -32,7 +32,7 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
   constructor(
     private activeRoute: ActivatedRoute,
     private stageDetailService: StageDetailService,
-    private requestStagesService: RequestStagesPollingService
+    private requestStagesService: RequestStagesService
   ) {
     super();
     this.init();
@@ -86,6 +86,11 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
   }
 
   private init() {
+    this.stages$ = this.requestStagesService.resource$.pipe(map((paginatedStages) => paginatedStages.elements));
+    this.hasError$ = this.requestStagesService.hasError$;
+    this.stageDetails$ = this.stageDetailService.stageDetails$.pipe(takeWhile((_) => this.isAlive));
+    this.stageDetails$.subscribe((stageDetails) => (this.lastStageDetails = stageDetails));
+
     const data$ = this.activeRoute.data;
     this.request$ = data$.pipe(
       tap((data) => {
@@ -93,18 +98,11 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
       }),
       map((data) => data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])
     );
-    // We need to initialize polling with ids first
     data$
       .pipe(
-        tap((data) => this.requestStagesService.startPolling(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
+        switchMap((data) => this.requestStagesService.getAll(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
         takeWhile((_) => this.isAlive)
       )
       .subscribe();
-
-    this.stages$ = this.requestStagesService.resource$.pipe(map((paginatedStages) => paginatedStages.elements));
-
-    this.hasError$ = this.requestStagesService.hasError$;
-    this.stageDetails$ = this.stageDetailService.stageDetails$.pipe(takeWhile((_) => this.isAlive));
-    this.stageDetails$.subscribe((stageDetails) => (this.lastStageDetails = stageDetails));
   }
 }

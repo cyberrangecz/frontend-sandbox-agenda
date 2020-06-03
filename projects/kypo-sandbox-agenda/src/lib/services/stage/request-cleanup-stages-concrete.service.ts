@@ -11,10 +11,12 @@ import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
 import { SandboxNotificationService } from '../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
-import { RequestStagesPollingService } from './request-stages-polling.service';
+import { RequestStagesService } from './request-stages.service';
 
 @Injectable()
-export class RequestCleanupStagesPollingService extends RequestStagesPollingService {
+export class RequestCleanupStagesConcreteService extends RequestStagesService {
+  private lastRequest: Request;
+
   constructor(
     private api: StagesApi,
     private router: Router,
@@ -32,8 +34,8 @@ export class RequestCleanupStagesPollingService extends RequestStagesPollingServ
    * @param request request associated with stages
    */
   getAll(request: Request): Observable<KypoPaginatedResource<RequestStage>> {
-    this.onManualGetAll(request);
     const fakePagination = new KypoRequestedPagination(0, 100, '', '');
+    this.onManualResourceRefresh(fakePagination, this.lastRequest);
     return this.api.getCleanupStages(request.allocationUnitId, request.id, fakePagination).pipe(
       tap(
         (resource) => {
@@ -45,10 +47,9 @@ export class RequestCleanupStagesPollingService extends RequestStagesPollingServ
     );
   }
 
-  protected repeatLastGetAllRequest(): Observable<KypoPaginatedResource<RequestStage>> {
+  protected refreshResource(): Observable<KypoPaginatedResource<RequestStage>> {
     this.hasErrorSubject$.next(false);
-    const fakePagination = new KypoRequestedPagination(0, 100, '', '');
-    return this.api.getCleanupStages(this.request.allocationUnitId, this.request.id, fakePagination).pipe(
+    return this.api.getCleanupStages(this.lastRequest.allocationUnitId, this.lastRequest.id, this.lastPagination).pipe(
       tap(
         (resource) => this.navigateBackIfStagesFinished(resource),
         (err) => this.onGetAllError(err)
@@ -56,12 +57,9 @@ export class RequestCleanupStagesPollingService extends RequestStagesPollingServ
     );
   }
 
-  private onManualGetAll(request: Request) {
-    this.request = request;
-    if (this.hasErrorSubject$.getValue()) {
-      this.retryPolling$.next(true);
-    }
-    this.hasErrorSubject$.next(false);
+  protected onManualResourceRefresh(pagination: KypoRequestedPagination, ...params) {
+    super.onManualResourceRefresh(pagination, ...params);
+    this.lastRequest = params[0];
   }
 
   private onGetAllError(err: HttpErrorResponse) {
@@ -82,6 +80,6 @@ export class RequestCleanupStagesPollingService extends RequestStagesPollingServ
   }
 
   private navigateBack() {
-    this.route.paramMap.pipe(take(1)).subscribe((paramMap) => this.router.navigate([this.navigator.toPoolOverview()]));
+    this.route.paramMap.pipe(take(1)).subscribe((_) => this.router.navigate([this.navigator.toPoolOverview()]));
   }
 }

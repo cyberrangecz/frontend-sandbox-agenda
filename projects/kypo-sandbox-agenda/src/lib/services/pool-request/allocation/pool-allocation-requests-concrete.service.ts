@@ -14,15 +14,16 @@ import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
 import { SandboxNotificationService } from '../../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
-import { PoolAllocationRequestsPollingService } from './pool-allocation-requests-polling.service';
+import { PoolAllocationRequestsService } from './pool-allocation-requests.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Can manually get creation requests, poll them and perform various operations to modify them.
  */
 @Injectable()
-export class PoolAllocationRequestsConcreteService extends PoolAllocationRequestsPollingService {
-  private manuallyUpdatedRequests$: BehaviorSubject<KypoPaginatedResource<Request>>;
+export class PoolAllocationRequestsConcreteService extends PoolAllocationRequestsService {
+  private lastPoolId: number;
+
   constructor(
     private api: PoolRequestApi,
     private dialog: MatDialog,
@@ -31,8 +32,6 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
     private errorHandler: SandboxErrorHandler
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
-    this.manuallyUpdatedRequests$ = new BehaviorSubject(this.initSubject(context.config.defaultPaginationSize));
-    this.resource$ = merge(this.poll$, this.manuallyUpdatedRequests$.asObservable());
   }
 
   /**
@@ -41,13 +40,18 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
    * @param pagination requested pagination
    */
   getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Request>> {
-    this.onManualGetAll(poolId, pagination);
+    this.onManualResourceRefresh(pagination, poolId);
     return this.api.getAllocationRequests(poolId, pagination).pipe(
       tap(
-        (paginatedRequests) => this.manuallyUpdatedRequests$.next(paginatedRequests),
+        (paginatedRequests) => this.resourceSubject$.next(paginatedRequests),
         (err) => this.onGetAllError(err)
       )
     );
+  }
+
+  protected onManualResourceRefresh(pagination: KypoRequestedPagination, ...params) {
+    super.onManualResourceRefresh(pagination, ...params);
+    this.lastPoolId = params[0];
   }
 
   /**
@@ -68,6 +72,16 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
     return this.displayConfirmationDialog(request, 'Delete').pipe(
       switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
     );
+  }
+
+  /**
+   * Repeats last get all request for polling purposes
+   */
+  protected refreshResource(): Observable<KypoPaginatedResource<Request>> {
+    this.hasErrorSubject$.next(false);
+    return this.api
+      .getAllocationRequests(this.lastPoolId, this.lastPagination)
+      .pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
 
   private displayConfirmationDialog(request: Request, action: string): Observable<CsirtMuDialogResultEnum> {
@@ -100,16 +114,6 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
       ),
       switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
     );
-  }
-
-  /**
-   * Repeats last get all request for polling purposes
-   */
-  protected repeatLastGetAllRequest(): Observable<KypoPaginatedResource<Request>> {
-    this.hasErrorSubject$.next(false);
-    return this.api
-      .getAllocationRequests(this.lastPoolId, this.lastPagination)
-      .pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
 
   private onGetAllError(err: HttpErrorResponse) {

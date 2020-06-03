@@ -24,7 +24,7 @@ export abstract class StageDetailService {
   /**
    * Adds a stage to a list of subscribed stages (to get its details)
    * @param stage a stage to subscribe
-   * @param optional requested pagination if needed
+   * @param pagination optional requested pagination if needed
    */
   add(stage: RequestStage, pagination?: KypoRequestedPagination): Observable<any> {
     return this.getStageDetail(stage.id, stage.type, pagination).pipe(

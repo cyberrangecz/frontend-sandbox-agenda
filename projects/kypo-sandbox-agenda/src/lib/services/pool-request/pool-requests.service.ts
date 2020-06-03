@@ -1,5 +1,4 @@
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoPaginatedResourceService } from 'kypo-common';
+import { KypoPaginatedResource, KypoPaginatedResourcePollingService } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
 import { Request } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
@@ -9,9 +8,9 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated requests and other operations to modify data.
  */
-export abstract class PoolRequestsService extends KypoPaginatedResourceService<Request> {
-  protected constructor(pageSize: number) {
-    super(pageSize);
+export abstract class PoolRequestsService extends KypoPaginatedResourcePollingService<Request> {
+  protected constructor(pageSize: number, pollPeriod: number) {
+    super(pageSize, pollPeriod);
   }
 
   /**
