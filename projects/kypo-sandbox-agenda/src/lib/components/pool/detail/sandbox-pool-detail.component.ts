@@ -15,8 +15,8 @@ import { CleanupRequestTable } from '../../../model/tables/cleanup-request-table
 import { SandboxInstanceTable } from '../../../model/tables/sandbox-instance-table';
 import { SandboxNavigator } from '../../../services/client/sandbox-navigator.service';
 import { SandboxAgendaContext } from '../../../services/internal/sandox-agenda-context.service';
-import { PoolAllocationRequestsPollingService } from '../../../services/pool-request/allocation/pool-allocation-requests-polling.service';
-import { PoolCleanupRequestsPollingService } from '../../../services/pool-request/cleanup/pool-cleanup-requests-polling.service';
+import { PoolAllocationRequestsService } from '../../../services/pool-request/allocation/pool-allocation-requests.service';
+import { PoolCleanupRequestsService } from '../../../services/pool-request/cleanup/pool-cleanup-requests.service';
 import { SandboxInstanceService } from '../../../services/sandbox-instance/sandbox-instance.service';
 import { SandboxPoolDetailControls } from './sandbox-pool-detail-controls';
 
@@ -45,8 +45,8 @@ export class SandboxPoolDetailComponent extends KypoBaseComponent implements OnI
 
   constructor(
     private instanceService: SandboxInstanceService,
-    private allocationRequestService: PoolAllocationRequestsPollingService,
-    private cleanupRequestService: PoolCleanupRequestsPollingService,
+    private allocationRequestService: PoolAllocationRequestsService,
+    private cleanupRequestService: PoolCleanupRequestsService,
     private navigator: SandboxNavigator,
     private context: SandboxAgendaContext,
     private activeRoute: ActivatedRoute

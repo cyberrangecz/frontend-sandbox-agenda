@@ -11,21 +11,21 @@ import { KypoPaginatedResource } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
 import { PoolRequestApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { SandboxInstance } from 'kypo-sandbox-model';
-import { BehaviorSubject, EMPTY, from, merge, Observable } from 'rxjs';
+import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
 import { SandboxNotificationService } from '../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../internal/sandox-agenda-context.service';
-import { SandboxInstancePollingService } from './sandbox-instance-polling.service';
+import { SandboxInstanceService } from './sandbox-instance.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Can get sandbox instances and perform various operations to modify them.
  */
 @Injectable()
-export class SandboxInstanceConcreteService extends SandboxInstancePollingService {
-  private manuallyUpdatedInstances$: BehaviorSubject<KypoPaginatedResource<SandboxInstance>>;
+export class SandboxInstanceConcreteService extends SandboxInstanceService {
+  private lastPoolId: number;
 
   constructor(
     private sandboxApi: SandboxInstanceApi,
@@ -38,8 +38,6 @@ export class SandboxInstanceConcreteService extends SandboxInstancePollingServic
     private errorHandler: SandboxErrorHandler
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
-    this.manuallyUpdatedInstances$ = new BehaviorSubject(this.initSubject(context.config.defaultPaginationSize));
-    this.resource$ = merge(this.poll$, this.manuallyUpdatedInstances$.asObservable());
   }
 
   /**
@@ -48,15 +46,20 @@ export class SandboxInstanceConcreteService extends SandboxInstancePollingServic
    * @param pagination requested pagination
    */
   getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<SandboxInstance>> {
-    this.onManualGetAll(poolId, pagination);
+    this.onManualResourceRefresh(pagination, poolId);
     return this.sandboxApi.getSandboxes(poolId, pagination).pipe(
       tap(
         (paginatedInstances) => {
-          this.manuallyUpdatedInstances$.next(paginatedInstances);
+          this.resourceSubject$.next(paginatedInstances);
         },
         (err) => this.onGetAllError(err)
       )
     );
+  }
+
+  protected onManualResourceRefresh(pagination: KypoRequestedPagination, ...params: any[]) {
+    super.onManualResourceRefresh(pagination);
+    this.lastPoolId = params[0];
   }
 
   /**
@@ -117,7 +120,7 @@ export class SandboxInstanceConcreteService extends SandboxInstancePollingServic
     return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, sandboxInstance.id)]));
   }
 
-  protected repeatLastGetAll(): Observable<KypoPaginatedResource<SandboxInstance>> {
+  protected refreshResource(): Observable<KypoPaginatedResource<SandboxInstance>> {
     this.hasErrorSubject$.next(false);
     return this.sandboxApi
       .getSandboxes(this.lastPoolId, this.lastPagination)

@@ -39,14 +39,12 @@ export * from './lib/services/resolvers/pool-request-resolver.service';
 export * from './lib/services/pool/pool-edit.service';
 export * from './lib/services/pool/pool-overview.service';
 export * from './lib/services/pool-request/pool-requests.service';
-export * from './lib/services/pool-request/pool-requests-polling.service';
-export * from './lib/services/pool-request/allocation/pool-allocation-requests-polling.service';
-export * from './lib/services/pool-request/cleanup/pool-cleanup-requests-polling.service';
+export * from './lib/services/pool-request/allocation/pool-allocation-requests.service';
+export * from './lib/services/pool-request/cleanup/pool-cleanup-requests.service';
 export * from './lib/services/sandbox-definition/sandbox-definition-overview.service';
 export * from './lib/services/sandbox-definition/detail/sandbox-definition-detail.service';
 export * from './lib/services/sandbox-instance/sandbox-instance.service';
 export * from './lib/services/stage/request-stages.service';
-export * from './lib/services/stage/request-stages-polling.service';
 export * from './lib/services/stage/detail/stage-detail.service';
 export * from './lib/services/stage/detail/stage-detail-polling.service';
 

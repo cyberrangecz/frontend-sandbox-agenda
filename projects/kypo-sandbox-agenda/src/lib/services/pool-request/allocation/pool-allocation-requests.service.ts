@@ -1,8 +1,8 @@
 import { AllocationRequest } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
-import { PoolRequestsPollingService } from '../pool-requests-polling.service';
+import { PoolRequestsService } from '../pool-requests.service';
 
-export abstract class PoolAllocationRequestsPollingService extends PoolRequestsPollingService {
+export abstract class PoolAllocationRequestsService extends PoolRequestsService {
   protected constructor(pageSize: number, pollPeriod: number) {
     super(pageSize, pollPeriod);
   }
