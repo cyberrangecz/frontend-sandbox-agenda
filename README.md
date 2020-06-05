@@ -45,7 +45,7 @@ For example, you would add `SandboxDefinitionOverviewComponent` like this:
 
 1. Create feature module `SandboxDefinitionOverviewModule` containing all necessary imports and providers
 
-``
+```
 @NgModule({
   imports: [
     CommonModule,
@@ -59,11 +59,11 @@ For example, you would add `SandboxDefinitionOverviewComponent` like this:
   ],
 })
 export class SandboxDefinitionOverviewModule {}
-``
+```
 
 1. Create routing module importing the `SandboxDefinitionOverviewModule`
 
-``
+```
 const routes: Routes = [
   {
     path: '',
@@ -75,16 +75,17 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class SandboxDefinitionOverviewRoutingModule {}
-``
+```
 
 1. Lazy load the module in the parent routing module
 
-``
+```
   {
     path: SANDBOX_DEFINITION_PATH,
     loadChildren: () => import('./lazy-loaded-modules/sandbox-definition/sandbox-definition-overview.module).then((m) => m.SandboxDefinitionOverviewModule)
   }
-`` 
+```
+
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
