@@ -59,7 +59,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
    * @param request a request to be cancelled
    */
   cancel(request: Request): Observable<any> {
-    return this.displayConfirmationDialog(request, 'Confirm').pipe(
+    return this.displayConfirmationDialog(request, 'Cancel', 'No', 'Yes').pipe(
       switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
     );
   }
@@ -69,7 +69,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
    * @param request a request to be deleted
    */
   delete(request: Request): Observable<any> {
-    return this.displayConfirmationDialog(request, 'Delete').pipe(
+    return this.displayConfirmationDialog(request, 'Delete', 'Cancel', 'Delete').pipe(
       switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
     );
   }
@@ -84,13 +84,18 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
       .pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
 
-  private displayConfirmationDialog(request: Request, action: string): Observable<CsirtMuDialogResultEnum> {
+  private displayConfirmationDialog(
+    request: Request,
+    action: string,
+    cancelLabel: string,
+    confirmLabel: string
+  ): Observable<CsirtMuDialogResultEnum> {
     const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
       data: new CsirtMuConfirmationDialogConfig(
         `${action} allocation request`,
-        `Do you want to ${action} allocation request "${request.id}"?`,
-        'Cancel',
-        action
+        `Do you want to ${action.toLowerCase()} allocation request "${request.id}"?`,
+        cancelLabel,
+        confirmLabel
       ),
     });
     return dialogRef.afterClosed();
