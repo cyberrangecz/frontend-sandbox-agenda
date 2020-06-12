@@ -10,8 +10,7 @@
     "e2e": "ng e2e",
     "build-library": "ng build kypo-sandbox-agenda --prod",
     "create-package": "cd dist/kypo-sandbox-agenda && npm pack",
-    "build-and-pack": "npm install && npm run build-library && npm run create-package",
-    "publish": "npm run build-and-pack && cd dist/kypo-sandbox-agenda && npm publish --registry=http://kypo-storage.ics.muni.cz:8081/repository/npm-hosted"
+    "build-and-pack": "npm install && npm run build-library && npm run create-package"
   },
   "husky": {
     "hooks": {
@@ -32,7 +31,7 @@
     "@angular/router": "~9.0.6",
     "angular-oauth2-oidc": "^8.0.4",
     "csirt-mu-common": "9.0.0",
-    "csirt-mu-layout": "9.1.0",
+    "csirt-mu-layout": "9.2.1",
     "d3": "^5.15.0",
     "kypo-common": "9.0.2",
     "kypo-controls": "9.0.0",
@@ -40,8 +39,8 @@
     "kypo-sandbox-api": "9.0.1",
     "kypo-sandbox-model": "9.0.1",
     "kypo2-auth": "9.1.0",
-    "kypo2-table": "9.3.0",
-    "kypo2-topology-graph": "9.1.0",
+    "kypo2-table": "9.3.1",
+    "kypo2-topology-graph": "9.1.2",
     "kypo2-topology-graph-model": "9.0.0",
     "moment": "^2.24.0",
     "ngx-indexed-db": "4.0.3",
