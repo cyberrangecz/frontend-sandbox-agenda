@@ -1,10 +1,4 @@
-.ansible-output-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-kypo-allocation-ansible-stage-output {
+kypo-code-viewer {
   width: 100%;
 }
 

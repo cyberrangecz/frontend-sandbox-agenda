@@ -10,7 +10,7 @@
       <kypo-request-stage *ngFor="let stage of stages; trackBy: trackByFn; let i = index;"
                           [stage]="stage"
                           [stageDetail]="(stageDetails$ | async)[getStageDetailIndex(stage.id)]"
-                          (stageDetailEvent)="onStageDetailEvent($event)"
+                          (stageDetailPanelEvent)="onStageDetailPanelEvent($event)"
                           (fetchStageDetail)="onFetchStageDetail($event)">
       </kypo-request-stage>
     </div>

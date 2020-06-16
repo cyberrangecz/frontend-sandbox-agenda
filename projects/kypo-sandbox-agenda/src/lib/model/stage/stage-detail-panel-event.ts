@@ -2,9 +2,9 @@ import { RequestStage } from 'kypo-sandbox-model';
 import { StageDetailEventType } from './stage-detail-event-type';
 
 /**
- * Event representing opening/closing of stage detil
+ * Event representing opening/closing of stage detail
  */
-export class StageDetailEvent {
+export class StageDetailPanelEvent {
   stage: RequestStage;
   type: StageDetailEventType;
 

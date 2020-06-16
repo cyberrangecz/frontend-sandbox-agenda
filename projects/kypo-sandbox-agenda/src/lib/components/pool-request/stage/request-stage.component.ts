@@ -15,9 +15,9 @@ import { AnsibleAllocationStage } from 'kypo-sandbox-model';
 import { OpenStackCleanupStage } from 'kypo-sandbox-model';
 import { AnsibleCleanupStage } from 'kypo-sandbox-model';
 import { CleanupRequestStage } from 'kypo-sandbox-model';
-import { StageDetail } from '../../../model/stage/stage-detail-adapter';
-import { StageDetailEvent } from '../../../model/stage/stage-detail-event';
 import { StageDetailEventType } from '../../../model/stage/stage-detail-event-type';
+import { StageDetailPanelEvent } from '../../../model/stage/stage-detail-panel-event';
+import { StageDetailState } from '../../../model/stage/stage-detail-state';
 import { ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC } from '../../../model/stage/stage-logos';
 
 /**
@@ -31,14 +31,14 @@ import { ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC } from '../../../model/stage/stage
 })
 export class RequestStageComponent extends KypoBaseComponent implements OnInit, OnChanges {
   @Input() stage: RequestStage;
-  @Input() stageDetail: StageDetail;
-  @Output() stageDetailEvent: EventEmitter<StageDetailEvent> = new EventEmitter();
-
-  @Output() fetchStageDetail: EventEmitter<StageDetail> = new EventEmitter();
+  @Input() stageDetail: StageDetailState;
+  @Output() stageDetailPanelEvent: EventEmitter<StageDetailPanelEvent> = new EventEmitter();
+  @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 
   stageDetailIsLoading = false;
   logoSrc: string;
   detailDisabled: boolean;
+  stageDetailHasError: boolean;
 
   ngOnInit() {}
 
@@ -49,6 +49,7 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
     }
     if ('stageDetail' in changes) {
       this.stageDetailIsLoading = false;
+      this.stageDetailHasError = this.stageDetail?.hasError();
     }
   }
 
@@ -56,16 +57,15 @@ export class RequestStageComponent extends KypoBaseComponent implements OnInit, 
    * Changes internal state of the component and emits event to the parent component
    * @param open true if stage detail was opened, false if closed
    */
-  onStageDetailEvent(open: boolean) {
+  onPanelStateChanged(open: boolean) {
     this.stageDetailIsLoading = open;
-    this.stageDetailEvent.emit(
-      new StageDetailEvent(this.stage, open ? StageDetailEventType.OPEN : StageDetailEventType.CLOSE)
+    this.stageDetailPanelEvent.emit(
+      new StageDetailPanelEvent(this.stage, open ? StageDetailEventType.OPEN : StageDetailEventType.CLOSE)
     );
   }
 
-  onFetchStageDetail(requestedPagination: KypoRequestedPagination) {
-    this.stageDetail.requestedPagination = requestedPagination;
-    this.fetchStageDetail.emit(this.stageDetail);
+  onFetchStageDetail(stageDetail: StageDetailState) {
+    this.fetchStageDetail.emit(stageDetail);
   }
 
   private resolveStageLogo() {

@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { KypoInfiniteScroller } from 'kypo-list';
 
 @Component({
-  selector: 'kypo-allocation-ansible-stage-output',
-  templateUrl: './allocation-ansible-stage-output.component.html',
-  styleUrls: ['./allocation-ansible-stage-output.component.css'],
+  selector: 'kypo-code-viewer',
+  templateUrl: './code-viewer.component.html',
+  styleUrls: ['./code-viewer.component.css'],
 })
-export class AllocationAnsibleStageOutputComponent extends KypoInfiniteScroller<string> implements OnInit {
+export class CodeViewerComponent extends KypoInfiniteScroller<string> implements OnInit {
   ngOnInit(): void {}
 
   /**

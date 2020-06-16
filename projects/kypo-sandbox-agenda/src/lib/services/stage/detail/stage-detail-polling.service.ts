@@ -1,6 +1,6 @@
 import { combineLatest, merge, Observable, of, Subject, timer } from 'rxjs';
-import { publishReplay, refCount, retryWhen, switchMap, tap } from 'rxjs/operators';
-import { StageDetail } from '../../../model/stage/stage-detail-adapter';
+import { publishReplay, refCount, retryWhen, switchMap } from 'rxjs/operators';
+import { StageDetailState } from '../../../model/stage/stage-detail-state';
 import { StageDetailService } from './stage-detail.service';
 
 export abstract class StageDetailPollingService extends StageDetailService {
@@ -17,14 +17,14 @@ export abstract class StageDetailPollingService extends StageDetailService {
     );
   }
 
-  private createPoll(): Observable<StageDetail[]> {
+  private createPoll(): Observable<StageDetailState[]> {
     return timer(this.pollPeriod, this.pollPeriod).pipe(
       switchMap((_) => this.refreshSubscribed()),
       retryWhen((_) => this.retryPolling$)
     );
   }
 
-  private refreshSubscribed(): Observable<StageDetail[]> {
+  private refreshSubscribed(): Observable<StageDetailState[]> {
     const subscribedStageDetailValues = this.subscribedStageDetails.values();
     const stageDetails$ = this.getValuesOfFinished(subscribedStageDetailValues).concat(
       this.getValuesOfRunning(subscribedStageDetailValues)
@@ -32,15 +32,21 @@ export abstract class StageDetailPollingService extends StageDetailService {
     return combineLatest(stageDetails$);
   }
 
-  private getValuesOfFinished(stageDetails: StageDetail[]): Array<Observable<StageDetail>> {
-    return stageDetails.filter((stageDetail) => !stageDetail.stage.isRunning()).map((stageDetail) => of(stageDetail));
+  private getValuesOfFinished(stageDetails: StageDetailState[]): Array<Observable<StageDetailState>> {
+    return stageDetails
+      .filter((stageDetail) => !stageDetail.basicInfo.stage.isRunning())
+      .map((stageDetail) => of(stageDetail));
   }
 
-  private getValuesOfRunning(stageDetails: StageDetail[]): Array<Observable<StageDetail>> {
+  private getValuesOfRunning(stageDetails: StageDetailState[]): Array<Observable<StageDetailState>> {
     return stageDetails
-      .filter((stageDetail) => stageDetail.stage.isRunning())
+      .filter((stageDetail) => stageDetail.basicInfo.stage.isRunning())
       .map((stageDetail) =>
-        this.getStageDetail(stageDetail.stage.id, stageDetail.stage.type, stageDetail.requestedPagination)
+        this.getStageDetail(
+          stageDetail.basicInfo.stage.id,
+          stageDetail.basicInfo.stage.type,
+          stageDetail.additionalInfo.map((additional) => additional.requestedPagination)
+        )
       );
   }
 }
