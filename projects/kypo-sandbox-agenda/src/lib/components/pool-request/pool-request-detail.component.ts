@@ -6,9 +6,9 @@ import { RequestStage } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '../../model/client/activated-route-data-attributes';
-import { StageDetail } from '../../model/stage/stage-detail-adapter';
-import { StageDetailEvent } from '../../model/stage/stage-detail-event';
 import { StageDetailEventType } from '../../model/stage/stage-detail-event-type';
+import { StageDetailPanelEvent } from '../../model/stage/stage-detail-panel-event';
+import { StageDetailState } from '../../model/stage/stage-detail-state';
 import { StageDetailService } from '../../services/stage/detail/stage-detail.service';
 import { RequestStagesService } from '../../services/stage/request-stages.service';
 /**
@@ -23,11 +23,11 @@ import { RequestStagesService } from '../../services/stage/request-stages.servic
 export class PoolRequestDetailComponent extends KypoBaseComponent implements OnInit {
   request$: Observable<Request>;
   stages$: Observable<RequestStage[]>;
-  stageDetails$: Observable<StageDetail[]>;
+  stageDetails$: Observable<StageDetailState[]>;
   hasError$: Observable<boolean>;
 
   private request: Request;
-  private lastStageDetails: StageDetail[] = [];
+  private lastStageDetails: StageDetailState[] = [];
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -50,7 +50,7 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
   }
 
   getStageDetailIndex(id: number): number {
-    return this.lastStageDetails.findIndex((stageDetail) => stageDetail.stage.id === id);
+    return this.lastStageDetails.findIndex((stageDetail) => stageDetail.basicInfo.stage.id === id);
   }
 
   /**
@@ -67,20 +67,23 @@ export class PoolRequestDetailComponent extends KypoBaseComponent implements OnI
    * Resolves type of stage detail event and calls appropriate handler
    * @param event stage detail event emitted from child component (subscribe or unsubscribe)
    */
-  onStageDetailEvent(event: StageDetailEvent) {
+  onStageDetailPanelEvent(event: StageDetailPanelEvent) {
     if (event.type === StageDetailEventType.OPEN) {
       this.stageDetailService
-        .add(event.stage)
+        .register(event.stage)
         .pipe(takeWhile((_) => this.isAlive))
         .subscribe();
     } else {
-      this.stageDetailService.remove(event.stage);
+      this.stageDetailService.unregister(event.stage);
     }
   }
 
-  onFetchStageDetail(stageDetail: StageDetail) {
+  onFetchStageDetail(stageDetail: StageDetailState) {
     this.stageDetailService
-      .add(stageDetail.stage, stageDetail.requestedPagination)
+      .register(
+        stageDetail.basicInfo.stage,
+        stageDetail.additionalInfo.map((info) => info.requestedPagination)
+      )
       .pipe(takeWhile((_) => this.isAlive))
       .subscribe();
   }

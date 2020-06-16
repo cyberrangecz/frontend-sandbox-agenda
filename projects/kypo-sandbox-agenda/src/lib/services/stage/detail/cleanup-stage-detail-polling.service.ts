@@ -1,43 +1,57 @@
 import { Injectable } from '@angular/core';
 import { StagesApi } from 'kypo-sandbox-api';
-import { RequestStageType } from 'kypo-sandbox-model';
-import { RequestStage } from 'kypo-sandbox-model';
-import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { StageDetail } from '../../../model/stage/stage-detail-adapter';
-import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
+import { AnsibleCleanupStage, OpenStackCleanupStage, RequestStageType } from 'kypo-sandbox-model';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { CleanupStageDetailState } from '../../../model/stage/cleanup-stage-detail-state';
+import { StageDetailBasicInfo } from '../../../model/stage/stage-detail-basic-info';
+import { StageDetailState } from '../../../model/stage/stage-detail-state';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
 import { StageDetailPollingService } from './stage-detail-polling.service';
 
 @Injectable()
 export class CleanupStageDetailPollingService extends StageDetailPollingService {
-  constructor(
-    private api: StagesApi,
-    private context: SandboxAgendaContext,
-    private errorHandler: SandboxErrorHandler
-  ) {
+  constructor(private api: StagesApi, private context: SandboxAgendaContext) {
     super(context.config.pollingPeriod);
   }
 
-  getStageDetail(stageId: number, stageType: RequestStageType): Observable<StageDetail> {
-    let stage$: Observable<RequestStage>;
+  getStageDetail(stageId: number, stageType: RequestStageType): Observable<StageDetailState> {
+    let stage$: Observable<StageDetailState>;
     if (stageType === RequestStageType.OPENSTACK_CLEANUP) {
-      stage$ = this.api.getOpenstackCleanupStage(stageId);
+      stage$ = this.createOpenstackStageState(stageId);
     } else if (stageType === RequestStageType.ANSIBLE_CLEANUP) {
-      stage$ = this.api.getAnsibleCleanupStage(stageId);
+      stage$ = this.createAnsibleStageState(stageId);
     } else {
       return throwError(
         new Error(`Request stage of type "${stageType}" is not supported by CleanupStageDetailPollingService`)
       );
     }
-    return stage$.pipe(
-      map(
-        (stage) => new StageDetail(stage),
-        (err) => {
-          this.errorHandler.emit(err, `Fetching stage ${stageId} detail`);
-          return new StageDetail(undefined, true);
-        }
-      )
+    return stage$;
+  }
+
+  private createOpenstackStageState(stageId: number): Observable<StageDetailState> {
+    return this.api.getOpenstackCleanupStage(stageId).pipe(
+      map((stage) => new CleanupStageDetailState(new StageDetailBasicInfo(stage))),
+      catchError((err) => this.handleOpenstackStageError(stageId))
     );
+  }
+
+  private createAnsibleStageState(stageId: number): Observable<StageDetailState> {
+    return this.api.getAnsibleCleanupStage(stageId).pipe(
+      map((stage) => new CleanupStageDetailState(new StageDetailBasicInfo(stage))),
+      catchError((err) => this.handleAnsibleStageError(stageId))
+    );
+  }
+
+  private handleOpenstackStageError(stageId: number): Observable<CleanupStageDetailState> {
+    const errStage = new OpenStackCleanupStage();
+    errStage.id = stageId;
+    return of(new CleanupStageDetailState(new StageDetailBasicInfo(errStage, true)));
+  }
+
+  private handleAnsibleStageError(stageId: number): Observable<CleanupStageDetailState> {
+    const errStage = new AnsibleCleanupStage();
+    errStage.id = stageId;
+    return of(new CleanupStageDetailState(new StageDetailBasicInfo(errStage, true)));
   }
 }

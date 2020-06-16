@@ -4,7 +4,7 @@ import { RequestStageType } from 'kypo-sandbox-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Dictionary } from 'typescript-collections';
-import { StageDetail } from '../../../model/stage/stage-detail-adapter';
+import { StageDetailState } from '../../../model/stage/stage-detail-state';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -12,25 +12,25 @@ import { StageDetail } from '../../../model/stage/stage-detail-adapter';
  * Subscribe to stageDetail$ to receive latest data updates.
  */
 export abstract class StageDetailService {
-  protected subscribedStageDetails: Dictionary<number, StageDetail> = new Dictionary();
+  protected subscribedStageDetails: Dictionary<number, StageDetailState> = new Dictionary();
 
-  protected stageDetailsSubject$: BehaviorSubject<StageDetail[]> = new BehaviorSubject([]);
+  protected stageDetailsSubject$: BehaviorSubject<StageDetailState[]> = new BehaviorSubject([]);
 
   /**
    * @contract must be updated every time new data are received
    */
-  stageDetails$: Observable<StageDetail[]> = this.stageDetailsSubject$.asObservable();
+  stageDetails$: Observable<StageDetailState[]> = this.stageDetailsSubject$.asObservable();
 
   /**
-   * Adds a stage to a list of subscribed stages (to get its details)
-   * @param stage a stage to subscribe
-   * @param pagination optional requested pagination if needed
+   * Registers a stage to a list of subscribed stages (to get its details)
+   * @param stage a stage to to register
+   * @param additionalInfoPagination optional list of pagination requested for stage additional info (ORDER MATTERS)
    */
-  add(stage: RequestStage, pagination?: KypoRequestedPagination): Observable<any> {
-    return this.getStageDetail(stage.id, stage.type, pagination).pipe(
+  register(stage: RequestStage, additionalInfoPagination?: KypoRequestedPagination[]): Observable<any> {
+    return this.getStageDetail(stage.id, stage.type, additionalInfoPagination).pipe(
       tap(
         (stageDetail) => {
-          this.subscribedStageDetails.setValue(stageDetail.stage.id, stageDetail);
+          this.subscribedStageDetails.setValue(stage.id, stageDetail);
           return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
         },
         (_) => {
@@ -41,21 +41,21 @@ export abstract class StageDetailService {
   }
 
   /**
-   * Removes a stage from a list of subscribed stages (to stop getting its details)
+   * Unregisters a stage from a list of subscribed stages (to stop getting its details)
    * @param stage a stage to unsubscribe
    */
-  remove(stage: RequestStage): void {
+  unregister(stage: RequestStage): void {
     this.subscribedStageDetails.remove(stage.id);
   }
 
   /**
    * @param stageId id of stage
    * @param stageType type of stage
-   * @param pagination requested pagination
+   * @param additionalInfoPagination list of requested pagination of additional info of stage detail
    */
   abstract getStageDetail(
     stageId: number,
     stageType: RequestStageType,
-    pagination?: KypoRequestedPagination
-  ): Observable<StageDetail>;
+    additionalInfoPagination?: KypoRequestedPagination[]
+  ): Observable<StageDetailState>;
 }

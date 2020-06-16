@@ -1,17 +1,14 @@
-<p>Repository: {{ stageDetail.repoUrl }}</p>
-<p>Revision: {{ stageDetail.rev }}</p>
-<div *ngIf="stageDetail.hasOutput()">
-  <p>Output</p>
-  <div class="ansible-output-container">
-      <kypo-allocation-ansible-stage-output
-        maxHeight="600"
-        viewPortItemHeight="20"
-        [resource]="stageDetail?.output"
-        [pageSize]="500"
-        [isLoading]="isLoading"
-        (fetch)="onFetch($event)">
-      </kypo-allocation-ansible-stage-output>
-    <mat-progress-spinner *ngIf="isLoading" color="accent" mode="indeterminate" diameter="25"></mat-progress-spinner>
-  </div>
-</div>
-
+<p>Repository: {{ repository }}</p>
+<p>Revision: {{ revision }}</p>
+<h3>{{ stageDetail.additionalInfo[0]?.resourceName }}</h3>
+  <kypo-code-viewer *ngIf="hasOutput else noOutput"
+    maxHeight="600"
+    viewPortItemHeight="20"
+    [resource]="output"
+    [pageSize]="pageSize"
+    [isLoading]="isLoading"
+    (fetch)="onFetch($event)">
+  </kypo-code-viewer>
+<ng-template #noOutput>
+  <p>This stage has no output</p>
+</ng-template>

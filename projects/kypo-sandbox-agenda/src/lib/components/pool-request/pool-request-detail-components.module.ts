@@ -6,9 +6,9 @@ import { PoolRequestResolver } from '../../services/resolvers/pool-request-resol
 import { PoolResolver } from '../../services/resolvers/pool-resolver.service';
 import { PoolRequestDetailMaterialModule } from './pool-request-detail-material.module';
 import { PoolRequestDetailComponent } from './pool-request-detail.component';
-import { AllocationAnsibleStageOutputComponent } from './stage/detail/ansible-allocation-stage-detail/allocation-ansible-stage-output/allocation-ansible-stage-output.component';
 import { AnsibleAllocationStageDetailComponent } from './stage/detail/ansible-allocation-stage-detail/ansible-allocation-stage-detail.component';
 import { CleanupStageDetailComponent } from './stage/detail/cleanup-stage-detail/cleanup-stage-detail.component';
+import { CodeViewerComponent } from './stage/detail/code-viewer/code-viewer.component';
 import { OpenstackAllocationStageDetailComponent } from './stage/detail/openstack-allocation-stage-detail/openstack-allocation-stage-detail.component';
 import { RequestStageDetailComponent } from './stage/detail/request-stage-detail.component';
 import { RequestStageCommonComponent } from './stage/header/request-stage-common.component';
@@ -25,7 +25,7 @@ import { RequestStageComponent } from './stage/request-stage.component';
     RequestStageCommonComponent,
     RequestStageDetailComponent,
     AnsibleAllocationStageDetailComponent,
-    AllocationAnsibleStageOutputComponent,
+    CodeViewerComponent,
     OpenstackAllocationStageDetailComponent,
     CleanupStageDetailComponent,
   ],

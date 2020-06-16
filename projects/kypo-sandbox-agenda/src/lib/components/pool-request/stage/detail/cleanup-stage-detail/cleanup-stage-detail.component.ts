@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { KypoBaseComponent } from 'kypo-common';
-import { AnsibleCleanupStage } from 'kypo-sandbox-model';
-import { OpenStackCleanupStage } from 'kypo-sandbox-model';
+import { CleanupStageDetailState } from '../../../../../model/stage/cleanup-stage-detail-state';
 
 @Component({
   selector: 'kypo-cleanup-stage-detail',
@@ -10,7 +9,7 @@ import { OpenStackCleanupStage } from 'kypo-sandbox-model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CleanupStageDetailComponent extends KypoBaseComponent implements OnInit {
-  @Input() stageDetail: AnsibleCleanupStage | OpenStackCleanupStage;
+  @Input() stageDetail: CleanupStageDetailState;
 
   constructor() {
     super();
