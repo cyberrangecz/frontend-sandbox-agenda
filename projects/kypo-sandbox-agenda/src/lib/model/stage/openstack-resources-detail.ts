@@ -2,6 +2,9 @@ import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
 import { OpenstackResource } from 'kypo-sandbox-model';
 import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
 
+/**
+ * @dynamic
+ */
 export class OpenstackResourcesDetail extends StageDetailAdditionalInfo {
   constructor(
     content: KypoPaginatedResource<OpenstackResource>,
