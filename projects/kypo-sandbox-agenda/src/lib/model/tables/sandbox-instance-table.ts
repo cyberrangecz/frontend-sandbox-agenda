@@ -4,14 +4,19 @@ import { Column, Kypo2Table, Row, RowAction } from 'kypo2-table';
 import { DeleteAction } from 'kypo2-table';
 import { defer, of } from 'rxjs';
 import { SandboxInstanceService } from '../../services/sandbox-instance/sandbox-instance.service';
+import { SandboxInstanceRowAdapter } from './adapters/sandbox-instance-row-adapter';
 
 /**
  * Helper class transforming paginated resource to class for common table component
  * @dynamic
  */
-export class SandboxInstanceTable extends Kypo2Table<SandboxInstance> {
+export class SandboxInstanceTable extends Kypo2Table<SandboxInstanceRowAdapter> {
   constructor(resource: KypoPaginatedResource<SandboxInstance>, poolId: number, service: SandboxInstanceService) {
-    const columns = [new Column('id', 'id', false), new Column('lockState', 'state', false)];
+    const columns = [
+      new Column('id', 'id', false),
+      new Column('title', 'title', false),
+      new Column('lockState', 'state', false),
+    ];
     const rows = resource.elements.map((element) => SandboxInstanceTable.createRow(element, poolId, service));
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -21,11 +26,10 @@ export class SandboxInstanceTable extends Kypo2Table<SandboxInstance> {
     instance: SandboxInstance,
     poolId: number,
     service: SandboxInstanceService
-  ): Row<SandboxInstance> {
-    const row = new Row(instance, this.createActions(instance, poolId, service));
-    // TODO: ADD when supported by API
-    //  row.addLink('id', RouteFactory.toSandboxInstance(poolId, instance.id));
-    return row;
+  ): Row<SandboxInstanceRowAdapter> {
+    const rowAdapter = instance as SandboxInstanceRowAdapter;
+    rowAdapter.title = `Sandbox ${rowAdapter.id}`;
+    return new Row(rowAdapter, this.createActions(rowAdapter, poolId, service));
   }
 
   private static createActions(
