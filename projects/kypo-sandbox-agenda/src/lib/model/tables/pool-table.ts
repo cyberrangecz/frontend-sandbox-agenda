@@ -5,16 +5,18 @@ import { DeleteAction } from 'kypo2-table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
 import { PoolOverviewService } from '../../services/pool/pool-overview.service';
+import { PoolRowAdapter } from './adapters/pool-row-adapter';
 
 /**
  * Helper class transforming paginated resource to class for common table component
  * @dynamic
  */
-export class PoolTable extends Kypo2Table<Pool> {
+export class PoolTable extends Kypo2Table<PoolRowAdapter> {
   constructor(resource: KypoPaginatedResource<Pool>, service: PoolOverviewService, navigator: SandboxNavigator) {
     const rows = resource.elements.map((element) => PoolTable.createRow(element, service, navigator));
     const columns = [
       new Column('id', 'id', false),
+      new Column('title', 'title', false),
       new Column('definitionId', 'definition id', false),
       new Column('lockState', 'state', false),
       new Column('usedAndMaxSize', 'size', false),
@@ -23,9 +25,11 @@ export class PoolTable extends Kypo2Table<Pool> {
     this.pagination = resource.pagination;
   }
 
-  private static createRow(pool: Pool, service: PoolOverviewService, navigator: SandboxNavigator): Row<Pool> {
-    const row = new Row(pool, this.createActions(pool, service));
-    row.addLink('id', navigator.toPool(pool.id));
+  private static createRow(pool: Pool, service: PoolOverviewService, navigator: SandboxNavigator): Row<PoolRowAdapter> {
+    const rowAdapter = pool as PoolRowAdapter;
+    rowAdapter.title = `Pool ${rowAdapter.id}`;
+    const row = new Row(rowAdapter, this.createActions(pool, service));
+    row.addLink('title', navigator.toPool(rowAdapter.id));
     return row;
   }
 
