@@ -12,7 +12,7 @@
     "csirt-mu-common": "9.0.0",
     "kypo-common": "9.0.2",
     "kypo-controls": "9.0.0",
-    "kypo2-topology-graph": "9.1.0",
+    "kypo2-topology-graph": "9.2.0",
     "kypo2-topology-graph-model": "9.0.0"
   }
 }
