@@ -51,13 +51,17 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
       ];
     }
     return zip(
-      this.createOpenstackAllocationBasicInfo(stageId),
-      this.createOpenstackResources(stageId, additionalInfoPagination[0]),
-      this.createOpenstackEvents(stageId, additionalInfoPagination[1])
+      this.createOpenstackAllocationBasicInfo(stageId)
+      // TODO: Uncomment once https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service/-/issues/91 is closed
+      // this.createOpenstackResources(stageId, additionalInfoPagination[0]),
+      // TODO: Uncomment once https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service/-/issues/91 is closed
+      // this.createOpenstackEvents(stageId, additionalInfoPagination[1])
     ).pipe(
       map((results) => {
         const basicInfo = results[0];
-        const additionalInfo = [results[1], results[2]];
+        // TODO: Uncomment once https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service/-/issues/91 is closed
+        //  const additionalInfo = [results[1], results[2]];
+        const additionalInfo = [];
         return new OpenstackAllocationStageDetailState(basicInfo, additionalInfo);
       })
     );

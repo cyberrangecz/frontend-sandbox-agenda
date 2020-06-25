@@ -12,7 +12,7 @@
 </kypo-code-viewer>
 
 <h3>{{ stageDetail?.additionalInfo[1]?.resourceName }}</h3>
-<kypo-code-viewer *ngIf="hasEvents else noResources"
+<kypo-code-viewer *ngIf="hasEvents else noEvents"
   maxHeight="600"
   viewPortItemHeight="20"
   [resource]="events"
