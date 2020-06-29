@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { CleanupStageDetailState } from '../../../../../model/stage/cleanup-stage-detail-state';
 
 @Component({
@@ -8,7 +8,7 @@ import { CleanupStageDetailState } from '../../../../../model/stage/cleanup-stag
   styleUrls: ['./cleanup-stage-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CleanupStageDetailComponent extends KypoBaseComponent implements OnInit {
+export class CleanupStageDetailComponent extends KypoBaseDirective implements OnInit {
   @Input() stageDetail: CleanupStageDetailState;
 
   constructor() {

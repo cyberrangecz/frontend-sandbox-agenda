@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
-import { RequestStage } from 'kypo-sandbox-model';
+import { KypoBaseDirective } from 'kypo-common';
 import { RequestStageType } from 'kypo-sandbox-model';
 import { StageDetailState } from '../../../../model/stage/stage-detail-state';
 
@@ -13,7 +12,7 @@ import { StageDetailState } from '../../../../model/stage/stage-detail-state';
   styleUrls: ['./request-stage-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestStageDetailComponent extends KypoBaseComponent implements OnInit {
+export class RequestStageDetailComponent extends KypoBaseDirective implements OnInit {
   @Input() stageDetail: StageDetailState;
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { Request } from 'kypo-sandbox-model';
 import { RequestStage } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ import { RequestStagesService } from '../../services/stage/request-stages.servic
   styleUrls: ['./pool-request-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolRequestDetailComponent extends KypoBaseComponent implements OnInit {
+export class PoolRequestDetailComponent extends KypoBaseDirective implements OnInit {
   request$: Observable<Request>;
   stages$: Observable<RequestStage[]>;
   stageDetails$: Observable<StageDetailState[]>;

@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseComponent, KypoRequestedPagination } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { RequestStage } from 'kypo-sandbox-model';
 import { OpenStackAllocationStage } from 'kypo-sandbox-model';
 import { AnsibleAllocationStage } from 'kypo-sandbox-model';
@@ -29,7 +29,7 @@ import { ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC } from '../../../model/stage/stage
   styleUrls: ['./request-stage.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestStageComponent extends KypoBaseComponent implements OnInit, OnChanges {
+export class RequestStageComponent extends KypoBaseDirective implements OnInit, OnChanges {
   @Input() stage: RequestStage;
   @Input() stageDetail: StageDetailState;
   @Output() stageDetailPanelEvent: EventEmitter<StageDetailPanelEvent> = new EventEmitter();

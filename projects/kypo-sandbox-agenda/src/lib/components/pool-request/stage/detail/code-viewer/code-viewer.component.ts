@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { KypoInfiniteScroller } from 'kypo-list';
+import { KypoInfiniteScrollerDirective } from 'kypo-list';
 
 @Component({
   selector: 'kypo-code-viewer',
   templateUrl: './code-viewer.component.html',
   styleUrls: ['./code-viewer.component.css'],
 })
-export class CodeViewerComponent extends KypoInfiniteScroller<string> implements OnInit {
+export class CodeViewerComponent extends KypoInfiniteScrollerDirective<string> implements OnInit {
   ngOnInit(): void {}
 
   /**
