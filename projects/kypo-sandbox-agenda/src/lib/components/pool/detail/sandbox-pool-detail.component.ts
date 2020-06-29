@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { KypoRequestedPagination } from 'kypo-common';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { Pool } from 'kypo-sandbox-model';
 import { SandboxInstance } from 'kypo-sandbox-model';
@@ -29,7 +29,7 @@ import { SandboxPoolDetailControls } from './sandbox-pool-detail-controls';
   styleUrls: ['./sandbox-pool-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxPoolDetailComponent extends KypoBaseComponent implements OnInit {
+export class SandboxPoolDetailComponent extends KypoBaseDirective implements OnInit {
   pool: Pool;
 
   instances$: Observable<Kypo2Table<SandboxInstance>>;

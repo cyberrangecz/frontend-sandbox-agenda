@@ -1,37 +1,23 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "paths": {
-      "kypo-sandbox-model": [
-        "dist/kypo-sandbox-model/kypo-sandbox-model",
-        "dist/kypo-sandbox-model"
-      ],
-      "kypo-sandbox-api": [
-        "dist/kypo-sandbox-api/kypo-sandbox-api",
-        "dist/kypo-sandbox-api"
-      ],
-      "kypo-sandbox-agenda": [
-        "dist/kypo-sandbox-agenda/kypo-sandbox-agenda",
-        "dist/kypo-sandbox-agenda"
-      ]
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/kypo-sandbox-agenda/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/kypo-sandbox-agenda/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/kypo-sandbox-agenda-example/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/kypo-sandbox-agenda-example/tsconfig.spec.json"
     }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+  ]
 }

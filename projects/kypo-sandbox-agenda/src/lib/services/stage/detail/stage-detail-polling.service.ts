@@ -32,13 +32,13 @@ export abstract class StageDetailPollingService extends StageDetailService {
     return combineLatest(stageDetails$);
   }
 
-  private getValuesOfFinished(stageDetails: StageDetailState[]): Array<Observable<StageDetailState>> {
+  private getValuesOfFinished(stageDetails: StageDetailState[]): Observable<StageDetailState>[] {
     return stageDetails
       .filter((stageDetail) => !stageDetail.basicInfo.stage.isRunning())
       .map((stageDetail) => of(stageDetail));
   }
 
-  private getValuesOfRunning(stageDetails: StageDetailState[]): Array<Observable<StageDetailState>> {
+  private getValuesOfRunning(stageDetails: StageDetailState[]): Observable<StageDetailState>[] {
     return stageDetails
       .filter((stageDetail) => stageDetail.basicInfo.stage.isRunning())
       .map((stageDetail) =>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { SandboxDefinition } from 'kypo-sandbox-model';
@@ -21,7 +21,7 @@ import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview
  * Component displaying overview of sandbox definitions. Contains button for create sandbox definitions,
  * table with all sandbox definitions and possible actions on sandbox definition.
  */
-export class SandboxDefinitionOverviewComponent extends KypoBaseComponent implements OnInit {
+export class SandboxDefinitionOverviewComponent extends KypoBaseDirective implements OnInit {
   controls: KypoControlItem[];
   sandboxDefinitions$: Observable<Kypo2Table<SandboxDefinition>>;
   hasError$: Observable<boolean>;

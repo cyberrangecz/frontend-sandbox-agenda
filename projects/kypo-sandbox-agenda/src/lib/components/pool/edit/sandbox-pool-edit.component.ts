@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { KypoControlItem } from 'kypo-controls';
 import { defer, of } from 'rxjs';
 import { take, takeWhile } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { SandboxPoolFormGroup } from './sandbox-pool-form-group';
   templateUrl: './sandbox-pool-edit.component.html',
   styleUrls: ['./sandbox-pool-edit.component.css'],
 })
-export class SandboxPoolEditComponent extends KypoBaseComponent implements OnInit {
+export class SandboxPoolEditComponent extends KypoBaseDirective implements OnInit {
   poolFormGroup: SandboxPoolFormGroup;
   controls: KypoControlItem[];
 

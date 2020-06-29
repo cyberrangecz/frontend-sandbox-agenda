@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseComponent, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { KypoBaseDirective, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
 import { OpenstackAllocationStageDetailState } from '../../../../../model/stage/openstack-allocation-stage-detail-state';
 import { StageDetailState } from '../../../../../model/stage/stage-detail-state';
 
@@ -18,7 +18,7 @@ import { StageDetailState } from '../../../../../model/stage/stage-detail-state'
   styleUrls: ['./openstack-allocation-stage-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OpenstackAllocationStageDetailComponent extends KypoBaseComponent implements OnInit, OnChanges {
+export class OpenstackAllocationStageDetailComponent extends KypoBaseDirective implements OnInit, OnChanges {
   @Input() stageDetail: OpenstackAllocationStageDetailState;
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KypoBaseComponent } from 'kypo-common';
+import { KypoBaseDirective } from 'kypo-common';
 import { SandboxInstance } from 'kypo-sandbox-model';
 import { Kypo2TopologyErrorService } from 'kypo2-topology-graph';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import { SandboxErrorHandler } from '../../../services/client/sandbox-error.hand
   styleUrls: ['./sandbox-instance-topology.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxInstanceTopologyComponent extends KypoBaseComponent implements OnInit {
+export class SandboxInstanceTopologyComponent extends KypoBaseDirective implements OnInit {
   sandboxInstance$: Observable<SandboxInstance>;
   topologyWidth: number;
   topologyHeight: number;
