@@ -43,7 +43,7 @@ export abstract class StageDetailPollingService extends StageDetailService {
       .filter((stageDetail) => stageDetail.basicInfo.stage.isRunning())
       .map((stageDetail) =>
         this.getStageDetail(
-          stageDetail.basicInfo.stage.id,
+          stageDetail.basicInfo.stage.requestId,
           stageDetail.basicInfo.stage.type,
           stageDetail.additionalInfo.map((additional) => additional.requestedPagination)
         )

@@ -1,15 +1,15 @@
-import { Request } from 'kypo-sandbox-model';
-import { RequestsService } from '../../services/request/requests.service';
-import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
-import { Column, DeleteAction, Kypo2Table, Row, RowAction } from 'kypo2-table';
-import { RequestRowAdapter } from './adapters/request-row-adapter';
 import { KypoPaginatedResource } from 'kypo-common';
+import { Request } from 'kypo-sandbox-model';
+import { Column, DeleteAction, Kypo2Table, Row, RowAction } from 'kypo2-table';
 import { defer, of } from 'rxjs';
+import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
+import { RequestRowAdapter } from './adapters/request-row-adapter';
+import { RequestsService } from '../../services/request/requests.service';
 
 /**
  * @dynamic
  */
-export class AllocationRequestTable extends Kypo2Table<RequestRowAdapter> {
+export class RequestTable extends Kypo2Table<RequestRowAdapter> {
   constructor(
     resource: KypoPaginatedResource<Request>,
     poolId: number,
@@ -21,9 +21,7 @@ export class AllocationRequestTable extends Kypo2Table<RequestRowAdapter> {
       new Column('title', 'title', false),
       new Column('createdAtFormatted', 'created', false),
     ];
-    const rows = resource.elements.map((element) =>
-      AllocationRequestTable.createRow(element, poolId, service, navigator)
-    );
+    const rows = resource.elements.map((element) => RequestTable.createRow(element, poolId, service, navigator));
     super(rows, columns);
     this.pagination = resource.pagination;
   }

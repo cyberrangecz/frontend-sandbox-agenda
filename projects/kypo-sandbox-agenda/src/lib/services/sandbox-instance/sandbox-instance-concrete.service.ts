@@ -9,7 +9,7 @@ import {
 } from 'csirt-mu-common';
 import { KypoPaginatedResource } from 'kypo-common';
 import { KypoRequestedPagination } from 'kypo-common';
-import { PoolRequestApi, SandboxInstanceApi } from 'kypo-sandbox-api';
+import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { SandboxInstance } from 'kypo-sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -29,7 +29,8 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
 
   constructor(
     private sandboxApi: SandboxInstanceApi,
-    private requestApi: PoolRequestApi,
+    private poolApi: PoolApi,
+    private sandboxAllocationUnitsApi: SandboxAllocationUnitsApi,
     private router: Router,
     private dialog: MatDialog,
     private navigator: SandboxNavigator,
@@ -79,7 +80,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param poolId id of a pool in which the allocation will take place
    */
   allocate(poolId: number): Observable<any> {
-    return this.sandboxApi.allocateSandboxes(poolId).pipe(
+    return this.poolApi.allocateSandboxes(poolId).pipe(
       tap(
         (_) => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
         (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
@@ -153,7 +154,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   }
 
   private callApiToDelete(sandboxInstance: SandboxInstance): Observable<any> {
-    return this.requestApi.createCleanupRequest(sandboxInstance.allocationUnitId).pipe(
+    return this.sandboxAllocationUnitsApi.createCleanupRequest(sandboxInstance.allocationUnitId).pipe(
       tap(
         (_) => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was deleted`),
         (err) => this.errorHandler.emit(err, `Deleting sandbox ${sandboxInstance.id}`)

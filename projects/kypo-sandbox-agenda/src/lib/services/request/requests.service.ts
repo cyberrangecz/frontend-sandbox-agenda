@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated requests and other operations to modify data.
  */
-export abstract class PoolRequestsService extends KypoPaginatedResourcePollingService<Request> {
+export abstract class RequestsService extends KypoPaginatedResourcePollingService<Request> {
   protected constructor(pageSize: number, pollPeriod: number) {
     super(pageSize, pollPeriod);
   }
@@ -18,4 +18,8 @@ export abstract class PoolRequestsService extends KypoPaginatedResourcePollingSe
    * @param pagination requested pagination
    */
   abstract getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Request>>;
+
+  abstract cancel(request: Request): Observable<any>;
+
+  abstract delete(request: Request): Observable<any>;
 }

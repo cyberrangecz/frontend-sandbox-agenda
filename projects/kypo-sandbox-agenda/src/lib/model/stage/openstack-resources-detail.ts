@@ -1,5 +1,5 @@
 import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
-import { OpenstackResource } from 'kypo-sandbox-model';
+import { OpenStackResource } from 'kypo-sandbox-model';
 import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
 
 /**
@@ -7,7 +7,7 @@ import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
  */
 export class OpenstackResourcesDetail extends StageDetailAdditionalInfo {
   constructor(
-    content: KypoPaginatedResource<OpenstackResource>,
+    content: KypoPaginatedResource<OpenStackResource>,
     requestedPagination: KypoRequestedPagination,
     hasError: boolean = false
   ) {
@@ -16,7 +16,7 @@ export class OpenstackResourcesDetail extends StageDetailAdditionalInfo {
     super('Openstack Resources', formattedContent, requestedPagination, hasError);
   }
 
-  private static resourcesToStringToString(resources: OpenstackResource[]): string[] {
+  private static resourcesToStringToString(resources: OpenStackResource[]): string[] {
     return resources.map((resource) => `${resource.name} ${resource.type} ${resource.status}`);
   }
 }

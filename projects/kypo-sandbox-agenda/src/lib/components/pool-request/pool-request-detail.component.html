@@ -15,7 +15,7 @@
       </kypo-request-stage>
     </div>
     <ng-template #noStages>
-      <h2>Request has no stages</h2>
+      <h2 *ngIf="!(isLoading$ | async)">Request has no stages</h2>
     </ng-template>
   </ng-container>
 </ng-container>

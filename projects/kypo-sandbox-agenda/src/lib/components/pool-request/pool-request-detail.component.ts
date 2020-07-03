@@ -25,6 +25,7 @@ export class PoolRequestDetailComponent extends KypoBaseDirective implements OnI
   stages$: Observable<RequestStage[]>;
   stageDetails$: Observable<StageDetailState[]>;
   hasError$: Observable<boolean>;
+  isLoading$: Observable<boolean>;
 
   private request: Request;
   private lastStageDetails: StageDetailState[] = [];
@@ -89,8 +90,9 @@ export class PoolRequestDetailComponent extends KypoBaseDirective implements OnI
   }
 
   private init() {
-    this.stages$ = this.requestStagesService.resource$.pipe(map((paginatedStages) => paginatedStages.elements));
+    this.stages$ = this.requestStagesService.stages$;
     this.hasError$ = this.requestStagesService.hasError$;
+    this.isLoading$ = this.requestStagesService.isLoading$;
     this.stageDetails$ = this.stageDetailService.stageDetails$.pipe(takeWhile((_) => this.isAlive));
     this.stageDetails$.subscribe((stageDetails) => (this.lastStageDetails = stageDetails));
 
