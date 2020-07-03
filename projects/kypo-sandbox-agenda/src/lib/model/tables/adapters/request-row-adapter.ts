@@ -1,5 +1,5 @@
 import { AllocationRequest } from 'kypo-sandbox-model';
 
-export class AllocationRequestRowAdapter extends AllocationRequest {
+export class RequestRowAdapter extends AllocationRequest {
   title: string;
 }

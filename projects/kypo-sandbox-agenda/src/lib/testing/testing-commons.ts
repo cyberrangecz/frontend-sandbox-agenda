@@ -2,7 +2,13 @@ import { MetadataOverride } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { KypoRequestedPagination } from 'kypo-common';
-import { PoolRequestApi, SandboxDefinitionApi, StagesApi } from 'kypo-sandbox-api';
+import {
+  AllocationRequestsApi,
+  CleanupRequestsApi,
+  PoolApi,
+  SandboxAllocationUnitsApi,
+  SandboxDefinitionApi,
+} from 'kypo-sandbox-api';
 import { Kypo2TopologyGraphConfig } from 'kypo2-topology-graph';
 import { SandboxAgendaConfig } from '../model/client/sandbox-agenda-config';
 import { SandboxErrorHandler } from '../services/client/sandbox-error.handler';
@@ -18,16 +24,20 @@ export function createDefinitionApiSpy(): jasmine.SpyObj<SandboxDefinitionApi> {
   return jasmine.createSpyObj('SandboxDefinitionApi', ['getAll', 'delete', 'add']);
 }
 
-export function createRequestApiSpy(): jasmine.SpyObj<PoolRequestApi> {
-  return jasmine.createSpyObj('PoolRequestApi', [
-    'getAllocationRequests',
-    'getCleanupRequests',
-    'cancelAllocationRequest',
-  ]);
+export function createPoolApiSpy(): jasmine.SpyObj<PoolApi> {
+  return jasmine.createSpyObj('PoolApi', ['getAllocationRequests', 'getCleanupRequests']);
 }
 
-export function createStagesApiSpy(): jasmine.SpyObj<StagesApi> {
-  return jasmine.createSpyObj('StagesApi', ['getAllocationStages']);
+export function createSauApiSpy(): jasmine.SpyObj<SandboxAllocationUnitsApi> {
+  return jasmine.createSpyObj(['deleteCleanupRequest']);
+}
+
+export function createAllocationRequestApiSpy(): jasmine.SpyObj<AllocationRequestsApi> {
+  return jasmine.createSpyObj('AllocationRequestsApi', ['cancel']);
+}
+
+export function createCleanupRequestApiSpy(): jasmine.SpyObj<CleanupRequestsApi> {
+  return jasmine.createSpyObj('CleanupRequestsApi', ['cancel']);
 }
 
 export function createRouterSpy(): jasmine.SpyObj<Router> {

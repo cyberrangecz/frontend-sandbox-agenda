@@ -4,7 +4,7 @@ import { CsirtMuDialogResultEnum } from 'csirt-mu-common';
 import { asyncData } from 'kypo-common';
 import { KypoPaginatedResource } from 'kypo-common';
 import { KypoPagination } from 'kypo-common';
-import { PoolRequestApi } from 'kypo-sandbox-api';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { AllocationRequest } from 'kypo-sandbox-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
@@ -14,39 +14,47 @@ import {
   createMatDialogSpy,
   createNotificationSpy,
   createPagination,
-  createRequestApiSpy,
+  createAllocationRequestApiSpy,
+  createPoolApiSpy,
+  createSauApiSpy,
 } from '../../../testing/testing-commons';
 import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
 import { SandboxNotificationService } from '../../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
-import { PoolAllocationRequestsConcreteService } from './pool-allocation-requests-concrete.service';
+import { AllocationRequestsConcreteService } from './allocation-requests-concrete.service';
 
 describe('PoolAllocationRequestsPollingService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let notificationSpy: jasmine.SpyObj<SandboxNotificationService>;
-  let apiSpy: jasmine.SpyObj<PoolRequestApi>;
+  let allocationRequestsApiSpy: jasmine.SpyObj<AllocationRequestsApi>;
+  let sauApiSpy: jasmine.SpyObj<SandboxAllocationUnitsApi>;
+  let poolApiSpy: jasmine.SpyObj<PoolApi>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
   let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
 
-  let service: PoolAllocationRequestsConcreteService;
+  let service: AllocationRequestsConcreteService;
 
   beforeEach(async(() => {
     errorHandlerSpy = createErrorHandlerSpy();
     notificationSpy = createNotificationSpy();
-    apiSpy = createRequestApiSpy();
+    allocationRequestsApiSpy = createAllocationRequestApiSpy();
+    sauApiSpy = createSauApiSpy();
+    poolApiSpy = createPoolApiSpy();
     contextSpy = createContextSpy();
     dialogSpy = createMatDialogSpy();
     TestBed.configureTestingModule({
       providers: [
-        PoolAllocationRequestsConcreteService,
-        { provide: PoolRequestApi, useValue: apiSpy },
+        AllocationRequestsConcreteService,
+        { provide: AllocationRequestsApi, useValue: allocationRequestsApiSpy },
+        { provide: PoolApi, useValue: poolApiSpy },
+        { provide: SandboxAllocationUnitsApi, useValue: sauApiSpy },
         { provide: MatDialog, useValue: dialogSpy },
         { provide: SandboxAgendaContext, useValue: contextSpy },
         { provide: SandboxNotificationService, useValue: notificationSpy },
         { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
       ],
     });
-    service = TestBed.inject(PoolAllocationRequestsConcreteService);
+    service = TestBed.inject(AllocationRequestsConcreteService);
   }));
 
   it('should be created', () => {
@@ -55,14 +63,14 @@ describe('PoolAllocationRequestsPollingService', () => {
 
   it('should call api to get allocation requests', (done) => {
     const pagination = createPagination();
-    apiSpy.getAllocationRequests.and.returnValue(asyncData(null));
+    poolApiSpy.getAllocationRequests.and.returnValue(asyncData(null));
 
     service
       .getAll(0, pagination)
       .pipe(take(1))
       .subscribe(
         (_) => {
-          expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
+          expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
           done();
         },
         (_) => fail
@@ -72,7 +80,7 @@ describe('PoolAllocationRequestsPollingService', () => {
   it('should emit next value when data received from api', (done) => {
     const pagination = createPagination();
     const mockData = createMock();
-    apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
+    poolApiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
 
     service.resource$.pipe(skip(1), take(1)).subscribe(
       (emitted) => {
@@ -86,7 +94,7 @@ describe('PoolAllocationRequestsPollingService', () => {
 
   it('should call error handler on err', (done) => {
     const pagination = createPagination();
-    apiSpy.getAllocationRequests.and.returnValue(throwError({ status: 400 }));
+    poolApiSpy.getAllocationRequests.and.returnValue(throwError({ status: 400 }));
 
     service
       .getAll(0, pagination)
@@ -105,8 +113,8 @@ describe('PoolAllocationRequestsPollingService', () => {
     const mockData = createMock();
     const request = new AllocationRequest();
     request.id = 0;
-    apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
-    apiSpy.cancelAllocationRequest.and.returnValue(asyncData(null));
+    poolApiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
+    allocationRequestsApiSpy.cancel.and.returnValue(asyncData(null));
 
     service
       .cancel(request)
@@ -114,7 +122,7 @@ describe('PoolAllocationRequestsPollingService', () => {
       .subscribe(
         (_) => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
-          expect(apiSpy.cancelAllocationRequest).toHaveBeenCalledTimes(1);
+          expect(allocationRequestsApiSpy.cancel).toHaveBeenCalledTimes(1);
           done();
         },
         (_) => fail()
@@ -126,8 +134,8 @@ describe('PoolAllocationRequestsPollingService', () => {
     const mockData = createMock();
     const request = new AllocationRequest();
     request.id = 0;
-    apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
-    apiSpy.cancelAllocationRequest.and.returnValue(asyncData(null));
+    poolApiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
+    allocationRequestsApiSpy.cancel.and.returnValue(asyncData(null));
 
     service
       .cancel(request)
@@ -137,7 +145,7 @@ describe('PoolAllocationRequestsPollingService', () => {
         (_) => fail(),
         () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
-          expect(apiSpy.cancelAllocationRequest).toHaveBeenCalledTimes(0);
+          expect(allocationRequestsApiSpy.cancel).toHaveBeenCalledTimes(0);
           done();
         }
       );
@@ -145,7 +153,7 @@ describe('PoolAllocationRequestsPollingService', () => {
 
   it('should start polling', fakeAsync(() => {
     const mockData = createMock();
-    apiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
+    poolApiSpy.getAllocationRequests.and.returnValue(asyncData(mockData));
 
     const subscription = service.resource$.subscribe();
     assertPoll(1);
@@ -154,7 +162,7 @@ describe('PoolAllocationRequestsPollingService', () => {
 
   it('should stop polling on error', fakeAsync(() => {
     const mockData = createMock();
-    apiSpy.getAllocationRequests.and.returnValues(
+    poolApiSpy.getAllocationRequests.and.returnValues(
       asyncData(mockData),
       asyncData(mockData),
       throwError({ status: 400 })
@@ -163,14 +171,14 @@ describe('PoolAllocationRequestsPollingService', () => {
     const subscription = service.resource$.subscribe();
     assertPoll(3);
     tick(5 * contextSpy.config.pollingPeriod);
-    expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
+    expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
     subscription.unsubscribe();
   }));
 
   it('should start polling again after request is successful', fakeAsync(() => {
     const pagination = createPagination();
     const mockData = createMock();
-    apiSpy.getAllocationRequests.and.returnValues(
+    poolApiSpy.getAllocationRequests.and.returnValues(
       asyncData(mockData),
       asyncData(mockData),
       throwError({ status: 400 }),
@@ -180,14 +188,14 @@ describe('PoolAllocationRequestsPollingService', () => {
     );
 
     const subscription = service.resource$.subscribe();
-    expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(0);
+    expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(0);
     assertPoll(3);
     tick(contextSpy.config.pollingPeriod);
-    expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
+    expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
     tick(5 * contextSpy.config.pollingPeriod);
-    expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
+    expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(3);
     service.getAll(0, pagination).subscribe();
-    expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(4);
+    expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(4);
     assertPoll(3, 4);
     subscription.unsubscribe();
   }));
@@ -201,7 +209,7 @@ describe('PoolAllocationRequestsPollingService', () => {
     for (let i = 0; i < times; i++) {
       tick(contextSpy.config.pollingPeriod);
       calledTimes = calledTimes + 1;
-      expect(apiSpy.getAllocationRequests).toHaveBeenCalledTimes(calledTimes);
+      expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(calledTimes);
     }
   }
 });

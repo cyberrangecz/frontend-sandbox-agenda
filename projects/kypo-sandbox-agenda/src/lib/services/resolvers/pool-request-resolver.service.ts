@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { PoolRequestApi } from 'kypo-sandbox-api';
 import { Request } from 'kypo-sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
   POOL_ALLOCATION_REQUEST_PATH,
   POOL_REQUEST_ID_SELECTOR,
-  SANDBOX_ALLOCATION_UNIT_ID_SELECTOR,
   SANDBOX_POOL_ID_SELECTOR,
 } from '../../model/client/default-paths';
 import { SandboxErrorHandler } from '../client/sandbox-error.handler';
 import { SandboxNavigator } from '../client/sandbox-navigator.service';
+import { AllocationRequestsApi, CleanupRequestsApi } from 'kypo-sandbox-api';
 
 /**
  * Router data provider
@@ -19,7 +18,8 @@ import { SandboxNavigator } from '../client/sandbox-navigator.service';
 @Injectable()
 export class PoolRequestResolver implements Resolve<Request> {
   constructor(
-    private api: PoolRequestApi,
+    private allocationRequestApi: AllocationRequestsApi,
+    private cleanupRequestApi: CleanupRequestsApi,
     private errorHandler: SandboxErrorHandler,
     private navigator: SandboxNavigator,
     private router: Router
@@ -36,21 +36,17 @@ export class PoolRequestResolver implements Resolve<Request> {
     }
 
     const poolId = Number(route.paramMap.get(SANDBOX_POOL_ID_SELECTOR));
-    if (!route.paramMap.has(SANDBOX_ALLOCATION_UNIT_ID_SELECTOR)) {
-      return this.navigateToPool(poolId);
-    }
 
     if (!route.paramMap.has(POOL_REQUEST_ID_SELECTOR)) {
       return this.navigateToPool(poolId);
     }
 
-    const allocationUnitId = Number(route.paramMap.get(SANDBOX_ALLOCATION_UNIT_ID_SELECTOR));
     const requestId = Number(route.paramMap.get(POOL_REQUEST_ID_SELECTOR));
 
     let request$: Observable<Request>;
     request$ = state.url.includes(POOL_ALLOCATION_REQUEST_PATH)
-      ? this.api.getAllocationRequest(allocationUnitId)
-      : this.api.getCleanupRequest(allocationUnitId, requestId);
+      ? this.allocationRequestApi.get(requestId)
+      : this.cleanupRequestApi.get(requestId);
 
     return request$.pipe(
       take(1),

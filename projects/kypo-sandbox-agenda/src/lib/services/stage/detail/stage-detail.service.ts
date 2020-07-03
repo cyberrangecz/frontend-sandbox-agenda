@@ -27,7 +27,7 @@ export abstract class StageDetailService {
    * @param additionalInfoPagination optional list of pagination requested for stage additional info (ORDER MATTERS)
    */
   register(stage: RequestStage, additionalInfoPagination?: KypoRequestedPagination[]): Observable<any> {
-    return this.getStageDetail(stage.id, stage.type, additionalInfoPagination).pipe(
+    return this.getStageDetail(stage.requestId, stage.type, additionalInfoPagination).pipe(
       tap(
         (stageDetail) => {
           this.subscribedStageDetails.setValue(stage.id, stageDetail);
@@ -49,12 +49,12 @@ export abstract class StageDetailService {
   }
 
   /**
-   * @param stageId id of stage
+   * @param requestId id of request associated with stages
    * @param stageType type of stage
    * @param additionalInfoPagination list of requested pagination of additional info of stage detail
    */
   abstract getStageDetail(
-    stageId: number,
+    requestId: number,
     stageType: RequestStageType,
     additionalInfoPagination?: KypoRequestedPagination[]
   ): Observable<StageDetailState>;

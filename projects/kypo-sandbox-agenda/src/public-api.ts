@@ -17,7 +17,7 @@ export * from './lib/components/sandbox-definition/overview/sandbox-definition-o
 export * from './lib/components/sandbox-definition/edit/edit-sandbox-definition.component';
 export * from './lib/components/sandbox-instance/topology/sandbox-instance-topology.component';
 export * from './lib/components/pool/edit/sandbox-pool-edit.component';
-export * from './lib/components/pool/detail/sandbox-pool-detail.component';
+export * from './lib/components/pool/detail/pool-detail.component';
 export * from './lib/components/pool/overview/sandbox-pool-overview.component';
 export * from './lib/components/pool-request/pool-request-detail.component';
 
@@ -38,9 +38,9 @@ export * from './lib/services/resolvers/pool-request-resolver.service';
 // ABSTRACT SERVICE PROVIDERS - COMPONENT RELATED
 export * from './lib/services/pool/pool-edit.service';
 export * from './lib/services/pool/pool-overview.service';
-export * from './lib/services/pool-request/pool-requests.service';
-export * from './lib/services/pool-request/allocation/pool-allocation-requests.service';
-export * from './lib/services/pool-request/cleanup/pool-cleanup-requests.service';
+export * from './lib/services/request/requests.service';
+export * from './lib/services/request/allocation/allocation-requests.service';
+export * from './lib/services/request/cleanup/cleanup-requests.service';
 export * from './lib/services/sandbox-definition/sandbox-definition-overview.service';
 export * from './lib/services/sandbox-definition/detail/sandbox-definition-detail.service';
 export * from './lib/services/sandbox-instance/sandbox-instance.service';

@@ -9,11 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { KypoBaseDirective } from 'kypo-common';
-import { RequestStage } from 'kypo-sandbox-model';
-import { OpenStackAllocationStage } from 'kypo-sandbox-model';
-import { AnsibleAllocationStage } from 'kypo-sandbox-model';
-import { OpenStackCleanupStage } from 'kypo-sandbox-model';
-import { AnsibleCleanupStage } from 'kypo-sandbox-model';
+import { OpenStackAllocationStage, OpenStackCleanupStage, RequestStage } from 'kypo-sandbox-model';
 import { CleanupRequestStage } from 'kypo-sandbox-model';
 import { StageDetailEventType } from '../../../model/stage/stage-detail-event-type';
 import { StageDetailPanelEvent } from '../../../model/stage/stage-detail-panel-event';
@@ -36,7 +32,8 @@ export class RequestStageComponent extends KypoBaseDirective implements OnInit, 
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 
   stageDetailIsLoading = false;
-  logoSrc: string;
+  stageTitle: string;
+  stageLogoSrc: string;
   detailDisabled: boolean;
   stageDetailHasError: boolean;
 
@@ -44,7 +41,7 @@ export class RequestStageComponent extends KypoBaseDirective implements OnInit, 
 
   ngOnChanges(changes: SimpleChanges): void {
     if ('stage' in changes) {
-      this.resolveStageLogo();
+      this.resolveStagePresentationalInfo();
       this.resolveStageDetailPanelState();
     }
     if ('stageDetail' in changes) {
@@ -68,11 +65,13 @@ export class RequestStageComponent extends KypoBaseDirective implements OnInit, 
     this.fetchStageDetail.emit(stageDetail);
   }
 
-  private resolveStageLogo() {
+  private resolveStagePresentationalInfo() {
     if (this.stage instanceof OpenStackAllocationStage || this.stage instanceof OpenStackCleanupStage) {
-      this.logoSrc = OPENSTACK_LOGO_SRC;
-    } else if (this.stage instanceof AnsibleAllocationStage || this.stage instanceof AnsibleCleanupStage) {
-      this.logoSrc = ANSIBLE_LOGO_SRC;
+      this.stageLogoSrc = OPENSTACK_LOGO_SRC;
+      this.stageTitle = `OpenStack Stage ${this.stage.id}`;
+    } else {
+      this.stageLogoSrc = ANSIBLE_LOGO_SRC;
+      this.stageTitle = `Ansible Stage ${this.stage.id}`;
     }
   }
 

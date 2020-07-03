@@ -7,25 +7,25 @@ import {
   CsirtMuDialogResultEnum,
 } from 'csirt-mu-common';
 import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
-import { PoolRequestApi } from 'kypo-sandbox-api';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { Request } from 'kypo-sandbox-model';
-import { BehaviorSubject, EMPTY, merge, Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
 import { SandboxNotificationService } from '../../client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
-import { PoolAllocationRequestsService } from './pool-allocation-requests.service';
+import { AllocationRequestsService } from './allocation-requests.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Can manually get creation requests, poll them and perform various operations to modify them.
  */
 @Injectable()
-export class PoolAllocationRequestsConcreteService extends PoolAllocationRequestsService {
-  private lastPoolId: number;
-
+export class AllocationRequestsConcreteService extends AllocationRequestsService {
   constructor(
-    private api: PoolRequestApi,
+    private poolApi: PoolApi,
+    private allocationRequestsApi: AllocationRequestsApi,
+    private sauApi: SandboxAllocationUnitsApi,
     private dialog: MatDialog,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
@@ -33,6 +33,9 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
   }
+  private lastPoolId: number;
+
+  protected abstract;
 
   /**
    * Gets all allocation requests with passed pagination and updates related observables or handles an error
@@ -41,7 +44,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
    */
   getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Request>> {
     this.onManualResourceRefresh(pagination, poolId);
-    return this.api.getAllocationRequests(poolId, pagination).pipe(
+    return this.poolApi.getAllocationRequests(poolId, pagination).pipe(
       tap(
         (paginatedRequests) => this.resourceSubject$.next(paginatedRequests),
         (err) => this.onGetAllError(err)
@@ -79,7 +82,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
    */
   protected refreshResource(): Observable<KypoPaginatedResource<Request>> {
     this.hasErrorSubject$.next(false);
-    return this.api
+    return this.poolApi
       .getAllocationRequests(this.lastPoolId, this.lastPagination)
       .pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
@@ -102,7 +105,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
   }
 
   private callApiToDelete(request: Request): Observable<any> {
-    return this.api.createCleanupRequest(request.allocationUnitId).pipe(
+    return this.sauApi.createCleanupRequest(request.allocationUnitId).pipe(
       tap(
         (_) => this.notificationService.emit('success', `Created cleanup request`),
         (err) => this.errorHandler.emit(err, 'Creating cleanup request')
@@ -112,7 +115,7 @@ export class PoolAllocationRequestsConcreteService extends PoolAllocationRequest
   }
 
   private callApiToCancel(request: Request): Observable<any> {
-    return this.api.cancelAllocationRequest(request.allocationUnitId, request.id).pipe(
+    return this.allocationRequestsApi.cancel(request.id).pipe(
       tap(
         (_) => this.notificationService.emit('success', `Allocation request ${request.id} cancelled`),
         (err) => this.errorHandler.emit(err, 'Cancelling allocation request ' + request.id)

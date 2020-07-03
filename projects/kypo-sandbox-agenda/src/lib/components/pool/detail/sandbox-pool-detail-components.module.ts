@@ -3,10 +3,10 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { KypoControlsModule } from 'kypo-controls';
 import { Kypo2TableModule } from 'kypo2-table';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
-import { PoolAllocationRequestsConcreteService } from '../../../services/pool-request/allocation/pool-allocation-requests-concrete.service';
-import { PoolAllocationRequestsService } from '../../../services/pool-request/allocation/pool-allocation-requests.service';
-import { PoolCleanupRequestsConcreteService } from '../../../services/pool-request/cleanup/pool-cleanup-requests-concrete.service';
-import { PoolCleanupRequestsService } from '../../../services/pool-request/cleanup/pool-cleanup-requests.service';
+import { AllocationRequestsConcreteService } from '../../../services/request/allocation/allocation-requests-concrete.service';
+import { AllocationRequestsService } from '../../../services/request/allocation/allocation-requests.service';
+import { CleanupRequestsConcreteService } from '../../../services/request/cleanup/cleanup-requests-concrete.service';
+import { CleanupRequestsService } from '../../../services/request/cleanup/cleanup-requests.service';
 import { PoolRequestBreadcrumbResolver } from '../../../services/resolvers/pool-request-breadcrumb-resolver.service';
 import { PoolRequestResolver } from '../../../services/resolvers/pool-request-resolver.service';
 import { PoolResolver } from '../../../services/resolvers/pool-resolver.service';
@@ -15,13 +15,13 @@ import { SandboxInstanceResolver } from '../../../services/resolvers/sandbox-ins
 import { SandboxInstanceConcreteService } from '../../../services/sandbox-instance/sandbox-instance-concrete.service';
 import { SandboxInstanceService } from '../../../services/sandbox-instance/sandbox-instance.service';
 import { SandboxPoolDetailMaterialModule } from './sandbox-pool-detail-material.module';
-import { SandboxPoolDetailComponent } from './sandbox-pool-detail.component';
+import { PoolDetailComponent } from './pool-detail.component';
 
 /**
  * Module containing component and providers for sandbox pool detail page
  */
 @NgModule({
-  declarations: [SandboxPoolDetailComponent],
+  declarations: [PoolDetailComponent],
   imports: [CommonModule, Kypo2TableModule, SandboxPoolDetailMaterialModule, KypoControlsModule],
   providers: [
     PoolResolver,
@@ -29,8 +29,8 @@ import { SandboxPoolDetailComponent } from './sandbox-pool-detail.component';
     PoolRequestBreadcrumbResolver,
     SandboxInstanceResolver,
     SandboxInstanceBreadcrumbResolver,
-    { provide: PoolAllocationRequestsService, useClass: PoolAllocationRequestsConcreteService },
-    { provide: PoolCleanupRequestsService, useClass: PoolCleanupRequestsConcreteService },
+    { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
+    { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
   ],
 })

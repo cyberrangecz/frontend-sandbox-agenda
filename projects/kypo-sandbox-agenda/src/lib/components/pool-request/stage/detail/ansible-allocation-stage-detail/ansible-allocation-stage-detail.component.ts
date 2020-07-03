@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { KypoBaseDirective, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
-import { AllocationAnsibleStageDetailState } from '../../../../../model/stage/allocation-ansible-stage-detail-state';
+import { AnsibleAllocationStageDetailState } from '../../../../../model/stage/ansible-allocation-stage-detail-state';
 import { StageDetailState } from '../../../../../model/stage/stage-detail-state';
 
 @Component({
@@ -19,7 +19,7 @@ import { StageDetailState } from '../../../../../model/stage/stage-detail-state'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnsibleAllocationStageDetailComponent extends KypoBaseDirective implements OnInit, OnChanges {
-  @Input() stageDetail: AllocationAnsibleStageDetailState;
+  @Input() stageDetail: AnsibleAllocationStageDetailState;
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 
   repository: string;

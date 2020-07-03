@@ -28,7 +28,6 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   constructor(
     private poolApi: PoolApi,
     private dialog: MatDialog,
-    private sandboxApi: SandboxInstanceApi,
     private context: SandboxAgendaContext,
     private router: Router,
     private navigator: SandboxNavigator,
@@ -66,9 +65,9 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   allocate(pool: Pool, count: number = -1): Observable<any> {
     let allocation$: Observable<any>;
     if (count <= 0) {
-      allocation$ = this.sandboxApi.allocateSandboxes(pool.id);
+      allocation$ = this.poolApi.allocateSandboxes(pool.id);
     } else {
-      allocation$ = this.sandboxApi.allocateSandboxes(pool.id, count);
+      allocation$ = this.poolApi.allocateSandboxes(pool.id, count);
     }
     return allocation$.pipe(
       tap(
