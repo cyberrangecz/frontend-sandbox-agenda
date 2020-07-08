@@ -1,29 +1,29 @@
 <div class="overview">
   <h3>Sandbox Instances</h3>
-  <kypo-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></kypo-controls>
-  <kypo2-table [data]="instances$ | async"
+  <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
+  <sentinel-table [data]="instances$ | async"
                [hasError]="instancesTableHasError$ | async"
                (rowAction)="onTableAction($event)"
                (refresh)="onInstanceLoadEvent($event)">
-  </kypo2-table>
+  </sentinel-table>
 </div>
 <div class="overview">
   <div class="requests">
     <div class="request">
       <h3>Allocation Requests</h3>
-      <kypo2-table [data]="allocationRequests$ | async"
+      <sentinel-table [data]="allocationRequests$ | async"
                    [hasError]="allocationRequestsTableHasError$ | async"
                    (rowAction)="onTableAction($event)"
                    (refresh)="onAllocationRequestsLoadEvent($event)">
-      </kypo2-table>
+      </sentinel-table>
     </div>
     <div class="request">
       <h3>Cleanup Requests</h3>
-      <kypo2-table [data]="cleanupRequests$ | async"
+      <sentinel-table [data]="cleanupRequests$ | async"
                    [hasError]="cleanupRequestsTableHasError$ | async"
                    (rowAction)="onTableAction($event)"
                    (refresh)="onCleanupRequestsLoadEvent($event)">
-      </kypo2-table>
+      </sentinel-table>
     </div>
   </div>
 </div>

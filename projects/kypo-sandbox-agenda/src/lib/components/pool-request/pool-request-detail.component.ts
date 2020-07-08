@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KypoBaseDirective } from 'kypo-common';
+import { SentinelBaseDirective } from '@sentinel/common';
 import { Request } from 'kypo-sandbox-model';
 import { RequestStage } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { StageDetailPanelEvent } from '../../model/stage/stage-detail-panel-even
 import { StageDetailState } from '../../model/stage/stage-detail-state';
 import { StageDetailService } from '../../services/stage/detail/stage-detail.service';
 import { RequestStagesService } from '../../services/stage/request-stages.service';
+
 /**
  * Smart component for pool request detail page
  */
@@ -20,7 +21,7 @@ import { RequestStagesService } from '../../services/stage/request-stages.servic
   styleUrls: ['./pool-request-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolRequestDetailComponent extends KypoBaseDirective implements OnInit {
+export class PoolRequestDetailComponent extends SentinelBaseDirective implements OnInit {
   request$: Observable<Request>;
   stages$: Observable<RequestStage[]>;
   stageDetails$: Observable<StageDetailState[]>;

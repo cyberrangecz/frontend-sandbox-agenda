@@ -1,6 +1,6 @@
-import { KypoPaginatedResource } from 'kypo-common';
+import { PaginatedResource } from '@sentinel/common';
 import { Request } from 'kypo-sandbox-model';
-import { Column, DeleteAction, Kypo2Table, Row, RowAction } from 'kypo2-table';
+import { Column, DeleteAction, SentinelTable, Row, RowAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
 import { RequestRowAdapter } from './adapters/request-row-adapter';
@@ -9,9 +9,9 @@ import { RequestsService } from '../../services/request/requests.service';
 /**
  * @dynamic
  */
-export class RequestTable extends Kypo2Table<RequestRowAdapter> {
+export class RequestTable extends SentinelTable<RequestRowAdapter> {
   constructor(
-    resource: KypoPaginatedResource<Request>,
+    resource: PaginatedResource<Request>,
     poolId: number,
     service: RequestsService,
     navigator: SandboxNavigator

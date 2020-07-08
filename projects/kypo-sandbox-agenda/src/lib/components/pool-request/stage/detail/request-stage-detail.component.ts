@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseDirective } from 'kypo-common';
+import { SentinelBaseDirective } from '@sentinel/common';
 import { RequestStageType } from 'kypo-sandbox-model';
 import { StageDetailState } from '../../../../model/stage/stage-detail-state';
 import { StageDetailComponentEnum } from '../../../../model/stage/stage-detail-component-enum';
@@ -22,7 +22,7 @@ import { StageDetailComponentEnum } from '../../../../model/stage/stage-detail-c
   styleUrls: ['./request-stage-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestStageDetailComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class RequestStageDetailComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   @Input() stageDetail: StageDetailState;
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
   stageComponents = StageDetailComponentEnum;
@@ -50,9 +50,6 @@ export class RequestStageDetailComponent extends KypoBaseDirective implements On
       }
       case RequestStageType.OPEN_STACK_ALLOCATION: {
         return StageDetailComponentEnum.OPEN_STACK_ALLOCATION;
-      }
-      default: {
-        return StageDetailComponentEnum.CLEANUP;
       }
     }
   }

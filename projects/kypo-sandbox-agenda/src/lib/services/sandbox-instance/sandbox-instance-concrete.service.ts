@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { SandboxInstance } from 'kypo-sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
@@ -46,7 +45,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param poolId id of a pool associated with sandbox instances
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<SandboxInstance>> {
+  getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<SandboxInstance>> {
     this.onManualResourceRefresh(pagination, poolId);
     return this.sandboxApi.getSandboxes(poolId, pagination).pipe(
       tap(
@@ -58,7 +57,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     );
   }
 
-  protected onManualResourceRefresh(pagination: KypoRequestedPagination, ...params: any[]) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]) {
     super.onManualResourceRefresh(pagination);
     this.lastPoolId = params[0];
   }
@@ -70,7 +69,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   delete(sandboxInstance: SandboxInstance): Observable<any> {
     return this.displayConfirmationDialog(sandboxInstance, 'Delete').pipe(
       switchMap((result) =>
-        result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxInstance) : EMPTY
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxInstance) : EMPTY
       )
     );
   }
@@ -97,7 +96,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   unlock(sandboxInstance: SandboxInstance): Observable<any> {
     return this.displayConfirmationDialog(sandboxInstance, 'Unlock').pipe(
       switchMap((result) =>
-        result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToUnlock(sandboxInstance) : EMPTY
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToUnlock(sandboxInstance) : EMPTY
       )
     );
   }
@@ -121,7 +120,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, sandboxInstance.id)]));
   }
 
-  protected refreshResource(): Observable<KypoPaginatedResource<SandboxInstance>> {
+  protected refreshResource(): Observable<PaginatedResource<SandboxInstance>> {
     this.hasErrorSubject$.next(false);
     return this.sandboxApi
       .getSandboxes(this.lastPoolId, this.lastPagination)
@@ -131,9 +130,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   private displayConfirmationDialog(
     sandboxInstance: SandboxInstance,
     action: string
-  ): Observable<CsirtMuDialogResultEnum> {
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
-      data: new CsirtMuConfirmationDialogConfig(
+  ): Observable<SentinelDialogResultEnum> {
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
+      data: new SentinelConfirmationDialogConfig(
         `${action} sandbox`,
         `Do you want to ${action} sandbox ${sandboxInstance.id}"?`,
         'Cancel',

@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
-import { PoolApi, SandboxInstanceApi } from 'kypo-sandbox-api';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PoolApi } from 'kypo-sandbox-api';
 import { Pool } from 'kypo-sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
@@ -23,7 +23,7 @@ import { PoolOverviewService } from './pool-overview.service';
  */
 @Injectable()
 export class PoolOverviewConcreteService extends PoolOverviewService {
-  private lastPagination: KypoRequestedPagination;
+  private lastPagination: RequestedPagination;
 
   constructor(
     private poolApi: PoolApi,
@@ -41,7 +41,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    * Gets all pools with passed pagination and updates related observables or handles an error
    * @param pagination requested pagination
    */
-  getAll(pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Pool>> {
+  getAll(pagination: RequestedPagination): Observable<PaginatedResource<Pool>> {
     this.lastPagination = pagination;
     this.hasErrorSubject$.next(false);
     return this.poolApi.getPools(pagination).pipe(
@@ -84,7 +84,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    */
   delete(pool: Pool): Observable<any> {
     return this.displayConfirmationDialog(pool, 'Delete').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool) : EMPTY))
     );
   }
 
@@ -94,7 +94,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    */
   clear(pool: Pool): Observable<any> {
     return this.displayConfirmationDialog(pool, 'Clear').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToClear(pool) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToClear(pool) : EMPTY))
     );
   }
 
@@ -114,13 +114,13 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
 
   unlock(pool: Pool): Observable<any> {
     return this.displayConfirmationDialog(pool, 'Unlock').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToUnlock(pool) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToUnlock(pool) : EMPTY))
     );
   }
 
-  private displayConfirmationDialog(pool: Pool, action: string): Observable<CsirtMuDialogResultEnum> {
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
-      data: new CsirtMuConfirmationDialogConfig(
+  private displayConfirmationDialog(pool: Pool, action: string): Observable<SentinelDialogResultEnum> {
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
+      data: new SentinelConfirmationDialogConfig(
         `${action} Pool`,
         `Do you want to ${action} pool "${pool.id}"?`,
         'Cancel',

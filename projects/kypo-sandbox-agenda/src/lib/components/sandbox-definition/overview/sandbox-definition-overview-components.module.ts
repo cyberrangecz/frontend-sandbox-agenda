@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-import { KypoControlsModule } from 'kypo-controls';
-import { Kypo2TableModule } from 'kypo2-table';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
 import { SandboxDefaultNavigator } from '../../../services/client/sandbox-default-navigator.service';
 import { SandboxNavigator } from '../../../services/client/sandbox-navigator.service';
@@ -15,7 +15,7 @@ import { SandboxDefinitionOverviewComponent } from './sandbox-definition-overvie
  * Module containing components and services for sandbox definition overview page
  */
 @NgModule({
-  imports: [CommonModule, Kypo2TableModule, KypoControlsModule],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsModule],
   declarations: [SandboxDefinitionOverviewComponent, SandboxDefinitionDetailComponent],
   providers: [
     SandboxAgendaContext,

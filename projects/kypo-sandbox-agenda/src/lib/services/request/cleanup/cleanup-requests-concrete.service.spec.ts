@@ -1,8 +1,5 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoPagination } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
-import { asyncData } from 'kypo-common';
+import { PaginatedResource, SentinelPagination, RequestedPagination, asyncData } from '@sentinel/common';
 import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -158,11 +155,11 @@ describe('PoolCleanupRequestsConcreteService', () => {
   }));
 
   function createPagination() {
-    return new KypoRequestedPagination(1, 5, '', '');
+    return new RequestedPagination(1, 5, '', '');
   }
 
   function createMock() {
-    return new KypoPaginatedResource([], new KypoPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
   }
 
   function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {

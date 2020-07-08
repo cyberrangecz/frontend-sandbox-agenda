@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { KypoRequestedPagination } from 'kypo-common';
+import { RequestedPagination } from '@sentinel/common';
 import { NetworkingAnsibleAllocationStage, OpenStackAllocationStage, RequestStageType } from 'kypo-sandbox-model';
 import { Observable, of, throwError, zip } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
   getStageDetail(
     requestId: number,
     stageType: RequestStageType,
-    additionalInfoPagination?: KypoRequestedPagination[]
+    additionalInfoPagination?: RequestedPagination[]
   ): Observable<StageDetailState> {
     switch (stageType) {
       case RequestStageType.OPEN_STACK_ALLOCATION: {
@@ -50,13 +50,10 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createOpenStackStageState(
     requestId: number,
-    additionalInfoPagination: KypoRequestedPagination[]
+    additionalInfoPagination: RequestedPagination[]
   ): Observable<StageDetailState> {
     if (!additionalInfoPagination || additionalInfoPagination.length < 2) {
-      additionalInfoPagination = [
-        new KypoRequestedPagination(0, 500, '', ''),
-        new KypoRequestedPagination(0, 500, '', ''),
-      ];
+      additionalInfoPagination = [new RequestedPagination(0, 500, '', ''), new RequestedPagination(0, 500, '', '')];
     }
     return zip(
       this.createOpenStackAllocationBasicInfo(requestId),
@@ -73,10 +70,10 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createNetworkingAnsibleStageState(
     stageId: number,
-    additionalInfoPagination: KypoRequestedPagination[]
+    additionalInfoPagination: RequestedPagination[]
   ): Observable<StageDetailState> {
     if (!additionalInfoPagination || additionalInfoPagination.length < 1) {
-      additionalInfoPagination = [new KypoRequestedPagination(0, 500, '', '')];
+      additionalInfoPagination = [new RequestedPagination(0, 500, '', '')];
     }
     return zip(
       this.createNetworkingAnsibleAllocationBasicInfo(stageId),
@@ -101,7 +98,7 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createNetworkingAnsibleAllocationOutput(
     stageId: number,
-    pagination: KypoRequestedPagination
+    pagination: RequestedPagination
   ): Observable<StageDetailAdditionalInfo> {
     return this.api.getNetworkingAnsibleOutputs(stageId, pagination).pipe(
       map((output) => new StageDetailAdditionalInfo('Networking Ansible Output', output, pagination)),
@@ -111,10 +108,10 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createUserAnsibleStageState(
     requestId: number,
-    additionalInfoPagination: KypoRequestedPagination[]
+    additionalInfoPagination: RequestedPagination[]
   ): Observable<StageDetailState> {
     if (!additionalInfoPagination || additionalInfoPagination.length < 1) {
-      additionalInfoPagination = [new KypoRequestedPagination(0, 500, '', '')];
+      additionalInfoPagination = [new RequestedPagination(0, 500, '', '')];
     }
     return zip(
       this.createUserAnsibleAllocationBasicInfo(requestId),
@@ -139,7 +136,7 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createUserAnsibleAllocationOutput(
     requestId: number,
-    pagination: KypoRequestedPagination
+    pagination: RequestedPagination
   ): Observable<StageDetailAdditionalInfo> {
     return this.api.getUserAnsibleOutputs(requestId, pagination).pipe(
       map((output) => new StageDetailAdditionalInfo('User Ansible Output', output, pagination)),
@@ -158,7 +155,7 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createOpenStackResources(
     requestId: number,
-    pagination: KypoRequestedPagination
+    pagination: RequestedPagination
   ): Observable<StageDetailAdditionalInfo> {
     return this.api.getOpenStackResources(requestId, pagination).pipe(
       map((resources) => new OpenstackResourcesDetail(resources, pagination)),
@@ -168,7 +165,7 @@ export class AllocationStageDetailPollingService extends StageDetailPollingServi
 
   private createOpenStackEvents(
     requestId: number,
-    pagination: KypoRequestedPagination
+    pagination: RequestedPagination
   ): Observable<StageDetailAdditionalInfo> {
     return this.api.getOpenStackEvents(requestId, pagination).pipe(
       map((events) => new OpenStackEventsDetail(events, pagination)),

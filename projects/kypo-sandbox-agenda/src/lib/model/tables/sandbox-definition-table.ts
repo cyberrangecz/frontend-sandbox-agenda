@@ -1,7 +1,6 @@
-import { KypoPaginatedResource } from 'kypo-common';
+import { PaginatedResource } from '@sentinel/common';
 import { SandboxDefinition } from 'kypo-sandbox-model';
-import { Column, Kypo2Table, Row, RowExpand } from 'kypo2-table';
-import { DeleteAction } from 'kypo2-table';
+import { Column, SentinelTable, Row, RowExpand, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxDefinitionDetailComponent } from '../../components/sandbox-definition/overview/sandbox-definition-detail/sandbox-definition-detail.component';
 import { SandboxDefinitionOverviewService } from '../../services/sandbox-definition/sandbox-definition-overview.service';
@@ -9,8 +8,8 @@ import { SandboxDefinitionOverviewService } from '../../services/sandbox-definit
 /**
  * Helper class transforming paginated resource to class for common table component
  */
-export class SandboxDefinitionTable extends Kypo2Table<SandboxDefinition> {
-  constructor(resource: KypoPaginatedResource<SandboxDefinition>, service: SandboxDefinitionOverviewService) {
+export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
+  constructor(resource: PaginatedResource<SandboxDefinition>, service: SandboxDefinitionOverviewService) {
     const columns = [new Column('id', 'id', false), new Column('title', 'title', false)];
     const rows = resource.elements.map((element) => SandboxDefinitionTable.createRow(element, service));
     super(rows, columns);

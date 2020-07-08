@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseDirective, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { AnsibleAllocationStageDetailState } from '../../../../../model/stage/ansible-allocation-stage-detail-state';
 import { StageDetailState } from '../../../../../model/stage/stage-detail-state';
 
@@ -18,13 +18,13 @@ import { StageDetailState } from '../../../../../model/stage/stage-detail-state'
   styleUrls: ['./ansible-allocation-stage-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnsibleAllocationStageDetailComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class AnsibleAllocationStageDetailComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   @Input() stageDetail: AnsibleAllocationStageDetailState;
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 
   repository: string;
   revision: string;
-  output: KypoPaginatedResource<string>;
+  output: PaginatedResource<string>;
   hasOutput: boolean;
 
   pageSize = 500;
@@ -43,7 +43,7 @@ export class AnsibleAllocationStageDetailComponent extends KypoBaseDirective imp
     }
   }
 
-  onFetch(requestedPagination: KypoRequestedPagination) {
+  onFetch(requestedPagination: RequestedPagination) {
     this.isLoading = true;
     this.stageDetail.additionalInfo[0].requestedPagination = requestedPagination;
     this.fetchStageDetail.emit(this.stageDetail);

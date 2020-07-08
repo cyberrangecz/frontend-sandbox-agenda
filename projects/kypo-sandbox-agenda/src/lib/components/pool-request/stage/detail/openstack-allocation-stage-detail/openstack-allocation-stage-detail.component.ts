@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseDirective, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { OpenStackAllocationStageDetailState } from '../../../../../model/stage/open-stack-allocation-stage-detail-state';
 import { StageDetailState } from '../../../../../model/stage/stage-detail-state';
 
@@ -18,15 +18,15 @@ import { StageDetailState } from '../../../../../model/stage/stage-detail-state'
   styleUrls: ['./openstack-allocation-stage-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OpenstackAllocationStageDetailComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class OpenstackAllocationStageDetailComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   @Input() stageDetail: OpenStackAllocationStageDetailState;
   @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
 
   status: string;
   statusReason: string;
-  resources: KypoPaginatedResource<string>;
+  resources: PaginatedResource<string>;
   hasResources: boolean;
-  events: KypoPaginatedResource<string>;
+  events: PaginatedResource<string>;
   hasEvents: boolean;
   resourcesPageSize = 100;
   eventsPageSize = 100;
@@ -52,7 +52,7 @@ export class OpenstackAllocationStageDetailComponent extends KypoBaseDirective i
     }
   }
 
-  onFetch(requestedPagination: KypoRequestedPagination, index: number) {
+  onFetch(requestedPagination: RequestedPagination, index: number) {
     this.isLoading = true;
     this.stageDetail.additionalInfo[index].requestedPagination = requestedPagination;
     this.fetchStageDetail.emit(this.stageDetail);

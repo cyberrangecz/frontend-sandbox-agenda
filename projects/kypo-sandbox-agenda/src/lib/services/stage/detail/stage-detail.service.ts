@@ -1,4 +1,4 @@
-import { KypoRequestedPagination } from 'kypo-common';
+import { RequestedPagination } from '@sentinel/common';
 import { RequestStage } from 'kypo-sandbox-model';
 import { RequestStageType } from 'kypo-sandbox-model';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -26,7 +26,7 @@ export abstract class StageDetailService {
    * @param stage a stage to to register
    * @param additionalInfoPagination optional list of pagination requested for stage additional info (ORDER MATTERS)
    */
-  register(stage: RequestStage, additionalInfoPagination?: KypoRequestedPagination[]): Observable<any> {
+  register(stage: RequestStage, additionalInfoPagination?: RequestedPagination[]): Observable<any> {
     return this.getStageDetail(stage.requestId, stage.type, additionalInfoPagination).pipe(
       tap(
         (stageDetail) => {
@@ -56,6 +56,6 @@ export abstract class StageDetailService {
   abstract getStageDetail(
     requestId: number,
     stageType: RequestStageType,
-    additionalInfoPagination?: KypoRequestedPagination[]
+    additionalInfoPagination?: RequestedPagination[]
   ): Observable<StageDetailState>;
 }

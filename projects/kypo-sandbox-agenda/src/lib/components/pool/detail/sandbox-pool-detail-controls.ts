@@ -1,4 +1,4 @@
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from 'kypo-sandbox-model';
 import { defer, of } from 'rxjs';
 import { SandboxInstanceService } from '../../../services/sandbox-instance/sandbox-instance.service';
@@ -9,9 +9,9 @@ import { SandboxInstanceService } from '../../../services/sandbox-instance/sandb
 export class SandboxPoolDetailControls {
   static readonly ALLOCATE_ACTION_ID = 'allocate';
 
-  static create(pool: Pool, service: SandboxInstanceService): KypoControlItem[] {
+  static create(pool: Pool, service: SandboxInstanceService): SentinelControlItem[] {
     return [
-      new KypoControlItem(
+      new SentinelControlItem(
         this.ALLOCATE_ACTION_ID,
         'Allocate',
         'primary',

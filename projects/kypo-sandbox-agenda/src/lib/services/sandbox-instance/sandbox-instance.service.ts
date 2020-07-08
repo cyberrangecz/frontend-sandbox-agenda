@@ -1,5 +1,4 @@
-import { KypoPaginatedResource, KypoPaginatedResourcePollingService } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination, PaginatedResourcePollingService } from '@sentinel/common';
 import { SandboxInstance } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 
@@ -8,7 +7,7 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated sandbox instances and other operations to modify data.
  */
-export abstract class SandboxInstanceService extends KypoPaginatedResourcePollingService<SandboxInstance> {
+export abstract class SandboxInstanceService extends PaginatedResourcePollingService<SandboxInstance> {
   protected constructor(pageSize: number, pollPeriod: number) {
     super(pageSize, pollPeriod);
   }
@@ -17,10 +16,7 @@ export abstract class SandboxInstanceService extends KypoPaginatedResourcePollin
    * @param poolId id of a pool associated with sandbox instances
    * @param pagination requested pagination
    */
-  abstract getAll(
-    poolId: number,
-    pagination: KypoRequestedPagination
-  ): Observable<KypoPaginatedResource<SandboxInstance>>;
+  abstract getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<SandboxInstance>>;
 
   /**
    * Deletes a sandbox instance

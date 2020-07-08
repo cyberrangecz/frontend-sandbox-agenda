@@ -2,7 +2,7 @@
   <div class="sandbox-select-container">
     <h1 mat-dialog-title>Select Sandbox Definition</h1>
     <mat-divider></mat-divider>
-    <kypo-list resourceName="Sandbox Definitions"
+    <sentinel-list resourceName="Sandbox Definitions"
                mode="radio"
                [resource]="definitions$ | async"
                [hasError]="hasError$ | async"
@@ -11,7 +11,7 @@
                [pageSize]="PAGE_SIZE"
                (fetch)="fetch($event)"
                (selectionChange)="onSelectionChange($event)">
-    </kypo-list>
+    </sentinel-list>
     <div mat-dialog-actions>
       <button (click)="cancel()"
               mat-button color="warn">Cancel</button>

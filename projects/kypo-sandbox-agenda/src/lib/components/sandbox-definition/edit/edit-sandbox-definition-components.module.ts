@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { KypoControlsModule } from 'kypo-controls';
+import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
 import { SandboxDefaultNavigator } from '../../../services/client/sandbox-default-navigator.service';
 import { SandboxNavigator } from '../../../services/client/sandbox-navigator.service';
@@ -15,7 +15,7 @@ import { EditSandboxDefinitionComponent } from './edit-sandbox-definition.compon
  * Module for create sandbox definition page and components
  */
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CreateSandboxDefinitionMaterial, KypoControlsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CreateSandboxDefinitionMaterial, SentinelControlsModule],
   declarations: [EditSandboxDefinitionComponent],
   providers: [
     SandboxAgendaContext,

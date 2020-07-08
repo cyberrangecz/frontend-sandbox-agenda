@@ -1,7 +1,7 @@
-<kypo-controls [controls]="controls" (itemClicked)="onControls($event)"></kypo-controls>
-<kypo2-table
+<sentinel-controls [controls]="controls" (itemClicked)="onControls($event)"></sentinel-controls>
+<sentinel-table
   [data]="pools$ | async"
   [hasError]="hasError$ | async"
   (rowAction)="onPoolAction($event)"
   (refresh)="onPoolsLoadEvent($event)">
-</kypo2-table>
+</sentinel-table>

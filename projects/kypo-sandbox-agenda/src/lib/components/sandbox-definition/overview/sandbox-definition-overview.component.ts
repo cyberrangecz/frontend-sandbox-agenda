@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { SandboxDefinition } from 'kypo-sandbox-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionTable } from '../../../model/tables/sandbox-definition-table';
@@ -21,9 +20,9 @@ import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview
  * Component displaying overview of sandbox definitions. Contains button for create sandbox definitions,
  * table with all sandbox definitions and possible actions on sandbox definition.
  */
-export class SandboxDefinitionOverviewComponent extends KypoBaseDirective implements OnInit {
-  controls: KypoControlItem[];
-  sandboxDefinitions$: Observable<Kypo2Table<SandboxDefinition>>;
+export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective implements OnInit {
+  controls: SentinelControlItem[];
+  sandboxDefinitions$: Observable<SentinelTable<SandboxDefinition>>;
   hasError$: Observable<boolean>;
 
   private lastLoadEvent: LoadTableEvent;
@@ -62,7 +61,7 @@ export class SandboxDefinitionOverviewComponent extends KypoBaseDirective implem
   /**
    * Navigates to create sandbox definition page
    */
-  onControlsActions(control: KypoControlItem) {
+  onControlsActions(control: SentinelControlItem) {
     control.result$.pipe(take(1)).subscribe();
   }
 
@@ -71,7 +70,7 @@ export class SandboxDefinitionOverviewComponent extends KypoBaseDirective implem
       map((resource) => new SandboxDefinitionTable(resource, this.sandboxDefinitionService))
     );
     this.lastLoadEvent = new LoadTableEvent(
-      new KypoRequestedPagination(0, this.context.config.defaultPaginationSize, '', ''),
+      new RequestedPagination(0, this.context.config.defaultPaginationSize, '', ''),
       null
     );
     this.onLoadEvent(this.lastLoadEvent);

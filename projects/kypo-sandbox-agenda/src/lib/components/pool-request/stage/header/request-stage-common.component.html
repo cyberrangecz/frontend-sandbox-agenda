@@ -7,6 +7,6 @@
   </ng-container>
   <h3>{{ stage?.state }}</h3>
 </div>
-<p *ngIf="stage.start">Started: {{ stage?.start | kypoDateTimeFormat }}</p>
-<p *ngIf="stage.start">Ended: {{ stage?.end | kypoDateTimeFormat }}</p>
+<p *ngIf="stage.start">Started: {{ stage?.start | sentinelDateTimeFormat }}</p>
+<p *ngIf="stage.start">Ended: {{ stage?.end | sentinelDateTimeFormat }}</p>
 <p class="error" *ngIf="stage.errorMessage"> {{ stage.errorMessage }}</p>

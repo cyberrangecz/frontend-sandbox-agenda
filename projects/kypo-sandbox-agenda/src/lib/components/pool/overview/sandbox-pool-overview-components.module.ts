@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { KypoControlsModule } from 'kypo-controls';
-import { Kypo2TableModule } from 'kypo2-table';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
 import { SandboxDefaultNavigator } from '../../../services/client/sandbox-default-navigator.service';
 import { SandboxNavigator } from '../../../services/client/sandbox-navigator.service';
@@ -18,7 +18,7 @@ import { SandboxPoolOverviewComponent } from './sandbox-pool-overview.component'
  */
 @NgModule({
   declarations: [SandboxPoolOverviewComponent],
-  imports: [CommonModule, Kypo2TableModule, KypoControlsModule, MatDialogModule],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsModule, MatDialogModule],
   providers: [
     PoolResolver,
     PoolBreadcrumbResolver,

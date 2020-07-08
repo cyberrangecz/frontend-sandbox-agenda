@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { CleanupRequest, Request } from 'kypo-sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
@@ -10,10 +9,10 @@ import { SandboxErrorHandler } from '../../client/sandbox-error.handler';
 import { SandboxAgendaContext } from '../../internal/sandox-agenda-context.service';
 import { RequestsService } from '../requests.service';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
 import { SandboxNotificationService } from '../../client/sandbox-notification.service';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,7 +27,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
   /**
    * List of cleanup requests with currently selected pagination options
    */
-  resource$: Observable<KypoPaginatedResource<Request>>;
+  resource$: Observable<PaginatedResource<Request>>;
 
   constructor(
     private poolApi: PoolApi,
@@ -47,7 +46,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
    * @param poolId id of a pool associated with cleanup requests
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Request>> {
+  getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<Request>> {
     this.onManualResourceRefresh(pagination, poolId);
     return this.poolApi.getCleanupRequests(poolId, pagination).pipe(
       tap(
@@ -59,17 +58,17 @@ export class CleanupRequestsConcreteService extends RequestsService {
 
   cancel(request: CleanupRequest): Observable<any> {
     return this.displayConfirmationDialog(request, 'Cancel', 'No', 'Yes').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
     );
   }
 
   delete(request: CleanupRequest): Observable<any> {
     return this.displayConfirmationDialog(request, 'Delete', 'Cancel', 'Delete').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
     );
   }
 
-  protected onManualResourceRefresh(pagination: KypoRequestedPagination, ...params) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params) {
     super.onManualResourceRefresh(pagination, ...params);
     this.lastPoolId = params[0];
   }
@@ -77,7 +76,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
   /**
    * Repeats last get all request for polling purposes
    */
-  protected refreshResource(): Observable<KypoPaginatedResource<Request>> {
+  protected refreshResource(): Observable<PaginatedResource<Request>> {
     this.hasErrorSubject$.next(false);
     return this.poolApi
       .getCleanupRequests(this.lastPoolId, this.lastPagination)
@@ -94,9 +93,9 @@ export class CleanupRequestsConcreteService extends RequestsService {
     action: string,
     cancelLabel: string,
     confirmLabel: string
-  ): Observable<CsirtMuDialogResultEnum> {
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
-      data: new CsirtMuConfirmationDialogConfig(
+  ): Observable<SentinelDialogResultEnum> {
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
+      data: new SentinelConfirmationDialogConfig(
         `${action} cleanup request`,
         `Do you want to ${action.toLowerCase()} cleanup request "${request.id}"?`,
         cancelLabel,

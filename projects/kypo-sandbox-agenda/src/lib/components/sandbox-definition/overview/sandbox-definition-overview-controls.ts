@@ -1,4 +1,4 @@
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { defer, of } from 'rxjs';
 import { SandboxDefinitionOverviewService } from '../../../services/sandbox-definition/sandbox-definition-overview.service';
 
@@ -12,9 +12,9 @@ export class SandboxDefinitionOverviewControls {
    *
    * @param service
    */
-  static create(service: SandboxDefinitionOverviewService): KypoControlItem[] {
+  static create(service: SandboxDefinitionOverviewService): SentinelControlItem[] {
     return [
-      new KypoControlItem(
+      new SentinelControlItem(
         this.CREATE_ACTION_ID,
         'Create',
         'primary',

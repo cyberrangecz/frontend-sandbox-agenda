@@ -2,10 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoPagination } from 'kypo-common';
-import { asyncData } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, SentinelPagination, asyncData, RequestedPagination } from '@sentinel/common';
 import { SandboxDefinitionApi } from 'kypo-sandbox-api';
 import { SandboxDefinition } from 'kypo-sandbox-model';
 import { throwError } from 'rxjs';
@@ -91,7 +88,7 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
   });
 
   function createPagination() {
-    return new KypoRequestedPagination(1, 5, '', '');
+    return new RequestedPagination(1, 5, '', '');
   }
 
   function createMockData() {
@@ -99,6 +96,6 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
     sandbox1.id = 1;
     const sandbox2 = new SandboxDefinition();
     sandbox2.id = 2;
-    return new KypoPaginatedResource<SandboxDefinition>([sandbox1, sandbox2], new KypoPagination(1, 2, 5, 2, 1));
+    return new PaginatedResource<SandboxDefinition>([sandbox1, sandbox2], new SentinelPagination(1, 2, 5, 2, 1));
   }
 });

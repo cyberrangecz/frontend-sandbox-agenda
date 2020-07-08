@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KypoRequestedPagination } from 'kypo-common';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from 'kypo-sandbox-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../../../model/tables/pool-table';
@@ -20,11 +19,11 @@ import { PoolOverviewService } from '../../../services/pool/pool-overview.servic
   styleUrls: ['./sandbox-pool-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxPoolOverviewComponent extends KypoBaseDirective implements OnInit {
-  pools$: Observable<Kypo2Table<Pool>>;
+export class SandboxPoolOverviewComponent extends SentinelBaseDirective implements OnInit {
+  pools$: Observable<SentinelTable<Pool>>;
   hasError$: Observable<boolean>;
 
-  controls: KypoControlItem[] = [];
+  controls: SentinelControlItem[] = [];
 
   constructor(
     private poolService: PoolOverviewService,
@@ -58,13 +57,13 @@ export class SandboxPoolOverviewComponent extends KypoBaseDirective implements O
     event.action.result$.pipe(take(1)).subscribe();
   }
 
-  onControls(controlItem: KypoControlItem) {
+  onControls(controlItem: SentinelControlItem) {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new KypoRequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
+      new RequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
     );
     this.pools$ = this.poolService.resource$.pipe(
       map((resource) => new PoolTable(resource, this.poolService, this.navigator))
@@ -75,7 +74,7 @@ export class SandboxPoolOverviewComponent extends KypoBaseDirective implements O
 
   private initControls() {
     this.controls = [
-      new KypoControlItem(
+      new SentinelControlItem(
         'create',
         'Create',
         'primary',
