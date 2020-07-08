@@ -3,7 +3,7 @@ import { RequestsService } from '../../services/request/requests.service';
 import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
 import { Column, DeleteAction, SentinelTable, Row, RowAction } from '@sentinel/components/table';
 import { RequestRowAdapter } from './adapters/request-row-adapter';
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource, SentinelDateTimeFormatPipe } from '@sentinel/common';
 import { defer, of } from 'rxjs';
 
 /**
@@ -33,7 +33,9 @@ export class CleanupRequestTable extends SentinelTable<RequestRowAdapter> {
     navigator: SandboxNavigator
   ): Row<RequestRowAdapter> {
     const rowAdapter = request as RequestRowAdapter;
+    const dateFormatter = new SentinelDateTimeFormatPipe('en-US');
     rowAdapter.title = `Request ${rowAdapter.id}`;
+    rowAdapter.createdAtFormatted = dateFormatter.transform(rowAdapter.createdAt);
     const row = new Row(rowAdapter, this.createActions(request, service));
     row.addLink('title', navigator.toCleanupRequest(poolId, rowAdapter.id));
     return row;
