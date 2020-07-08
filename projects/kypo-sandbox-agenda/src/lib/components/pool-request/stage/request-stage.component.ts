@@ -8,8 +8,13 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { KypoBaseDirective } from 'kypo-common';
-import { OpenStackAllocationStage, OpenStackCleanupStage, RequestStage } from 'kypo-sandbox-model';
+import { SentinelBaseDirective } from '@sentinel/common';
+import {
+  AllocationRequestStage,
+  OpenStackAllocationStage,
+  OpenStackCleanupStage,
+  RequestStage,
+} from 'kypo-sandbox-model';
 import { CleanupRequestStage } from 'kypo-sandbox-model';
 import { StageDetailEventType } from '../../../model/stage/stage-detail-event-type';
 import { StageDetailPanelEvent } from '../../../model/stage/stage-detail-panel-event';
@@ -25,7 +30,7 @@ import { ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC } from '../../../model/stage/stage
   styleUrls: ['./request-stage.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestStageComponent extends KypoBaseDirective implements OnInit, OnChanges {
+export class RequestStageComponent extends SentinelBaseDirective implements OnInit, OnChanges {
   @Input() stage: RequestStage;
   @Input() stageDetail: StageDetailState;
   @Output() stageDetailPanelEvent: EventEmitter<StageDetailPanelEvent> = new EventEmitter();
@@ -36,6 +41,7 @@ export class RequestStageComponent extends KypoBaseDirective implements OnInit, 
   stageLogoSrc: string;
   detailDisabled: boolean;
   stageDetailHasError: boolean;
+  isAllocationStage: boolean;
 
   ngOnInit() {}
 
@@ -76,6 +82,7 @@ export class RequestStageComponent extends KypoBaseDirective implements OnInit, 
   }
 
   private resolveStageDetailPanelState() {
+    this.isAllocationStage = this.stage instanceof AllocationRequestStage;
     if (this.stage.isInQueue()) {
       this.detailDisabled = true;
     } else {

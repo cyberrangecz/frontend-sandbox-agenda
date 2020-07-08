@@ -1,6 +1,6 @@
 import { RequestStage } from 'kypo-sandbox-model';
 import { Request } from 'kypo-sandbox-model';
-import { BehaviorSubject, merge, Observable, Subject, timer, zip } from 'rxjs';
+import { BehaviorSubject, merge, Observable, Subject, timer } from 'rxjs';
 import { retryWhen, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 

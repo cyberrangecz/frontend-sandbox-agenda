@@ -2,11 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
-  CsirtMuConfirmationDialogComponent,
-  CsirtMuConfirmationDialogConfig,
-  CsirtMuDialogResultEnum,
-} from 'csirt-mu-common';
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+  SentinelConfirmationDialogComponent,
+  SentinelConfirmationDialogConfig,
+  SentinelDialogResultEnum,
+} from '@sentinel/components/dialogs';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { Request } from 'kypo-sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
@@ -42,7 +42,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
    * @param poolId id of a pool associated with allocation requests
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Request>> {
+  getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<Request>> {
     this.onManualResourceRefresh(pagination, poolId);
     return this.poolApi.getAllocationRequests(poolId, pagination).pipe(
       tap(
@@ -52,7 +52,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     );
   }
 
-  protected onManualResourceRefresh(pagination: KypoRequestedPagination, ...params) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params) {
     super.onManualResourceRefresh(pagination, ...params);
     this.lastPoolId = params[0];
   }
@@ -63,7 +63,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
    */
   cancel(request: Request): Observable<any> {
     return this.displayConfirmationDialog(request, 'Cancel', 'No', 'Yes').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
     );
   }
 
@@ -73,14 +73,14 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
    */
   delete(request: Request): Observable<any> {
     return this.displayConfirmationDialog(request, 'Delete', 'Cancel', 'Delete').pipe(
-      switchMap((result) => (result === CsirtMuDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
     );
   }
 
   /**
    * Repeats last get all request for polling purposes
    */
-  protected refreshResource(): Observable<KypoPaginatedResource<Request>> {
+  protected refreshResource(): Observable<PaginatedResource<Request>> {
     this.hasErrorSubject$.next(false);
     return this.poolApi
       .getAllocationRequests(this.lastPoolId, this.lastPagination)
@@ -92,9 +92,9 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     action: string,
     cancelLabel: string,
     confirmLabel: string
-  ): Observable<CsirtMuDialogResultEnum> {
-    const dialogRef = this.dialog.open(CsirtMuConfirmationDialogComponent, {
-      data: new CsirtMuConfirmationDialogConfig(
+  ): Observable<SentinelDialogResultEnum> {
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
+      data: new SentinelConfirmationDialogConfig(
         `${action} allocation request`,
         `Do you want to ${action.toLowerCase()} allocation request "${request.id}"?`,
         cancelLabel,

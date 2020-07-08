@@ -1,4 +1,4 @@
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { OpenStackEvent } from 'kypo-sandbox-model';
 import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
 
@@ -7,12 +7,12 @@ import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
  */
 export class OpenStackEventsDetail extends StageDetailAdditionalInfo {
   constructor(
-    content: KypoPaginatedResource<OpenStackEvent>,
-    requestedPagination: KypoRequestedPagination,
+    content: PaginatedResource<OpenStackEvent>,
+    requestedPagination: RequestedPagination,
     hasError: boolean = false
   ) {
     const formattedEvents = content ? OpenStackEventsDetail.eventsToString(content.elements) : [];
-    const formattedContent = content ? new KypoPaginatedResource(formattedEvents, content.pagination) : undefined;
+    const formattedContent = content ? new PaginatedResource(formattedEvents, content.pagination) : undefined;
     super('OpenStack Events', formattedContent, requestedPagination, hasError);
   }
 

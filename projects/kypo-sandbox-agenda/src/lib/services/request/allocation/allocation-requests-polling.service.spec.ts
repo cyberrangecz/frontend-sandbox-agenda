@@ -1,9 +1,7 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { CsirtMuDialogResultEnum } from 'csirt-mu-common';
-import { asyncData } from 'kypo-common';
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoPagination } from 'kypo-common';
+import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
+import { PaginatedResource, SentinelPagination, asyncData } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { AllocationRequest } from 'kypo-sandbox-model';
 import { of, throwError } from 'rxjs';
@@ -109,7 +107,7 @@ describe('PoolAllocationRequestsPollingService', () => {
   });
 
   it('should open dialog and call api if confirmed on cancel', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.CONFIRMED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.CONFIRMED) } as any);
     const mockData = createMock();
     const request = new AllocationRequest();
     request.id = 0;
@@ -130,7 +128,7 @@ describe('PoolAllocationRequestsPollingService', () => {
   });
 
   it('should open dialog and not call api if dialog dismissed on cancel', (done) => {
-    dialogSpy.open.and.returnValue({ afterClosed: () => of(CsirtMuDialogResultEnum.DISMISSED) } as any);
+    dialogSpy.open.and.returnValue({ afterClosed: () => of(SentinelDialogResultEnum.DISMISSED) } as any);
     const mockData = createMock();
     const request = new AllocationRequest();
     request.id = 0;
@@ -201,7 +199,7 @@ describe('PoolAllocationRequestsPollingService', () => {
   }));
 
   function createMock() {
-    return new KypoPaginatedResource([], new KypoPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
   }
 
   function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {

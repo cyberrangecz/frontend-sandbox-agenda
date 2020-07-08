@@ -1,4 +1,4 @@
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { OpenStackResource } from 'kypo-sandbox-model';
 import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
 
@@ -7,12 +7,12 @@ import { StageDetailAdditionalInfo } from './stage-detail-additional-info';
  */
 export class OpenstackResourcesDetail extends StageDetailAdditionalInfo {
   constructor(
-    content: KypoPaginatedResource<OpenStackResource>,
-    requestedPagination: KypoRequestedPagination,
+    content: PaginatedResource<OpenStackResource>,
+    requestedPagination: RequestedPagination,
     hasError: boolean = false
   ) {
     const formattedResources = content ? OpenstackResourcesDetail.resourcesToStringToString(content.elements) : [];
-    const formattedContent = content ? new KypoPaginatedResource(formattedResources, content.pagination) : undefined;
+    const formattedContent = content ? new PaginatedResource(formattedResources, content.pagination) : undefined;
     super('Openstack Resources', formattedContent, requestedPagination, hasError);
   }
 

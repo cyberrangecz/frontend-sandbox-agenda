@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { KypoBaseDirective, KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { SandboxDefinition } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
@@ -15,10 +15,10 @@ import { SandboxDefinitionOverviewService } from '../../../../services/sandbox-d
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService }],
 })
-export class SandboxDefinitionSelectComponent extends KypoBaseDirective implements OnInit {
+export class SandboxDefinitionSelectComponent extends SentinelBaseDirective implements OnInit {
   readonly PAGE_SIZE: number;
 
-  definitions$: Observable<KypoPaginatedResource<SandboxDefinition>>;
+  definitions$: Observable<PaginatedResource<SandboxDefinition>>;
   isLoading$: Observable<boolean>;
   hasError$: Observable<boolean>;
 
@@ -36,7 +36,7 @@ export class SandboxDefinitionSelectComponent extends KypoBaseDirective implemen
   }
 
   ngOnInit(): void {
-    const pagination = new KypoRequestedPagination(0, this.PAGE_SIZE, '', '');
+    const pagination = new RequestedPagination(0, this.PAGE_SIZE, '', '');
     this.definitions$ = this.definitionService.resource$;
     this.isLoading$ = this.definitionService.isLoading$;
     this.hasError$ = this.definitionService.hasError$;
@@ -46,7 +46,7 @@ export class SandboxDefinitionSelectComponent extends KypoBaseDirective implemen
       .subscribe();
   }
 
-  fetch(pagination: KypoRequestedPagination) {
+  fetch(pagination: RequestedPagination) {
     this.definitionService
       .getAll(pagination)
       .pipe(takeWhile((_) => this.isAlive))

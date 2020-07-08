@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KypoRequestedPagination } from 'kypo-common';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from 'kypo-sandbox-model';
 import { SandboxInstance } from 'kypo-sandbox-model';
 import { Request } from 'kypo-sandbox-model';
-import { Kypo2Table, LoadTableEvent, TableActionEvent } from 'kypo2-table';
+import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { POOL_DATA_ATTRIBUTE_NAME } from '../../../model/client/activated-route-data-attributes';
-import { RequestTable } from '../../../model/tables/request-table';
 import { SandboxInstanceTable } from '../../../model/tables/sandbox-instance-table';
 import { SandboxNavigator } from '../../../services/client/sandbox-navigator.service';
 import { SandboxAgendaContext } from '../../../services/internal/sandox-agenda-context.service';
@@ -30,19 +28,19 @@ import { CleanupRequestTable } from '../../../model/tables/cleanup-request-table
   styleUrls: ['./pool-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolDetailComponent extends KypoBaseDirective implements OnInit {
+export class PoolDetailComponent extends SentinelBaseDirective implements OnInit {
   pool: Pool;
 
-  instances$: Observable<Kypo2Table<SandboxInstance>>;
+  instances$: Observable<SentinelTable<SandboxInstance>>;
   instancesTableHasError$: Observable<boolean>;
 
-  allocationRequests$: Observable<Kypo2Table<Request>>;
+  allocationRequests$: Observable<SentinelTable<Request>>;
   allocationRequestsTableHasError$: Observable<boolean>;
 
-  cleanupRequests$: Observable<Kypo2Table<Request>>;
+  cleanupRequests$: Observable<SentinelTable<Request>>;
   cleanupRequestsTableHasError$: Observable<boolean>;
 
-  controls: KypoControlItem[];
+  controls: SentinelControlItem[];
 
   constructor(
     private instanceService: SandboxInstanceService,
@@ -93,7 +91,7 @@ export class PoolDetailComponent extends KypoBaseDirective implements OnInit {
       .subscribe();
   }
 
-  onControlsAction(control: KypoControlItem) {
+  onControlsAction(control: SentinelControlItem) {
     control.result$.pipe(takeWhile((_) => this.isAlive)).subscribe();
   }
 
@@ -107,7 +105,7 @@ export class PoolDetailComponent extends KypoBaseDirective implements OnInit {
 
   private initTables() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new KypoRequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
+      new RequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
     );
     this.activeRoute.data.pipe(takeWhile((_) => this.isAlive)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];

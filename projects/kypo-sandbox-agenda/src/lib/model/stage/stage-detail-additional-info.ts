@@ -1,15 +1,15 @@
-import { KypoPaginatedResource, KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 
 export class StageDetailAdditionalInfo {
   resourceName: string;
-  content: KypoPaginatedResource<string>;
+  content: PaginatedResource<string>;
   hasError: boolean;
-  requestedPagination: KypoRequestedPagination;
+  requestedPagination: RequestedPagination;
 
   constructor(
     resourceName: string,
-    content: KypoPaginatedResource<string>,
-    requestedPagination: KypoRequestedPagination,
+    content: PaginatedResource<string>,
+    requestedPagination: RequestedPagination,
     hasError: boolean = false
   ) {
     this.resourceName = resourceName;

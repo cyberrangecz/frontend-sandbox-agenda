@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { KypoControlsModule } from 'kypo-controls';
-import { Kypo2TableModule } from 'kypo2-table';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
 import { AllocationRequestsConcreteService } from '../../../services/request/allocation/allocation-requests-concrete.service';
 import { AllocationRequestsService } from '../../../services/request/allocation/allocation-requests.service';
@@ -22,7 +22,7 @@ import { PoolDetailComponent } from './pool-detail.component';
  */
 @NgModule({
   declarations: [PoolDetailComponent],
-  imports: [CommonModule, Kypo2TableModule, SandboxPoolDetailMaterialModule, KypoControlsModule],
+  imports: [CommonModule, SentinelTableModule, SandboxPoolDetailMaterialModule, SentinelControlsModule],
   providers: [
     PoolResolver,
     PoolRequestResolver,

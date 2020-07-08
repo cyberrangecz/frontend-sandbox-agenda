@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { defer, of } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionDetailService } from '../../../services/sandbox-definition/detail/sandbox-definition-detail.service';
@@ -15,9 +15,9 @@ import { SandboxDefinitionFormGroup } from './edit-sandbox-definition-form-group
   styleUrls: ['./edit-sandbox-definition.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditSandboxDefinitionComponent extends KypoBaseDirective implements OnInit {
+export class EditSandboxDefinitionComponent extends SentinelBaseDirective implements OnInit {
   sandboxDefinitionFormGroup: SandboxDefinitionFormGroup;
-  controls: KypoControlItem[];
+  controls: SentinelControlItem[];
 
   constructor(private sandboxDefinitionService: SandboxDefinitionDetailService) {
     super();
@@ -39,13 +39,13 @@ export class EditSandboxDefinitionComponent extends KypoBaseDirective implements
     return this.sandboxDefinitionFormGroup.formGroup.get('revision');
   }
 
-  onControlsAction(control: KypoControlItem) {
+  onControlsAction(control: SentinelControlItem) {
     control.result$.pipe(takeWhile((_) => this.isAlive)).subscribe();
   }
 
   private initControls() {
     this.controls = [
-      new KypoControlItem(
+      new SentinelControlItem(
         'create',
         'Create',
         'primary',

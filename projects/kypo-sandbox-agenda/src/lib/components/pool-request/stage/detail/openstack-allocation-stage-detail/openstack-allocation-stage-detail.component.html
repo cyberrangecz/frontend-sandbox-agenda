@@ -2,24 +2,24 @@
 <p>Reason: {{ statusReason }}</p>
 
 <h3>{{ stageDetail?.additionalInfo[0]?.resourceName }}</h3>
-<kypo-code-viewer *ngIf="hasResources else noResources"
+<sentinel-code-viewer *ngIf="hasResources else noResources"
   maxHeight="600"
   viewPortItemHeight="20"
   [resource]="resources"
   [pageSize]="resourcesPageSize"
   [isLoading]="isLoading"
   (fetch)="onFetch($event, 0)">>
-</kypo-code-viewer>
+</sentinel-code-viewer>
 
 <h3>{{ stageDetail?.additionalInfo[1]?.resourceName }}</h3>
-<kypo-code-viewer *ngIf="hasEvents else noEvents"
+<sentinel-code-viewer *ngIf="hasEvents else noEvents"
   maxHeight="600"
   viewPortItemHeight="20"
   [resource]="events"
   [pageSize]="eventsPageSize"
   [isLoading]="isLoading"
   (fetch)="onFetch($event, 1)">>
-</kypo-code-viewer>
+</sentinel-code-viewer>
 
 <ng-template #noResources>
   <p>This stage has no resources<p>

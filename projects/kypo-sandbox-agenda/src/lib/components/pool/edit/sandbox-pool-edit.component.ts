@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { KypoBaseDirective } from 'kypo-common';
-import { KypoControlItem } from 'kypo-controls';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { SentinelControlItem } from '@sentinel/components/controls';
 import { defer, of } from 'rxjs';
 import { take, takeWhile } from 'rxjs/operators';
 import { PoolEditService } from '../../../services/pool/pool-edit.service';
@@ -14,9 +14,9 @@ import { SandboxPoolFormGroup } from './sandbox-pool-form-group';
   templateUrl: './sandbox-pool-edit.component.html',
   styleUrls: ['./sandbox-pool-edit.component.css'],
 })
-export class SandboxPoolEditComponent extends KypoBaseDirective implements OnInit {
+export class SandboxPoolEditComponent extends SentinelBaseDirective implements OnInit {
   poolFormGroup: SandboxPoolFormGroup;
-  controls: KypoControlItem[];
+  controls: SentinelControlItem[];
 
   constructor(private poolEditService: PoolEditService) {
     super();
@@ -38,7 +38,7 @@ export class SandboxPoolEditComponent extends KypoBaseDirective implements OnIni
     return this.poolFormGroup.formGroup.get('poolSize');
   }
 
-  onControlsAction(control: KypoControlItem) {
+  onControlsAction(control: SentinelControlItem) {
     control.result$.pipe(take(1)).subscribe();
   }
 
@@ -56,7 +56,7 @@ export class SandboxPoolEditComponent extends KypoBaseDirective implements OnIni
 
   initControls() {
     this.controls = [
-      new KypoControlItem(
+      new SentinelControlItem(
         'create',
         'Create',
         'primary',

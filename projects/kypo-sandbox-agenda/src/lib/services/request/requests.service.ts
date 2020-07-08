@@ -1,5 +1,4 @@
-import { KypoPaginatedResource, KypoPaginatedResourcePollingService } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, PaginatedResourcePollingService, RequestedPagination } from '@sentinel/common';
 import { Request } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 
@@ -8,7 +7,7 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated requests and other operations to modify data.
  */
-export abstract class RequestsService extends KypoPaginatedResourcePollingService<Request> {
+export abstract class RequestsService extends PaginatedResourcePollingService<Request> {
   protected constructor(pageSize: number, pollPeriod: number) {
     super(pageSize, pollPeriod);
   }
@@ -17,7 +16,7 @@ export abstract class RequestsService extends KypoPaginatedResourcePollingServic
    * @param poolId id of a pool associated with requests
    * @param pagination requested pagination
    */
-  abstract getAll(poolId: number, pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Request>>;
+  abstract getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<Request>>;
 
   abstract cancel(request: Request): Observable<any>;
 

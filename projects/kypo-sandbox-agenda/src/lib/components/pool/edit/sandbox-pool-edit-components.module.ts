@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { KypoControlsModule } from 'kypo-controls';
-import { KypoListModule } from 'kypo-list';
+import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelListModule } from '@sentinel/components/list';
 import { SandboxAgendaConfig } from '../../../model/client/sandbox-agenda-config';
 import { PoolEditConcreteService } from '../../../services/pool/pool-edit-concrete.service';
 import { PoolEditService } from '../../../services/pool/pool-edit.service';
@@ -12,7 +12,13 @@ import { SandboxPoolEditComponent } from './sandbox-pool-edit.component';
 
 @NgModule({
   declarations: [SandboxPoolEditComponent, SandboxDefinitionSelectComponent],
-  imports: [CommonModule, SandboxPoolEditMaterialModule, KypoControlsModule, KypoListModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SandboxPoolEditMaterialModule,
+    SentinelControlsModule,
+    SentinelListModule,
+    ReactiveFormsModule,
+  ],
   providers: [{ provide: PoolEditService, useClass: PoolEditConcreteService }],
 })
 export class SandboxPoolEditComponentsModule {

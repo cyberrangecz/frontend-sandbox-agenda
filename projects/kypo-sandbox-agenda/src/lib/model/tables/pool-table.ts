@@ -1,7 +1,6 @@
-import { KypoPaginatedResource } from 'kypo-common';
+import { PaginatedResource } from '@sentinel/common';
 import { Pool } from 'kypo-sandbox-model';
-import { Column, Kypo2Table, Row, RowAction } from 'kypo2-table';
-import { DeleteAction } from 'kypo2-table';
+import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '../../services/client/sandbox-navigator.service';
 import { PoolOverviewService } from '../../services/pool/pool-overview.service';
@@ -11,8 +10,8 @@ import { PoolRowAdapter } from './adapters/pool-row-adapter';
  * Helper class transforming paginated resource to class for common table component
  * @dynamic
  */
-export class PoolTable extends Kypo2Table<PoolRowAdapter> {
-  constructor(resource: KypoPaginatedResource<Pool>, service: PoolOverviewService, navigator: SandboxNavigator) {
+export class PoolTable extends SentinelTable<PoolRowAdapter> {
+  constructor(resource: PaginatedResource<Pool>, service: PoolOverviewService, navigator: SandboxNavigator) {
     const rows = resource.elements.map((element) => PoolTable.createRow(element, service, navigator));
     const columns = [
       new Column('id', 'id', false),

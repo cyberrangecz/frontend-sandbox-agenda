@@ -1,6 +1,4 @@
-import { KypoPaginatedResource } from 'kypo-common';
-import { KypoPaginatedResourceService } from 'kypo-common';
-import { KypoRequestedPagination } from 'kypo-common';
+import { PaginatedResource, PaginatedResourceService, RequestedPagination } from '@sentinel/common';
 import { Pool } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 
@@ -9,7 +7,7 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated pools and other operations to modify data.
  */
-export abstract class PoolOverviewService extends KypoPaginatedResourceService<Pool> {
+export abstract class PoolOverviewService extends PaginatedResourceService<Pool> {
   protected constructor(pageSize: number) {
     super(pageSize);
   }
@@ -17,7 +15,7 @@ export abstract class PoolOverviewService extends KypoPaginatedResourceService<P
   /**
    * @param pagination requested pagination
    */
-  abstract getAll(pagination: KypoRequestedPagination): Observable<KypoPaginatedResource<Pool>>;
+  abstract getAll(pagination: RequestedPagination): Observable<PaginatedResource<Pool>>;
 
   /**
    * Deletes a pool

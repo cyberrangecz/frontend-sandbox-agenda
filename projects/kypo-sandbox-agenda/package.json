@@ -4,13 +4,10 @@
   "peerDependencies": {
     "@angular/common": "^10.0.0",
     "@angular/core": "^10.0.0",
-    "kypo-sandbox-api": "~10.1.0",
-    "kypo-sandbox-model": "~10.1.0",
-    "kypo2-table": "~10.0.0",
-    "kypo-list": "~10.0.0",
-    "csirt-mu-common": "9.0.0",
-    "kypo-common": "~10.0.0",
-    "kypo-controls": "~10.0.0",
+    "@sentinel/common": "~10.0.0",
+    "@sentinel/components": "~10.0.0",
+    "kypo-sandbox-api": "~10.2.0",
+    "kypo-sandbox-model": "~10.2.0",
     "kypo2-topology-graph": "~10.0.0",
     "kypo2-topology-graph-model": "~10.0.0"
   },

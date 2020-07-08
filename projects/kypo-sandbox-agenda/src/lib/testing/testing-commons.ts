@@ -1,7 +1,7 @@
 import { MetadataOverride } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { KypoRequestedPagination } from 'kypo-common';
+import { RequestedPagination } from '@sentinel/common';
 import {
   AllocationRequestsApi,
   CleanupRequestsApi,
@@ -16,9 +16,9 @@ import { SandboxNavigator } from '../services/client/sandbox-navigator.service';
 import { SandboxNotificationService } from '../services/client/sandbox-notification.service';
 import { SandboxAgendaContext } from '../services/internal/sandox-agenda-context.service';
 
-export const KYPO_TABLE_COMPONENT_SELECTOR = 'kypo2-table';
-export const KYPO_CONTROLS_COMPONENT_SELECTOR = 'kypo-controls';
-export const KYPO_RESOURCE_SELECTOR_COMPONENT_SELECTOR = 'kypo2-resource-selector';
+export const SENTINEL_TABLE_COMPONENT_SELECTOR = 'sentinel-table';
+export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
+export const SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR = 'sentinel-resource-selector';
 
 export function createDefinitionApiSpy(): jasmine.SpyObj<SandboxDefinitionApi> {
   return jasmine.createSpyObj('SandboxDefinitionApi', ['getAll', 'delete', 'add']);
@@ -68,14 +68,14 @@ export function createErrorHandlerSpy(): jasmine.SpyObj<SandboxErrorHandler> {
   return jasmine.createSpyObj('SandboxErrorHandler', ['emit']);
 }
 
-export function createPagination(): KypoRequestedPagination {
-  return new KypoRequestedPagination(0, 5, '', '');
+export function createPagination(): RequestedPagination {
+  return new RequestedPagination(0, 5, '', '');
 }
 
-export function createKypoTableOverride(): MetadataOverride<any> {
+export function createSentinelTableOverride(): MetadataOverride<any> {
   return {
     set: {
-      selector: KYPO_TABLE_COMPONENT_SELECTOR,
+      selector: SENTINEL_TABLE_COMPONENT_SELECTOR,
       inputs: ['hasError', 'defaultSortName', 'defaultSortDirection', 'data'],
       outputs: ['refresh', 'rowAction', 'rowSelection'],
     },
@@ -85,17 +85,17 @@ export function createKypoTableOverride(): MetadataOverride<any> {
 export function createResourceSelectorOverride(): MetadataOverride<any> {
   return {
     set: {
-      selector: KYPO_RESOURCE_SELECTOR_COMPONENT_SELECTOR,
+      selector: SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR,
       inputs: ['searchPlaceholder', 'resources', 'selected', 'resourceMapping'],
       outputs: ['selectionChange', 'fetch'],
     },
   };
 }
 
-export function createKypoControlsOverride(): MetadataOverride<any> {
+export function createSentinelControlsOverride(): MetadataOverride<any> {
   return {
     set: {
-      selector: KYPO_CONTROLS_COMPONENT_SELECTOR,
+      selector: SENTINEL_CONTROLS_COMPONENT_SELECTOR,
       outputs: ['itemClicked'],
     },
   };
