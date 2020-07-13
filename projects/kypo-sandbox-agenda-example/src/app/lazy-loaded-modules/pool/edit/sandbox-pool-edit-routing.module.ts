@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SandboxPoolEditComponent } from '../../../../../../kypo-sandbox-agenda/src/lib/components/pool/edit/sandbox-pool-edit.component';
+import { PoolEditComponent } from 'kypo-sandbox-agenda/pool-edit';
 
 const routes: Routes = [
   {
     path: '',
-    component: SandboxPoolEditComponent,
+    component: PoolEditComponent,
   },
 ];
 

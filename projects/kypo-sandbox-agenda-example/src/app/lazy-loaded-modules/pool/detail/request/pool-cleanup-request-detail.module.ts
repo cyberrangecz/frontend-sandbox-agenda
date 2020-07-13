@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { PoolCleanupRequestDetailComponentsModule } from '../../../../../../../kypo-sandbox-agenda/src/lib/components/pool-request/pool-cleanup-request-detail-components.module';
+import { CleanupRequestDetailComponentsModule } from 'kypo-sandbox-agenda/request-detail';
 import { PoolRequestDetailRoutingModule } from './pool-request-detail-routing.module';
 
 @NgModule({
-  imports: [PoolCleanupRequestDetailComponentsModule, PoolRequestDetailRoutingModule],
+  imports: [CleanupRequestDetailComponentsModule, PoolRequestDetailRoutingModule],
 })
 export class PoolCleanupRequestDetailModule {}

@@ -1,5 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
-import { SandboxNotificationService } from '../../../../kypo-sandbox-agenda/src/lib/services/client/sandbox-notification.service';
+import { SandboxNotificationService } from '../../../../kypo-sandbox-agenda/src/sandbox-notification.service';
 import { ClientNotificationService } from './client-notification.service';
 
 describe('ClientNotificationService', () => {
