@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PoolRequestDetailComponent } from '../../../../../../../kypo-sandbox-agenda/src/lib/components/pool-request/pool-request-detail.component';
-import {
-  POOL_DATA_ATTRIBUTE_NAME,
-  POOL_REQUEST_DATA_ATTRIBUTE_NAME,
-} from '../../../../../../../kypo-sandbox-agenda/src/lib/model/client/activated-route-data-attributes';
-import { PoolRequestResolver } from '../../../../../../../kypo-sandbox-agenda/src/lib/services/resolvers/pool-request-resolver.service';
-import { PoolResolver } from '../../../../../../../kypo-sandbox-agenda/src/lib/services/resolvers/pool-resolver.service';
+import { RequestDetailComponent } from 'kypo-sandbox-agenda/request-detail';
+import { POOL_DATA_ATTRIBUTE_NAME, POOL_REQUEST_DATA_ATTRIBUTE_NAME } from 'kypo-sandbox-agenda';
+import { PoolRequestResolver, PoolResolver } from 'kypo-sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {
     path: '',
-    component: PoolRequestDetailComponent,
+    component: RequestDetailComponent,
     resolve: {
       [POOL_DATA_ATTRIBUTE_NAME]: PoolResolver,
       [POOL_REQUEST_DATA_ATTRIBUTE_NAME]: PoolRequestResolver,

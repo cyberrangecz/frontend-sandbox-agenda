@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PoolDetailComponent } from '../../../../../../kypo-sandbox-agenda/src/lib/components/pool/detail/pool-detail.component';
-import { POOL_DATA_ATTRIBUTE_NAME } from '../../../../../../kypo-sandbox-agenda/src/lib/model/client/activated-route-data-attributes';
+import { PoolDetailComponent } from 'kypo-sandbox-agenda/pool-detail';
 import {
+  POOL_DATA_ATTRIBUTE_NAME,
   POOL_ALLOCATION_REQUEST_PATH,
   POOL_CLEANUP_REQUEST_PATH,
   POOL_REQUEST_ID_SELECTOR,
   SANDBOX_INSTANCE_ID_SELECTOR,
   SANDBOX_INSTANCE_PATH,
   SANDBOX_INSTANCE_TOPOLOGY_PATH,
-} from '../../../../../../kypo-sandbox-agenda/src/lib/model/client/default-paths';
-import { PoolRequestBreadcrumbResolver } from '../../../../../../kypo-sandbox-agenda/src/lib/services/resolvers/pool-request-breadcrumb-resolver.service';
-import { PoolResolver } from '../../../../../../kypo-sandbox-agenda/src/lib/services/resolvers/pool-resolver.service';
-import { SandboxInstanceBreadcrumbResolver } from '../../../../../../kypo-sandbox-agenda/src/lib/services/resolvers/sandbox-instance-breadcrumb-resolver.service';
+} from 'kypo-sandbox-agenda';
+import {
+  PoolRequestBreadcrumbResolver,
+  PoolResolver,
+  SandboxInstanceBreadcrumbResolver,
+} from 'kypo-sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {

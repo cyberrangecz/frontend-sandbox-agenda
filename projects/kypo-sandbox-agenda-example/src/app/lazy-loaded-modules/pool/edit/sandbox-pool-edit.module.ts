@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { SandboxPoolEditComponentsModule } from '../../../../../../kypo-sandbox-agenda/src/lib/components/pool/edit/sandbox-pool-edit-components.module';
+import { PoolEditComponentsModule } from 'kypo-sandbox-agenda/pool-edit';
 import { SandboxPoolEditRoutingModule } from './sandbox-pool-edit-routing.module';
 
 @NgModule({
-  imports: [SandboxPoolEditComponentsModule, SandboxPoolEditRoutingModule],
+  imports: [PoolEditComponentsModule, SandboxPoolEditRoutingModule],
 })
 export class SandboxPoolEditModule {}

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SandboxDefinitionOverviewComponent } from '../../../../../kypo-sandbox-agenda/src/lib/components/sandbox-definition/overview/sandbox-definition-overview.component';
-import { SANDBOX_DEFINITION_NEW_PATH } from '../../../../../kypo-sandbox-agenda/src/lib/model/client/default-paths';
+import { SandboxDefinitionOverviewComponent } from 'kypo-sandbox-agenda/sandbox-definition-overview';
+import { SANDBOX_DEFINITION_NEW_PATH } from 'kypo-sandbox-agenda';
 
 const routes: Routes = [
   {

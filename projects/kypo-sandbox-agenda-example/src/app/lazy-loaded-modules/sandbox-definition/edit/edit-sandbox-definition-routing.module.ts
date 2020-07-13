@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EditSandboxDefinitionComponent } from '../../../../../../kypo-sandbox-agenda/src/lib/components/sandbox-definition/edit/edit-sandbox-definition.component';
+import { SandboxDefinitionEditComponent } from 'kypo-sandbox-agenda/sandbox-definition-edit';
 
 const routes: Routes = [
   {
     path: '',
-    component: EditSandboxDefinitionComponent,
+    component: SandboxDefinitionEditComponent,
   },
 ];
 
