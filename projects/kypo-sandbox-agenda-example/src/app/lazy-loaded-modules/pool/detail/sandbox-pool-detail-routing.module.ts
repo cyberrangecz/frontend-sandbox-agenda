@@ -11,7 +11,7 @@ import {
   SANDBOX_INSTANCE_TOPOLOGY_PATH,
 } from 'kypo-sandbox-agenda';
 import {
-  PoolRequestBreadcrumbResolver,
+  RequestBreadcrumbResolver,
   PoolResolver,
   SandboxInstanceBreadcrumbResolver,
 } from 'kypo-sandbox-agenda/resolvers';
@@ -40,7 +40,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./request/pool-allocation-request-detail.module').then((m) => m.PoolAllocationRequestDetailModule),
     resolve: {
-      breadcrumb: PoolRequestBreadcrumbResolver,
+      breadcrumb: RequestBreadcrumbResolver,
     },
     data: {
       title: 'Allocation Request Stages',
@@ -51,7 +51,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./request/pool-cleanup-request-detail.module').then((m) => m.PoolCleanupRequestDetailModule),
     resolve: {
-      breadcrumb: PoolRequestBreadcrumbResolver,
+      breadcrumb: RequestBreadcrumbResolver,
     },
     data: {
       title: 'Cleanup Request Stages',

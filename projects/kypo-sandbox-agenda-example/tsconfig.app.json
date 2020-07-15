@@ -6,10 +6,10 @@
     "types": [],
     "paths": {
       "kypo-sandbox-agenda": [
-        "../../dist/kypo-sandbox-agenda"
+        "../kypo-sandbox-agenda/src/public_api.ts"
       ],
       "kypo-sandbox-agenda/*": [
-        "../../dist/kypo-sandbox-agenda/*"
+        "../kypo-sandbox-agenda/*/src/public_api.ts"
       ]
     }
   },
