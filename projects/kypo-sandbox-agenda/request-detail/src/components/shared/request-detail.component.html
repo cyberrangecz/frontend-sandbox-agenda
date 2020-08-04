@@ -6,12 +6,10 @@
     </mat-card>
   </ng-container>
   <ng-container *ngIf="(stages$ | async) as stages">
-    <div *ngIf="stages.length > 0 else noStages">
-      <kypo-request-stage *ngFor="let stage of stages; trackBy: trackByFn; let i = index;"
+    <div *ngIf="stages?.length > 0 else noStages">
+      <kypo-request-stage *ngFor="let stage of stages.values(); trackBy: trackByFn; let i = index;"
                           [stage]="stage"
-                          [stageDetail]="(stageDetails$ | async)[getStageDetailIndex(stage.id)]"
-                          (stageDetailPanelEvent)="onStageDetailPanelEvent($event)"
-                          (fetchStageDetail)="onFetchStageDetail($event)">
+                          (stageDetailPanelChange)="onStageDetailPanelChange($event, stage)">
       </kypo-request-stage>
     </div>
     <ng-template #noStages>

@@ -1,45 +1,22 @@
 <mat-card>
   <mat-card-header>
-      <img mat-card-avatar [src]="stageLogoSrc">
-      <mat-card-title>{{ stageTitle }}</mat-card-title>
+      <img mat-card-avatar [src]="stage?.logoSrc">
+      <mat-card-title>{{ stage?.title }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <kypo-request-stage-common [stage]="stage"></kypo-request-stage-common>
-    <mat-expansion-panel  *ngIf="isAllocationStage"
+    <kypo-request-stage-header [stage]="stage"></kypo-request-stage-header>
+    <mat-expansion-panel  *ngIf="stage?.hasDetail"
                           class="mat-elevation-z1"
-                          [disabled]="detailDisabled"
-                          (closed)="onPanelStateChanged(false)"
-                          (opened)="onPanelStateChanged(true)">
+                          (opened)="onPanelStateChange(true)"
+                          (closed)="onPanelStateChange(false)"
+                          [disabled]="stage?.detailDisabled">
       <mat-expansion-panel-header>
         <mat-panel-title>Stage detail</mat-panel-title>
       </mat-expansion-panel-header>
-      <div *ngIf="!stageDetailIsLoading else stageDetailLoading">
-        <div *ngIf="!stageDetailHasError else stageDetailError">
-          <kypo-request-stage-detail *ngIf="stageDetail else noStageDetail"
-                                     [stageDetail]="stageDetail"
-                                     (fetchStageDetail)="onFetchStageDetail($event)">
-          </kypo-request-stage-detail>
-        </div>
-      </div>
+      <ng-template matExpansionPanelContent>
+        <kypo-request-stage-detail [stage]="stage">
+        </kypo-request-stage-detail>
+      </ng-template>
     </mat-expansion-panel>
   </mat-card-content>
 </mat-card>
-
-<ng-template #stageDetailLoading>
-  <div class="loading">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-  </div>
-</ng-template>
-
-<ng-template #stageDetailError>
-  <div class="error">
-    <p class="error">We have some trouble loading the data. Please try again.</p>
-    <button mat-icon-button color="primary" (click)="onPanelStateChanged(true)">
-      <mat-icon>refresh</mat-icon>
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #noStageDetail>
-  <h3>Stage has no detail</h3>
-</ng-template>

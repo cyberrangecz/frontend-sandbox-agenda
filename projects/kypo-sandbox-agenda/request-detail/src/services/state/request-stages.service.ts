@@ -1,8 +1,9 @@
 import { RequestStage } from 'kypo-sandbox-model';
 import { Request } from 'kypo-sandbox-model';
 import { BehaviorSubject, merge, Observable, Subject, timer } from 'rxjs';
-import { retryWhen, switchMap, takeWhile, tap } from 'rxjs/operators';
+import { retryWhen, shareReplay, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { StageAdapter } from '../../model/adapters/stage-adapter';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -41,9 +42,9 @@ export abstract class RequestStagesService {
    */
   protected retryPolling$: Subject<boolean> = new Subject<boolean>();
 
-  protected stagesSubject$: BehaviorSubject<RequestStage[]> = new BehaviorSubject([]);
+  protected stagesSubject$: BehaviorSubject<StageAdapter[]> = new BehaviorSubject([]);
 
-  stages$: Observable<RequestStage[]>;
+  stages$: Observable<StageAdapter[]>;
 
   private pollPeriod: number;
 
@@ -56,7 +57,7 @@ export abstract class RequestStagesService {
    * Gets all stages and updates related observables or handles an error
    * @param request request associated with stages
    */
-  getAll(request: Request): Observable<RequestStage[]> {
+  getAll(request: Request): Observable<StageAdapter[]> {
     this.onManualResourceRefresh(request);
     return this.callApiToGetStages(request).pipe(
       tap(
@@ -69,7 +70,7 @@ export abstract class RequestStagesService {
     );
   }
 
-  protected refreshResource(): Observable<RequestStage[]> {
+  protected refreshStages(): Observable<StageAdapter[]> {
     this.hasErrorSubject$.next(false);
     return this.callApiToGetStages(this.lastRequest).pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
@@ -86,23 +87,28 @@ export abstract class RequestStagesService {
     this.lastRequest = request;
   }
 
-  protected createPoll(): Observable<RequestStage[]> {
-    return timer(0, this.pollPeriod).pipe(
-      switchMap((_) => this.refreshResource()),
+  protected createPoll(): Observable<StageAdapter[]> {
+    return timer(this.pollPeriod, this.pollPeriod).pipe(
+      switchMap((_) => this.refreshStages()),
       retryWhen((_) => this.retryPolling$),
-      takeWhile((stages) => !this.stagesFinished(stages) && !this.stageFailed(stages), true)
+      takeWhile((stageMap) => this.shouldStopPolling(Array.from(stageMap.values())), true),
+      shareReplay(Number.POSITIVE_INFINITY, this.pollPeriod)
     );
   }
 
-  protected abstract callApiToGetStages(request: Request): Observable<RequestStage[]>;
+  protected abstract callApiToGetStages(request: Request): Observable<StageAdapter[]>;
 
   protected abstract onGetAllError(err: HttpErrorResponse): void;
 
-  private stagesFinished(data: RequestStage[]): boolean {
-    return data.every((stage) => stage.hasFinished());
+  private shouldStopPolling(stages: RequestStage[]): boolean {
+    return !this.stagesFinished(stages) && !this.stageFailed(stages);
   }
 
-  private stageFailed(data: RequestStage[]): boolean {
-    return data.some((stage) => stage.hasFailed());
+  private stagesFinished(stages: RequestStage[]): boolean {
+    return stages.every((stage) => stage.hasFinished());
+  }
+
+  private stageFailed(stages: RequestStage[]): boolean {
+    return stages.some((stage) => stage.hasFailed());
   }
 }

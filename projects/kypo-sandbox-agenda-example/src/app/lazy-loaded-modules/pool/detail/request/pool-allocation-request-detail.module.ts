@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { AllocationRequestDetailComponentsModule } from 'kypo-sandbox-agenda/request-detail';
-import { PoolRequestDetailRoutingModule } from './pool-request-detail-routing.module';
+import { PoolAllocationRequestDetailRoutingModule } from './pool-allocation-request-detail-routing.module';
 
 @NgModule({
-  imports: [AllocationRequestDetailComponentsModule, PoolRequestDetailRoutingModule],
+  imports: [AllocationRequestDetailComponentsModule, PoolAllocationRequestDetailRoutingModule],
 })
 export class PoolAllocationRequestDetailModule {}

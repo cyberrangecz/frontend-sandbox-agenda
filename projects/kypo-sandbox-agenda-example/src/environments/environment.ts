@@ -20,7 +20,7 @@ export const kypo2TopologyConfig = {
 export const environment = {
   production: false,
   sandboxAgendaConfig: {
-    pollingPeriod: 5000,
+    pollingPeriod: 10000,
     defaultPaginationSize: 10,
     kypo2TopologyConfig,
   },

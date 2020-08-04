@@ -17,6 +17,9 @@ import { SandboxInstanceService } from '../services/state/sandbox-instance/sandb
 import { PoolDetailControls } from './pool-detail-controls';
 import { AllocationRequestTable } from '../model/allocation-request-table';
 import { CleanupRequestTable } from '../model/cleanup-request-table';
+import { AllocationRequestsConcreteService } from '../services/state/request/allocation/allocation-requests-concrete.service';
+import { CleanupRequestsConcreteService } from '../services/state/request/cleanup/cleanup-requests-concrete.service';
+import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
 
 /**
  * Smart component of pool detail page
@@ -26,6 +29,11 @@ import { CleanupRequestTable } from '../model/cleanup-request-table';
   templateUrl: './pool-detail.component.html',
   styleUrls: ['./pool-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
+    { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
+    { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
+  ],
 })
 export class PoolDetailComponent extends SentinelBaseDirective implements OnInit {
   pool: Pool;

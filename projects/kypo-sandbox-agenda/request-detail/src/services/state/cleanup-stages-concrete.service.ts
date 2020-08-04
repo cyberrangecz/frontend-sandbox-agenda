@@ -4,13 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CleanupRequestsApi } from 'kypo-sandbox-api';
 import { Request, RequestStage } from 'kypo-sandbox-model';
 import { Observable, zip } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from 'kypo-sandbox-agenda';
 import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
 import { RequestStagesService } from './request-stages.service';
+import { StageAdapter } from '../../model/adapters/stage-adapter';
+import { StageAdapterMapper } from '../../model/adapters/stage-adapter-mapper';
 
 @Injectable()
-export class RequestCleanupStagesConcreteService extends RequestStagesService {
+export class CleanupStagesConcreteService extends RequestStagesService {
   constructor(
     private api: CleanupRequestsApi,
     private router: Router,
@@ -23,16 +25,18 @@ export class RequestCleanupStagesConcreteService extends RequestStagesService {
     super(context.config.pollingPeriod);
   }
 
-  protected refreshResource(): Observable<RequestStage[]> {
-    return super.refreshResource().pipe(tap((resource) => this.navigateBackIfStagesFinished(resource)));
+  protected refreshStages(): Observable<StageAdapter[]> {
+    return super
+      .refreshStages()
+      .pipe(tap((stagesMap) => this.navigateBackIfStagesFinished(Array.from(stagesMap.values()))));
   }
 
-  protected callApiToGetStages(request: Request): Observable<RequestStage[]> {
+  protected callApiToGetStages(request: Request): Observable<StageAdapter[]> {
     return zip(
       this.api.getOpenStackStage(request.id),
       this.api.getNetworkingAnsibleStage(request.id),
       this.api.getUserAnsibleStage(request.id)
-    );
+    ).pipe(map((stages) => stages.map((stage) => StageAdapterMapper.fromStage(stage))));
   }
 
   protected onGetAllError(err: HttpErrorResponse) {

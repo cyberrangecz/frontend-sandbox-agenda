@@ -1,61 +1,55 @@
-import { RequestedPagination } from '@sentinel/common';
+import { merge, NEVER, Observable } from 'rxjs';
+import { PaginatedResource, PaginatedResourcePollingService, RequestedPagination } from '@sentinel/common';
 import { RequestStage } from 'kypo-sandbox-model';
-import { RequestStageType } from 'kypo-sandbox-model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { Dictionary } from 'typescript-collections';
-import { StageDetailState } from '../../../model/stage-detail-state';
+import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
 
-/**
- * A layer between a component and an API service. Implement a concrete service by extending this class.
- * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
- * Subscribe to stageDetail$ to receive latest data updates.
- */
-export abstract class StageDetailService {
-  protected subscribedStageDetails: Dictionary<number, StageDetailState> = new Dictionary();
+export abstract class StageDetailService extends PaginatedResourcePollingService<string> {
+  private lastStage: RequestStage;
+  protected constructor(protected pollRegistry: StagesDetailPollRegistry, pageSize: number, pollingPeriod: number) {
+    super(pageSize, pollingPeriod);
+    this.resource$ = merge(this.resourceSubject$.asObservable(), this.createStoppablePoll(pollingPeriod));
+  }
 
-  protected stageDetailsSubject$: BehaviorSubject<StageDetailState[]> = new BehaviorSubject([]);
-
-  /**
-   * @contract must be updated every time new data are received
-   */
-  stageDetails$: Observable<StageDetailState[]> = this.stageDetailsSubject$.asObservable();
-
-  /**
-   * Registers a stage to a list of subscribed stages (to get its details)
-   * @param stage a stage to to register
-   * @param additionalInfoPagination optional list of pagination requested for stage additional info (ORDER MATTERS)
-   */
-  register(stage: RequestStage, additionalInfoPagination?: RequestedPagination[]): Observable<any> {
-    return this.getStageDetail(stage.requestId, stage.type, additionalInfoPagination).pipe(
+  getAll(stage: RequestStage, requestedPagination: RequestedPagination) {
+    this.onManualResourceRefresh(requestedPagination, stage);
+    return this.callApiToGetStageDetail(stage, requestedPagination).pipe(
       tap(
-        (stageDetail) => {
-          this.subscribedStageDetails.setValue(stage.id, stageDetail);
-          return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
-        },
-        (_) => {
-          return this.stageDetailsSubject$.next(this.subscribedStageDetails.values());
-        }
+        (resource) => this.resourceSubject$.next(resource),
+        (err) => this.onGetAllError(err)
       )
     );
   }
 
-  /**
-   * Unregisters a stage from a list of subscribed stages (to stop getting its details)
-   * @param stage a stage to unsubscribe
-   */
-  unregister(stage: RequestStage): void {
-    this.subscribedStageDetails.remove(stage.id);
+  protected createStoppablePoll(pollingPeriod: number): Observable<PaginatedResource<string>> {
+    const shouldBePolled$ = this.pollRegistry.polledStageIds$.pipe(
+      map((polledIds) => polledIds.includes(this.lastStage.id))
+    );
+    return shouldBePolled$.pipe(
+      filter((shouldBePolled) => shouldBePolled),
+      switchMap((_) => this.refreshResource()),
+      shareReplay(Number.POSITIVE_INFINITY, pollingPeriod)
+    );
   }
 
-  /**
-   * @param requestId id of request associated with stages
-   * @param stageType type of stage
-   * @param additionalInfoPagination list of requested pagination of additional info of stage detail
-   */
-  abstract getStageDetail(
-    requestId: number,
-    stageType: RequestStageType,
-    additionalInfoPagination?: RequestedPagination[]
-  ): Observable<StageDetailState>;
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params) {
+    super.onManualResourceRefresh(pagination, ...params);
+    this.lastStage = params[0];
+  }
+  protected refreshResource(): Observable<PaginatedResource<string>> {
+    this.hasErrorSubject$.next(false);
+    return this.callApiToGetStageDetail(this.lastStage, this.lastPagination).pipe(
+      tap({ error: (err) => this.onGetAllError(err) })
+    );
+  }
+
+  protected onGetAllError(err: HttpErrorResponse) {
+    this.hasErrorSubject$.next(true);
+  }
+
+  protected abstract callApiToGetStageDetail(
+    stage: RequestStage,
+    requestedPagination: RequestedPagination
+  ): Observable<PaginatedResource<string>>;
 }
