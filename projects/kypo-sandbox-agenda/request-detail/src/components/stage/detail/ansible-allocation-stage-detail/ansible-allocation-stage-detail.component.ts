@@ -1,51 +1,52 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { AnsibleAllocationStageDetailState } from '../../../../model/ansible-allocation-stage-detail-state';
-import { StageDetailState } from '../../../../model/stage-detail-state';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { SentinelBaseDirective, RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { AnsibleStageAdapter } from '../../../../model/adapters/ansible-stage-adapter';
+import { Observable } from 'rxjs';
+import { AnsibleOutputsService } from '../../../../services/state/detail/ansible-outputs.service';
+import { map, takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'kypo-ansible-allocation-stage-detail',
   templateUrl: './ansible-allocation-stage-detail.component.html',
   styleUrls: ['./ansible-allocation-stage-detail.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AnsibleOutputsService],
 })
 export class AnsibleAllocationStageDetailComponent extends SentinelBaseDirective implements OnInit, OnChanges {
-  @Input() stageDetail: AnsibleAllocationStageDetailState;
-  @Output() fetchStageDetail: EventEmitter<StageDetailState> = new EventEmitter();
+  readonly PAGE_SIZE = 500;
 
-  repository: string;
-  revision: string;
-  output: PaginatedResource<string>;
-  hasOutput: boolean;
+  @Input() stage: AnsibleStageAdapter;
 
-  pageSize = 500;
-  isLoading = false;
+  outputs$: Observable<PaginatedResource<string>>;
+  isLoading$: Observable<boolean>;
+  hasError$: Observable<boolean>;
+  hasOutputs$: Observable<boolean>;
+
+  constructor(private outputsService: AnsibleOutputsService) {
+    super();
+  }
 
   ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if ('stageDetail' in changes && this.stageDetail) {
-      this.isLoading = false;
-      this.repository = this.stageDetail?.basicInfo?.stage?.repoUrl;
-      this.revision = this.stageDetail?.basicInfo?.stage?.rev;
-      this.output = this.stageDetail?.additionalInfo[0]?.content;
-      this.pageSize = this.output?.pagination?.size;
-      this.hasOutput = this.output && this.output?.elements?.length > 0;
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.stage && 'stage' in changes && changes['stage'].isFirstChange()) {
+      this.init();
     }
   }
 
+  init() {
+    const initialPagination = new RequestedPagination(0, 500, '', '');
+    this.onFetch(initialPagination);
+    this.outputs$ = this.outputsService.resource$.pipe(takeWhile((_) => this.isAlive));
+    this.hasOutputs$ = this.outputs$.pipe(map((outputs) => outputs.elements.length > 0));
+    this.isLoading$ = this.outputsService.isLoading$.pipe(takeWhile((_) => this.isAlive));
+    this.hasError$ = this.outputsService.hasError$.pipe(takeWhile((_) => this.isAlive));
+  }
+
   onFetch(requestedPagination: RequestedPagination) {
-    this.isLoading = true;
-    this.stageDetail.additionalInfo[0].requestedPagination = requestedPagination;
-    this.fetchStageDetail.emit(this.stageDetail);
+    this.outputsService
+      .getAll(this.stage, requestedPagination)
+      .pipe(takeWhile((_) => this.isAlive))
+      .subscribe();
   }
 }

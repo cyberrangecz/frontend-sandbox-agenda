@@ -4,12 +4,10 @@ import { SentinelPipesModule } from '@sentinel/common';
 import { SentinelListModule } from '@sentinel/components/list';
 import { PoolResolver, RequestResolver } from 'kypo-sandbox-agenda/resolvers';
 import { RequestDetailMaterialModule } from './request-detail-material.module';
-import { RequestDetailComponent } from './request-detail.component';
 import { AnsibleAllocationStageDetailComponent } from './stage/detail/ansible-allocation-stage-detail/ansible-allocation-stage-detail.component';
-import { CleanupStageDetailComponent } from './stage/detail/cleanup-stage-detail/cleanup-stage-detail.component';
-import { OpenstackAllocationStageDetailComponent } from './stage/detail/openstack-allocation-stage-detail/openstack-allocation-stage-detail.component';
+import { OpenStackAllocationStageDetailComponent } from './stage/detail/openstack-allocation-stage-detail/open-stack-allocation-stage-detail.component';
 import { RequestStageDetailComponent } from './stage/detail/request-stage-detail.component';
-import { RequestStageCommonComponent } from './stage/header/request-stage-common.component';
+import { RequestStageHeaderComponent } from './stage/header/request-stage-header.component';
 import { RequestStageComponent } from './stage/request-stage.component';
 import { SentinelCodeViewerModule } from '@sentinel/components/code-viewer';
 
@@ -25,14 +23,13 @@ import { SentinelCodeViewerModule } from '@sentinel/components/code-viewer';
     SentinelCodeViewerModule,
   ],
   declarations: [
-    RequestDetailComponent,
     RequestStageComponent,
-    RequestStageCommonComponent,
+    RequestStageHeaderComponent,
     RequestStageDetailComponent,
     AnsibleAllocationStageDetailComponent,
-    OpenstackAllocationStageDetailComponent,
-    CleanupStageDetailComponent,
+    OpenStackAllocationStageDetailComponent,
   ],
   providers: [PoolResolver, RequestResolver],
+  exports: [RequestStageComponent, RequestDetailMaterialModule],
 })
 export class RequestDetailComponentsModule {}

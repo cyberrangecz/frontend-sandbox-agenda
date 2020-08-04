@@ -1,14 +1,16 @@
-<p>Repository: {{ repository }}</p>
-<p>Revision: {{ revision }}</p>
-<h3>{{ stageDetail.additionalInfo[0]?.resourceName }}</h3>
-  <sentinel-code-viewer *ngIf="hasOutput else noOutput"
-    maxHeight="600"
-    viewPortItemHeight="20"
-    [resource]="output"
-    [pageSize]="pageSize"
-    [isLoading]="isLoading"
-    (fetch)="onFetch($event)">
-  </sentinel-code-viewer>
+<p>Repository: {{ stage?.repoUrl }}</p>
+<p>Revision: {{ stage?.rev }}</p>
+
+<h3>Outputs:</h3>
+<sentinel-code-viewer  *ngIf="hasOutputs$ | async else noOutput"
+                       maxHeight="600"
+                      viewPortItemHeight="20"
+                      [resource]="outputs$ | async"
+                      [pageSize]="PAGE_SIZE"
+                      [isLoading]="isLoading$ | async"
+                      (fetch)="onFetch($event)">
+</sentinel-code-viewer>
+
 <ng-template #noOutput>
-  <p>This stage has no output</p>
+  Stage has no outputs
 </ng-template>
