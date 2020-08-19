@@ -26,7 +26,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
   controls: SentinelControlItem[] = [];
 
   constructor(
-    private poolService: PoolOverviewService,
+    private service: PoolOverviewService,
     private navigator: SandboxNavigator,
     private context: SandboxAgendaContext
   ) {
@@ -43,7 +43,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    * @param loadEvent load data event from table component
    */
   onPoolsLoadEvent(loadEvent: LoadTableEvent) {
-    this.poolService
+    this.service
       .getAll(loadEvent.pagination)
       .pipe(takeWhile((_) => this.isAlive))
       .subscribe();
@@ -65,10 +65,8 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
     );
-    this.pools$ = this.poolService.resource$.pipe(
-      map((resource) => new PoolTable(resource, this.poolService, this.navigator))
-    );
-    this.hasError$ = this.poolService.hasError$;
+    this.pools$ = this.service.resource$.pipe(map((resource) => new PoolTable(resource, this.service, this.navigator)));
+    this.hasError$ = this.service.hasError$;
     this.onPoolsLoadEvent(initialLoadEvent);
   }
 
@@ -79,7 +77,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
         'Create',
         'primary',
         of(false),
-        defer(() => this.poolService.create())
+        defer(() => this.service.create())
       ),
     ];
   }
