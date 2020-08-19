@@ -30,6 +30,17 @@ const routes: Routes = [
     },
   },
   {
+    path: 'resources',
+    loadChildren: () =>
+      import('./lazy-loaded-modules/sandbox-resources/sandbox-resources.module').then(
+        (m) => m.SandboxResourcesOverviewModule
+      ),
+    data: {
+      breadcrumb: 'Resources',
+      title: 'Resources Overview',
+    },
+  },
+  {
     path: 'login',
     component: Kypo2AuthProviderPickerComponent,
     canActivate: [Kypo2NotAuthGuardService],
