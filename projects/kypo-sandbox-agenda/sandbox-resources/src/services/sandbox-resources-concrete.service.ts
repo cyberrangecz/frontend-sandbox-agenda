@@ -18,7 +18,6 @@ export class SandboxResourcesConcreteService extends SandboxResourcesService {
     return this.resourcesApi.getResources().pipe(
       tap((resource) => {
         this.resourcesSubject$.next(resource);
-        console.log(this.resources$);
       })
     );
   }

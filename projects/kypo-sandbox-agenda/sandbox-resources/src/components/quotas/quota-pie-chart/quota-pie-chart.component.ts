@@ -24,9 +24,7 @@ export class QuotaPieChartComponent implements OnInit, AfterViewInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.quota);
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.setup();
