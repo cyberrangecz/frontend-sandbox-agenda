@@ -10,7 +10,7 @@ import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { PoolApi } from 'kypo-sandbox-api';
 import { Pool } from 'kypo-sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from 'kypo-sandbox-agenda';
 import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
@@ -107,6 +107,15 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
       ),
       switchMap((_) => this.getAll(this.lastPagination))
+    );
+  }
+
+  getSshAccess(poolId: number): Observable<boolean> {
+    return this.poolApi.getManagementSshAccess(poolId).pipe(
+      catchError((err) => {
+        this.errorHandler.emit(err, `Management SSH Access for pool: ${poolId}`);
+        return EMPTY;
+      })
     );
   }
 

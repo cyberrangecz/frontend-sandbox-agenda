@@ -41,4 +41,6 @@ export abstract class PoolOverviewService extends PaginatedResourceService<Pool>
   abstract lock(pool: Pool): Observable<any>;
 
   abstract unlock(pool: Pool): Observable<any>;
+
+  abstract getSshAccess(poolId: number): Observable<boolean>;
 }
