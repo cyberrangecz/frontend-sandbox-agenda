@@ -1,0 +1,11 @@
+<mat-card>
+  <h2>{{ resources?.projectName }}</h2>
+  <div class="resources">
+    <ng-container *ngFor="let resource of displayedResources">
+      <kypo-quota-pie-chart
+        *ngIf="(resources?.quotas)[resource] != null"
+        [quota]="(resources?.quotas)[resource]"
+      ></kypo-quota-pie-chart>
+    </ng-container>
+  </div>
+</mat-card>

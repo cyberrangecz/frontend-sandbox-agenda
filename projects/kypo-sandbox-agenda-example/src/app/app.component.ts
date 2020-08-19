@@ -55,6 +55,7 @@ export class AppComponent {
     const agendas: Agenda[] = [];
     agendas.push(new Agenda('Definition', 'sandbox-definition'));
     agendas.push(new Agenda('Pool', 'pool'));
+    agendas.push(new Agenda('Resources', 'resources'));
     if (agendas.length > 0) {
       containers.push(new AgendaContainer('Sandboxes', agendas));
     }
