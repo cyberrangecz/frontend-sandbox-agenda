@@ -8,6 +8,7 @@ import {
   SANDBOX_INSTANCE_TOPOLOGY_PATH,
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH,
+  SANDBOX_RESOURCES_PATH,
 } from './default-paths';
 import { SandboxNavigator } from './sandbox-navigator.service';
 
@@ -40,6 +41,13 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
    */
   toPoolOverview(): string {
     return SANDBOX_POOL_PATH;
+  }
+
+  /**
+   * Returns route to resources page
+   */
+  toResources(): string {
+    return SANDBOX_RESOURCES_PATH;
   }
 
   toCreatePool(): string {
