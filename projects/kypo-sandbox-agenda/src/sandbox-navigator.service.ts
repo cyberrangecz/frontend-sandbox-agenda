@@ -25,6 +25,11 @@ export abstract class SandboxNavigator {
   abstract toPoolOverview(): string;
 
   /**
+   * Returns route to resources page
+   */
+  abstract toResources(): string;
+
+  /**
    * Returns route to create pool page
    */
   abstract toCreatePool(): string;

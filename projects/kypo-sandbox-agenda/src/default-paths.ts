@@ -10,3 +10,4 @@ export const SANDBOX_INSTANCE_TOPOLOGY_PATH = 'topology';
 export const SANDBOX_DEFINITION_NEW_PATH = 'create';
 export const SANDBOX_POOL_ID_SELECTOR = 'poolId';
 export const SANDBOX_POOL_NEW_PATH = 'create';
+export const SANDBOX_RESOURCES_PATH = 'resources';
