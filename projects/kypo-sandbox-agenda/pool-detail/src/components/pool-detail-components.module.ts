@@ -12,7 +12,6 @@ import {
 } from 'kypo-sandbox-agenda/resolvers';
 import { PoolDetailMaterialModule } from './pool-detail-material.module';
 import { PoolDetailComponent } from './pool-detail.component';
-
 /**
  * Module containing component and providers for sandbox pool detail page
  */

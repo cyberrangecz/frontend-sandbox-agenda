@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   POOL_ALLOCATION_REQUEST_PATH,
+  POOL_ALLOCATION_UNITS_PATH,
   POOL_CLEANUP_REQUEST_PATH,
   SANDBOX_DEFINITION_NEW_PATH,
   SANDBOX_DEFINITION_PATH,
@@ -61,6 +62,15 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
    */
   toSandboxInstanceTopology(poolId: number | string, sandboxId: number | string): string {
     return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_INSTANCE_PATH}/${sandboxId}/${SANDBOX_INSTANCE_TOPOLOGY_PATH}`;
+  }
+
+  /**
+   * Returns route to
+   * @param poolId
+   * @param requestId
+   */
+  toAllocationUnit(poolId: number | string, requestId: number | string): string {
+    return `${SANDBOX_POOL_PATH}/${poolId}/${POOL_ALLOCATION_UNITS_PATH}/${requestId}`;
   }
 
   /**

@@ -56,13 +56,17 @@ export class CleanupRequestsConcreteService extends RequestsService {
   }
 
   cancel(request: CleanupRequest): Observable<any> {
-    return this.displayConfirmationDialog(request, 'Cancel', 'No', 'Yes').pipe(
+    return this.displayConfirmationDialog(request, 'Cancel', 'Cancel cleanup request', 'No', 'Yes').pipe(
       switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
     );
   }
 
+  /**
+   * Deletes a cleanup request, informs about the result and updates list of requests or handles an error
+   * @param request a cleanup request to be deleted
+   */
   delete(request: CleanupRequest): Observable<any> {
-    return this.displayConfirmationDialog(request, 'Delete', 'Cancel', 'Delete').pipe(
+    return this.displayConfirmationDialog(request, 'Delete', 'delete cleanup', 'Cancel', 'Delete').pipe(
       switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
     );
   }
@@ -89,14 +93,15 @@ export class CleanupRequestsConcreteService extends RequestsService {
 
   private displayConfirmationDialog(
     request: Request,
+    title: string,
     action: string,
     cancelLabel: string,
     confirmLabel: string
   ): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
-        `${action} cleanup request`,
-        `Do you want to ${action.toLowerCase()} cleanup request "${request.id}"?`,
+        `${title} cleanup request`,
+        `Do you want to ${action.toLowerCase()} "${request.id}"?`,
         cancelLabel,
         confirmLabel
       ),
@@ -107,7 +112,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
   private callApiToDelete(request: Request): Observable<any> {
     return this.sauApi.deleteCleanupRequest(request.allocationUnitId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Deleted cleanup request`),
+        (_) => this.notificationService.emit('success', `Delete cleanup request`),
         (err) => this.errorHandler.emit(err, 'Deleting cleanup request')
       ),
       switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
