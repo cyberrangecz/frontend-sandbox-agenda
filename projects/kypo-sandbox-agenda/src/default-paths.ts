@@ -2,6 +2,7 @@ export const SANDBOX_DEFINITION_PATH = 'sandbox-definition';
 export const SANDBOX_POOL_PATH = 'pool';
 export const BREADCRUMB_PARAM_SELECTOR = 'breadcrumb';
 export const SANDBOX_INSTANCE_PATH = 'sandbox-instance';
+export const POOL_ALLOCATION_UNITS_PATH = 'allocation-pull';
 export const POOL_ALLOCATION_REQUEST_PATH = 'allocation-request';
 export const POOL_CLEANUP_REQUEST_PATH = 'cleanup-request';
 export const SANDBOX_INSTANCE_ID_SELECTOR = 'sandboxInstanceId';

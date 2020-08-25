@@ -25,11 +25,15 @@ export function createDefinitionApiSpy(): jasmine.SpyObj<SandboxDefinitionApi> {
 }
 
 export function createPoolApiSpy(): jasmine.SpyObj<PoolApi> {
-  return jasmine.createSpyObj('PoolApi', ['getAllocationRequests', 'getCleanupRequests']);
+  return jasmine.createSpyObj('PoolApi', [
+    'getAllocationRequests',
+    'getCleanupRequests',
+    'getPoolsSandboxAllocationUnits',
+  ]);
 }
 
 export function createSauApiSpy(): jasmine.SpyObj<SandboxAllocationUnitsApi> {
-  return jasmine.createSpyObj(['deleteCleanupRequest']);
+  return jasmine.createSpyObj(['createCleanupRequest', 'deleteCleanupRequest']);
 }
 
 export function createAllocationRequestApiSpy(): jasmine.SpyObj<AllocationRequestsApi> {

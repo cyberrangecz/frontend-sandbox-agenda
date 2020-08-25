@@ -1,7 +1,7 @@
 import { Request } from 'kypo-sandbox-model';
 import { RequestsService } from '../services/state/request/requests.service';
 import { SandboxNavigator } from 'kypo-sandbox-agenda';
-import { Column, DeleteAction, SentinelTable, Row, RowAction } from '@sentinel/components/table';
+import { Column, SentinelTable, Row, RowAction } from '@sentinel/components/table';
 import { RequestRowAdapter } from './request-row-adapter';
 import { PaginatedResource, SentinelDateTimeFormatPipe } from '@sentinel/common';
 import { defer, of } from 'rxjs';
@@ -53,11 +53,6 @@ export class AllocationRequestTable extends SentinelTable<RequestRowAdapter> {
         'Cancel request',
         of(false),
         defer(() => service.cancel(request))
-      ),
-      new DeleteAction(
-        'Delete request',
-        of(false),
-        defer(() => service.delete(request))
       ),
     ];
   }

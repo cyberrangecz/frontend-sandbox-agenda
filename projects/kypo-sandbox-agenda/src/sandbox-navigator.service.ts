@@ -42,6 +42,13 @@ export abstract class SandboxNavigator {
   abstract toSandboxInstanceTopology(poolId: number | string, sandboxId: number | string): string;
 
   /**
+   *
+   * @param poolId
+   * @param requestId
+   */
+  abstract toAllocationUnit(poolId: number | string, requestId: number | string): string;
+
+  /**
    * Returns path to creation request detail page
    * @param poolId id of the pool associated with the request
    * @param requestId id of the request
