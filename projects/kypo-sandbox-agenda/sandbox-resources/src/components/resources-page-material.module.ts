@@ -8,4 +8,4 @@ import { MatCardModule } from '@angular/material/card';
   imports: [MatCardModule],
   exports: [MatCardModule],
 })
-export class SandboxResourcesMaterialModule {}
+export class ResourcesPageMaterialModule {}
