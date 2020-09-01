@@ -6,8 +6,8 @@
     "@angular/core": "^10.0.0",
     "@sentinel/common": "~10.0.0",
     "@sentinel/components": "~10.0.0",
-    "kypo-sandbox-api": "~10.4.0",
-    "kypo-sandbox-model": "~10.3.0",
+    "kypo-sandbox-api": "~10.5.0",
+    "kypo-sandbox-model": "~10.4.0",
     "kypo2-topology-graph": "~10.0.0",
     "kypo2-topology-graph-model": "~10.0.0",
     "file-saver": "^2.0.2"

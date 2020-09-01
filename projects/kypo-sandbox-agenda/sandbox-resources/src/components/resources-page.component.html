@@ -1,0 +1,11 @@
+<div class="content">
+  <kypo-quotas [resources]="resources$ | async"></kypo-quotas>
+  <sentinel-table
+    [defaultSortName]="INIT_SORT_NAME"
+    [defaultSortDirection]="INIT_SORT_DIR"
+    [data]="images$ | async"
+    [hasError]="imagesTableHasError$ | async"
+    (refresh)="onLoadTableEvent($event)"
+  >
+  </sentinel-table>
+</div>

@@ -1,4 +1,4 @@
-import { SandboxResourcesModule } from './../../../../../kypo-sandbox-agenda/sandbox-resources/src/components/sandbox-resources.module';
+import { ResourcesPageModule } from './../../../../../kypo-sandbox-agenda/sandbox-resources/src/components/resources-page.module';
 import { NgModule } from '@angular/core';
 import { KypoSandboxApiModule } from 'kypo-sandbox-api';
 import { environment } from '../../../environments/environment';
@@ -9,7 +9,7 @@ import { SandboxResourcesOverviewRoutingModule } from './sandbox-resources-overv
   imports: [
     SharedProvidersModule,
     KypoSandboxApiModule.forRoot(environment.sandboxApiConfig),
-    SandboxResourcesModule,
+    ResourcesPageModule.forRoot(environment.sandboxAgendaConfig),
     SandboxResourcesOverviewRoutingModule,
   ],
 })
