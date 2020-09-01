@@ -1,4 +1,4 @@
-import { VMImagesRowAdapter } from '../../../../sandbox-resources/src/models/vm-images-row-adapter';
+import { VMImagesRowAdapter } from './../../models/vm-images-row-adapter';
 import { Component, Input, OnInit, HostBinding } from '@angular/core';
 
 /**
