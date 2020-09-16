@@ -7,7 +7,6 @@ export const baseURL = 'https://172.19.0.22/';
 // Frontend url
 export const homeURL = 'https://localhost:4200';
 export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
-export const userAngGroupURL = baseURL + 'kypo2-rest-user-and-group/api/v1/';
 
 export const kypo2TopologyConfig = {
   topologyRestUrl: sandboxesURL,
@@ -27,22 +26,18 @@ export const environment = {
   sandboxApiConfig: {
     sandboxRestBasePath: sandboxesURL,
   },
-  kypo2AuthConfig: {
-    maxRetryAttempts: 3, // How many attempts to try to get user info from user and group service before emitting error
+  authConfig: {
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
-    tokenInterceptorAllowedUrls: [
-      // all matching urls will have authorization token header
-      baseURL,
-    ],
-    userInfoRestUri: userAngGroupURL,
+    interceptorAllowedUrls: [baseURL],
+    authorizationStrategyConfig: {
+      authorizationUrl: baseURL + 'kypo2-rest-user-and-group/api/v1/users/info',
+    },
     providers: [
-      // OIDC providers
       {
         label: 'Login with local issuer',
         textColor: 'white',
         backgroundColor: '#002776',
-        tokenRefreshTime: 30000, // how often check if tokens are still valid
         oidcConfig: {
           issuer: 'https://172.19.0.22:443/csirtmu-dummy-issuer-server/',
           clientId: '0bf33f00-2700-4efb-ab09-186076f85c7d',

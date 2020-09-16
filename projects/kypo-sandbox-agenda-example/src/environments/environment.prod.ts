@@ -27,7 +27,7 @@ export const environment = {
   sandboxApiConfig: {
     sandboxRestBasePath: sandboxesURL,
   },
-  kypo2AuthConfig: {
+  authConfig: {
     maxRetryAttempts: 3, // How many attempts to try to get user info from user and group service before emitting error
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
