@@ -1,0 +1,124 @@
+import { async, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatDialog } from '@angular/material/dialog';
+import { asyncData, PaginatedResource, RequestedPagination, SentinelPagination } from '@sentinel/common';
+import { throwError } from 'rxjs';
+import { skip } from 'rxjs/operators';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from 'kypo-sandbox-agenda';
+import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from 'kypo-sandbox-api';
+import { SandboxInstanceConcreteService } from './sandbox-instance-concrete.service';
+import {
+  createContextSpy,
+  createErrorHandlerSpy,
+  createMatDialogSpy,
+  createNavigatorSpy,
+  createNotificationSpy,
+  createPoolApiSpy,
+  createSauApiSpy,
+  createSiApiSpy,
+} from '../../../../../internal/src/testing/testing-commons.spec';
+import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
+
+describe('SandboxInstanceConcreteService', () => {
+  let sandboxInstanceApiSpy: jasmine.SpyObj<SandboxInstanceApi>;
+  let poolApiSpy: jasmine.SpyObj<PoolApi>;
+  let sauApiSpy: jasmine.SpyObj<SandboxAllocationUnitsApi>;
+  let dialogSpy: jasmine.SpyObj<MatDialog>;
+  let navigatorSpy: jasmine.SpyObj<SandboxNavigator>;
+  let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
+  let notificationSpy: jasmine.SpyObj<SandboxNotificationService>;
+  let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
+  let service: SandboxInstanceConcreteService;
+
+  beforeEach(async(() => {
+    poolApiSpy = createPoolApiSpy();
+    sandboxInstanceApiSpy = createSiApiSpy();
+    sauApiSpy = createSauApiSpy();
+    dialogSpy = createMatDialogSpy();
+    navigatorSpy = createNavigatorSpy();
+    contextSpy = createContextSpy();
+    notificationSpy = createNotificationSpy();
+    errorHandlerSpy = createErrorHandlerSpy();
+
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
+      providers: [
+        SandboxInstanceConcreteService,
+        { provide: SandboxInstanceApi, useValue: sandboxInstanceApiSpy },
+        { provide: PoolApi, useValue: poolApiSpy },
+        { provide: SandboxAllocationUnitsApi, useValue: sauApiSpy },
+        { provide: MatDialog, useValue: dialogSpy },
+        { provide: SandboxNavigator, useValue: navigatorSpy },
+        { provide: SandboxAgendaContext, useValue: contextSpy },
+        { provide: SandboxNotificationService, useValue: notificationSpy },
+        { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
+      ],
+    });
+    service = TestBed.inject(SandboxInstanceConcreteService);
+  }));
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('should load data from api', (done) => {
+    const pagination = createPagination();
+    sandboxInstanceApiSpy.getSandboxes.and.returnValue(asyncData(null));
+
+    service.getAll(0, pagination).subscribe((_) => done(), fail);
+    expect(sandboxInstanceApiSpy.getSandboxes).toHaveBeenCalledTimes(1);
+  });
+
+  it('should emit next value on update', (done) => {
+    const pagination = createPagination();
+    const mockData = createMock();
+    sandboxInstanceApiSpy.getSandboxes.and.returnValue(asyncData(mockData));
+
+    service.resource$.pipe(skip(1)).subscribe((emitted) => {
+      expect(emitted).toEqual(mockData);
+      done();
+    }, fail);
+    service.getAll(0, pagination).subscribe((_) => _, fail);
+  });
+
+  it('should call error handler on err', (done) => {
+    const pagination = createPagination();
+    sandboxInstanceApiSpy.getSandboxes.and.returnValue(throwError(null));
+
+    service.getAll(0, pagination).subscribe(
+      (_) => fail,
+      (_) => {
+        expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
+        done();
+      }
+    );
+  });
+
+  it('should emit hasError observable on err', (done) => {
+    const pagination = createPagination();
+    sandboxInstanceApiSpy.getSandboxes.and.returnValue(throwError(null));
+    service.hasError$
+      .pipe(
+        skip(2) // we ignore initial value and value emitted before the call is made
+      )
+      .subscribe(
+        (hasError) => {
+          expect(hasError).toBeTruthy();
+          done();
+        },
+        (_) => fail
+      );
+    service.getAll(0, pagination).subscribe(
+      (_) => fail,
+      (_) => _
+    );
+  });
+
+  function createPagination() {
+    return new RequestedPagination(1, 5, '', '');
+  }
+
+  function createMock() {
+    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
+  }
+});

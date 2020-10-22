@@ -6,8 +6,11 @@ import {
   AllocationRequestsApi,
   CleanupRequestsApi,
   PoolApi,
+  ResourcesApi,
   SandboxAllocationUnitsApi,
   SandboxDefinitionApi,
+  SandboxInstanceApi,
+  VMImagesApi,
 } from 'kypo-sandbox-api';
 import { Kypo2TopologyGraphConfig } from 'kypo2-topology-graph';
 import { SandboxAgendaConfig } from '../../../src/sandbox-agenda-config';
@@ -21,7 +24,7 @@ export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
 export const SENTINEL_RESOURCE_SELECTOR_COMPONENT_SELECTOR = 'sentinel-resource-selector';
 
 export function createDefinitionApiSpy(): jasmine.SpyObj<SandboxDefinitionApi> {
-  return jasmine.createSpyObj('SandboxDefinitionApi', ['getAll', 'delete', 'add']);
+  return jasmine.createSpyObj('SandboxDefinitionApi', ['getAll', 'delete', 'add', 'create']);
 }
 
 export function createPoolApiSpy(): jasmine.SpyObj<PoolApi> {
@@ -29,11 +32,19 @@ export function createPoolApiSpy(): jasmine.SpyObj<PoolApi> {
     'getAllocationRequests',
     'getCleanupRequests',
     'getPoolsSandboxAllocationUnits',
+    'createPool',
+    'allocateSandboxes',
+    'getManagementSshAccess',
+    'getPools',
   ]);
 }
 
 export function createSauApiSpy(): jasmine.SpyObj<SandboxAllocationUnitsApi> {
   return jasmine.createSpyObj(['createCleanupRequest', 'deleteCleanupRequest']);
+}
+
+export function createSiApiSpy(): jasmine.SpyObj<SandboxInstanceApi> {
+  return jasmine.createSpyObj(['getSandboxes']);
 }
 
 export function createAllocationRequestApiSpy(): jasmine.SpyObj<AllocationRequestsApi> {
@@ -42,6 +53,14 @@ export function createAllocationRequestApiSpy(): jasmine.SpyObj<AllocationReques
 
 export function createCleanupRequestApiSpy(): jasmine.SpyObj<CleanupRequestsApi> {
   return jasmine.createSpyObj('CleanupRequestsApi', ['cancel']);
+}
+
+export function createResourcesApiSpy(): jasmine.SpyObj<ResourcesApi> {
+  return jasmine.createSpyObj(['getResources']);
+}
+
+export function createVMImagesApiSpy(): jasmine.SpyObj<VMImagesApi> {
+  return jasmine.createSpyObj(['getAvailableImages']);
 }
 
 export function createRouterSpy(): jasmine.SpyObj<Router> {
@@ -65,7 +84,11 @@ export function createContextSpy(): jasmine.SpyObj<SandboxAgendaContext> {
 }
 
 export function createNavigatorSpy(): jasmine.SpyObj<SandboxNavigator> {
-  return jasmine.createSpyObj('SandboxNavigator', ['toNewSandboxDefinition']);
+  return jasmine.createSpyObj('SandboxNavigator', [
+    'toNewSandboxDefinition',
+    'toPoolOverview',
+    'toSandboxDefinitionOverview',
+  ]);
 }
 
 export function createErrorHandlerSpy(): jasmine.SpyObj<SandboxErrorHandler> {

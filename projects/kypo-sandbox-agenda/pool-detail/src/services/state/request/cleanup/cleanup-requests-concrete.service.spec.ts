@@ -1,4 +1,5 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { PaginatedResource, SentinelPagination, RequestedPagination, asyncData } from '@sentinel/common';
 import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { throwError } from 'rxjs';
@@ -12,10 +13,9 @@ import {
   createPoolApiSpy,
   createSauApiSpy,
 } from '../../../../../../internal/src/testing/testing-commons.spec';
-import { SandboxErrorHandler } from '../../../../../../src/sandbox-error-handler.service';
-import { SandboxAgendaContext } from '../../../../../../internal/src/services/sandox-agenda-context.service';
 import { CleanupRequestsConcreteService } from './cleanup-requests-concrete.service';
-import { MatDialog } from '@angular/material/dialog';
+import { SandboxAgendaContext } from '../../../../../../internal/src/services/sandox-agenda-context.service';
+import { SandboxErrorHandler } from '../../../../../../src/sandbox-error-handler.service';
 import { SandboxNotificationService } from '../../../../../../src/sandbox-notification.service';
 
 describe('PoolCleanupRequestsConcreteService', () => {
