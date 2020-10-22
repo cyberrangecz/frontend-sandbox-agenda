@@ -56,7 +56,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   }
 
   /**
-   * Starts a sandbox instance allocation, inforoms about the result and updates list of pools or handles an error
+   * Starts a sandbox instance allocation, informs about the result and updates list of pools or handles an error
    * @param pool a pool to be allocated with sandbox instances
    * @param count number of sandbox instances to be allocated
    */
