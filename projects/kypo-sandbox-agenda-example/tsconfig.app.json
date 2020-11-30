@@ -5,10 +5,10 @@
     "baseUrl": "./",
     "types": [],
     "paths": {
-      "kypo-sandbox-agenda": [
+      "@kypo/sandbox-agenda": [
         "../kypo-sandbox-agenda/src/public_api.ts"
       ],
-      "kypo-sandbox-agenda/*": [
+      "@kypo/sandbox-agenda/*": [
         "../kypo-sandbox-agenda/*/src/public_api.ts"
       ]
     }

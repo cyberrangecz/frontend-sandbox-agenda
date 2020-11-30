@@ -1,5 +1,5 @@
-import { SandboxErrorHandler } from 'kypo-sandbox-agenda';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { VMImagesApi } from 'kypo-sandbox-api';
 import { tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject, BehaviorSubject } from 'rxjs';

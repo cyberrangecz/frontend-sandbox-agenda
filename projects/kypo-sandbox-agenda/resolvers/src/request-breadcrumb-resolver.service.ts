@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Request } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { POOL_ALLOCATION_REQUEST_PATH } from 'kypo-sandbox-agenda';
+import { POOL_ALLOCATION_REQUEST_PATH } from '@kypo/sandbox-agenda';
 import { RequestResolver } from './request-resolver.service';
 
 /**

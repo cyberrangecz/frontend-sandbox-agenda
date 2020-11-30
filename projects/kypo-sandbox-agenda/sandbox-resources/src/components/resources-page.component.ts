@@ -1,4 +1,4 @@
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { takeWhile, map } from 'rxjs/operators';
 import { Resources, VirtualImage } from 'kypo-sandbox-model';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';

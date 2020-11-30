@@ -9,8 +9,8 @@ import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/compo
 import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxInstanceTable } from '../model/sandbox-instance-table';
-import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from 'kypo-sandbox-agenda';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from '@kypo/sandbox-agenda';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';

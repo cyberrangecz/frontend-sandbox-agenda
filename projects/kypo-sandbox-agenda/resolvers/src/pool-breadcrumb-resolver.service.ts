@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Pool } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SANDBOX_POOL_NEW_PATH } from 'kypo-sandbox-agenda';
+import { SANDBOX_POOL_NEW_PATH } from '@kypo/sandbox-agenda';
 import { PoolResolver } from './pool-resolver.service';
 
 /**

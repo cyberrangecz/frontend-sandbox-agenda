@@ -6,7 +6,7 @@ import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/compo
 import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionTable } from '../model/sandbox-definition-table';
-import { SandboxAgendaContext, SandboxDefinitionOverviewService } from 'kypo-sandbox-agenda/internal';
+import { SandboxAgendaContext, SandboxDefinitionOverviewService } from '@kypo/sandbox-agenda/internal';
 import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview-controls';
 
 @Component({

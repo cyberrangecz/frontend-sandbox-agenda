@@ -6,8 +6,8 @@ import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/compo
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
-import { SandboxNavigator } from 'kypo-sandbox-agenda';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxNavigator } from '@kypo/sandbox-agenda';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { PoolOverviewService } from '../services/state/pool-overview.service';
 
 /**

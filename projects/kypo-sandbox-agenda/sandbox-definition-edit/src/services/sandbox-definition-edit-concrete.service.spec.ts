@@ -2,7 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { asyncData } from '@sentinel/common';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';
 import { SandboxDefinitionApi } from 'kypo-sandbox-api';
 import { SandboxDefinition } from 'kypo-sandbox-model';
 import { SandboxDefinitionEditConcreteService } from './sandbox-definition-edit-concrete.service';

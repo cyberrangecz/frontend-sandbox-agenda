@@ -5,7 +5,7 @@ import { RequestStage } from 'kypo-sandbox-model';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
 
 @Injectable()

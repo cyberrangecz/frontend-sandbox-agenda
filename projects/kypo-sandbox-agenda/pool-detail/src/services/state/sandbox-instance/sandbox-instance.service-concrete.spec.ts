@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { asyncData, PaginatedResource, RequestedPagination, SentinelPagination } from '@sentinel/common';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from 'kypo-sandbox-api';
 import { SandboxInstanceConcreteService } from './sandbox-instance-concrete.service';
 import {

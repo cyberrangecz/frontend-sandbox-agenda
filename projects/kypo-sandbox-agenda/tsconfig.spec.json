@@ -8,10 +8,10 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "kypo-sandbox-agenda": [
+      "@kypo/sandbox-agenda": [
         "./public_api.ts"
       ],
-      "kypo-sandbox-agenda/*": [
+      "@kypo/sandbox-agenda/*": [
         "../*/src/public_api.ts"
       ]
     }

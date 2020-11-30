@@ -3,7 +3,7 @@ import { SandboxDefinition } from 'kypo-sandbox-model';
 import { Column, SentinelTable, Row, RowExpand, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxDefinitionDetailComponent } from '../components/sandbox-definition-detail/sandbox-definition-detail.component';
-import { SandboxDefinitionOverviewService } from 'kypo-sandbox-agenda/internal';
+import { SandboxDefinitionOverviewService } from '@kypo/sandbox-agenda/internal';
 
 /**
  * Helper class transforming paginated resource to class for common table component

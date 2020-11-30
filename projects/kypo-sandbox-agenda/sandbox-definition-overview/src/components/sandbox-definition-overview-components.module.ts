@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SandboxNavigator, SandboxDefaultNavigator, SandboxAgendaConfig } from 'kypo-sandbox-agenda';
+import { SandboxNavigator, SandboxDefaultNavigator, SandboxAgendaConfig } from '@kypo/sandbox-agenda';
 import {
   SandboxAgendaContext,
   SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
-} from 'kypo-sandbox-agenda/internal';
+} from '@kypo/sandbox-agenda/internal';
 import { SandboxDefinitionDetailComponent } from './sandbox-definition-detail/sandbox-definition-detail.component';
 import { SandboxDefinitionOverviewComponent } from './sandbox-definition-overview.component';
 

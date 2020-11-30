@@ -9,7 +9,7 @@ import {
   SANDBOX_POOL_ID_SELECTOR,
   SandboxErrorHandler,
   SandboxNavigator,
-} from 'kypo-sandbox-agenda';
+} from '@kypo/sandbox-agenda';
 import { AllocationRequestsApi, CleanupRequestsApi } from 'kypo-sandbox-api';
 
 /**

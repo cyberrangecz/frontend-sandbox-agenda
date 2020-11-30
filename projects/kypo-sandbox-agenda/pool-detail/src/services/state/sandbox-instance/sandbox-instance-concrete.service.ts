@@ -12,8 +12,8 @@ import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from 'kypo-san
 import { SandboxInstance } from 'kypo-sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from 'kypo-sandbox-agenda';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { SandboxInstanceService } from './sandbox-instance.service';
 
 /**

@@ -2,7 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { asyncData } from '@sentinel/common';
 import { take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
 import { ResourcesApi } from 'kypo-sandbox-api';
 import { Resources } from 'kypo-sandbox-model';
 import { SandboxResourcesConcreteService } from './sandbox-resources-concrete.service';
