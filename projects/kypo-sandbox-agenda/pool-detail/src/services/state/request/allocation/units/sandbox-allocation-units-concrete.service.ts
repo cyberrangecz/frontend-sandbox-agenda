@@ -4,8 +4,8 @@ import { BehaviorSubject, EMPTY, merge, Observable, timer } from 'rxjs';
 import { PaginatedResource, RequestedPagination, SentinelPagination } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import { Request, SandboxAllocationUnit } from 'kypo-sandbox-model';
-import { SandboxErrorHandler, SandboxNotificationService } from 'kypo-sandbox-agenda';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { retryWhen, switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import {

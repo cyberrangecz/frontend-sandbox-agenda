@@ -1,7 +1,7 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
-import { SandboxErrorHandler, SandboxNotificationService } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
 import {
   createAllocationRequestApiSpy,

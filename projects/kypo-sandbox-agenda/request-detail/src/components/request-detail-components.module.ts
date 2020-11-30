@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SentinelPipesModule } from '@sentinel/common';
 import { SentinelListModule } from '@sentinel/components/list';
-import { PoolResolver, RequestResolver } from 'kypo-sandbox-agenda/resolvers';
+import { PoolResolver, RequestResolver } from '@kypo/sandbox-agenda/resolvers';
 import { RequestDetailMaterialModule } from './request-detail-material.module';
 import { AnsibleAllocationStageDetailComponent } from './stage/detail/ansible-allocation-stage-detail/ansible-allocation-stage-detail.component';
 import { OpenStackAllocationStageDetailComponent } from './stage/detail/openstack-allocation-stage-detail/open-stack-allocation-stage-detail.component';

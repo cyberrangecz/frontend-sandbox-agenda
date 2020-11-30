@@ -7,7 +7,7 @@ import { Pool } from 'kypo-sandbox-model';
 import { from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxDefinitionSelectComponent } from '../components/sandbox-definition-select/sandbox-definition-select.component';
-import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from 'kypo-sandbox-agenda';
+import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@kypo/sandbox-agenda';
 import { PoolEditService } from './pool-edit.service';
 
 @Injectable()

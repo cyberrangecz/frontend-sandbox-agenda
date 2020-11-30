@@ -9,7 +9,7 @@ import {
   SandboxNavigator,
   SANDBOX_INSTANCE_ID_SELECTOR,
   SANDBOX_POOL_ID_SELECTOR,
-} from 'kypo-sandbox-agenda';
+} from '@kypo/sandbox-agenda';
 /**
  * Router data provider
  */

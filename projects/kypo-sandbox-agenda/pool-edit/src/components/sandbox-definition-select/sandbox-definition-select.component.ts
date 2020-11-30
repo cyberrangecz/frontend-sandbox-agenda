@@ -4,11 +4,11 @@ import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@
 import { SandboxDefinition } from 'kypo-sandbox-model';
 import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import {
   SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
-} from 'kypo-sandbox-agenda/internal';
+} from '@kypo/sandbox-agenda/internal';
 
 @Component({
   selector: 'kypo-sandbox-definition-select',

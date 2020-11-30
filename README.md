@@ -10,9 +10,7 @@ You can modify the behaviour of components by implementing abstract service clas
 
 To use the library you need to have installed:
 
-* NPM with private [KYPO Nexus repository](https://projects.ics.muni.cz/projects/kbase/knowledgebase/articles/153)
-* Angular 9+
-* Angular Material 9+
+* NPM with access to [KYPO registry](https://projects.ics.muni.cz/projects/kbase/knowledgebase/articles/153)
 
 ## Features
 
@@ -29,7 +27,7 @@ To use the library you need to have installed:
 
 To use the sandbox agenda in your Angular application follow these steps:
 
-1. Run `npm install kypo-sandbox-agenda`
+1. Run `npm install @kypo/sandbox-agenda`
 1. Install all peer dependencies
 1. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
     +   pollingPeriod

@@ -1,6 +1,6 @@
 import { Request, SandboxAllocationUnit } from 'kypo-sandbox-model';
 import { RequestsService } from '../services/state/request/requests.service';
-import { SandboxNavigator } from 'kypo-sandbox-agenda';
+import { SandboxNavigator } from '@kypo/sandbox-agenda';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { RequestRowAdapter } from './request-row-adapter';
 import { PaginatedResource, SentinelDateTimeFormatPipe } from '@sentinel/common';

@@ -2,7 +2,7 @@ import { PaginatedResource } from '@sentinel/common';
 import { Pool } from 'kypo-sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
-import { SandboxNavigator } from 'kypo-sandbox-agenda';
+import { SandboxNavigator } from '@kypo/sandbox-agenda';
 import { PoolOverviewService } from '../services/state/pool-overview.service';
 import { PoolRowAdapter } from './pool-row-adapter';
 

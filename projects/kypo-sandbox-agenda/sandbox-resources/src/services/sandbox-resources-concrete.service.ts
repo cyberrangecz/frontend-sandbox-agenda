@@ -1,4 +1,4 @@
-import { SandboxErrorHandler } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
 import { tap } from 'rxjs/operators';
 import { ResourcesApi } from 'kypo-sandbox-api';
 import { Observable, of, ReplaySubject } from 'rxjs';

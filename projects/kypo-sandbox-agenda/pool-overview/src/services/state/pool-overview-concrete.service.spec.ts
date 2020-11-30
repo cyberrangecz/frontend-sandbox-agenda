@@ -2,7 +2,7 @@ import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData, RequestedPagination } from '@sentinel/common';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from 'kypo-sandbox-agenda';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';
 import { PoolApi } from 'kypo-sandbox-api';
 import { PoolOverviewConcreteService } from './pool-overview-concrete.service';
 import { SandboxAgendaContext } from '../../../../internal/src/services/sandox-agenda-context.service';

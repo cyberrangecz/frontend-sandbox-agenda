@@ -5,8 +5,8 @@ import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-san
 import { CleanupRequest, Request } from 'kypo-sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNotificationService } from 'kypo-sandbox-agenda';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { RequestsService } from '../requests.service';
 import {
   SentinelConfirmationDialogComponent,

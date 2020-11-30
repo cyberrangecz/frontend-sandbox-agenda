@@ -10,7 +10,7 @@ import {
   SANDBOX_POOL_ID_SELECTOR,
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH,
-} from 'kypo-sandbox-agenda';
+} from '@kypo/sandbox-agenda';
 
 /**
  * Router data provider

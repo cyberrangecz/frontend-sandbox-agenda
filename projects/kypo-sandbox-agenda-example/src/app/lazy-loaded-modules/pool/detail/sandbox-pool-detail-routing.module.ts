@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PoolDetailComponent } from 'kypo-sandbox-agenda/pool-detail';
+import { PoolDetailComponent } from '@kypo/sandbox-agenda/pool-detail';
 import {
   POOL_DATA_ATTRIBUTE_NAME,
   POOL_ALLOCATION_REQUEST_PATH,
@@ -9,12 +9,12 @@ import {
   SANDBOX_INSTANCE_ID_SELECTOR,
   SANDBOX_INSTANCE_PATH,
   SANDBOX_INSTANCE_TOPOLOGY_PATH,
-} from 'kypo-sandbox-agenda';
+} from '@kypo/sandbox-agenda';
 import {
   RequestBreadcrumbResolver,
   PoolResolver,
   SandboxInstanceBreadcrumbResolver,
-} from 'kypo-sandbox-agenda/resolvers';
+} from '@kypo/sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {

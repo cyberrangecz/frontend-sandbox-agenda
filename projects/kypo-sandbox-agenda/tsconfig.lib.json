@@ -11,16 +11,16 @@
       "es2018"
     ],
     "paths": {
-      "kypo-sandbox-agenda": ["./src/public_api.ts"],
-      "kypo-sandbox-agenda/internal": ["./internal/src/public_api.ts"],
-      "kypo-sandbox-agenda/pool-detail": ["./pool-detail/src/public_api.ts"],
-      "kypo-sandbox-agenda/pool-edit": ["./pool-edit/src/public_api.ts"],
-      "kypo-sandbox-agenda/pool-overview": ["./pool-overview/src/public_api.ts"],
-      "kypo-sandbox-agenda/request-detail": ["./request-detail/src/public_api.ts"],
-      "kypo-sandbox-agenda/resolvers": ["./resolvers/src/public_api.ts"],
-      "kypo-sandbox-agenda/sandbox-definition-edit": ["./sandbox-definition-edit/src/public_api.ts"],
-      "kypo-sandbox-agenda/sandbox-definition-overview": ["./sandbox-definition-overview/src/public_api.ts"],
-      "kypo-sandbox-agenda/topology": ["./topology/src/public_api.ts"]
+      "@kypo/sandbox-agenda": ["./src/public_api.ts"],
+      "@kypo/sandbox-agenda/internal": ["./internal/src/public_api.ts"],
+      "@kypo/sandbox-agenda/pool-detail": ["./pool-detail/src/public_api.ts"],
+      "@kypo/sandbox-agenda/pool-edit": ["./pool-edit/src/public_api.ts"],
+      "@kypo/sandbox-agenda/pool-overview": ["./pool-overview/src/public_api.ts"],
+      "@kypo/sandbox-agenda/request-detail": ["./request-detail/src/public_api.ts"],
+      "@kypo/sandbox-agenda/resolvers": ["./resolvers/src/public_api.ts"],
+      "@kypo/sandbox-agenda/sandbox-definition-edit": ["./sandbox-definition-edit/src/public_api.ts"],
+      "@kypo/sandbox-agenda/sandbox-definition-overview": ["./sandbox-definition-overview/src/public_api.ts"],
+      "@kypo/sandbox-agenda/topology": ["./topology/src/public_api.ts"]
     }
   },
   "angularCompilerOptions": {

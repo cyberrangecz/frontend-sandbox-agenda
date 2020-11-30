@@ -3,7 +3,7 @@ import { AllocationRequestsApi } from 'kypo-sandbox-api';
 import { RequestStage } from 'kypo-sandbox-model';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { Observable } from 'rxjs';
-import { SandboxAgendaContext } from 'kypo-sandbox-agenda/internal';
+import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
