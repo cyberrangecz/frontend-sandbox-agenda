@@ -1,8 +1,8 @@
 import { StageDetailService } from './stage-detail.service';
-import { RequestStage, RequestStageType } from 'kypo-sandbox-model';
+import { RequestStage, RequestStageType } from '@kypo/sandbox-model';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { Observable } from 'rxjs';
-import { AllocationRequestsApi } from 'kypo-sandbox-api';
+import { AllocationRequestsApi } from '@kypo/sandbox-api';
 import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { Injectable } from '@angular/core';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';

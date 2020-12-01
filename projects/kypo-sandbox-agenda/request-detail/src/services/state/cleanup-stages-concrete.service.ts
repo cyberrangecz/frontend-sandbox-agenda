@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CleanupRequestsApi } from 'kypo-sandbox-api';
-import { Request, RequestStage } from 'kypo-sandbox-model';
+import { CleanupRequestsApi } from '@kypo/sandbox-api';
+import { Request, RequestStage } from '@kypo/sandbox-model';
 import { Observable, zip } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';

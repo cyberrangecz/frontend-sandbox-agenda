@@ -1,6 +1,6 @@
 import { StageDetailService } from './stage-detail.service';
-import { AllocationRequestsApi } from 'kypo-sandbox-api';
-import { RequestStage } from 'kypo-sandbox-model';
+import { AllocationRequestsApi } from '@kypo/sandbox-api';
+import { RequestStage } from '@kypo/sandbox-model';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { Observable } from 'rxjs';
 import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';

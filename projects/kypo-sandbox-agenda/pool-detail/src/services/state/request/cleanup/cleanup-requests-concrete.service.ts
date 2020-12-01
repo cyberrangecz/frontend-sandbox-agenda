@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
-import { CleanupRequest, Request } from 'kypo-sandbox-model';
+import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@kypo/sandbox-api';
+import { CleanupRequest, Request } from '@kypo/sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';

@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PaginatedResource, SentinelPagination, asyncData, RequestedPagination } from '@sentinel/common';
-import { SandboxDefinitionApi } from 'kypo-sandbox-api';
-import { SandboxDefinition } from 'kypo-sandbox-model';
+import { SandboxDefinitionApi } from '@kypo/sandbox-api';
+import { SandboxDefinition } from '@kypo/sandbox-model';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import {

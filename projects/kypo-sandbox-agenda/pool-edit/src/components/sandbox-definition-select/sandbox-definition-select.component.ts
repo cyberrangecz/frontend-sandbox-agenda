@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { SandboxDefinition } from 'kypo-sandbox-model';
+import { SandboxDefinition } from '@kypo/sandbox-model';
 import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';

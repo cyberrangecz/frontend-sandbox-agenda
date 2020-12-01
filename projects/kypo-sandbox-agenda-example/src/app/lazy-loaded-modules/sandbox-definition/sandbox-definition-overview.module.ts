@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { KypoSandboxApiModule } from 'kypo-sandbox-api';
+import { KypoSandboxApiModule } from '@kypo/sandbox-api';
 import { SandboxDefinitionOverviewComponentsModule } from '@kypo/sandbox-agenda/sandbox-definition-overview';
 import { environment } from '../../../environments/environment';
 import { SharedProvidersModule } from '../shared-providers.module';

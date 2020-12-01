@@ -1,4 +1,4 @@
-import { SandboxAllocationUnit } from 'kypo-sandbox-model';
+import { SandboxAllocationUnit } from '@kypo/sandbox-model';
 
 export class SandboxAllocationUnitRowAdapter extends SandboxAllocationUnit {
   allocationRequestTitle: string;

@@ -1,4 +1,4 @@
-import { RequestStageType } from 'kypo-sandbox-model';
+import { RequestStageType } from '@kypo/sandbox-model';
 import { StageDetailComponentEnum } from './stage-detail-component-enum';
 
 export class StageComponentResolver {

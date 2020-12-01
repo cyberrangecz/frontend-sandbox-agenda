@@ -4,12 +4,12 @@
   "peerDependencies": {
     "@angular/common": "^10.0.0",
     "@angular/core": "^10.0.0",
-    "@sentinel/common": "~10.0.0",
-    "@sentinel/components": "~10.0.0",
-    "kypo-sandbox-api": "~10.5.0",
-    "kypo-sandbox-model": "~10.4.0",
-    "kypo2-topology-graph": "~10.0.0",
-    "kypo2-topology-graph-model": "~10.0.0",
+    "@sentinel/common": "~10.1.0",
+    "@sentinel/components": "~10.4.0",
+    "@kypo/sandbox-api": "~10.7.0",
+    "@kypo/sandbox-model": "~10.5.0",
+    "@kypo/topology-graph": "~10.2.0",
+    "@kypo/topology-model": "~10.1.0",
     "file-saver": "^2.0.2"
   },
   "dependencies": {

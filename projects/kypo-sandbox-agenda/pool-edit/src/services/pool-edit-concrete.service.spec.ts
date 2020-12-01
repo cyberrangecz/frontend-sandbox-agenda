@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';
-import { PoolApi } from 'kypo-sandbox-api';
-import { Pool } from 'kypo-sandbox-model';
+import { PoolApi } from '@kypo/sandbox-api';
+import { Pool } from '@kypo/sandbox-model';
 import { PoolEditConcreteService } from './pool-edit-concrete.service';
 import {
   createErrorHandlerSpy,

@@ -1,6 +1,6 @@
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Request, SandboxAllocationUnit } from 'kypo-sandbox-model';
+import { Request, SandboxAllocationUnit } from '@kypo/sandbox-model';
 
 export abstract class SandboxAllocationUnitsService {
   protected constructor() {}

@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common';
-import { Pool } from 'kypo-sandbox-model';
+import { Pool } from '@kypo/sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '@kypo/sandbox-agenda';

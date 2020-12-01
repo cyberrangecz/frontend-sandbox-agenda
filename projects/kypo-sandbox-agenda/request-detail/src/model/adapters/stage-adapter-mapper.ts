@@ -1,4 +1,4 @@
-import { AllocationRequestStage, RequestStage } from 'kypo-sandbox-model';
+import { AllocationRequestStage, RequestStage } from '@kypo/sandbox-model';
 import {
   ANSIBLE_NETWORKING_TYPES,
   ANSIBLE_STAGE_TYPES,

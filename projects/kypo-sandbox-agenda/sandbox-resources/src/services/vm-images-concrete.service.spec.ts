@@ -3,7 +3,7 @@ import { asyncData, PaginatedResource, SentinelPagination } from '@sentinel/comm
 import { skip, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
-import { VMImagesApi } from 'kypo-sandbox-api';
+import { VMImagesApi } from '@kypo/sandbox-api';
 import { VMImagesConcreteService } from './vm-images-concrete.service';
 import {
   createContextSpy,

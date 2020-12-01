@@ -1,4 +1,4 @@
-import { Request } from 'kypo-sandbox-model';
+import { Request } from '@kypo/sandbox-model';
 import { RequestsService } from '../services/state/request/requests.service';
 import { SandboxNavigator } from '@kypo/sandbox-agenda';
 import { Column, SentinelTable, Row, RowAction } from '@sentinel/components/table';

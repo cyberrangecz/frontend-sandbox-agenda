@@ -1,4 +1,4 @@
-import { RequestStageType } from 'kypo-sandbox-model';
+import { RequestStageType } from '@kypo/sandbox-model';
 
 export const OPENSTACK_STAGE_TYPES = [RequestStageType.OPEN_STACK_ALLOCATION, RequestStageType.OPEN_STACK_CLEANUP];
 export const ANSIBLE_STAGE_TYPES = [
