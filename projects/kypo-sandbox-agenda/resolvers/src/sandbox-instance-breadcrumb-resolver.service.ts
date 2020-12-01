@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { SandboxInstance } from 'kypo-sandbox-model';
+import { SandboxInstance } from '@kypo/sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SANDBOX_INSTANCE_TOPOLOGY_PATH } from '@kypo/sandbox-agenda';

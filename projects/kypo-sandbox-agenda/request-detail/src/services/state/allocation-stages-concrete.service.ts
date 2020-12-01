@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Request } from 'kypo-sandbox-model';
+import { Request } from '@kypo/sandbox-model';
 import { Observable, zip } from 'rxjs';
 import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
 import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
 import { RequestStagesService } from './request-stages.service';
-import { AllocationRequestsApi } from 'kypo-sandbox-api';
+import { AllocationRequestsApi } from '@kypo/sandbox-api';
 import { map } from 'rxjs/operators';
 import { StageAdapterMapper } from '../../model/adapters/stage-adapter-mapper';
 import { StageAdapter } from '../../model/adapters/stage-adapter';

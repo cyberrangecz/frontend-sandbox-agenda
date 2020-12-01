@@ -8,8 +8,8 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from 'kypo-sandbox-api';
-import { SandboxInstance } from 'kypo-sandbox-model';
+import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@kypo/sandbox-api';
+import { SandboxInstance } from '@kypo/sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';

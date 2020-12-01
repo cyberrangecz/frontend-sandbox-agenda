@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { Request } from 'kypo-sandbox-model';
-import { RequestStage } from 'kypo-sandbox-model';
+import { Request } from '@kypo/sandbox-model';
+import { RequestStage } from '@kypo/sandbox-model';
 import { Observable } from 'rxjs';
 import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@kypo/sandbox-agenda';

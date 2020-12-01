@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { VirtualImage } from 'kypo-sandbox-model';
+import { VirtualImage } from '@kypo/sandbox-model';
 import { PaginatedResource, RequestedPagination, PaginatedResourceService } from '@sentinel/common';
 
 /**

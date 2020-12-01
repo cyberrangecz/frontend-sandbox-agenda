@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { Request } from 'kypo-sandbox-model';
+import { Request } from '@kypo/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
@@ -10,7 +10,7 @@ import {
   SandboxErrorHandler,
   SandboxNavigator,
 } from '@kypo/sandbox-agenda';
-import { AllocationRequestsApi, CleanupRequestsApi } from 'kypo-sandbox-api';
+import { AllocationRequestsApi, CleanupRequestsApi } from '@kypo/sandbox-api';
 
 /**
  * Router data provider

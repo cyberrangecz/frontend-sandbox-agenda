@@ -1,10 +1,10 @@
 import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
 import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
-import { VMImagesApi } from 'kypo-sandbox-api';
+import { VMImagesApi } from '@kypo/sandbox-api';
 import { tap } from 'rxjs/operators';
 import { Observable, of, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { VirtualImage } from 'kypo-sandbox-model';
+import { VirtualImage } from '@kypo/sandbox-model';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { VMImagesService } from './vm-images.service';
 

@@ -1,7 +1,7 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatedResource, SentinelPagination, RequestedPagination, asyncData } from '@sentinel/common';
-import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from 'kypo-sandbox-api';
+import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@kypo/sandbox-api';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import {

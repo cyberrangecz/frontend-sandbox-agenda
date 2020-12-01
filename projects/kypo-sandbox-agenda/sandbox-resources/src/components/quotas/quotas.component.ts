@@ -1,4 +1,4 @@
-import { Resources } from 'kypo-sandbox-model';
+import { Resources } from '@kypo/sandbox-model';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 

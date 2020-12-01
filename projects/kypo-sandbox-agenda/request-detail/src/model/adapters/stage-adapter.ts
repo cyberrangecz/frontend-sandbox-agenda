@@ -1,4 +1,4 @@
-import { RequestStage } from 'kypo-sandbox-model';
+import { RequestStage } from '@kypo/sandbox-model';
 
 export interface StageAdapter extends RequestStage {
   logoSrc: string;

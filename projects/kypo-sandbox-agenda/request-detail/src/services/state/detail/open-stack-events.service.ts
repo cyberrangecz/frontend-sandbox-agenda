@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StageDetailService } from './stage-detail.service';
-import { AllocationRequestsApi } from 'kypo-sandbox-api';
-import { RequestStage } from 'kypo-sandbox-model';
+import { AllocationRequestsApi } from '@kypo/sandbox-api';
+import { RequestStage } from '@kypo/sandbox-model';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

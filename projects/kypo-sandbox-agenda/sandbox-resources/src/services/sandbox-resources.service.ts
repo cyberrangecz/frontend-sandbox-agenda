@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Resources } from 'kypo-sandbox-model/public-api';
+import { Resources } from '@kypo/sandbox-model';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.

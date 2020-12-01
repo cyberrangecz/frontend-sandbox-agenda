@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { SandboxDefinitionApi } from 'kypo-sandbox-api';
-import { SandboxDefinition } from 'kypo-sandbox-model';
+import { SandboxDefinitionApi } from '@kypo/sandbox-api';
+import { SandboxDefinition } from '@kypo/sandbox-model';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@kypo/sandbox-agenda';
