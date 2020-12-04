@@ -1,7 +1,7 @@
 import { ChartData } from './../../../models/chart-data';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import * as d3 from 'd3';
-import { Quota } from '@kypo/sandbox-model';
+import { Quota } from '@muni-kypo-crp/sandbox-model';
 
 @Component({
   selector: 'kypo-quota-pie-chart',

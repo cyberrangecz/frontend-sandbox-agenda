@@ -3,11 +3,11 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@kypo/sandbox-agenda';
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewConcreteService } from '../services/state/pool-overview-concrete.service';
 import { PoolOverviewService } from '../services/state/pool-overview.service';
-import { PoolResolver, PoolBreadcrumbResolver } from '@kypo/sandbox-agenda/resolvers';
+import { PoolResolver, PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
 
 /**

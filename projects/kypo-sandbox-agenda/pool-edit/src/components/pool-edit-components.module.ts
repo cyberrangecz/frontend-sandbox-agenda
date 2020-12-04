@@ -3,7 +3,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelListModule } from '@sentinel/components/list';
-import { SandboxAgendaConfig } from '@kypo/sandbox-agenda';
+import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolEditConcreteService } from '../services/pool-edit-concrete.service';
 import { PoolEditService } from '../services/pool-edit.service';
 import { SandboxDefinitionSelectComponent } from './sandbox-definition-select/sandbox-definition-select.component';

@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SandboxDefinition } from '@kypo/sandbox-model';
+import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 /**
  * Sandbox Definition create form

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { PoolApi } from '@kypo/sandbox-api';
-import { SandboxDefinition } from '@kypo/sandbox-model';
-import { Pool } from '@kypo/sandbox-model';
+import { PoolApi } from '@muni-kypo-crp/sandbox-api';
+import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { from, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxDefinitionSelectComponent } from '../components/sandbox-definition-select/sandbox-definition-select.component';
-import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@kypo/sandbox-agenda';
+import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolEditService } from './pool-edit.service';
 
 @Injectable()

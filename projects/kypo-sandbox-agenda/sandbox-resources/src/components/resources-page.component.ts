@@ -1,6 +1,6 @@
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { takeWhile, map } from 'rxjs/operators';
-import { Resources, VirtualImage } from '@kypo/sandbox-model';
+import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';

@@ -1,6 +1,6 @@
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { defer, of } from 'rxjs';
-import { SandboxDefinitionOverviewService } from '@kypo/sandbox-agenda/internal';
+import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
 
 /**
  * @dynamic

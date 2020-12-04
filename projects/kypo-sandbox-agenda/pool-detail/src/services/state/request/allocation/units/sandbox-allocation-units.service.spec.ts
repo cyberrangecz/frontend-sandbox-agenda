@@ -1,8 +1,8 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
-import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@kypo/sandbox-api';
+import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import {
   createAllocationRequestApiSpy,
   createContextSpy,
@@ -20,7 +20,7 @@ import { SandboxAllocationUnitsConcreteService } from './sandbox-allocation-unit
 import { SandboxAgendaContext } from '../../../../../../../internal/src/services/sandox-agenda-context.service';
 import { of, throwError } from 'rxjs';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { AllocationRequest } from '@kypo/sandbox-model';
+import { AllocationRequest } from '@muni-kypo-crp/sandbox-model';
 
 describe('SandboxAllocationUnitsService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;

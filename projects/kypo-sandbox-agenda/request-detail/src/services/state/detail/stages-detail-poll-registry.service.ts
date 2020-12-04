@@ -1,7 +1,7 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RequestStagesService } from '../request-stages.service';
 import { map, switchMap } from 'rxjs/operators';
-import { RequestStage } from '@kypo/sandbox-model';
+import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { Injectable } from '@angular/core';
 
 @Injectable()

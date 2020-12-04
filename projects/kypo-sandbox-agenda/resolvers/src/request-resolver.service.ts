@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { Request } from '@kypo/sandbox-model';
+import { Request } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
@@ -9,8 +9,8 @@ import {
   SANDBOX_POOL_ID_SELECTOR,
   SandboxErrorHandler,
   SandboxNavigator,
-} from '@kypo/sandbox-agenda';
-import { AllocationRequestsApi, CleanupRequestsApi } from '@kypo/sandbox-api';
+} from '@muni-kypo-crp/sandbox-agenda';
+import { AllocationRequestsApi, CleanupRequestsApi } from '@muni-kypo-crp/sandbox-api';
 
 /**
  * Router data provider

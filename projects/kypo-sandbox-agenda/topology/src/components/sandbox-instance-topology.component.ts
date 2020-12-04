@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { SandboxInstance } from '@kypo/sandbox-model';
-import { Kypo2TopologyErrorService } from '@kypo/topology-graph';
+import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { Kypo2TopologyErrorService } from '@muni-kypo-crp/topology-graph';
 import { Observable } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
-import { SandboxErrorHandler, SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME } from '@kypo/sandbox-agenda';
+import { SandboxErrorHandler, SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 
 /**
  * Smart component of sandbox instance topology page

@@ -27,7 +27,7 @@ To use the library you need to have installed:
 
 To use the sandbox agenda in your Angular application follow these steps:
 
-1. Run `npm install @kypo/sandbox-agenda`
+1. Run `npm install @muni-kypo-crp/sandbox-agenda`
 1. Install all peer dependencies
 1. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
     +   pollingPeriod

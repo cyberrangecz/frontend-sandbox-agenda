@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common';
-import { SandboxInstance } from '@kypo/sandbox-model';
+import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';

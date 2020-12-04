@@ -1,4 +1,4 @@
-import { VirtualImage } from '@kypo/sandbox-model';
+import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
 
 export class VMImagesRowAdapter extends VirtualImage {
   updatedAtFormatted: string;

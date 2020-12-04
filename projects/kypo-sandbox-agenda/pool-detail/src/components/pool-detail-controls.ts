@@ -1,5 +1,5 @@
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool } from '@kypo/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { defer, of } from 'rxjs';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 

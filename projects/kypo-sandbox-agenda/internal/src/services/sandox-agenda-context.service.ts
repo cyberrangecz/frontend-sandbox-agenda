@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SandboxAgendaConfig } from '@kypo/sandbox-agenda';
+import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 
 @Injectable()
 export class SandboxAgendaContext {

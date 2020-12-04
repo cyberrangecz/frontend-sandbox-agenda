@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@kypo/sandbox-api';
-import { CleanupRequest, Request } from '@kypo/sandbox-model';
+import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
+import { CleanupRequest, Request } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { RequestsService } from '../requests.service';
 import {
   SentinelConfirmationDialogComponent,

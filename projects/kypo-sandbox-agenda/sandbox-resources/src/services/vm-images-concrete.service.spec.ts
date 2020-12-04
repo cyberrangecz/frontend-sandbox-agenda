@@ -2,8 +2,8 @@ import { async, TestBed } from '@angular/core/testing';
 import { asyncData, PaginatedResource, SentinelPagination } from '@sentinel/common';
 import { skip, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
-import { VMImagesApi } from '@kypo/sandbox-api';
+import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
+import { VMImagesApi } from '@muni-kypo-crp/sandbox-api';
 import { VMImagesConcreteService } from './vm-images-concrete.service';
 import {
   createContextSpy,

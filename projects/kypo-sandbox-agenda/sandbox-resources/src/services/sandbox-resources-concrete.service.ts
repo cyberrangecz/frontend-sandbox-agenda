@@ -1,9 +1,9 @@
-import { SandboxErrorHandler } from '@kypo/sandbox-agenda';
+import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
 import { tap } from 'rxjs/operators';
-import { ResourcesApi } from '@kypo/sandbox-api';
+import { ResourcesApi } from '@muni-kypo-crp/sandbox-api';
 import { Observable, of, ReplaySubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Resources } from '@kypo/sandbox-model';
+import { Resources } from '@muni-kypo-crp/sandbox-model';
 import { SandboxResourcesService } from './sandbox-resources.service';
 
 @Injectable()

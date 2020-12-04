@@ -1,6 +1,6 @@
 import { merge, NEVER, Observable } from 'rxjs';
 import { PaginatedResource, PaginatedResourcePollingService, RequestedPagination } from '@sentinel/common';
-import { RequestStage } from '@kypo/sandbox-model';
+import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
