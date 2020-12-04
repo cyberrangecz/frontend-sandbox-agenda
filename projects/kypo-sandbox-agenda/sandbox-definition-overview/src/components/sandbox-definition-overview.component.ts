@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { SandboxDefinition } from '@kypo/sandbox-model';
+import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionTable } from '../model/sandbox-definition-table';
-import { SandboxAgendaContext, SandboxDefinitionOverviewService } from '@kypo/sandbox-agenda/internal';
+import { SandboxAgendaContext, SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview-controls';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RequestStageState } from '@kypo/sandbox-model';
+import { RequestStageState } from '@muni-kypo-crp/sandbox-model';
 import { StageAdapter } from '../../../model/adapters/stage-adapter';
 
 @Component({

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Kypo2TopologyGraphConfig, Kypo2TopologyGraphModule } from '@kypo/topology-graph';
-import { SandboxAgendaConfig } from '@kypo/sandbox-agenda';
+import { Kypo2TopologyGraphConfig, Kypo2TopologyGraphModule } from '@muni-kypo-crp/topology-graph';
+import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxInstanceTopologyComponent } from './sandbox-instance-topology.component';
 
 /**

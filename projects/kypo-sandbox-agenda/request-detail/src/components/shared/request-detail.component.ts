@@ -1,10 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { Request } from '@kypo/sandbox-model';
-import { RequestStage } from '@kypo/sandbox-model';
+import { Request } from '@muni-kypo-crp/sandbox-model';
+import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
-import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@kypo/sandbox-agenda';
+import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { RequestStagesService } from '../../services/state/request-stages.service';
 import { StageAdapter } from '../../model/adapters/stage-adapter';
 import { StagesDetailPollRegistry } from '../../services/state/detail/stages-detail-poll-registry.service';

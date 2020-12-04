@@ -1,4 +1,4 @@
-import { SandboxAllocationUnit } from '@kypo/sandbox-model';
+import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 import { Column, Row, RowAction, SentinelTable } from '@sentinel/components/table';
 import { PaginatedResource, SentinelDateTimeFormatPipe } from '@sentinel/common';
 import { defer, of } from 'rxjs';

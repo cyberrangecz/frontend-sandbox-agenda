@@ -1,4 +1,4 @@
-import { OpenStackAllocationStage } from '@kypo/sandbox-model';
+import { OpenStackAllocationStage } from '@muni-kypo-crp/sandbox-model';
 import { StageAdapter } from './stage-adapter';
 
 export class OpenStackStageAdapter extends OpenStackAllocationStage implements StageAdapter {

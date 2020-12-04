@@ -1,5 +1,5 @@
-import { Pool } from '@kypo/sandbox-model';
-import { SandboxDefinition } from '@kypo/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 
 export abstract class PoolEditService {

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
 import { BehaviorSubject, EMPTY, merge, Observable, timer } from 'rxjs';
 import { PaginatedResource, RequestedPagination, SentinelPagination } from '@sentinel/common';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@kypo/sandbox-api';
-import { Request, SandboxAllocationUnit } from '@kypo/sandbox-model';
-import { SandboxErrorHandler, SandboxNotificationService } from '@kypo/sandbox-agenda';
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
+import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
+import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { retryWhen, switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import {

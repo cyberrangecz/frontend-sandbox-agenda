@@ -7,12 +7,12 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@kypo/sandbox-api';
-import { Request } from '@kypo/sandbox-model';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
+import { Request } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SandboxNotificationService, SandboxErrorHandler } from '@kypo/sandbox-agenda';
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { SandboxNotificationService, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from './allocation-requests.service';
 
 /**

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { SandboxAgendaConfig } from '@kypo/sandbox-agenda';
+import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { RequestDetailComponentsModule } from '../request-detail-components.module';
 import { AllocationRequestDetailComponent } from './allocation-request-detail.component';
 

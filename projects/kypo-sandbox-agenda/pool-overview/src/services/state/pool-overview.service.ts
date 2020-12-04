@@ -1,5 +1,5 @@
 import { PaginatedResource, PaginatedResourceService, RequestedPagination } from '@sentinel/common';
-import { Pool } from '@kypo/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 
 /**

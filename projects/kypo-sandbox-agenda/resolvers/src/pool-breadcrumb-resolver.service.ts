@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Pool } from '@kypo/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SANDBOX_POOL_NEW_PATH } from '@kypo/sandbox-agenda';
+import { SANDBOX_POOL_NEW_PATH } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolResolver } from './pool-resolver.service';
 
 /**

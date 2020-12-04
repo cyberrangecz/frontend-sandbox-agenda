@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { PoolApi } from '@kypo/sandbox-api';
-import { Pool } from '@kypo/sandbox-model';
+import { PoolApi } from '@muni-kypo-crp/sandbox-api';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
@@ -10,7 +10,7 @@ import {
   SANDBOX_POOL_ID_SELECTOR,
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH,
-} from '@kypo/sandbox-agenda';
+} from '@muni-kypo-crp/sandbox-agenda';
 
 /**
  * Router data provider

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool } from '@kypo/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
-import { SandboxNavigator } from '@kypo/sandbox-agenda';
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from '../services/state/pool-overview.service';
 
 /**

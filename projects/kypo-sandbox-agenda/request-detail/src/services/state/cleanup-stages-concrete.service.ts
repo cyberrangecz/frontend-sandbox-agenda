@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CleanupRequestsApi } from '@kypo/sandbox-api';
-import { Request, RequestStage } from '@kypo/sandbox-model';
+import { CleanupRequestsApi } from '@muni-kypo-crp/sandbox-api';
+import { Request, RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { Observable, zip } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@kypo/sandbox-agenda';
-import { SandboxAgendaContext } from '@kypo/sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { RequestStagesService } from './request-stages.service';
 import { StageAdapter } from '../../model/adapters/stage-adapter';
 import { StageAdapterMapper } from '../../model/adapters/stage-adapter-mapper';
