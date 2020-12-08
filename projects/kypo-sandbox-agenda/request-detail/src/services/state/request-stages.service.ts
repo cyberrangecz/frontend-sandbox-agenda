@@ -78,7 +78,7 @@ export abstract class RequestStagesService {
   /**
    * Performs necessary operations and updates state of the service.
    */
-  protected onManualResourceRefresh(request: Request) {
+  protected onManualResourceRefresh(request: Request): void {
     this.isLoadingSubject$.next(true);
     if (this.hasErrorSubject$.getValue()) {
       this.retryPolling$.next(true);
@@ -89,8 +89,8 @@ export abstract class RequestStagesService {
 
   protected createPoll(): Observable<StageAdapter[]> {
     return timer(this.pollPeriod, this.pollPeriod).pipe(
-      switchMap((_) => this.refreshStages()),
-      retryWhen((_) => this.retryPolling$),
+      switchMap(() => this.refreshStages()),
+      retryWhen(() => this.retryPolling$),
       takeWhile((stageMap) => this.shouldStopPolling(Array.from(stageMap.values())), true),
       shareReplay(Number.POSITIVE_INFINITY, this.pollPeriod)
     );

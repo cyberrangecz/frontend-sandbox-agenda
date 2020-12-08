@@ -48,7 +48,7 @@ describe('SandboxDefinitionEditConcreteService', () => {
     sandboxDefinitionApiSpy.create.and.returnValue(asyncData(null));
     navigatorSpy.toSandboxDefinitionOverview.and.returnValue('/');
 
-    service.create(mockData).subscribe((_) => done(), fail);
+    service.create(mockData).subscribe(() => done(), fail);
     expect(sandboxDefinitionApiSpy.create).toHaveBeenCalledTimes(1);
   });
 
@@ -57,8 +57,8 @@ describe('SandboxDefinitionEditConcreteService', () => {
     sandboxDefinitionApiSpy.create.and.returnValue(throwError(null));
 
     service.create(mockData).subscribe(
-      (_) => fail,
-      (_) => {
+      () => fail,
+      () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
       }

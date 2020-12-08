@@ -5,6 +5,7 @@ import { defer, of } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionEditService } from '../services/sandbox-definition-edit.service';
 import { SandboxDefinitionFormGroup } from './sandbox-definition-edit-form-group';
+import { AbstractControl } from '@angular/forms';
 
 /**
  * Component with form for creating new sandbox definition
@@ -23,24 +24,24 @@ export class SandboxDefinitionEditComponent extends SentinelBaseDirective implem
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sandboxDefinitionFormGroup = new SandboxDefinitionFormGroup();
     this.initControls();
     this.sandboxDefinitionFormGroup.formGroup.valueChanges
-      .pipe(takeWhile((_) => this.isAlive))
-      .subscribe((_) => this.initControls());
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe(() => this.initControls());
   }
 
-  get gitlabUrl() {
+  get gitlabUrl(): AbstractControl {
     return this.sandboxDefinitionFormGroup.formGroup.get('gitlabUrl');
   }
 
-  get revision() {
+  get revision(): AbstractControl {
     return this.sandboxDefinitionFormGroup.formGroup.get('revision');
   }
 
-  onControlsAction(control: SentinelControlItem) {
-    control.result$.pipe(takeWhile((_) => this.isAlive)).subscribe();
+  onControlsAction(control: SentinelControlItem): void {
+    control.result$.pipe(takeWhile(() => this.isAlive)).subscribe();
   }
 
   private initControls() {

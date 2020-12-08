@@ -1,7 +1,7 @@
 import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
 import { tap } from 'rxjs/operators';
 import { ResourcesApi } from '@muni-kypo-crp/sandbox-api';
-import { Observable, of, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Resources } from '@muni-kypo-crp/sandbox-model';
 import { SandboxResourcesService } from './sandbox-resources.service';

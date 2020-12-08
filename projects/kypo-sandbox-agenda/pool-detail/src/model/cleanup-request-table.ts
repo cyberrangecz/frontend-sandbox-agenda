@@ -1,4 +1,4 @@
-import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
+import { Request } from '@muni-kypo-crp/sandbox-model';
 import { RequestsService } from '../services/state/request/requests.service';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';

@@ -33,7 +33,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initTable();
     this.initControls();
   }
@@ -42,10 +42,10 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    * Gets new data for pool overview table
    * @param loadEvent load data event from table component
    */
-  onPoolsLoadEvent(loadEvent: LoadTableEvent) {
+  onPoolsLoadEvent(loadEvent: LoadTableEvent): void {
     this.service
       .getAll(loadEvent.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -53,11 +53,11 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    * Resolves type of action and calls appropriate handler
    * @param event action event emitted from pool overview table
    */
-  onPoolAction(event: TableActionEvent<Pool>) {
+  onPoolAction(event: TableActionEvent<Pool>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
-  onControls(controlItem: SentinelControlItem) {
+  onControls(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
   }
 

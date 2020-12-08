@@ -7,7 +7,6 @@ import { Resources } from '@muni-kypo-crp/sandbox-model';
  */
 export abstract class SandboxResourcesService {
   resources$: Observable<Resources>;
-  constructor() {}
 
   abstract getResources(): Observable<Resources>;
 }

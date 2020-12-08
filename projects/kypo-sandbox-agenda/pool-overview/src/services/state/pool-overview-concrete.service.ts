@@ -69,10 +69,10 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     }
     return allocation$.pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Allocation of pool ${pool.id} started`),
+        () => this.notificationService.emit('success', `Allocation of pool ${pool.id} started`),
         (err) => this.errorHandler.emit(err, `Allocation of pool ${pool.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination))
     );
   }
 
@@ -103,10 +103,10 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   lock(pool: Pool): Observable<any> {
     return this.poolApi.lockPool(pool.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
+        () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
         (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination))
     );
   }
 
@@ -140,30 +140,30 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   private callApiToDelete(pool: Pool): Observable<any> {
     return this.poolApi.deletePool(pool.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
+        () => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
         (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination))
     );
   }
 
   private callApiToClear(pool: Pool): Observable<any> {
     return this.poolApi.clearPool(pool.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Pool ${pool.id} was cleared`),
+        () => this.notificationService.emit('success', `Pool ${pool.id} was cleared`),
         (err) => this.errorHandler.emit(err, `Clearing pool ${pool.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination))
     );
   }
 
   private callApiToUnlock(pool: Pool): Observable<any> {
     return this.poolApi.unlockPool(pool.id, pool.lockId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Pool ${pool.id} was unlocked`),
+        () => this.notificationService.emit('success', `Pool ${pool.id} was unlocked`),
         (err) => this.errorHandler.emit(err, `Unlocking pool ${pool.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination))
     );
   }
 }

@@ -39,7 +39,7 @@ export class CleanupStagesConcreteService extends RequestStagesService {
     ).pipe(map((stages) => stages.map((stage) => StageAdapterMapper.fromStage(stage))));
   }
 
-  protected onGetAllError(err: HttpErrorResponse) {
+  protected onGetAllError(err: HttpErrorResponse): void {
     if (err.status === 404) {
       this.notificationService.emit('info', 'Cleanup request finished. All stages were removed');
       this.navigateBack();
@@ -57,6 +57,6 @@ export class CleanupStagesConcreteService extends RequestStagesService {
   }
 
   private navigateBack() {
-    this.route.paramMap.pipe(take(1)).subscribe((_) => this.router.navigate([this.navigator.toPoolOverview()]));
+    this.route.paramMap.pipe(take(1)).subscribe(() => this.router.navigate([this.navigator.toPoolOverview()]));
   }
 }

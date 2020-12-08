@@ -55,7 +55,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     );
   }
 
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
     super.onManualResourceRefresh(pagination);
     this.lastPoolId = params[0];
   }
@@ -79,10 +79,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   allocate(poolId: number): Observable<any> {
     return this.poolApi.allocateSandboxes(poolId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
+        () => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
         (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 
@@ -107,10 +107,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   lock(sandboxInstance: SandboxInstance): Observable<any> {
     return this.sandboxApi.lockSandbox(sandboxInstance.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was locked`),
+        () => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was locked`),
         (err) => this.errorHandler.emit(err, `Locking sandbox ${sandboxInstance.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 
@@ -143,20 +143,20 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   private callApiToUnlock(sandboxInstance: SandboxInstance): Observable<any> {
     return this.sandboxApi.unlockSandbox(sandboxInstance.id, sandboxInstance.lockId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Sandbox${sandboxInstance.id} was unlocked`),
+        () => this.notificationService.emit('success', `Sandbox${sandboxInstance.id} was unlocked`),
         (err) => this.errorHandler.emit(err, `Unlocking sandbox ${sandboxInstance.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 
   private callApiToDelete(sandboxInstance: SandboxInstance): Observable<any> {
     return this.sandboxAllocationUnitsApi.createCleanupRequest(sandboxInstance.allocationUnitId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was deleted`),
+        () => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was deleted`),
         (err) => this.errorHandler.emit(err, `Deleting sandbox ${sandboxInstance.id}`)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 

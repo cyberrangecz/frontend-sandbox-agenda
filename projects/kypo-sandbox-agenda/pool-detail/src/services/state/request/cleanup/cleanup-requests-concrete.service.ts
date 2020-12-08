@@ -71,7 +71,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
     );
   }
 
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
     super.onManualResourceRefresh(pagination, ...params);
     this.lastPoolId = params[0];
   }
@@ -112,20 +112,20 @@ export class CleanupRequestsConcreteService extends RequestsService {
   private callApiToDelete(request: Request): Observable<any> {
     return this.sauApi.deleteCleanupRequest(request.allocationUnitId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Delete cleanup request`),
+        () => this.notificationService.emit('success', `Delete cleanup request`),
         (err) => this.errorHandler.emit(err, 'Deleting cleanup request')
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 
   private callApiToCancel(request: Request): Observable<any> {
     return this.cleanupRequestsApi.cancel(request.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Cleanup request ${request.id} cancelled`),
+        () => this.notificationService.emit('success', `Cleanup request ${request.id} cancelled`),
         (err) => this.errorHandler.emit(err, 'Cancelling cleanup request ' + request.id)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 }

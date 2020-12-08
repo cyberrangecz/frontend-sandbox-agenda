@@ -26,10 +26,10 @@ export class SandboxDefinitionEditConcreteService extends SandboxDefinitionEditS
   create(sandboxDefinition: SandboxDefinition): Observable<any> {
     return this.api.create(sandboxDefinition).pipe(
       tap(
-        (_) => this.alertService.emit('success', 'Sandbox definition was successfully created'),
+        () => this.alertService.emit('success', 'Sandbox definition was successfully created'),
         (err) => this.errorHandler.emit(err, 'Creating sandbox definition')
       ),
-      switchMap((_) => this.router.navigate([this.navigator.toSandboxDefinitionOverview()]))
+      switchMap(() => this.router.navigate([this.navigator.toSandboxDefinitionOverview()]))
     );
   }
 }

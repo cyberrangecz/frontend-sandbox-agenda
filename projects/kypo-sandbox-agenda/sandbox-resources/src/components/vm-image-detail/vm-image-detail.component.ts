@@ -1,5 +1,5 @@
 import { VMImagesRowAdapter } from './../../models/vm-images-row-adapter';
-import { Component, Input, OnInit, HostBinding } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 
 /**
  * Example of expanded row component
@@ -9,11 +9,7 @@ import { Component, Input, OnInit, HostBinding } from '@angular/core';
   templateUrl: './vm-image-detail.component.html',
   styleUrls: ['./vm-image-detail.component.css'],
 })
-export class VMImageDetailComponent implements OnInit {
+export class VMImageDetailComponent {
   @HostBinding('style.width') width = '100%';
   @Input() data: VMImagesRowAdapter;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

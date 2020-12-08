@@ -44,11 +44,11 @@ describe('VMImagesConcreteService', () => {
     VMImagesApiSpy.getAvailableImages.and.returnValue(asyncData(null));
 
     service.getAvailableImages(pagination).subscribe(
-      (_) => {
+      () => {
         expect(VMImagesApiSpy.getAvailableImages).toHaveBeenCalledTimes(1);
         done();
       },
-      (_) => fail
+      () => fail
     );
   });
 
@@ -62,7 +62,7 @@ describe('VMImagesConcreteService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      (_) => fail
+      () => fail
     );
     service.getAvailableImages(pagination).subscribe();
   });
@@ -72,8 +72,8 @@ describe('VMImagesConcreteService', () => {
     VMImagesApiSpy.getAvailableImages.and.returnValue(throwError(null));
 
     service.getAvailableImages(pagination).subscribe(
-      (_) => fail,
-      (_) => {
+      () => fail,
+      () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
       }

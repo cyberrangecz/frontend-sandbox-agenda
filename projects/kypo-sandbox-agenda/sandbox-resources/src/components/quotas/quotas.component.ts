@@ -1,6 +1,5 @@
-import { Resources } from '@muni-kypo-crp/sandbox-model';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'kypo-quotas',
@@ -8,7 +7,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
   styleUrls: ['./quotas.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuotasComponent extends SentinelBaseDirective implements OnInit {
+export class QuotasComponent extends SentinelBaseDirective {
   @Input() resources;
 
   displayedResources = ['instances', 'vcpu', 'ram'];
@@ -16,6 +15,4 @@ export class QuotasComponent extends SentinelBaseDirective implements OnInit {
   constructor() {
     super();
   }
-
-  ngOnInit() {}
 }

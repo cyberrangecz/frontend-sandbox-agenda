@@ -34,11 +34,11 @@ describe('SandboxResourcesConcreteService', () => {
   it('should call api to get available resources', (done) => {
     resourcesApiSpy.getResources.and.returnValue(asyncData(null));
     service.getResources().subscribe(
-      (_) => {
+      () => {
         expect(resourcesApiSpy.getResources).toHaveBeenCalledTimes(1);
         done();
       },
-      (_) => fail
+      () => fail
     );
   });
 
@@ -50,7 +50,7 @@ describe('SandboxResourcesConcreteService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.getResources().subscribe();
   });
@@ -58,8 +58,8 @@ describe('SandboxResourcesConcreteService', () => {
   it('should emit error on error state', (done) => {
     resourcesApiSpy.getResources.and.returnValue(throwError(null));
     service.getResources().subscribe(
-      (_) => fail,
-      (_) => {
+      () => fail,
+      () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
       }

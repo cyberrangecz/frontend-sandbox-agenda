@@ -1,5 +1,5 @@
 import { ChartData } from './../../../models/chart-data';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import * as d3 from 'd3';
 import { Quota } from '@muni-kypo-crp/sandbox-model';
 
@@ -9,7 +9,7 @@ import { Quota } from '@muni-kypo-crp/sandbox-model';
   styleUrls: ['./quota-pie-chart.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuotaPieChartComponent implements OnInit, AfterViewInit {
+export class QuotaPieChartComponent implements AfterViewInit {
   @ViewChild('containerPieChart') element: ElementRef;
 
   @Input() quota: Quota;
@@ -22,11 +22,7 @@ export class QuotaPieChartComponent implements OnInit, AfterViewInit {
 
   private data: ChartData;
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.setup();
     this.buildSvg();
     this.buildPie();
@@ -72,7 +68,7 @@ export class QuotaPieChartComponent implements OnInit, AfterViewInit {
       });
   }
 
-  private prepareChartData() {
+  private prepareChartData(): ChartData {
     return new ChartData(this.quota.inUse, this.quota.limit - this.quota.inUse);
   }
 }

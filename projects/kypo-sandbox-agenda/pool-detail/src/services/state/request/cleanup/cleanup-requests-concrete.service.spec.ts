@@ -60,7 +60,7 @@ describe('PoolCleanupRequestsConcreteService', () => {
     const pagination = createPagination();
     poolApiSpy.getCleanupRequests.and.returnValue(asyncData(null));
 
-    service.getAll(0, pagination).subscribe((_) => done(), fail);
+    service.getAll(0, pagination).subscribe(() => done(), fail);
     expect(poolApiSpy.getCleanupRequests).toHaveBeenCalledTimes(1);
   });
 
@@ -81,8 +81,8 @@ describe('PoolCleanupRequestsConcreteService', () => {
     poolApiSpy.getCleanupRequests.and.returnValue(throwError(null));
 
     service.getAll(0, pagination).subscribe(
-      (_) => fail,
-      (_) => {
+      () => fail,
+      () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
       }
@@ -101,10 +101,10 @@ describe('PoolCleanupRequestsConcreteService', () => {
           expect(hasError).toBeTruthy();
           done();
         },
-        (_) => fail
+        () => fail
       );
     service.getAll(0, pagination).subscribe(
-      (_) => fail,
+      () => fail,
       (_) => _
     );
   });
@@ -154,7 +154,7 @@ describe('PoolCleanupRequestsConcreteService', () => {
     subscription.unsubscribe();
   }));
 
-  function createPagination() {
+  function createPagination(): RequestedPagination {
     return new RequestedPagination(1, 5, '', '');
   }
 
@@ -162,7 +162,7 @@ describe('PoolCleanupRequestsConcreteService', () => {
     return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
   }
 
-  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {
+  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0): void {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
       tick(contextSpy.config.pollingPeriod);

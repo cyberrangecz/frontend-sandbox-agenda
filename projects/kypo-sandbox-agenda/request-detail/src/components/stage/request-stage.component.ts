@@ -15,7 +15,7 @@ export class RequestStageComponent extends SentinelBaseDirective {
   @Input() stage: StageAdapter;
   @Output() stageDetailPanelChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onPanelStateChange(opened: boolean) {
+  onPanelStateChange(opened: boolean): void {
     this.stageDetailPanelChange.emit(opened);
   }
 }

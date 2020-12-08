@@ -44,22 +44,22 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
     this.hasError$ = this.definitionService.hasError$;
     this.definitionService
       .getAll(pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
-  fetch(pagination: RequestedPagination) {
+  fetch(pagination: RequestedPagination): void {
     this.definitionService
       .getAll(pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
-  confirm() {
+  confirm(): void {
     this.dialogRef.close(this.selected[0]);
   }
 
-  cancel() {
+  cancel(): void {
     this.dialogRef.close(undefined);
   }
 
@@ -67,7 +67,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
    * Updated selected sandbox definition
    * @param selected selected sandbox definition
    */
-  onSelectionChange(selected: SandboxDefinition[]) {
+  onSelectionChange(selected: SandboxDefinition[]): void {
     this.selected = selected;
   }
 }

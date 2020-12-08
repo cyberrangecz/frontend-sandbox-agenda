@@ -33,7 +33,7 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.controls = SandboxDefinitionOverviewControls.create(this.sandboxDefinitionService);
     this.initTable();
   }
@@ -42,10 +42,10 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
    * Refreshes table with new data
    * @param event to load data
    */
-  onLoadEvent(event: LoadTableEvent) {
+  onLoadEvent(event: LoadTableEvent): void {
     this.sandboxDefinitionService
       .getAll(event.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -53,14 +53,14 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
    * Resolves correct action based on received event and performs it
    * @param event table action event emitted by child table component
    */
-  onTableAction(event: TableActionEvent<SandboxDefinition>) {
+  onTableAction(event: TableActionEvent<SandboxDefinition>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
   /**
    * Navigates to create sandbox definition page
    */
-  onControlsActions(control: SentinelControlItem) {
+  onControlsActions(control: SentinelControlItem): void {
     control.result$.pipe(take(1)).subscribe();
   }
 

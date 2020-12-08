@@ -86,7 +86,7 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
   private callApiToDelete(sandboxDefinition: SandboxDefinition): Observable<PaginatedResource<SandboxDefinition>> {
     return this.api.delete(sandboxDefinition.id).pipe(
       tap(
-        (_) => this.alertService.emit('success', 'Sandbox definition was successfully deleted'),
+        () => this.alertService.emit('success', 'Sandbox definition was successfully deleted'),
         (err) => this.errorHandler.emit(err, 'Removing sandbox definition')
       ),
       switchMap(() => this.getAll(this.lastPagination))
