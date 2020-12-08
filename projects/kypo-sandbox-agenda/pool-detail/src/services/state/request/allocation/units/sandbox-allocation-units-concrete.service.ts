@@ -74,7 +74,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param pagination new requested pagination
    * @param params any other parameters required to update data in your concrete service
    */
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
     this.lastPagination = pagination;
     if (this.hasErrorSubject$.getValue()) {
       this.retryPolling$.next(true);
@@ -108,8 +108,8 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   protected createPoll(): Observable<PaginatedResource<SandboxAllocationUnit>> {
     // The initial delay is set to synchronize it with pools from other tables
     return timer(this.poolPeriod, this.poolPeriod).pipe(
-      switchMap((_) => this.refreshResources()),
-      retryWhen((_) => this.retryPolling$)
+      switchMap(() => this.refreshResources()),
+      retryWhen(() => this.retryPolling$)
     );
   }
 
@@ -134,20 +134,20 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   private callApiToDelete(request: Request): Observable<any> {
     return this.sauApi.deleteCleanupRequest(request.allocationUnitId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Delete Allocation Units`),
+        () => this.notificationService.emit('success', `Delete Allocation Units`),
         (err) => this.errorHandler.emit(err, 'Deleting Allocation Units')
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 
   private callApiToCleanup(request: Request): Observable<any> {
     return this.sauApi.createCleanupRequest(request.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Cleanup request for allocation units ${request.id}`),
+        () => this.notificationService.emit('success', `Cleanup request for allocation units ${request.id}`),
         (err) => this.errorHandler.emit(err, 'Creating cleanup request for allocation units ' + request.id)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 

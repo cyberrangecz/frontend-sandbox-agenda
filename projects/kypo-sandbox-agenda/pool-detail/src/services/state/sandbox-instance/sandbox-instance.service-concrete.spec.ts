@@ -65,7 +65,7 @@ describe('SandboxInstanceConcreteService', () => {
     const pagination = createPagination();
     sandboxInstanceApiSpy.getSandboxes.and.returnValue(asyncData(null));
 
-    service.getAll(0, pagination).subscribe((_) => done(), fail);
+    service.getAll(0, pagination).subscribe(() => done(), fail);
     expect(sandboxInstanceApiSpy.getSandboxes).toHaveBeenCalledTimes(1);
   });
 
@@ -86,8 +86,8 @@ describe('SandboxInstanceConcreteService', () => {
     sandboxInstanceApiSpy.getSandboxes.and.returnValue(throwError(null));
 
     service.getAll(0, pagination).subscribe(
-      (_) => fail,
-      (_) => {
+      () => fail,
+      () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
       }
@@ -106,10 +106,10 @@ describe('SandboxInstanceConcreteService', () => {
           expect(hasError).toBeTruthy();
           done();
         },
-        (_) => fail
+        () => fail
       );
     service.getAll(0, pagination).subscribe(
-      (_) => fail,
+      () => fail,
       (_) => _
     );
   });

@@ -22,7 +22,7 @@ export class AppComponent {
 
     this.agendaContainers$ = this.auth.activeUser$.pipe(
       filter((user) => user !== null && user !== undefined),
-      map((user) => this.buildNav(user))
+      map(() => this.buildNav())
     );
   }
 
@@ -42,15 +42,15 @@ export class AppComponent {
     );
   }
 
-  onLogin() {
+  onLogin(): void {
     this.auth.login();
   }
 
-  onLogout() {
+  onLogout(): void {
     this.auth.logout();
   }
 
-  buildNav(user: User): AgendaContainer[] {
+  buildNav(): AgendaContainer[] {
     const containers: AgendaContainer[] = [];
     const agendas: Agenda[] = [];
     agendas.push(new Agenda('Definition', 'sandbox-definition'));

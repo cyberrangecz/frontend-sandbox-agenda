@@ -29,9 +29,9 @@ export class SandboxInstanceTopologyComponent extends SentinelBaseDirective impl
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sandboxInstance$ = this.activeRoute.data.pipe(
-      takeWhile((_) => this.isAlive),
+      takeWhile(() => this.isAlive),
       map((data) => data[SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME])
     );
     this.calculateTopologySize();
@@ -39,7 +39,8 @@ export class SandboxInstanceTopologyComponent extends SentinelBaseDirective impl
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unused-vars
+  onResize(event): void {
     this.calculateTopologySize();
   }
 
@@ -49,7 +50,7 @@ export class SandboxInstanceTopologyComponent extends SentinelBaseDirective impl
   }
 
   private subscribeToTopologyErrorHandler() {
-    this.topologyErrorService.error$.pipe(takeWhile((_) => this.isAlive)).subscribe({
+    this.topologyErrorService.error$.pipe(takeWhile(() => this.isAlive)).subscribe({
       next: (event) => this.errorHandler.emit(event.err, event.action),
       error: (err) => this.errorHandler.emit(err, 'There is a problem with topology error handler.'),
     });

@@ -3,8 +3,6 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class SandboxAllocationUnitsService {
-  protected constructor() {}
-
   /**
    * @contract Needs to be updated in onManualResourceRefresh method
    * Last pagination used when requesting new data
@@ -66,7 +64,7 @@ export abstract class SandboxAllocationUnitsService {
    * @param pagination new requested pagination
    * @param params any other parameters required to update data in your concrete service
    */
-  protected abstract onManualResourceRefresh(pagination: RequestedPagination, ...params);
+  protected abstract onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void;
 
   /**
    * @contract must update resource and hasErrorSubject

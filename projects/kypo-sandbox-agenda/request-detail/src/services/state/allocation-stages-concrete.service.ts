@@ -32,7 +32,7 @@ export class AllocationStagesConcreteService extends RequestStagesService {
     ).pipe(map((stages) => stages.map((stage) => StageAdapterMapper.fromStage(stage))));
   }
 
-  protected onGetAllError(err: HttpErrorResponse) {
+  protected onGetAllError(err: HttpErrorResponse): void {
     this.errorHandler.emit(err, 'Fetching stages');
     this.hasErrorSubject$.next(true);
   }

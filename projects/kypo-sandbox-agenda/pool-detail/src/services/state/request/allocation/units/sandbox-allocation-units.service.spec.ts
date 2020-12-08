@@ -1,6 +1,4 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-
-import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import {
@@ -68,11 +66,11 @@ describe('SandboxAllocationUnitsService', () => {
       .getAll(0, pagination)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(poolApiSpy.getPoolsSandboxAllocationUnits).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail
+        () => fail
       );
   });
 
@@ -86,7 +84,7 @@ describe('SandboxAllocationUnitsService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.getAll(0, pagination).subscribe();
   });
@@ -99,8 +97,8 @@ describe('SandboxAllocationUnitsService', () => {
       .getAll(0, pagination)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
-        (_) => {
+        () => fail(),
+        () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           done();
         }
@@ -119,12 +117,12 @@ describe('SandboxAllocationUnitsService', () => {
       .cleanup(request)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(sauApiSpy.createCleanupRequest).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -140,8 +138,8 @@ describe('SandboxAllocationUnitsService', () => {
       .cleanup(request)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
-        (_) => fail(),
+        () => fail(),
+        () => fail(),
         () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(sauApiSpy.createCleanupRequest).toHaveBeenCalledTimes(0);
@@ -203,7 +201,7 @@ describe('SandboxAllocationUnitsService', () => {
     return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
   }
 
-  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {
+  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0): void {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
       tick(contextSpy.config.pollingPeriod);

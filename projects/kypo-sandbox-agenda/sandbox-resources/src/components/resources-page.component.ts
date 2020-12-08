@@ -36,19 +36,19 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   ngOnInit(): void {
     this.sandboxResourcesService
       .getResources()
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
     this.initTable();
   }
 
-  onLoadTableEvent(loadEvent: LoadTableEvent) {
+  onLoadTableEvent(loadEvent: LoadTableEvent): void {
     this.vmImagesService
       .getAvailableImages(loadEvent.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
-  private initTable() {
+  private initTable(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.context.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR)
     );

@@ -55,17 +55,17 @@ describe('PoolOverviewConcreteService', () => {
     const pagination = createPagination();
     poolApiSpy.getPools.and.returnValue(asyncData(null));
 
-    service.getAll(pagination).subscribe((_) => done(), fail);
+    service.getAll(pagination).subscribe(() => done(), fail);
     expect(poolApiSpy.getPools).toHaveBeenCalledTimes(1);
   });
 
   it('should get ssh access', (done) => {
     poolApiSpy.getManagementSshAccess.and.returnValue(asyncData(null));
-    service.getSshAccess(0).subscribe((_) => done(), fail);
+    service.getSshAccess(0).subscribe(() => done(), fail);
     expect(poolApiSpy.getManagementSshAccess).toHaveBeenCalledTimes(1);
   });
 
-  function createPagination() {
+  function createPagination(): RequestedPagination {
     return new RequestedPagination(1, 5, '', '');
   }
 });

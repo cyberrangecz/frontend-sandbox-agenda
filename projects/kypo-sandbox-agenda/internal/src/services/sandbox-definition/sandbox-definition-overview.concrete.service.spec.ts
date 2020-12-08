@@ -16,9 +16,9 @@ import {
   createNotificationSpy,
   createRouterSpy,
 } from '../../testing/testing-commons.spec';
-import { SandboxErrorHandler } from '../../../../src/sandbox-error-handler.service';
-import { SandboxNavigator } from '../../../../src/sandbox-navigator.service';
-import { SandboxNotificationService } from '../../../../src/sandbox-notification.service';
+import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '../sandox-agenda-context.service';
 import { SandboxDefinitionOverviewConcreteService } from './sandbox-definition-overview-concrete.service';
 
@@ -66,8 +66,8 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
     apiSpy.getAll.and.returnValue(throwError(null));
 
     service.getAll(pagination).subscribe(
-      (_) => fail,
-      (_) => {
+      () => fail,
+      () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
       }
@@ -84,10 +84,10 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
       expect(emitted).toBe(mockData);
       done();
     }, fail);
-    service.getAll(pagination).subscribe((_) => done(), fail);
+    service.getAll(pagination).subscribe(() => done(), fail);
   });
 
-  function createPagination() {
+  function createPagination(): RequestedPagination {
     return new RequestedPagination(1, 5, '', '');
   }
 

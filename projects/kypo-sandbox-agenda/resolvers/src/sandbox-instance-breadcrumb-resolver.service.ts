@@ -22,7 +22,7 @@ export class SandboxInstanceBreadcrumbResolver implements Resolve<string> {
     if (state.url.endsWith(SANDBOX_INSTANCE_TOPOLOGY_PATH)) {
       return 'Topology';
     }
-    const sandboxInstance$ = this.sandboxInstanceResolver.resolve(route, state) as Observable<SandboxInstance>;
+    const sandboxInstance$ = this.sandboxInstanceResolver.resolve(route) as Observable<SandboxInstance>;
     return sandboxInstance$.pipe(map((sandboxInstance) => `Sandbox ${sandboxInstance.id}`));
   }
 }

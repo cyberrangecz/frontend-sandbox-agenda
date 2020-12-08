@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 /**
@@ -9,10 +9,6 @@ import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
   templateUrl: './sandbox-definition-detail.component.html',
   styleUrls: ['./sandbox-definition-detail.component.scss'],
 })
-export class SandboxDefinitionDetailComponent implements OnInit {
+export class SandboxDefinitionDetailComponent {
   @Input() data: SandboxDefinition;
-
-  constructor() {}
-
-  ngOnInit() {}
 }

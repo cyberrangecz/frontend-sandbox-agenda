@@ -33,21 +33,21 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
    * @param index index of pool request stage
    * @param item selected stage
    */
-  trackByFn(index: number, item: RequestStage) {
+  trackByFn(index: number, item: RequestStage): number {
     return item.id;
   }
 
   /**
    * Reloads stages of pool request
    */
-  reloadStages() {
+  reloadStages(): void {
     this.requestStagesService
       .getAll(this.request)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
-  onStageDetailPanelChange(opened: boolean, stage: RequestStage) {
+  onStageDetailPanelChange(opened: boolean, stage: RequestStage): void {
     if (opened) {
       this.stageDetailRegistry.add(stage);
     } else {
@@ -70,7 +70,7 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
     data$
       .pipe(
         switchMap((data) => this.requestStagesService.getAll(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
-        takeWhile((_) => this.isAlive)
+        takeWhile(() => this.isAlive)
       )
       .subscribe();
   }

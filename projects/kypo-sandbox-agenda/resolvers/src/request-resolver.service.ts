@@ -43,8 +43,7 @@ export class RequestResolver implements Resolve<Request> {
 
     const requestId = Number(route.paramMap.get(POOL_REQUEST_ID_SELECTOR));
 
-    let request$: Observable<Request>;
-    request$ = state.url.includes(POOL_ALLOCATION_REQUEST_PATH)
+    const request$: Observable<Request> = state.url.includes(POOL_ALLOCATION_REQUEST_PATH)
       ? this.allocationRequestApi.get(requestId)
       : this.cleanupRequestApi.get(requestId);
 

@@ -5,6 +5,7 @@ import { defer, of } from 'rxjs';
 import { take, takeWhile } from 'rxjs/operators';
 import { PoolEditService } from '../services/pool-edit.service';
 import { PoolFormGroup } from './pool-form-group';
+import { AbstractControl } from '@angular/forms';
 
 /**
  * Component with form for creating pool
@@ -25,24 +26,22 @@ export class PoolEditComponent extends SentinelBaseDirective implements OnInit {
   ngOnInit(): void {
     this.poolFormGroup = new PoolFormGroup();
     this.initControls();
-    this.poolFormGroup.formGroup.valueChanges
-      .pipe(takeWhile((_) => this.isAlive))
-      .subscribe((_) => this.initControls());
+    this.poolFormGroup.formGroup.valueChanges.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.initControls());
   }
 
-  get sandboxDefinition() {
+  get sandboxDefinition(): AbstractControl {
     return this.poolFormGroup.formGroup.get('sandboxDefinition');
   }
 
-  get poolSize() {
+  get poolSize(): AbstractControl {
     return this.poolFormGroup.formGroup.get('poolSize');
   }
 
-  onControlsAction(control: SentinelControlItem) {
+  onControlsAction(control: SentinelControlItem): void {
     control.result$.pipe(take(1)).subscribe();
   }
 
-  selectSandboxDefinition() {
+  selectSandboxDefinition(): void {
     this.poolEditService
       .selectDefinition(this.sandboxDefinition.value)
       .pipe(take(1))
@@ -54,7 +53,7 @@ export class PoolEditComponent extends SentinelBaseDirective implements OnInit {
       });
   }
 
-  initControls() {
+  initControls(): void {
     this.controls = [
       new SentinelControlItem(
         'create',

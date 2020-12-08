@@ -67,11 +67,11 @@ describe('PoolAllocationRequestsPollingService', () => {
       .getAll(0, pagination)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail
+        () => fail
       );
   });
 
@@ -85,7 +85,7 @@ describe('PoolAllocationRequestsPollingService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      (_) => fail()
+      () => fail()
     );
     service.getAll(0, pagination).subscribe();
   });
@@ -98,8 +98,8 @@ describe('PoolAllocationRequestsPollingService', () => {
       .getAll(0, pagination)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
-        (_) => {
+        () => fail(),
+        () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           done();
         }
@@ -118,12 +118,12 @@ describe('PoolAllocationRequestsPollingService', () => {
       .cancel(request)
       .pipe(take(1))
       .subscribe(
-        (_) => {
+        () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(allocationRequestsApiSpy.cancel).toHaveBeenCalledTimes(1);
           done();
         },
-        (_) => fail()
+        () => fail()
       );
   });
 
@@ -139,8 +139,8 @@ describe('PoolAllocationRequestsPollingService', () => {
       .cancel(request)
       .pipe(take(1))
       .subscribe(
-        (_) => fail(),
-        (_) => fail(),
+        () => fail(),
+        () => fail(),
         () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(allocationRequestsApiSpy.cancel).toHaveBeenCalledTimes(0);
@@ -202,7 +202,7 @@ describe('PoolAllocationRequestsPollingService', () => {
     return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
   }
 
-  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0) {
+  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0): void {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
       tick(contextSpy.config.pollingPeriod);

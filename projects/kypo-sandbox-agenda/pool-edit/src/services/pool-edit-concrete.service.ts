@@ -26,10 +26,10 @@ export class PoolEditConcreteService extends PoolEditService {
   create(pool: Pool): Observable<any> {
     return this.api.createPool(pool).pipe(
       tap(
-        (_) => this.notificationService.emit('success', 'Pool was created'),
+        () => this.notificationService.emit('success', 'Pool was created'),
         (err) => this.errorHandler.emit(err, 'Creating pool')
       ),
-      switchMap((_) => from(this.router.navigate([this.navigator.toPoolOverview()])))
+      switchMap(() => from(this.router.navigate([this.navigator.toPoolOverview()])))
     );
   }
 

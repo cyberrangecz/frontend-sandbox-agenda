@@ -18,13 +18,13 @@ export class StagesDetailPollRegistry {
     );
   }
 
-  add(stage: RequestStage) {
+  add(stage: RequestStage): void {
     if (!(stage.id in this.displayedDetailIdsSubject$.getValue())) {
       this.displayedDetailIdsSubject$.next([...this.displayedDetailIdsSubject$.getValue(), stage.id]);
     }
   }
 
-  remove(stage: RequestStage) {
+  remove(stage: RequestStage): void {
     const currIds = this.displayedDetailIdsSubject$.getValue();
     const toRemoveIndex = currIds.findIndex((id) => id === stage.id);
     if (toRemoveIndex > -1) {

@@ -51,7 +51,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     );
   }
 
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params) {
+  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
     super.onManualResourceRefresh(pagination, ...params);
     this.lastPoolId = params[0];
   }
@@ -106,20 +106,20 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
   private callApiToDelete(request: Request): Observable<any> {
     return this.sauApi.createCleanupRequest(request.allocationUnitId).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Created cleanup request`),
+        () => this.notificationService.emit('success', `Created cleanup request`),
         (err) => this.errorHandler.emit(err, 'Creating cleanup request')
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 
   private callApiToCancel(request: Request): Observable<any> {
     return this.allocationRequestsApi.cancel(request.id).pipe(
       tap(
-        (_) => this.notificationService.emit('success', `Allocation request ${request.id} cancelled`),
+        () => this.notificationService.emit('success', `Allocation request ${request.id} cancelled`),
         (err) => this.errorHandler.emit(err, 'Cancelling allocation request ' + request.id)
       ),
-      switchMap((_) => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }
 

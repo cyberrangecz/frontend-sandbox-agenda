@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
@@ -25,12 +25,8 @@ export class SandboxInstanceResolver implements Resolve<SandboxInstance> {
   /**
    * Retrieves a specific resource based on id provided in url. Navigates to a resource overview if no resource with such id exists.
    * @param route route snapshot
-   * @param state router state snapshot
    */
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<SandboxInstance> | Promise<SandboxInstance> | SandboxInstance {
+  resolve(route: ActivatedRouteSnapshot): Observable<SandboxInstance> | Promise<SandboxInstance> | SandboxInstance {
     if (!route.paramMap.has(SANDBOX_POOL_ID_SELECTOR)) {
       return this.navigateToPoolOverview();
     }

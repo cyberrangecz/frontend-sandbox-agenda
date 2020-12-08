@@ -68,7 +68,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     super();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initTables();
     this.initControls();
   }
@@ -77,10 +77,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * Gets new data for sandbox instance overview table
    * @param loadEvent load event emitted from sandbox instances table
    */
-  onInstanceLoadEvent(loadEvent: LoadTableEvent) {
+  onInstanceLoadEvent(loadEvent: LoadTableEvent): void {
     this.instanceService
       .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -88,10 +88,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * Gets new data for allocation units overview table
    * @param loadEvent load event emitted from allocation units table
    */
-  onAllocationUnitsLoadEvent(loadEvent: LoadTableEvent) {
+  onAllocationUnitsLoadEvent(loadEvent: LoadTableEvent): void {
     this.allocationUnitService
       .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -99,10 +99,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * Gets new data for creation requests overview table
    * @param loadEvent load event emitted from creation requests table
    */
-  onAllocationRequestsLoadEvent(loadEvent: LoadTableEvent) {
+  onAllocationRequestsLoadEvent(loadEvent: LoadTableEvent): void {
     this.allocationRequestService
       .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
@@ -110,22 +110,22 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * Gets new data for cleanup requests overview table
    * @param loadEvent load event emitted from cleanup requests table
    */
-  onCleanupRequestsLoadEvent(loadEvent: LoadTableEvent) {
+  onCleanupRequestsLoadEvent(loadEvent: LoadTableEvent): void {
     this.cleanupRequestService
       .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile((_) => this.isAlive))
+      .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
-  onControlsAction(control: SentinelControlItem) {
-    control.result$.pipe(takeWhile((_) => this.isAlive)).subscribe();
+  onControlsAction(control: SentinelControlItem): void {
+    control.result$.pipe(takeWhile(() => this.isAlive)).subscribe();
   }
 
   /**
    * Subscribes to result of a table action event
    * @param event action event emitted from table component
    */
-  onTableAction(event: TableActionEvent<any>) {
+  onTableAction(event: TableActionEvent<any>): void {
     event.action.result$.pipe(take(1)).subscribe();
   }
 
@@ -133,7 +133,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
     );
-    this.activeRoute.data.pipe(takeWhile((_) => this.isAlive)).subscribe((data) => {
+    this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];
       this.onInstanceLoadEvent(initialLoadEvent);
       this.onAllocationUnitsLoadEvent(initialLoadEvent);
