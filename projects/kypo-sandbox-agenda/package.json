@@ -2,14 +2,15 @@
   "name": "@muni-kypo-crp/sandbox-agenda",
   "version": "10.9.0",
   "peerDependencies": {
-    "@angular/common": "^10.0.0",
-    "@angular/core": "^10.0.0",
-    "@sentinel/common": "~10.1.0",
-    "@sentinel/components": "~10.4.0",
-    "@muni-kypo-crp/sandbox-api": "~10.8.0",
-    "@muni-kypo-crp/sandbox-model": "~10.6.0",
-    "@muni-kypo-crp/topology-graph": "~10.3.0",
-    "@muni-kypo-crp/topology-model": "~10.2.0",
+    "@angular/common": "~11.0.8",
+    "@angular/core": "~11.0.8",
+    "@angular/material": "^11.0.3",
+    "@sentinel/common": "~11.0.1",
+    "@sentinel/components": "~11.0.0",
+    "@muni-kypo-crp/sandbox-api": "~11.0.1",
+    "@muni-kypo-crp/sandbox-model": "~11.0.1",
+    "@muni-kypo-crp/topology-graph": "~11.0.1",
+    "@muni-kypo-crp/topology-model": "~11.0.1",
     "file-saver": "^2.0.2"
   },
   "dependencies": {
