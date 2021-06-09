@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-output-on-prefix */
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { StageAdapter } from '../../model/adapters/stage-adapter';

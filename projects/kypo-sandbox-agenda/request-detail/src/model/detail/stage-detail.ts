@@ -8,7 +8,7 @@ export class StageDetail {
   hasError: boolean;
   hasContent: boolean;
 
-  constructor(resourceName: string, content: PaginatedResource<string>, hasError: boolean = false) {
+  constructor(resourceName: string, content: PaginatedResource<string>, hasError = false) {
     this.resourceName = resourceName;
     this.content = content;
     this.hasError = hasError;

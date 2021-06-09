@@ -201,7 +201,7 @@ describe('SandboxAllocationUnitsService', () => {
     return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
   }
 
-  function assertPoll(times: number, initialHaveBeenCalledTimes: number = 0): void {
+  function assertPoll(times: number, initialHaveBeenCalledTimes = 0): void {
     let calledTimes = initialHaveBeenCalledTimes;
     for (let i = 0; i < times; i++) {
       tick(contextSpy.config.pollingPeriod);
