@@ -60,7 +60,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    * @param pool a pool to be allocated with sandbox instances
    * @param count number of sandbox instances to be allocated
    */
-  allocate(pool: Pool, count: number = -1): Observable<any> {
+  allocate(pool: Pool, count = -1): Observable<any> {
     let allocation$: Observable<any>;
     if (count <= 0) {
       allocation$ = this.poolApi.allocateSandboxes(pool.id);

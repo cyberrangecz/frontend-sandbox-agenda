@@ -1,8 +1,8 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import "variables.scss";
 @import "~@sentinel/components/table/assets/sentinel-table-theme";
 
-@include mat-core();
-@include angular-material-theme($sentinel-theme);
-@include angular-material-typography($sentinel-typography);
+@include mat.core();
+@include mat.all-component-themes($sentinel-theme);
+@include mat.all-component-typographies($sentinel-typography);
 @include sentinel-table-theme($sentinel-theme);

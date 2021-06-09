@@ -3,7 +3,7 @@
   <div class="resources">
     <ng-container *ngFor="let resource of displayedResources">
       <kypo-quota-pie-chart
-        *ngIf="(resources?.quotas)[resource] != null"
+        *ngIf="(resources?.quotas)[resource]"
         [quota]="(resources?.quotas)[resource]"
       ></kypo-quota-pie-chart>
     </ng-container>
