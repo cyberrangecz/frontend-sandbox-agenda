@@ -31,7 +31,7 @@ export const environment = {
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
     interceptorAllowedUrls: [baseURL],
     authorizationStrategyConfig: {
-      authorizationUrl: baseURL + 'kypo2-rest-user-and-group/api/v1/users/info',
+      authorizationUrl: baseURL + 'kypo-rest-user-and-group/api/v1/users/info',
     },
     providers: [
       {
