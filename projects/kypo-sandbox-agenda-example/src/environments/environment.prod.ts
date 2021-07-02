@@ -7,7 +7,7 @@ export const baseURL = 'https://172.19.0.22/';
 // Frontend url
 export const homeURL = 'https://localhost:4200';
 export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
-export const userAngGroupURL = baseURL + 'kypo2-rest-user-and-group/api/v1/';
+export const userAngGroupURL = baseURL + 'kypo-rest-user-and-group/api/v1/';
 
 export const kypo2TopologyConfig = {
   topologyRestUrl: sandboxesURL,
