@@ -3,6 +3,7 @@
   <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
   <sentinel-table [data]="instances$ | async"
                   [hasError]="instancesTableHasError$ | async"
+                  [titlecasedActions]=false
                   (rowAction)="onTableAction($event)"
                   (refresh)="onInstanceLoadEvent($event)">
   </sentinel-table>

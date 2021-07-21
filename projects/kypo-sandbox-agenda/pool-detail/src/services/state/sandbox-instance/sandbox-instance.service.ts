@@ -42,5 +42,11 @@ export abstract class SandboxInstanceService extends PaginatedResourcePollingSer
    */
   abstract lock(sandboxInstance: SandboxInstance): Observable<any>;
 
+  /**
+   * Gets zip file that contains configurations, key and script for remote ssh access for user
+   * @param sandboxId id of the sandbox for which remote ssh access is demanded
+   */
+  abstract getUserSshAccess(sandboxId: number): Observable<boolean>;
+
   abstract showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<any>;
 }
