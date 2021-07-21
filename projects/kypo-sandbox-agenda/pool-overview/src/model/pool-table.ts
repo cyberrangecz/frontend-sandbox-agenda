@@ -67,11 +67,11 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         defer(() => service.clear(pool))
       ),
       new RowAction(
-        'download',
-        'Download',
-        'cloud_download',
+        'download_man_ssh_access',
+        'Get SSH access',
+        'vpn_key',
         'primary',
-        'Download access for ssh client',
+        'Download management SSH access',
         of(false),
         defer(() => service.getSshAccess(pool.id))
       ),

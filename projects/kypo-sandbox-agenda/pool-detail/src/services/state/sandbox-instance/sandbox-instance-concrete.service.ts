@@ -11,7 +11,7 @@ import { PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxInstanceService } from './sandbox-instance.service';
@@ -111,6 +111,19 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         (err) => this.errorHandler.emit(err, `Locking sandbox ${sandboxInstance.id}`)
       ),
       switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+    );
+  }
+
+  /**
+   * Gets zip file that contains configurations, key and script for remote ssh access for user
+   * @param sandboxId id of the sandbox for which remote ssh access is demanded
+   */
+  getUserSshAccess(sandboxId: number): Observable<boolean> {
+    return this.sandboxApi.getUserSshAccess(sandboxId).pipe(
+      catchError((err) => {
+        this.errorHandler.emit(err, `Management SSH Access for pool: ${sandboxId}`);
+        return EMPTY;
+      })
     );
   }
 
