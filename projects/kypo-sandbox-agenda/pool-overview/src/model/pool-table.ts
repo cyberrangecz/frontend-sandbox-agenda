@@ -68,7 +68,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       ),
       new RowAction(
         'download_man_ssh_access',
-        'Get SSH access',
+        'Get SSH Access',
         'vpn_key',
         'primary',
         'Download management SSH access',

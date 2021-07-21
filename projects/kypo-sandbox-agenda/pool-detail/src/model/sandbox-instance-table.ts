@@ -53,7 +53,7 @@ export class SandboxInstanceTable extends SentinelTable<SandboxInstanceRowAdapte
       ),
       new RowAction(
         'download_user_ssh_access',
-        'Get SSH access',
+        'Get SSH Access',
         'vpn_key',
         'primary',
         'Download user SSH access',
