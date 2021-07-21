@@ -7,7 +7,7 @@ import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from '../services/state/pool-overview.service';
 
 /**
@@ -28,7 +28,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
   constructor(
     private service: PoolOverviewService,
     private navigator: SandboxNavigator,
-    private context: SandboxAgendaContext
+    private paginationService: PaginationService
   ) {
     super();
   }
@@ -43,6 +43,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    * @param loadEvent load data event from table component
    */
   onPoolsLoadEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.service
       .getAll(loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -63,7 +64,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
 
   private initTable() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
+      new RequestedPagination(0, this.paginationService.getPagination(), '', '')
     );
     this.pools$ = this.service.resource$.pipe(map((resource) => new PoolTable(resource, this.service, this.navigator)));
     this.hasError$ = this.service.hasError$;

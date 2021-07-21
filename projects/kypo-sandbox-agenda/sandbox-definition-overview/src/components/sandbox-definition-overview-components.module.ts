@@ -4,6 +4,7 @@ import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxNavigator, SandboxDefaultNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import {
+  PaginationService,
   SandboxAgendaContext,
   SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
@@ -18,6 +19,7 @@ import { SandboxDefinitionOverviewComponent } from './sandbox-definition-overvie
   imports: [CommonModule, SentinelTableModule, SentinelControlsModule],
   declarations: [SandboxDefinitionOverviewComponent, SandboxDefinitionDetailComponent],
   providers: [
+    PaginationService,
     SandboxAgendaContext,
     { provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService },
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },
