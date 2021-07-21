@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';
 import { QuotasComponent } from './quotas/quotas.component';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService, SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { VMImagesService } from '../services/vm-images.service';
 import { VMImagesConcreteService } from '../services/vm-images-concrete.service';
 
@@ -17,6 +17,7 @@ import { VMImagesConcreteService } from '../services/vm-images-concrete.service'
   declarations: [ResourcesPageComponent, QuotaPieChartComponent, QuotasComponent, VMImageDetailComponent],
   imports: [CommonModule, ResourcesPageMaterialModule, SentinelTableModule],
   providers: [
+    PaginationService,
     SandboxAgendaContext,
     { provide: SandboxResourcesService, useClass: SandboxResourcesConcreteService },
     { provide: VMImagesService, useClass: VMImagesConcreteService },

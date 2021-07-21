@@ -6,7 +6,7 @@ import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/compo
 import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionTable } from '../model/sandbox-definition-table';
-import { SandboxAgendaContext, SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService, SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview-controls';
 
 @Component({
@@ -28,7 +28,7 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
 
   constructor(
     private sandboxDefinitionService: SandboxDefinitionOverviewService,
-    private context: SandboxAgendaContext
+    private paginationService: PaginationService
   ) {
     super();
   }
@@ -43,6 +43,7 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
    * @param event to load data
    */
   onLoadEvent(event: LoadTableEvent): void {
+    this.paginationService.setPagination(event.pagination.size);
     this.sandboxDefinitionService
       .getAll(event.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -69,7 +70,7 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
       map((resource) => new SandboxDefinitionTable(resource, this.sandboxDefinitionService))
     );
     this.lastLoadEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.context.config.defaultPaginationSize, '', ''),
+      new RequestedPagination(0, this.paginationService.getPagination(), '', ''),
       null
     );
     this.onLoadEvent(this.lastLoadEvent);

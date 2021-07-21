@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxInstanceTable } from '../model/sandbox-instance-table';
 import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
@@ -61,8 +61,8 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     private allocationUnitService: SandboxAllocationUnitsService,
     private allocationRequestService: AllocationRequestsService,
     private cleanupRequestService: CleanupRequestsService,
+    private paginationService: PaginationService,
     private navigator: SandboxNavigator,
-    private context: SandboxAgendaContext,
     private activeRoute: ActivatedRoute
   ) {
     super();
@@ -78,6 +78,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * @param loadEvent load event emitted from sandbox instances table
    */
   onInstanceLoadEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.instanceService
       .getAll(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -89,6 +90,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * @param loadEvent load event emitted from allocation units table
    */
   onAllocationUnitsLoadEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.allocationUnitService
       .getAll(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -100,6 +102,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * @param loadEvent load event emitted from creation requests table
    */
   onAllocationRequestsLoadEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.allocationRequestService
       .getAll(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -111,6 +114,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * @param loadEvent load event emitted from cleanup requests table
    */
   onCleanupRequestsLoadEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.cleanupRequestService
       .getAll(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -131,7 +135,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
 
   private initTables() {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.context.config.defaultPaginationSize, '', '')
+      new RequestedPagination(0, this.paginationService.getPagination(), '', '')
     );
     this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];

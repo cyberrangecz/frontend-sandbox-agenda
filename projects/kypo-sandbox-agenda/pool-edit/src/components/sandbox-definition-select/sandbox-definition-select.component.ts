@@ -4,8 +4,8 @@ import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import {
+  PaginationService,
   SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
 } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -29,12 +29,12 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public preselected: SandboxDefinition,
     public dialogRef: MatDialogRef<SandboxDefinitionSelectComponent>,
-    private context: SandboxAgendaContext,
+    private paginationService: PaginationService,
     private definitionService: SandboxDefinitionOverviewService
   ) {
     super();
     this.selected = [preselected];
-    this.PAGE_SIZE = this.context.config.defaultPaginationSize;
+    this.PAGE_SIZE = this.paginationService.getPagination();
   }
 
   ngOnInit(): void {
@@ -49,6 +49,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
   }
 
   fetch(pagination: RequestedPagination): void {
+    this.paginationService.setPagination(pagination.size);
     this.definitionService
       .getAll(pagination)
       .pipe(takeWhile(() => this.isAlive))

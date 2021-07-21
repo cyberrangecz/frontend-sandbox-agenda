@@ -1,4 +1,4 @@
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { takeWhile, map } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
 import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
@@ -27,7 +27,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
     private vmImagesService: VMImagesService,
-    private context: SandboxAgendaContext
+    private paginationService: PaginationService
   ) {
     super();
     this.resources$ = this.sandboxResourcesService.resources$;
@@ -42,6 +42,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   }
 
   onLoadTableEvent(loadEvent: LoadTableEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
     this.vmImagesService
       .getAvailableImages(loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
@@ -50,7 +51,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
 
   private initTable(): void {
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.context.config.defaultPaginationSize, this.INIT_SORT_NAME, this.INIT_SORT_DIR)
+      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
     );
 
     this.images$ = this.vmImagesService.resource$.pipe(map((resource) => new VirtualImagesTable(resource)));
