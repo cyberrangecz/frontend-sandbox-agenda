@@ -52,11 +52,11 @@ export class SandboxInstanceTable extends SentinelTable<SandboxInstanceRowAdapte
         defer(() => service.showTopology(poolId, instance))
       ),
       new RowAction(
-        'download_user_ssh_access',
-        'Get SSH Access',
+        'download_user_ssh_config',
+        'Get SSH Config',
         'vpn_key',
         'primary',
-        'Download user SSH access',
+        'Download user SSH config',
         of(false),
         defer(() => service.getUserSshAccess(instance.id))
       ),
