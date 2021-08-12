@@ -30,6 +30,17 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
         defer(() => service.delete(sandboxDefinition))
       ),
     ];
-    return new Row(sandboxDefinition, actions);
+    const row = new Row(sandboxDefinition, actions);
+    row.addLink('title', this.parseUrl(sandboxDefinition.url), '_blank');
+    return row;
+  }
+
+  private static parseUrl(gitUrl: string): string {
+    let res = gitUrl;
+    res = res.replace('git@', '');
+    res = res.replace(':', '/');
+    res = res.replace('.git', '');
+    res = 'https://' + res;
+    return res;
   }
 }
