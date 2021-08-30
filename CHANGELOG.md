@@ -1,3 +1,48 @@
+### 12.0.4 Add build of example app to CI. Rename endpoint from kypo2 to kypo. Save user preferred pagination. Change titles for SSH buttons. Add aliases to tsconfig.
+* 320fcfc -- [CI/CD] Update packages.json version based on GitLab tag.
+*   b402c02 -- Merge branch '72-create-tag-with-latest-changes' into 'master'
+|\  
+| * 02d2e20 -- Resolve "Create tag with latest changes"
+|/  
+*   dc3fa11 -- Merge branch '70-add-node-modules-to-gitignore' into 'master'
+|\  
+| * 5976208 -- add node modules to gitignore
+* |   8fa1ae7 -- Merge branch '71-add-link-to-sandbox-definition-repository' into 'master'
+|\ \  
+| |/  
+|/|   
+| * a174321 -- Resolve "Add link to sandbox definition repository"
+|/  
+*   2c112f9 -- Merge branch '69-add-aliases-to-tsconfig' into 'master'
+|\  
+| * b0e1c1c -- Added aliases to tsconfig
+|/  
+*   ea6be9d -- Merge branch '64-rename-button-for-downloading-ssh-access' into 'master'
+|\  
+| * 3a1a8b0 -- Resolve "Rename button for downloading SSH access"
+|/  
+*   853d0f3 -- Merge branch '66-update-name-for-download-ssh-access' into 'master'
+|\  
+| * 268b8f0 -- Update download access button
+|/  
+*   18d7c43 -- Merge branch '64-rename-button-for-downloading-ssh-access' into 'master'
+|\  
+| * 6750213 -- Resolve "Rename button for downloading SSH access"
+|/  
+*   303a040 -- Merge branch '62-save-user-preferences-of-pagination-page-size' into 'master'
+|\  
+| * 1b794e4 -- Resolve "Save user preferences of pagination page size"
+|/  
+*   05b4d37 -- Merge branch '65-bump-version-of-sentinel' into 'master'
+|\  
+| * 4791e2f -- Bump version of Sentinel
+|/  
+*   13dc6a5 -- Merge branch '63-fix-local-config-paths' into 'master'
+|\  
+| * 8c65842 -- Fix paths
+|/  
+* 5a4a2a8 -- Merge branch '61-add-build-example-app-to-ci' into 'master'
+* 908a7bd -- Add build example app to CI
 ### 12.0.3 Update gitlab CI
 * 1300806 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   6606cca -- Merge branch '60-simplify-gitlab-ci-cd-using-csirt-mu-docker-image' into 'master'
@@ -137,4 +182,3 @@
 | * f7075c0 -- Resolve "Update to Angular 10"
 |/  
 * 65318b7 -- Update project package.json version based on GitLab tag. Done by CI
-
