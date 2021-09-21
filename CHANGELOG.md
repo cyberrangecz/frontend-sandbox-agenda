@@ -1,3 +1,7 @@
+### 12.0.5 New version of the topology graph package - added missing configuration for Apache Guacamole.
+* 998ea43 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 46051cc -- Merge branch '73-update-version-of-the-topology-graph-package' into 'master'
+* 54e3773 -- New version of the topology graph pacakge.
 ### 12.0.4 Add build of example app to CI. Rename endpoint from kypo2 to kypo. Save user preferred pagination. Change titles for SSH buttons. Add aliases to tsconfig.
 * 320fcfc -- [CI/CD] Update packages.json version based on GitLab tag.
 *   b402c02 -- Merge branch '72-create-tag-with-latest-changes' into 'master'
