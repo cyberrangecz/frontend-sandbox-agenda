@@ -15,6 +15,11 @@ export const kypo2TopologyConfig = {
   defaultDecoratorRefreshPeriodInSeconds: 3, // OBSOLETE
   useRealTime: false, // OBSOLETE
   useDecorators: false, // OBSOLETE
+  guacamoleConfig: {
+    url: baseURL + '/guacamole/',
+    username: 'guacuser',
+    password: 'guacuser',
+  },
 };
 
 export const environment = {
