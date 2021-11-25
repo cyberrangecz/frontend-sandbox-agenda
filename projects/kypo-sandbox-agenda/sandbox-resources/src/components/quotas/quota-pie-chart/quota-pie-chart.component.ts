@@ -47,25 +47,24 @@ export class QuotaPieChartComponent implements AfterViewInit {
   }
 
   private buildPie(): void {
-    const pie = d3
-      .pie()
-      .value((d) => {
-        return d.value;
-      })
-      .sort(null);
-    const color = d3.scaleOrdinal().domain(this.data).range(['#3D54AF', '#DDDDDD']);
-    const arcGenerator = d3.arc().innerRadius(0).outerRadius(this.radius);
-    const data_ready = pie(d3.entries(this.data));
+    const g = this.svg.append('g');
 
-    this.svg
-      .selectAll('slices')
-      .data(data_ready)
+    const pie = d3.pie().sort(null);
+
+    const colorScale = d3.scaleOrdinal().domain(Object.values(this.data)).range(['#3D54AF', '#DDDDDD']);
+
+    const arc = d3.arc().innerRadius(0).outerRadius(this.radius);
+
+    const arcs = g
+      .selectAll('arc')
+      .data(pie(Object.values(this.data)))
       .enter()
+      .append('g');
+
+    arcs
       .append('path')
-      .attr('d', arcGenerator)
-      .attr('fill', (d) => {
-        return color(d.data.key);
-      });
+      .attr('fill', (d) => colorScale(d.data))
+      .attr('d', arc);
   }
 
   private prepareChartData(): ChartData {
