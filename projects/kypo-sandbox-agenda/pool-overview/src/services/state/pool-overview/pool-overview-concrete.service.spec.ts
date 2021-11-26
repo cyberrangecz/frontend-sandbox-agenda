@@ -5,7 +5,7 @@ import { asyncData, RequestedPagination } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { PoolOverviewConcreteService } from './pool-overview-concrete.service';
-import { SandboxAgendaContext } from '../../../../internal/src/services/sandox-agenda-context.service';
+import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
 import {
   createContextSpy,
   createErrorHandlerSpy,
@@ -13,7 +13,7 @@ import {
   createNavigatorSpy,
   createNotificationSpy,
   createPoolApiSpy,
-} from '../../../../internal/src/testing/testing-commons.spec';
+} from '../../../../../internal/src/testing/testing-commons.spec';
 
 describe('PoolOverviewConcreteService', () => {
   let poolApiSpy: jasmine.SpyObj<PoolApi>;

@@ -4,36 +4,13 @@
   <sentinel-table [data]="instances$ | async"
                   [hasError]="instancesTableHasError$ | async"
                   [titlecasedActions]=false
+                  elevation="0"
                   (rowAction)="onTableAction($event)"
-                  (refresh)="onInstanceLoadEvent($event)">
+                  (refresh)="onLoadEvent($event)">
+                  <ng-container *sentinelRow="'stages'; template: stagesTemplate"></ng-container>
   </sentinel-table>
+</mat-card>
 
-</mat-card>
-<mat-card>
-  <h3>Allocation Units</h3>
-  <sentinel-table [data]="allocationUnits$ | async"
-                  [hasError]="allocationUnitsTableHasError$ | async"
-                  (rowAction)="onTableAction($event)"
-                  (refresh)="onAllocationUnitsLoadEvent($event)">
-  </sentinel-table>
-  <div class="overview">
-    <div class="requests">
-      <div class="request">
-        <h3>Allocation Requests</h3>
-        <sentinel-table [data]="allocationRequests$ | async"
-                     [hasError]="allocationRequestsTableHasError$ | async"
-                     (rowAction)="onTableAction($event)"
-                     (refresh)="onAllocationRequestsLoadEvent($event)">
-        </sentinel-table>
-      </div>
-      <div class="request">
-        <h3>Cleanup Requests</h3>
-        <sentinel-table [data]="cleanupRequests$ | async"
-                     [hasError]="cleanupRequestsTableHasError$ | async"
-                     (rowAction)="onTableAction($event)"
-                     (refresh)="onCleanupRequestsLoadEvent($event)">
-        </sentinel-table>
-      </div>
-    </div>
-  </div>
-</mat-card>
+<ng-template #stagesTemplate let-row>
+  <kypo-stage-overview [stages]="row.element.stages"></kypo-stage-overview>
+</ng-template>

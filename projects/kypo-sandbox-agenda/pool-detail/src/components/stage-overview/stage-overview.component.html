@@ -1,0 +1,9 @@
+<div class="stages">
+  <div *ngFor="let stage of stages">
+    <div matRipple [matRippleCentered]='true' class="stage-container" [ngClass]="stageIconResolver(stage)" [matTooltip]="stage">
+      <mat-icon  class="material-icons-outlined" >{{
+        stageIconResolver(stage)
+      }}</mat-icon>
+    </div>
+  </div>
+</div>

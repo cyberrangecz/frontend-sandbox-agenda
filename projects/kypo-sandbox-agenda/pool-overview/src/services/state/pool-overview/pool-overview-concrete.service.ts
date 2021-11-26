@@ -71,8 +71,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       tap(
         () => this.notificationService.emit('success', `Allocation of pool ${pool.id} started`),
         (err) => this.errorHandler.emit(err, `Allocation of pool ${pool.id}`)
-      ),
-      switchMap(() => this.getAll(this.lastPagination))
+      )
     );
   }
 
@@ -105,8 +104,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
         (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
-      ),
-      switchMap(() => this.getAll(this.lastPagination))
+      )
     );
   }
 
@@ -142,8 +140,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
         (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`)
-      ),
-      switchMap(() => this.getAll(this.lastPagination))
+      )
     );
   }
 
@@ -152,8 +149,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was cleared`),
         (err) => this.errorHandler.emit(err, `Clearing pool ${pool.id}`)
-      ),
-      switchMap(() => this.getAll(this.lastPagination))
+      )
     );
   }
 
@@ -162,8 +158,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was unlocked`),
         (err) => this.errorHandler.emit(err, `Unlocking pool ${pool.id}`)
-      ),
-      switchMap(() => this.getAll(this.lastPagination))
+      )
     );
   }
 }

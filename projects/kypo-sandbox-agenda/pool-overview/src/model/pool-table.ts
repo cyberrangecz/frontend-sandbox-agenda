@@ -1,43 +1,74 @@
 import { PaginatedResource } from '@sentinel/common';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
-import { PoolOverviewService } from '../services/state/pool-overview.service';
 import { PoolRowAdapter } from './pool-row-adapter';
+import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 
 /**
  * Helper class transforming paginated resource to class for common table component
  * @dynamic
  */
 export class PoolTable extends SentinelTable<PoolRowAdapter> {
-  constructor(resource: PaginatedResource<Pool>, service: PoolOverviewService, navigator: SandboxNavigator) {
-    const rows = resource.elements.map((element) => PoolTable.createRow(element, service, navigator));
+  constructor(
+    resource: PaginatedResource<Pool>,
+    sandboxResources: Resources,
+    abstractPoolService: AbstractPoolService,
+    navigator: SandboxNavigator
+  ) {
+    const rows = resource.elements.map((element) =>
+      PoolTable.createRow(element, sandboxResources, abstractPoolService, navigator)
+    );
     const columns = [
-      new Column('id', 'id', false),
       new Column('title', 'title', false),
+      new Column('createdByName', 'created by', false),
       new Column('definitionId', 'definition id', false),
       new Column('lockState', 'state', false),
       new Column('usedAndMaxSize', 'size', false),
+      new Column('instancesUtilization', 'Instances util.', false),
+      new Column('cpuUtilization', 'CPU util.', false),
+      new Column('ramUtilization', 'RAM util.', false),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;
   }
 
-  private static createRow(pool: Pool, service: PoolOverviewService, navigator: SandboxNavigator): Row<PoolRowAdapter> {
+  private static createRow(
+    pool: Pool,
+    sandboxResources: Resources,
+    abstractPoolService: AbstractPoolService,
+    navigator: SandboxNavigator
+  ): Row<PoolRowAdapter> {
     const rowAdapter = pool as PoolRowAdapter;
     rowAdapter.title = `Pool ${rowAdapter.id}`;
-    const row = new Row(rowAdapter, this.createActions(pool, service));
+    rowAdapter.createdByName = pool.createdBy.fullName;
+    rowAdapter.instancesUtilization = `${(
+      ((pool.hardwareUsage.instances * pool.usedSize) / sandboxResources.quotas.instances.limit) *
+      100
+    ).toFixed(1)}%`;
+
+    rowAdapter.cpuUtilization = `${(
+      ((pool.hardwareUsage.vcpu * pool.usedSize) / sandboxResources.quotas.vcpu.limit) *
+      100
+    ).toFixed(1)}%`;
+
+    rowAdapter.ramUtilization = `${(
+      ((pool.hardwareUsage.ram * pool.usedSize) / sandboxResources.quotas.ram.limit) *
+      100
+    ).toFixed(1)}%`;
+
+    const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService));
     row.addLink('title', navigator.toPool(rowAdapter.id));
     return row;
   }
 
-  private static createActions(pool: Pool, service: PoolOverviewService): RowAction[] {
+  private static createActions(pool: Pool, abstractPoolService: AbstractPoolService): RowAction[] {
     return [
       new DeleteAction(
         'Delete Pool',
         of(pool.usedSize !== 0),
-        defer(() => service.delete(pool))
+        defer(() => abstractPoolService.delete(pool))
       ),
       new RowAction(
         'allocate_all',
@@ -46,7 +77,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'primary',
         'Allocate sandboxes',
         of(pool.isFull()),
-        defer(() => service.allocate(pool))
+        defer(() => abstractPoolService.allocate(pool))
       ),
       new RowAction(
         'allocate_one',
@@ -55,7 +86,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'primary',
         'Allocate one sandbox',
         of(pool.isFull()),
-        defer(() => service.allocate(pool, 1))
+        defer(() => abstractPoolService.allocate(pool, 1))
       ),
       new RowAction(
         'clear',
@@ -64,7 +95,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'warn',
         'Remove all allocations',
         of(false),
-        defer(() => service.clear(pool))
+        defer(() => abstractPoolService.clear(pool))
       ),
       new RowAction(
         'download_man_ssh_configs',
@@ -73,13 +104,13 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'primary',
         'Download management SSH configs',
         of(false),
-        defer(() => service.getSshAccess(pool.id))
+        defer(() => abstractPoolService.getSshAccess(pool.id))
       ),
-      this.createLockAction(pool, service),
+      this.createLockAction(pool, abstractPoolService),
     ];
   }
 
-  private static createLockAction(pool: Pool, service: PoolOverviewService): RowAction {
+  private static createLockAction(pool: Pool, service: AbstractPoolService): RowAction {
     if (pool.isLocked()) {
       return new RowAction(
         'unlock',

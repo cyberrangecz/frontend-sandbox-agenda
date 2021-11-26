@@ -4,6 +4,7 @@
 
 export * from './components/pool-detail-components.module';
 export * from './components/pool-detail.component';
+export * from './components/stage-overview/stage-overview.component';
 
 export * from './services/state/request/requests.service';
 export * from './services/state/request/allocation/requests/allocation-requests.service';
