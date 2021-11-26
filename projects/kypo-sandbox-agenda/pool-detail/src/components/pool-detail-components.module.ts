@@ -12,11 +12,12 @@ import {
 } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolDetailMaterialModule } from './pool-detail-material.module';
 import { PoolDetailComponent } from './pool-detail.component';
+import { StageOverviewComponent } from './stage-overview/stage-overview.component';
 /**
  * Module containing component and providers for sandbox pool detail page
  */
 @NgModule({
-  declarations: [PoolDetailComponent],
+  declarations: [PoolDetailComponent, StageOverviewComponent],
   imports: [CommonModule, SentinelTableModule, PoolDetailMaterialModule, SentinelControlsModule],
   providers: [
     PoolResolver,

@@ -6,7 +6,8 @@
         "@sentinel/components/dialogs": "sentinel.components.dialogs",
         "@sentinel/components/table": "sentinel.components.table",
         "@sentinel/components/controls": "sentinel.components.controls",
-        "@muni-kypo-crp/sandbox-api": "muni-kypo-crp.sandbox-api"
+        "@muni-kypo-crp/sandbox-api": "muni-kypo-crp.sandbox-api",
+        "@muni-kypo-crp/sandbox-model": "muni-kypo-crp.sandbox-model"
         }
     }
 }

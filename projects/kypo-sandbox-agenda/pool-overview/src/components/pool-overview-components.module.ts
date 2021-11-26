@@ -5,10 +5,14 @@ import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext, PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { PoolOverviewConcreteService } from '../services/state/pool-overview-concrete.service';
-import { PoolOverviewService } from '../services/state/pool-overview.service';
 import { PoolResolver, PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
+import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
+import { AbstractPoolConcreteService } from '../services/abstract-pool/abstract-sandbox/abstract-pool-concrete.service';
+import { PoolOverviewService } from '../services/state/pool-overview/pool-overview.service';
+import { PoolOverviewConcreteService } from '../services/state/pool-overview/pool-overview-concrete.service';
+import { SandboxResourcesService } from '../services/state/resources/sandbox-resources.service';
+import { SandboxResourcesConcreteService } from '../services/state/resources/sandbox-resources-concrete.service';
 
 /**
  * Module containing components and providers for sandbox pool overview page
@@ -23,6 +27,8 @@ import { PoolOverviewComponent } from './pool-overview.component';
     SandboxAgendaContext,
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },
     { provide: PoolOverviewService, useClass: PoolOverviewConcreteService },
+    { provide: SandboxResourcesService, useClass: SandboxResourcesConcreteService },
+    { provide: AbstractPoolService, useClass: AbstractPoolConcreteService },
   ],
 })
 export class PoolOverviewComponentsModule {

@@ -53,23 +53,6 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   }
 
   /**
-   * Creates cleanup request for sandbox allocation units for pool, informs about the result and updates list of sandbox allocation units
-   * or handles an error
-   * @param request a cleanup request to be created
-   */
-  cleanup(request: Request): Observable<any> {
-    return this.displayConfirmationDialog(
-      request,
-      'Create',
-      'create a cleanup request to allocation request',
-      'No',
-      'Yes'
-    ).pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanup(request) : EMPTY))
-    );
-  }
-
-  /**
    * Performs necessary operations and updates state of the service.
    * @param pagination new requested pagination
    * @param params any other parameters required to update data in your concrete service
@@ -113,19 +96,13 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     );
   }
 
-  private displayConfirmationDialog(
-    request: Request,
-    title: string,
-    action: string,
-    cancelLabel: string,
-    confirmLabel: string
-  ): Observable<SentinelDialogResultEnum> {
+  private displayConfirmationDialog(sandboxIds: number[], title: string): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${title} Cleanup Request`,
-        `Do you want to ${action.toLowerCase()} "${request.id}"?`,
-        cancelLabel,
-        confirmLabel
+        `Do you want to delete ${sandboxIds.length === 1 ? 'Sandbox ' : 'Sandboxes '}${sandboxIds.toString()}?`,
+        'Cancel',
+        'Delete'
       ),
     });
     return dialogRef.afterClosed();
@@ -141,18 +118,26 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     );
   }
 
-  private callApiToCleanup(request: Request): Observable<any> {
-    return this.sauApi.createCleanupRequest(request.id).pipe(
-      tap(
-        () => this.notificationService.emit('success', `Cleanup request for allocation units ${request.id}`),
-        (err) => this.errorHandler.emit(err, 'Creating cleanup request for allocation units ' + request.id)
-      ),
-      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
-    );
-  }
-
   private onGetAllError(err: HttpErrorResponse) {
     this.errorHandler.emit(err, 'Fetching allocation units');
     this.hasErrorSubject$.next(true);
+  }
+
+  cleanupMultiple(poolId: number, unitIds: number[], force: boolean): Observable<any> {
+    return this.displayConfirmationDialog(unitIds, 'Create').pipe(
+      switchMap((result) =>
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, unitIds, force) : EMPTY
+      )
+    );
+  }
+
+  private callApiToCleanupMultiple(poolId: number, unitIds: number[], force: boolean): any {
+    return this.poolApi.createMultipleCleanupRequests(poolId, unitIds, force).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Cleanup request for allocation units ${unitIds.toString()}`),
+        (err) => this.errorHandler.emit(err, 'Creating cleanup request for allocation units ' + unitIds.toString())
+      ),
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+    );
   }
 }

@@ -50,7 +50,7 @@ export const environment = {
         tokenRefreshTime: 30000, // how often check if tokens are still valid
         oidcConfig: {
           issuer: 'https://172.19.0.22:8443/csirtmu-dummy-issuer-server/',
-          clientId: '0bf33f00-2700-4efb-ab09-186076f85c7d',
+          clientId: '1be61a0a-8cdd-4a58-ab19-2c2f54265b5a',
           redirectUri: homeURL, // redirect after successful login
           scope: 'openid email profile',
           logoutUrl: 'https://172.19.0.22/csirtmu-dummy-issuer-server/endsession/endsession',

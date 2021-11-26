@@ -51,13 +51,6 @@ export abstract class SandboxAllocationUnitsService {
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**
-   * Cancels a sandbox allocation units for pool, informs about the result and updates list of sandbox allocation units
-   * or handles an error
-   * @param request a request to be cancelled
-   */
-  abstract cleanup(request: Request): Observable<any>;
-
-  /**
    * Performs necessary operations and updates state of the service.
    * @contract Needs to update lastPagination attribute, hasError subject and retry polling
    * if it was previously interrupted
@@ -83,4 +76,6 @@ export abstract class SandboxAllocationUnitsService {
    * @param pageSize size of a page for pagination
    */
   protected abstract initSubject(pageSize: number): PaginatedResource<SandboxAllocationUnit>;
+
+  abstract cleanupMultiple(poolId: number, unitIds: number[], force?: boolean): Observable<any>;
 }

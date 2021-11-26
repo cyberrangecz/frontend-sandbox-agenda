@@ -1,28 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { PaginatedResource, RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { Request } from '@muni-kypo-crp/sandbox-model';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
-import { Observable } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
-import { SandboxInstanceTable } from '../model/sandbox-instance-table';
+import { LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { combineLatest, forkJoin, Observable, zip } from 'rxjs';
+import { map, take, takeWhile, tap } from 'rxjs/operators';
 import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 import { PoolDetailControls } from './pool-detail-controls';
-import { AllocationRequestTable } from '../model/allocation-request-table';
-import { CleanupRequestTable } from '../model/cleanup-request-table';
-import { SandboxAllocationUnitsService } from '../services/state/request/allocation/units/sandbox-allocation-units.service';
-import { SandboxAllocationUnitTable } from '../model/sandbox-allocation-unit-table';
+import { SandboxAllocationUnitsService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AllocationRequestsConcreteService } from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
-import { SandboxAllocationUnitsConcreteService } from '../services/state/request/allocation/units/sandbox-allocation-units-concrete.service';
+import { SandboxAllocationUnitsConcreteService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units-concrete.service';
 import { CleanupRequestsConcreteService } from '../services/state/request/cleanup/cleanup-requests-concrete.service';
 import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
+import { PoolDetailTable } from '../model/pool-detail-table';
+import { AbstractSandbox } from '../model/abstract-sandbox';
+import { AbstractSandboxConcreteService } from '../services/abstract-sandbox/abstract-sandbox-concrete.service';
+import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sandbox.service';
 
 /**
  * Smart component of pool detail page
@@ -37,30 +36,19 @@ import { SandboxInstanceConcreteService } from '../services/state/sandbox-instan
     { provide: SandboxAllocationUnitsService, useClass: SandboxAllocationUnitsConcreteService },
     { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
+    { provide: AbstractSandboxService, useClass: AbstractSandboxConcreteService },
   ],
 })
 export class PoolDetailComponent extends SentinelBaseDirective implements OnInit {
   pool: Pool;
 
-  instances$: Observable<SentinelTable<SandboxInstance>>;
+  instances$: Observable<PoolDetailTable>;
   instancesTableHasError$: Observable<boolean>;
-
-  allocationUnits$: Observable<SandboxAllocationUnitTable>;
-  allocationUnitsTableHasError$: Observable<boolean>;
-
-  allocationRequests$: Observable<SentinelTable<Request>>;
-  allocationRequestsTableHasError$: Observable<boolean>;
-
-  cleanupRequests$: Observable<SentinelTable<Request>>;
-  cleanupRequestsTableHasError$: Observable<boolean>;
 
   controls: SentinelControlItem[];
 
   constructor(
-    private instanceService: SandboxInstanceService,
-    private allocationUnitService: SandboxAllocationUnitsService,
-    private allocationRequestService: AllocationRequestsService,
-    private cleanupRequestService: CleanupRequestsService,
+    private abstractSandboxService: AbstractSandboxService,
     private paginationService: PaginationService,
     private navigator: SandboxNavigator,
     private activeRoute: ActivatedRoute
@@ -77,45 +65,9 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * Gets new data for sandbox instance overview table
    * @param loadEvent load event emitted from sandbox instances table
    */
-  onInstanceLoadEvent(loadEvent: LoadTableEvent): void {
+  onLoadEvent(loadEvent: LoadTableEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
-    this.instanceService
-      .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
-  }
-
-  /**
-   * Gets new data for allocation units overview table
-   * @param loadEvent load event emitted from allocation units table
-   */
-  onAllocationUnitsLoadEvent(loadEvent: LoadTableEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
-    this.allocationUnitService
-      .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
-  }
-
-  /**
-   * Gets new data for creation requests overview table
-   * @param loadEvent load event emitted from creation requests table
-   */
-  onAllocationRequestsLoadEvent(loadEvent: LoadTableEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
-    this.allocationRequestService
-      .getAll(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
-  }
-
-  /**
-   * Gets new data for cleanup requests overview table
-   * @param loadEvent load event emitted from cleanup requests table
-   */
-  onCleanupRequestsLoadEvent(loadEvent: LoadTableEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
-    this.cleanupRequestService
+    this.abstractSandboxService
       .getAll(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();
@@ -139,36 +91,47 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     );
     this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];
-      this.onInstanceLoadEvent(initialLoadEvent);
-      this.onAllocationUnitsLoadEvent(initialLoadEvent);
-      this.onAllocationRequestsLoadEvent(initialLoadEvent);
-      this.onCleanupRequestsLoadEvent(initialLoadEvent);
+      this.onLoadEvent(initialLoadEvent);
     });
 
-    this.instances$ = this.instanceService.resource$.pipe(
-      map((resource) => new SandboxInstanceTable(resource, this.pool.id, this.instanceService))
-    );
-    this.instancesTableHasError$ = this.instanceService.hasError$;
+    this.instances$ = combineLatest([
+      this.abstractSandboxService.allocationUnits$,
+      this.abstractSandboxService.sandboxInstances$,
+    ]).pipe(
+      map((resource) => {
+        const data = resource[0].elements.map(
+          (_, index) => new AbstractSandbox(resource[0].elements[index], resource[1].elements[index])
+        );
 
-    this.allocationUnits$ = this.allocationUnitService.units$.pipe(
-      map((resource) => new SandboxAllocationUnitTable(resource, this.pool.id, this.allocationUnitService))
+        return new PoolDetailTable(
+          new PaginatedResource<AbstractSandbox>(data, resource[1].pagination),
+          this.abstractSandboxService,
+          this.navigator
+        );
+      })
     );
-    this.allocationUnitsTableHasError$ = this.allocationUnitService.hasError$;
 
-    this.allocationRequests$ = this.allocationRequestService.resource$.pipe(
-      map(
-        (resource) => new AllocationRequestTable(resource, this.pool.id, this.allocationRequestService, this.navigator)
-      )
-    );
-    this.allocationRequestsTableHasError$ = this.allocationRequestService.hasError$;
-
-    this.cleanupRequests$ = this.cleanupRequestService.resource$.pipe(
-      map((resource) => new CleanupRequestTable(resource, this.pool.id, this.cleanupRequestService, this.navigator))
-    );
-    this.cleanupRequestsTableHasError$ = this.cleanupRequestService.hasError$;
+    //this.instancesTableHasError$ = this.abstractSandboxService.hasError$;
   }
 
   private initControls() {
-    this.controls = PoolDetailControls.create(this.pool, this.instanceService);
+    const sandboxes$ = combineLatest([
+      this.abstractSandboxService.allocationUnits$,
+      this.abstractSandboxService.sandboxInstances$,
+    ]).pipe(
+      map((resource) => {
+        this.controls = PoolDetailControls.create(
+          this.pool,
+          resource[0].elements.map(
+            (_, index) => new AbstractSandbox(resource[0].elements[index], resource[1].elements[index])
+          ),
+          this.abstractSandboxService
+        );
+        return resource[0].elements.map(
+          (_, index) => new AbstractSandbox(resource[0].elements[index], resource[1].elements[index])
+        );
+      })
+    );
+    sandboxes$.pipe(takeWhile(() => this.isAlive)).subscribe();
   }
 }

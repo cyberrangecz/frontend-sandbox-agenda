@@ -3,12 +3,12 @@ import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
-import { defer, Observable, of } from 'rxjs';
+import { combineLatest, defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { PoolOverviewService } from '../services/state/pool-overview.service';
+import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 
 /**
  * Smart component of sandbox pool overview page
@@ -26,7 +26,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
   controls: SentinelControlItem[] = [];
 
   constructor(
-    private service: PoolOverviewService,
+    private abstractPoolService: AbstractPoolService,
     private navigator: SandboxNavigator,
     private paginationService: PaginationService
   ) {
@@ -42,9 +42,9 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    * Gets new data for pool overview table
    * @param loadEvent load data event from table component
    */
-  onPoolsLoadEvent(loadEvent: LoadTableEvent): void {
+  onLoadEvent(loadEvent: LoadTableEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
-    this.service
+    this.abstractPoolService
       .getAll(loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();
@@ -66,9 +66,11 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.paginationService.getPagination(), '', '')
     );
-    this.pools$ = this.service.resource$.pipe(map((resource) => new PoolTable(resource, this.service, this.navigator)));
-    this.hasError$ = this.service.hasError$;
-    this.onPoolsLoadEvent(initialLoadEvent);
+    this.pools$ = combineLatest([this.abstractPoolService.pools$, this.abstractPoolService.resources$]).pipe(
+      map((resource) => new PoolTable(resource[0], resource[1], this.abstractPoolService, this.navigator))
+    );
+    this.hasError$ = this.abstractPoolService.poolsHasError$;
+    this.onLoadEvent(initialLoadEvent);
   }
 
   private initControls() {
@@ -78,7 +80,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
         'Create',
         'primary',
         of(false),
-        defer(() => this.service.create())
+        defer(() => this.abstractPoolService.create())
       ),
     ];
   }
