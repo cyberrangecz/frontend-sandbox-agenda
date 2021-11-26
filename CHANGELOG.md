@@ -1,3 +1,19 @@
+### 12.0.6 Redesign detail page for pools
+* ef11bbd -- [CI/CD] Update packages.json version based on GitLab tag.
+*   4e1f897 -- Merge branch '68-redesign-detail-page-for-pools' into 'master'
+|\  
+| * ed20708 -- Resolve "Redesign detail page for pools"
+|/  
+*   37cac58 -- Merge branch '76-bump-d3-version' into 'master'
+|\  
+| * fe72019 -- Bump d3 version
+|/  
+*   3a6b293 -- Merge branch '75-add-license-file' into 'master'
+|\  
+| * fe4e7b2 -- Add license file
+|/  
+* fa0dd7d -- Merge branch '74-bump-version-of-sentinel' into 'master'
+* 886c88f -- Bump sentinel
 ### 12.0.5 New version of the topology graph package - added missing configuration for Apache Guacamole.
 * 998ea43 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 46051cc -- Merge branch '73-update-version-of-the-topology-graph-package' into 'master'
