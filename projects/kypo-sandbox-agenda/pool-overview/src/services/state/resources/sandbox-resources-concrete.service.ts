@@ -3,26 +3,26 @@ import { tap } from 'rxjs/operators';
 import { ResourcesApi } from '@muni-kypo-crp/sandbox-api';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Resources } from '@muni-kypo-crp/sandbox-model';
-import { SandboxResourcesService } from './sandbox-resources.service';
+import { HardwareUsage } from '@muni-kypo-crp/sandbox-model';
+import { SandboxLimitsService } from './sandbox-resources.service';
 
 @Injectable()
-export class SandboxResourcesConcreteService extends SandboxResourcesService {
-  private resourcesSubject$: ReplaySubject<Resources> = new ReplaySubject();
-  resources$: Observable<Resources> = this.resourcesSubject$.asObservable();
+export class SandboxLimitsConcreteService extends SandboxLimitsService {
+  private limitsSubject$: ReplaySubject<HardwareUsage> = new ReplaySubject();
+  limits$: Observable<HardwareUsage> = this.limitsSubject$.asObservable();
 
   constructor(private resourcesApi: ResourcesApi, private errorHandler: SandboxErrorHandler) {
     super();
   }
 
-  getResources(): Observable<Resources> {
-    return this.resourcesApi.getResources().pipe(
+  getLimits(): Observable<HardwareUsage> {
+    return this.resourcesApi.getLimits().pipe(
       tap(
         (resource) => {
-          this.resourcesSubject$.next(resource);
+          this.limitsSubject$.next(resource);
         },
         (err) => {
-          this.errorHandler.emit(err, 'Fetching resources');
+          this.errorHandler.emit(err, 'Fetching limits');
         }
       )
     );

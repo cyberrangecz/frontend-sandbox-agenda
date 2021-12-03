@@ -11,8 +11,8 @@ import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/
 import { AbstractPoolConcreteService } from '../services/abstract-pool/abstract-sandbox/abstract-pool-concrete.service';
 import { PoolOverviewService } from '../services/state/pool-overview/pool-overview.service';
 import { PoolOverviewConcreteService } from '../services/state/pool-overview/pool-overview-concrete.service';
-import { SandboxResourcesService } from '../services/state/resources/sandbox-resources.service';
-import { SandboxResourcesConcreteService } from '../services/state/resources/sandbox-resources-concrete.service';
+import { SandboxLimitsConcreteService } from '../services/state/resources/sandbox-resources-concrete.service';
+import { SandboxLimitsService } from '../services/state/resources/sandbox-resources.service';
 
 /**
  * Module containing components and providers for sandbox pool overview page
@@ -27,7 +27,7 @@ import { SandboxResourcesConcreteService } from '../services/state/resources/san
     SandboxAgendaContext,
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },
     { provide: PoolOverviewService, useClass: PoolOverviewConcreteService },
-    { provide: SandboxResourcesService, useClass: SandboxResourcesConcreteService },
+    { provide: SandboxLimitsService, useClass: SandboxLimitsConcreteService },
     { provide: AbstractPoolService, useClass: AbstractPoolConcreteService },
   ],
 })

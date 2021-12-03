@@ -1,30 +1,20 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { RequestedPagination } from '@sentinel/common';
-import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { switchMap } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { Pool, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolOverviewService } from '../../state/pool-overview/pool-overview.service';
-import { SandboxResourcesService } from '../../state/resources/sandbox-resources.service';
 import { AbstractPoolService } from './abstract-pool.service';
+import { SandboxLimitsService } from '../../state/resources/sandbox-resources.service';
 
 @Injectable()
 export class AbstractPoolConcreteService extends AbstractPoolService {
   private lastPagination: RequestedPagination;
 
-  constructor(
-    private poolOverviewService: PoolOverviewService,
-    private sandboxResourcesService: SandboxResourcesService,
-    private dialog: MatDialog,
-    private context: SandboxAgendaContext,
-    private notificationService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
-  ) {
+  constructor(private poolOverviewService: PoolOverviewService, private sandboxLimitsService: SandboxLimitsService) {
     super();
     this.pools$ = poolOverviewService.resource$;
-    this.resources$ = sandboxResourcesService.resources$;
+    this.limits$ = sandboxLimitsService.limits$;
     this.poolsHasError$ = poolOverviewService.hasError$;
   }
 
@@ -35,7 +25,7 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
    */
   getAll(pagination: RequestedPagination): Observable<any> {
     this.lastPagination = pagination;
-    return combineLatest([this.poolOverviewService.getAll(pagination), this.sandboxResourcesService.getResources()]);
+    return combineLatest([this.poolOverviewService.getAll(pagination), this.sandboxLimitsService.getLimits()]);
   }
 
   /**

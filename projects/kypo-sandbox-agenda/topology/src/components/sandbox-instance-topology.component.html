@@ -1,12 +1,19 @@
 <mat-card>
   <mat-card-content>
-    <kypo2-topology-graph
-      [style.width.px]="topologyWidth"
-      [style.height.px]="topologyHeight"
-      [width]="topologyWidth"
-      [height]="topologyHeight"
-      [sandboxId]="(sandboxInstance$ | async)?.id">
-    </kypo2-topology-graph>
+    <div class="topology-content">
+      <kypo2-topology-app-legend [width]="65"
+                                 [height]="topologyHeight"
+                                 [style.float]="'left'"
+                                 [legendAttachment]="'vertical'"
+      ></kypo2-topology-app-legend>
+      <kypo2-topology-graph
+        [style.width.px]="topologyWidth"
+        [style.height.px]="topologyHeight"
+        [width]="topologyWidth"
+        [height]="topologyHeight"
+        [sandboxId]="(sandboxInstance$ | async)?.id">
+      </kypo2-topology-graph>
+    </div>
   </mat-card-content>
 </mat-card>
 

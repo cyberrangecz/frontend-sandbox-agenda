@@ -1,19 +1,19 @@
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Pool, Request, Resources, SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HardwareUsage, Pool } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class AbstractPoolService {
-  protected resourcesHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  protected limitsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  resourcesHasError$: Observable<boolean> = this.resourcesHasErrorSubject$.asObservable();
+  limitsHasError$: Observable<boolean> = this.limitsHasErrorSubject$.asObservable();
 
   protected poolsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   poolsHasError$: Observable<boolean> = this.poolsHasErrorSubject$.asObservable();
 
-  protected resourcesSubject$: BehaviorSubject<Resources>;
+  protected limitsSubject$: BehaviorSubject<HardwareUsage>;
 
-  resources$: Observable<Resources>;
+  limits$: Observable<HardwareUsage>;
 
   protected poolsSubject$: BehaviorSubject<PaginatedResource<Pool>>;
 

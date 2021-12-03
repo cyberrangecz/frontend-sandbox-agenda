@@ -66,7 +66,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
     const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
       new RequestedPagination(0, this.paginationService.getPagination(), '', '')
     );
-    this.pools$ = combineLatest([this.abstractPoolService.pools$, this.abstractPoolService.resources$]).pipe(
+    this.pools$ = combineLatest([this.abstractPoolService.pools$, this.abstractPoolService.limits$]).pipe(
       map((resource) => new PoolTable(resource[0], resource[1], this.abstractPoolService, this.navigator))
     );
     this.hasError$ = this.abstractPoolService.poolsHasError$;
