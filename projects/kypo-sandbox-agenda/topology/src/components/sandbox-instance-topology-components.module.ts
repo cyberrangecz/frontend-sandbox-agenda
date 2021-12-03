@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Kypo2TopologyGraphConfig, Kypo2TopologyGraphModule } from '@muni-kypo-crp/topology-graph';
+import {
+  Kypo2TopologyGraphConfig,
+  Kypo2TopologyGraphModule,
+  Kypo2TopologyLegendModule,
+  TopologyApiModule,
+} from '@muni-kypo-crp/topology-graph';
 import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxInstanceTopologyComponent } from './sandbox-instance-topology.component';
 
@@ -10,7 +15,7 @@ import { SandboxInstanceTopologyComponent } from './sandbox-instance-topology.co
  */
 @NgModule({
   declarations: [SandboxInstanceTopologyComponent],
-  imports: [CommonModule, MatCardModule, Kypo2TopologyGraphModule],
+  imports: [CommonModule, MatCardModule, Kypo2TopologyGraphModule, Kypo2TopologyLegendModule, TopologyApiModule],
 })
 export class SandboxInstanceTopologyComponentsModule {
   static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<SandboxInstanceTopologyComponentsModule> {
@@ -19,6 +24,7 @@ export class SandboxInstanceTopologyComponentsModule {
       providers: [
         { provide: Kypo2TopologyGraphConfig, useValue: config.kypo2TopologyConfig },
         { provide: SandboxAgendaConfig, useValue: config },
+        TopologyApiModule.forRoot(config.kypo2TopologyConfig).providers,
       ],
     };
   }
