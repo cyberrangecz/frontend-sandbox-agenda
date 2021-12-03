@@ -1,3 +1,7 @@
+### 12.0.7 Preload spice in topology. Add created by field to sandbox definition.
+* 3117f5b -- [CI/CD] Update packages.json version based on GitLab tag.
+* 460d34d -- Merge branch '77-preload-spice-in-display-topology' into 'master'
+* 4f4155a -- Resolve "Preload spice in display topology"
 ### 12.0.6 Redesign detail page for pools
 * ef11bbd -- [CI/CD] Update packages.json version based on GitLab tag.
 *   4e1f897 -- Merge branch '68-redesign-detail-page-for-pools' into 'master'
