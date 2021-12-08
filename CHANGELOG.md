@@ -1,3 +1,7 @@
+### 12.0.8 Add sandbox definition name to pool overview
+* c649a4b -- [CI/CD] Update packages.json version based on GitLab tag.
+* 0af4793 -- Merge branch '78-add-sandbox-definition-name-to-pool-overview' into 'master'
+* 4cfb50d -- Resolve "Add sandbox definition name to pool overview"
 ### 12.0.7 Preload spice in topology. Add created by field to sandbox definition.
 * 3117f5b -- [CI/CD] Update packages.json version based on GitLab tag.
 * 460d34d -- Merge branch '77-preload-spice-in-display-topology' into 'master'
