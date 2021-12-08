@@ -1,6 +1,6 @@
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { IPaginatedElements, PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HardwareUsage, Pool } from '@muni-kypo-crp/sandbox-model';
+import { HardwareUsage, Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class AbstractPoolService {
   protected limitsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -11,6 +11,10 @@ export abstract class AbstractPoolService {
 
   poolsHasError$: Observable<boolean> = this.poolsHasErrorSubject$.asObservable();
 
+  protected sandboxDefinitionsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  sandboxDefinitionsHasError$: Observable<boolean> = this.sandboxDefinitionsHasErrorSubject$.asObservable();
+
   protected limitsSubject$: BehaviorSubject<HardwareUsage>;
 
   limits$: Observable<HardwareUsage>;
@@ -18,6 +22,10 @@ export abstract class AbstractPoolService {
   protected poolsSubject$: BehaviorSubject<PaginatedResource<Pool>>;
 
   pools$: Observable<PaginatedResource<Pool>>;
+
+  protected sandboxDefinitionsSubject$: BehaviorSubject<IPaginatedElements<SandboxDefinition>>;
+
+  sandboxDefinitions$: Observable<IPaginatedElements<SandboxDefinition>>;
 
   /**
    * @param pagination requested pagination

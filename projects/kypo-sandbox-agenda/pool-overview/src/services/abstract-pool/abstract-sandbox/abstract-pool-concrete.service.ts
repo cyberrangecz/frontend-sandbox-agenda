@@ -6,15 +6,21 @@ import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolOverviewService } from '../../state/pool-overview/pool-overview.service';
 import { AbstractPoolService } from './abstract-pool.service';
 import { SandboxLimitsService } from '../../state/resources/sandbox-resources.service';
+import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
 
 @Injectable()
 export class AbstractPoolConcreteService extends AbstractPoolService {
   private lastPagination: RequestedPagination;
 
-  constructor(private poolOverviewService: PoolOverviewService, private sandboxLimitsService: SandboxLimitsService) {
+  constructor(
+    private poolOverviewService: PoolOverviewService,
+    private sandboxLimitsService: SandboxLimitsService,
+    private sandboxDefinitionService: SandboxDefinitionOverviewService
+  ) {
     super();
     this.pools$ = poolOverviewService.resource$;
     this.limits$ = sandboxLimitsService.limits$;
+    this.sandboxDefinitions$ = sandboxDefinitionService.resource$;
     this.poolsHasError$ = poolOverviewService.hasError$;
   }
 
@@ -25,7 +31,11 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
    */
   getAll(pagination: RequestedPagination): Observable<any> {
     this.lastPagination = pagination;
-    return combineLatest([this.poolOverviewService.getAll(pagination), this.sandboxLimitsService.getLimits()]);
+    return combineLatest([
+      this.poolOverviewService.getAll(pagination),
+      this.sandboxLimitsService.getLimits(),
+      this.sandboxDefinitionService.getAll(pagination),
+    ]);
   }
 
   /**

@@ -4,7 +4,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { SentinelControlsModule } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext, PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import {
+  SandboxAgendaContext,
+  PaginationService,
+  SandboxDefinitionOverviewConcreteService,
+  SandboxDefinitionOverviewService,
+} from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolResolver, PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
@@ -29,6 +34,7 @@ import { SandboxLimitsService } from '../services/state/resources/sandbox-resour
     { provide: PoolOverviewService, useClass: PoolOverviewConcreteService },
     { provide: SandboxLimitsService, useClass: SandboxLimitsConcreteService },
     { provide: AbstractPoolService, useClass: AbstractPoolConcreteService },
+    { provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService },
   ],
 })
 export class PoolOverviewComponentsModule {
