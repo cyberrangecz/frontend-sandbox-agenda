@@ -1,3 +1,7 @@
+### 12.0.9 Add support for backend sort
+* b98c84c -- [CI/CD] Update packages.json version based on GitLab tag.
+* f350925 -- Merge branch '79-add-support-for-backend-sort' into 'master'
+* 06bfc61 -- Resolve "Add support for backend sort"
 ### 12.0.8 Add sandbox definition name to pool overview
 * c649a4b -- [CI/CD] Update packages.json version based on GitLab tag.
 * 0af4793 -- Merge branch '78-add-sandbox-definition-name-to-pool-overview' into 'master'
