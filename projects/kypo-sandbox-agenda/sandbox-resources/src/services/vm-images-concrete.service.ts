@@ -23,14 +23,17 @@ export class VMImagesConcreteService extends VMImagesService {
    * @param pagination requested pagination
    */
   getAvailableImages(pagination: RequestedPagination): Observable<PaginatedResource<VirtualImage>> {
+    this.isLoadingSubject$.next(true);
     return this.vmImagesApi.getAvailableImages(pagination).pipe(
       tap(
         (resource) => {
           this.resourceSubject$.next(resource);
+          this.isLoadingSubject$.next(false);
         },
         (err) => {
           this.errorHandler.emit(err, 'Fetching images');
           this.hasErrorSubject$.next(true);
+          this.isLoadingSubject$.next(false);
         }
       )
     );

@@ -21,6 +21,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
 
   images$: Observable<SentinelTable<VirtualImage>>;
   imagesTableHasError$: Observable<boolean>;
+  isLoadingImages$: Observable<boolean>;
 
   resources$: Observable<Resources>;
 
@@ -31,6 +32,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   ) {
     super();
     this.resources$ = this.sandboxResourcesService.resources$;
+    this.isLoadingImages$ = vmImagesService.isLoading$;
   }
 
   ngOnInit(): void {
