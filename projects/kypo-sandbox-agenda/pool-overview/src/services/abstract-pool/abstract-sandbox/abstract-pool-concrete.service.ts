@@ -34,7 +34,7 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
     return combineLatest([
       this.poolOverviewService.getAll(pagination),
       this.sandboxLimitsService.getLimits(),
-      this.sandboxDefinitionService.getAll(pagination),
+      this.sandboxDefinitionService.getAll(new RequestedPagination(0, Number.MAX_SAFE_INTEGER)),
     ]);
   }
 
