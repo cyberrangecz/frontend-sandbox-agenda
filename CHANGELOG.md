@@ -1,3 +1,7 @@
+### 12.0.10 Fix pagination
+* 8e05424 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 009dff0 -- Merge branch '80-fix-pagination' into 'master'
+* 5f1c79a -- Resolve "Fix pagination"
 ### 12.0.9 Add support for backend sort
 * b98c84c -- [CI/CD] Update packages.json version based on GitLab tag.
 * f350925 -- Merge branch '79-add-support-for-backend-sort' into 'master'
