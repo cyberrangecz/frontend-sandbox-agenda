@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import {
   PaginationService,
   SandboxDefinitionOverviewService,
@@ -44,7 +44,15 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
     this.hasError$ = this.definitionService.hasError$;
     this.definitionService
       .getAll(pagination)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(
+        map((resources) => {
+          resources.elements.map(
+            (definition) => (definition.title = `${definition.title} (ID: ${definition.id}, rev: ${definition.rev})`)
+          );
+          return resources;
+        }),
+        takeWhile(() => this.isAlive)
+      )
       .subscribe();
   }
 
@@ -52,7 +60,15 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
     this.paginationService.setPagination(pagination.size);
     this.definitionService
       .getAll(pagination)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(
+        map((resources) => {
+          resources.elements.map(
+            (definition) => (definition.title = `${definition.title} (ID: ${definition.id}, rev: ${definition.rev})`)
+          );
+          return resources;
+        }),
+        takeWhile(() => this.isAlive)
+      )
       .subscribe();
   }
 
