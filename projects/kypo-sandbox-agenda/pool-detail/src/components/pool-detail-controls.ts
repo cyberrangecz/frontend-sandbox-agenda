@@ -1,10 +1,7 @@
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { defer, EMPTY, of } from 'rxjs';
-import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
+import { defer, of } from 'rxjs';
 import { AbstractSandbox } from '../model/abstract-sandbox';
-import { map, switchMap } from 'rxjs/operators';
-import { SandboxAllocationUnitsService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sandbox.service';
 
 /**

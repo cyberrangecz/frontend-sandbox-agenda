@@ -1,6 +1,6 @@
 import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { Request, SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class AbstractSandboxService {
   /**
@@ -70,6 +70,12 @@ export abstract class AbstractSandboxService {
    * @param poolId id of a pool in which the allocation will take place
    */
   abstract allocate(poolId: number): Observable<any>;
+
+  /**
+   * Retries allocation of a sandbox instance in a provided pool
+   * @param unitId id of a unit for which retry will be performed
+   */
+  abstract retryAllocate(unitId: number): Observable<any>;
 
   /**
    * Unlocks a sandbox instance making it available for modification

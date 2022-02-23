@@ -3,7 +3,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { RequestedPagination } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AbstractSandboxService } from './abstract-sandbox.service';
 import { SandboxAllocationUnitsService } from '../state/sandbox-allocation-unit/sandbox-allocation-units.service';
@@ -46,6 +46,14 @@ export class AbstractSandboxConcreteService extends AbstractSandboxService {
     return this.sandboxInstanceService
       .allocate(poolId)
       .pipe(switchMap(() => this.getAll(this.lastPoolId, this.lastPagination)));
+  }
+
+  /**
+   * Retries allocation of a sandbox instance in a provided pool
+   * @param unitId id of a unit for which retry will be performed
+   */
+  retryAllocate(unitId: number): Observable<any> {
+    return this.sandboxInstanceService.retryAllocate(unitId);
   }
 
   /**

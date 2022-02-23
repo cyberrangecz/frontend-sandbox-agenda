@@ -12,5 +12,8 @@
 </mat-card>
 
 <ng-template #stagesTemplate let-row>
-  <kypo-stage-overview [stages]="row.element.stages"></kypo-stage-overview>
+  <kypo-stage-overview [stages]="row.element.stages"
+                       [unitId]="row.element.unitId"
+                       (stageSelected)="onStageAction($event)">
+  </kypo-stage-overview>
 </ng-template>
