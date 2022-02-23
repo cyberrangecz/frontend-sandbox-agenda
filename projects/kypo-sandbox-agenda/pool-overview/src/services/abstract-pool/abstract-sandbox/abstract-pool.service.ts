@@ -1,4 +1,4 @@
-import { IPaginatedElements, PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { IPaginatedElements, PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HardwareUsage, Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
@@ -30,7 +30,7 @@ export abstract class AbstractPoolService {
   /**
    * @param pagination requested pagination
    */
-  abstract getAll(pagination: RequestedPagination): Observable<any>;
+  abstract getAll(pagination: PaginationBaseEvent): Observable<any>;
 
   /**
    * Deletes a pool

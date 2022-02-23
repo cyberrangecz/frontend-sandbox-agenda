@@ -6,7 +6,7 @@
     [data]="images$ | async"
     [isLoading]="isLoadingImages$ | async"
     [hasError]="imagesTableHasError$ | async"
-    (refresh)="onLoadTableEvent($event)"
+    (tableLoad)="onTableLoadEvent($event)"
   >
   </sentinel-table>
 </div>

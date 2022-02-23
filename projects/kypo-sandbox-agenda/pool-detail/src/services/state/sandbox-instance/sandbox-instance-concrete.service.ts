@@ -7,7 +7,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
@@ -43,7 +43,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param poolId id of a pool associated with sandbox instances
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<SandboxInstance>> {
+  getAll(poolId: number, pagination: OffsetPaginationEvent): Observable<PaginatedResource<SandboxInstance>> {
     this.onManualResourceRefresh(pagination, poolId);
     return this.sandboxApi.getSandboxes(poolId, pagination).pipe(
       tap(
@@ -55,7 +55,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     );
   }
 
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
+  protected onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void {
     super.onManualResourceRefresh(pagination);
     this.lastPoolId = params[0];
   }

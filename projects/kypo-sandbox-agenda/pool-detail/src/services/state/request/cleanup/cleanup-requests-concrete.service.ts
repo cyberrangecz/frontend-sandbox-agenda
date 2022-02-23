@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { CleanupRequest, Request } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
@@ -45,7 +45,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
    * @param poolId id of a pool associated with cleanup requests
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<Request>> {
+  getAll(poolId: number, pagination: OffsetPaginationEvent): Observable<PaginatedResource<Request>> {
     this.onManualResourceRefresh(pagination, poolId);
     return this.poolApi.getCleanupRequests(poolId, pagination).pipe(
       tap(
@@ -71,7 +71,7 @@ export class CleanupRequestsConcreteService extends RequestsService {
     );
   }
 
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
+  protected onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void {
     super.onManualResourceRefresh(pagination, ...params);
     this.lastPoolId = params[0];
   }

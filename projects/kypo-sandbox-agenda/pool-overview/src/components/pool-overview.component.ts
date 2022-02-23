@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { SentinelTable, LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { combineLatest, defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
@@ -42,7 +42,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    * Gets new data for pool overview table
    * @param loadEvent load data event from table component
    */
-  onLoadEvent(loadEvent: LoadTableEvent): void {
+  onLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.abstractPoolService
       .getAll(loadEvent.pagination)
@@ -63,9 +63,9 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
   }
 
   private initTable() {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.paginationService.getPagination(), '', '')
-    );
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', ''),
+    };
     this.pools$ = combineLatest([
       this.abstractPoolService.pools$,
       this.abstractPoolService.limits$,

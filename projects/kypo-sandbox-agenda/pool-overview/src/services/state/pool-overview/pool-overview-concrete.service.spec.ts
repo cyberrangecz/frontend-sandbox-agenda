@@ -1,7 +1,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { asyncData, RequestedPagination } from '@sentinel/common';
+import { asyncData, OffsetPaginationEvent } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { PoolOverviewConcreteService } from './pool-overview-concrete.service';
@@ -65,7 +65,7 @@ describe('PoolOverviewConcreteService', () => {
     expect(poolApiSpy.getManagementSshAccess).toHaveBeenCalledTimes(1);
   });
 
-  function createPagination(): RequestedPagination {
-    return new RequestedPagination(1, 5, '', '');
+  function createPagination(): OffsetPaginationEvent {
+    return new OffsetPaginationEvent(1, 5, '', '');
   }
 });

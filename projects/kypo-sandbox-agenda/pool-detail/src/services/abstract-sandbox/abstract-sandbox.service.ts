@@ -1,6 +1,6 @@
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Request, SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class AbstractSandboxService {
   /**
@@ -62,7 +62,7 @@ export abstract class AbstractSandboxService {
    */
   abstract getAll(
     poolId: number,
-    pagination: RequestedPagination
+    pagination: PaginationBaseEvent
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**

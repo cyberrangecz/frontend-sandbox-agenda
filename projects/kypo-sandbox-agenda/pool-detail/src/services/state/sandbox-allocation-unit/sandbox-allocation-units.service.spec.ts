@@ -12,7 +12,7 @@ import {
   createSauApiSpy,
 } from '../../../../../internal/src/testing/testing-commons.spec';
 import { MatDialog } from '@angular/material/dialog';
-import { asyncData, PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { asyncData, PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { skip, take } from 'rxjs/operators';
 import { SandboxAllocationUnitsConcreteService } from './sandbox-allocation-units-concrete.service';
 import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
@@ -198,7 +198,7 @@ describe('SandboxAllocationUnitsService', () => {
   }));
 
   function createMock() {
-    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
   }
 
   function assertPoll(times: number, initialHaveBeenCalledTimes = 0): void {

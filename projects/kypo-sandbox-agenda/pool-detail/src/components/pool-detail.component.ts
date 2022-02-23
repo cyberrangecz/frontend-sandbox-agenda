@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PaginatedResource, RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, RequestStageState } from '@muni-kypo-crp/sandbox-model';
-import { LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
-import { combineLatest, Observable } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { combineLatest, forkJoin, Observable, zip } from 'rxjs';
+import { map, take, takeWhile, tap } from 'rxjs/operators';
 import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
@@ -65,7 +66,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    * Gets new data for sandbox instance overview table
    * @param loadEvent load event emitted from sandbox instances table
    */
-  onLoadEvent(loadEvent: LoadTableEvent): void {
+  onLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.abstractSandboxService
       .getAll(this.pool.id, loadEvent.pagination)
@@ -92,9 +93,9 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
   }
 
   private initTables() {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.paginationService.getPagination(), '', '')
-    );
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', ''),
+    };
     this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];
       this.onLoadEvent(initialLoadEvent);

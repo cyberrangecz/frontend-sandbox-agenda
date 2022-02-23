@@ -1,8 +1,5 @@
 {
     "lib": {
-        "entryFile": "src/public_api.ts",
-        "umdModuleIds": {
-        "@muni-kypo-crp/sandbox-api": "muni-kypo-crp.sandbox-api"
-        }
+        "entryFile": "src/public_api.ts"
     }
 }

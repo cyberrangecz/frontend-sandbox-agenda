@@ -1,4 +1,4 @@
-image: cypress/browsers:node12.18.0-chrome83-ff77
+image: cypress/browsers:node14.17.0-chrome88-ff89
 
 stages:
   - codeStyle
@@ -29,8 +29,10 @@ codeStyle:
     - triggers
     - branches
   except:
-      changes:
-        - "CHANGELOG.md"
+    changes:
+      - 'CHANGELOG.md'
+    refs:
+      - master
 
 unitTests:
   stage: test
@@ -46,7 +48,9 @@ unitTests:
     - branches
   except:
     changes:
-      - "CHANGELOG.md"
+      - 'CHANGELOG.md'
+    refs:
+      - master
 
 buildExampleApp:
   stage: build
@@ -66,7 +70,9 @@ buildExampleApp:
     expire_in: 1 hour
   except:
     changes:
-      - "CHANGELOG.md"
+      - 'CHANGELOG.md'
+    refs:
+      - master
 
 buildLibrary:
   stage: build
@@ -86,7 +92,9 @@ buildLibrary:
     expire_in: 1 hour
   except:
     changes:
-      - "CHANGELOG.md"
+      - 'CHANGELOG.md'
+    refs:
+      - master
 
 auto-tag:
   image: 'registry.gitlab.ics.muni.cz:443/csirt-mu-devel/csirt-mu-devel-artifact-repository/docker-common-ci:v0.1.6'
@@ -120,4 +128,3 @@ deploy:
     - npm run ci-publish-package
   only:
     - tags
-

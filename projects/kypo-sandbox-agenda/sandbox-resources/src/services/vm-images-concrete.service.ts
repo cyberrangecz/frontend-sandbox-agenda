@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { VMImagesService } from './vm-images.service';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class VMImagesConcreteService extends VMImagesService {
    * Retrieves paginated available virtual machine images
    * @param pagination requested pagination
    */
-  getAvailableImages(pagination: RequestedPagination): Observable<PaginatedResource<VirtualImage>> {
+  getAvailableImages(pagination: OffsetPaginationEvent): Observable<PaginatedResource<VirtualImage>> {
     this.isLoadingSubject$.next(true);
     return this.vmImagesApi.getAvailableImages(pagination).pipe(
       tap(

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SentinelBaseDirective, RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { OpenStackStageAdapter } from '../../../../model/adapters/open-stack-stage-adapter';
 import { Observable } from 'rxjs';
 import { OpenStackEventsService } from '../../../../services/state/detail/open-stack-events.service';
@@ -37,7 +37,7 @@ export class OpenStackAllocationStageDetailComponent extends SentinelBaseDirecti
   }
 
   init(): void {
-    const initialPagination = new RequestedPagination(0, 500, '', '');
+    const initialPagination = new OffsetPaginationEvent(0, 500, '', '');
     this.onFetchEvents(initialPagination);
     this.onFetchResources(initialPagination);
 
@@ -52,14 +52,14 @@ export class OpenStackAllocationStageDetailComponent extends SentinelBaseDirecti
     this.resourcesHasError$ = this.resourcesService.hasError$.pipe(takeWhile(() => this.isAlive));
   }
 
-  onFetchEvents(requestedPagination: RequestedPagination): void {
+  onFetchEvents(requestedPagination: OffsetPaginationEvent): void {
     this.eventsService
       .getAll(this.stage, requestedPagination)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
-  onFetchResources(requestedPagination: RequestedPagination): void {
+  onFetchResources(requestedPagination: OffsetPaginationEvent): void {
     this.resourcesService
       .getAll(this.stage, requestedPagination)
       .pipe(takeWhile(() => this.isAlive))

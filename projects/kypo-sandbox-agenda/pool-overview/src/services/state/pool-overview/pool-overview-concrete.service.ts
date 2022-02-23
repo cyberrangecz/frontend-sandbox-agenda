@@ -6,7 +6,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
@@ -21,7 +21,7 @@ import { PoolOverviewService } from './pool-overview.service';
  */
 @Injectable()
 export class PoolOverviewConcreteService extends PoolOverviewService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
 
   constructor(
     private poolApi: PoolApi,
@@ -39,7 +39,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    * Gets all pools with passed pagination and updates related observables or handles an error
    * @param pagination requested pagination
    */
-  getAll(pagination: RequestedPagination): Observable<PaginatedResource<Pool>> {
+  getAll(pagination: OffsetPaginationEvent): Observable<PaginatedResource<Pool>> {
     this.lastPagination = pagination;
     this.hasErrorSubject$.next(false);
     return this.poolApi.getPools(pagination).pipe(
@@ -91,7 +91,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    */
   clear(pool: Pool): Observable<any> {
     return this.displayConfirmationDialog(pool, 'Clear').pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToClear(pool) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToClear(pool.id) : EMPTY))
     );
   }
 
@@ -144,12 +144,13 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     );
   }
 
-  private callApiToClear(pool: Pool): Observable<any> {
-    return this.poolApi.clearPool(pool.id).pipe(
+  private callApiToClear(poolId: number): any {
+    return this.poolApi.createMultipleCleanupRequests(poolId, [], true).pipe(
       tap(
-        () => this.notificationService.emit('success', `Pool ${pool.id} was cleared`),
-        (err) => this.errorHandler.emit(err, `Clearing pool ${pool.id}`)
-      )
+        () => this.notificationService.emit('success', `Pool ${poolId} has been cleared`),
+        (err) => this.errorHandler.emit(err, 'Clearing pool ' + poolId.toString())
+      ),
+      switchMap(() => this.getAll(this.lastPagination))
     );
   }
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SentinelBaseDirective, PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { SentinelBaseDirective, PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
@@ -38,7 +38,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
   }
 
   ngOnInit(): void {
-    const pagination = new RequestedPagination(0, this.PAGE_SIZE, '', '');
+    const pagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', '');
     this.definitions$ = this.definitionService.resource$;
     this.isLoading$ = this.definitionService.isLoading$;
     this.hasError$ = this.definitionService.hasError$;
@@ -56,7 +56,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
       .subscribe();
   }
 
-  fetch(pagination: RequestedPagination): void {
+  fetch(pagination: OffsetPaginationEvent): void {
     this.paginationService.setPagination(pagination.size);
     this.definitionService
       .getAll(pagination)

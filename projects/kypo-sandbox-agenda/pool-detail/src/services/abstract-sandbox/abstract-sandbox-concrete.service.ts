@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { RequestedPagination } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { switchMap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { SandboxInstanceService } from '../state/sandbox-instance/sandbox-instan
 @Injectable()
 export class AbstractSandboxConcreteService extends AbstractSandboxService {
   private lastPoolId: number;
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
 
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
@@ -33,7 +33,7 @@ export class AbstractSandboxConcreteService extends AbstractSandboxService {
    * @param poolId id of a pool associated with requests for sandbox allocation units for pool
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: RequestedPagination): Observable<any> {
+  getAll(poolId: number, pagination: OffsetPaginationEvent): Observable<any> {
     this.lastPagination = pagination;
     this.lastPoolId = poolId;
     return combineLatest([

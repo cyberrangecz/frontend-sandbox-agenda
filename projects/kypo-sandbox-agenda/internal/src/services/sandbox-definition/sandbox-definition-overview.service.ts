@@ -1,4 +1,9 @@
-import { RequestedPagination, PaginatedResource, PaginatedResourceService } from '@sentinel/common';
+import {
+  OffsetPaginationEvent,
+  PaginatedResource,
+  OffsetPaginatedElementsService,
+  PaginationBaseEvent,
+} from '@sentinel/common';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 
@@ -7,7 +12,7 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated sandbox definitions and other operations to modify data.
  */
-export abstract class SandboxDefinitionOverviewService extends PaginatedResourceService<SandboxDefinition> {
+export abstract class SandboxDefinitionOverviewService extends OffsetPaginatedElementsService<SandboxDefinition> {
   protected constructor(pageSize: number) {
     super(pageSize);
   }
@@ -15,7 +20,7 @@ export abstract class SandboxDefinitionOverviewService extends PaginatedResource
   /**
    * @param pagination requested pagination
    */
-  abstract getAll(pagination: RequestedPagination): Observable<PaginatedResource<SandboxDefinition>>;
+  abstract getAll(pagination: PaginationBaseEvent): Observable<PaginatedResource<SandboxDefinition>>;
 
   /**
    * Deletes sandbox definition by given id

@@ -1,7 +1,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { asyncData, PaginatedResource, RequestedPagination, SentinelPagination } from '@sentinel/common';
+import { asyncData, PaginatedResource, OffsetPaginationEvent, OffsetPagination } from '@sentinel/common';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
@@ -115,10 +115,10 @@ describe('SandboxInstanceConcreteService', () => {
   });
 
   function createPagination() {
-    return new RequestedPagination(1, 5, '', '');
+    return new OffsetPaginationEvent(1, 5, '', '');
   }
 
   function createMock() {
-    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
   }
 });

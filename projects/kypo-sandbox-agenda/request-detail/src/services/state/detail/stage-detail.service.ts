@@ -1,17 +1,17 @@
 import { merge, Observable } from 'rxjs';
-import { PaginatedResource, PaginatedResourcePollingService, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginatedElementsPollingService, OffsetPaginationEvent } from '@sentinel/common';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
 
-export abstract class StageDetailService extends PaginatedResourcePollingService<string> {
+export abstract class StageDetailService extends OffsetPaginatedElementsPollingService<string> {
   private lastStage: RequestStage;
   protected constructor(protected pollRegistry: StagesDetailPollRegistry, pageSize: number, pollingPeriod: number) {
     super(pageSize, pollingPeriod);
     this.resource$ = merge(this.resourceSubject$.asObservable(), this.createStoppablePoll(pollingPeriod));
   }
 
-  getAll(stage: RequestStage, requestedPagination: RequestedPagination): Observable<PaginatedResource<string>> {
+  getAll(stage: RequestStage, requestedPagination: OffsetPaginationEvent): Observable<PaginatedResource<string>> {
     this.onManualResourceRefresh(requestedPagination, stage);
     return this.callApiToGetStageDetail(stage, requestedPagination).pipe(
       tap(
@@ -32,7 +32,7 @@ export abstract class StageDetailService extends PaginatedResourcePollingService
     );
   }
 
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
+  protected onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void {
     super.onManualResourceRefresh(pagination, ...params);
     this.lastStage = params[0];
   }
@@ -49,6 +49,6 @@ export abstract class StageDetailService extends PaginatedResourcePollingService
 
   protected abstract callApiToGetStageDetail(
     stage: RequestStage,
-    requestedPagination: RequestedPagination
+    requestedPagination: OffsetPaginationEvent
   ): Observable<PaginatedResource<string>>;
 }

@@ -1,6 +1,6 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { PaginatedResource, SentinelPagination, RequestedPagination, asyncData } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, OffsetPaginationEvent, asyncData } from '@sentinel/common';
 import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -154,12 +154,12 @@ describe('PoolCleanupRequestsConcreteService', () => {
     subscription.unsubscribe();
   }));
 
-  function createPagination(): RequestedPagination {
-    return new RequestedPagination(1, 5, '', '');
+  function createPagination(): OffsetPaginationEvent {
+    return new OffsetPaginationEvent(1, 5, '', '');
   }
 
   function createMock() {
-    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
   }
 
   function assertPoll(times: number, initialHaveBeenCalledTimes = 0): void {
