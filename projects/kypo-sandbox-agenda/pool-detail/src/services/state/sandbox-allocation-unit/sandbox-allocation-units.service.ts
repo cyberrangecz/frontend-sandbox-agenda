@@ -1,4 +1,4 @@
-import { PaginatedResource, RequestedPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 
@@ -7,7 +7,7 @@ export abstract class SandboxAllocationUnitsService {
    * @contract Needs to be updated in onManualResourceRefresh method
    * Last pagination used when requesting new data
    */
-  protected lastPagination: RequestedPagination;
+  protected lastPagination: OffsetPaginationEvent;
 
   /**
    * Observable triggering retry of polling after it was interrupted (e.g. by error)
@@ -47,7 +47,7 @@ export abstract class SandboxAllocationUnitsService {
    */
   abstract getAll(
     poolId: number,
-    pagination: RequestedPagination
+    pagination: OffsetPaginationEvent
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**
@@ -57,7 +57,7 @@ export abstract class SandboxAllocationUnitsService {
    * @param pagination new requested pagination
    * @param params any other parameters required to update data in your concrete service
    */
-  protected abstract onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void;
+  protected abstract onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void;
 
   /**
    * @contract must update resource and hasErrorSubject

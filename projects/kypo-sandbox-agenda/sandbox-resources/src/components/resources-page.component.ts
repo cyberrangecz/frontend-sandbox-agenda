@@ -1,11 +1,11 @@
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { takeWhile, map } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { SentinelBaseDirective, RequestedPagination } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';
-import { SentinelTable, LoadTableEvent } from '@sentinel/components/table';
+import { SentinelTable, TableLoadEvent } from '@sentinel/components/table';
 import { VMImagesService } from '../services/vm-images.service';
 import { VirtualImagesTable } from '../models/virtual-images-table';
 
@@ -43,7 +43,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
     this.initTable();
   }
 
-  onLoadTableEvent(loadEvent: LoadTableEvent): void {
+  onTableLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.vmImagesService
       .getAvailableImages(loadEvent.pagination)
@@ -52,12 +52,17 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   }
 
   private initTable(): void {
-    const initialLoadEvent: LoadTableEvent = new LoadTableEvent(
-      new RequestedPagination(0, this.paginationService.getPagination(), this.INIT_SORT_NAME, this.INIT_SORT_DIR)
-    );
+    const initialLoadEvent: TableLoadEvent = {
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(),
+        this.INIT_SORT_NAME,
+        this.INIT_SORT_DIR
+      ),
+    };
 
     this.images$ = this.vmImagesService.resource$.pipe(map((resource) => new VirtualImagesTable(resource)));
     this.imagesTableHasError$ = this.vmImagesService.hasError$;
-    this.onLoadTableEvent(initialLoadEvent);
+    this.onTableLoadEvent(initialLoadEvent);
   }
 }

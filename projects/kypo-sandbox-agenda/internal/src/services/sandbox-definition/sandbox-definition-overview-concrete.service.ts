@@ -6,7 +6,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { RequestedPagination, PaginatedResource } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
@@ -33,13 +33,13 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
     super(context.config.defaultPaginationSize);
   }
 
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
 
   /**
    * Gets all sandbox definitions with passed pagination and updates related observables or handles an error
    * @param pagination requested pagination
    */
-  getAll(pagination: RequestedPagination): Observable<PaginatedResource<SandboxDefinition>> {
+  getAll(pagination: OffsetPaginationEvent): Observable<PaginatedResource<SandboxDefinition>> {
     this.hasErrorSubject$.next(false);
     this.lastPagination = pagination;
     return this.api.getAll(pagination).pipe(

@@ -1,7 +1,7 @@
 import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { PaginatedResource, SentinelPagination, asyncData } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination, asyncData } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { AllocationRequest } from '@muni-kypo-crp/sandbox-model';
 import { of, throwError } from 'rxjs';
@@ -199,7 +199,7 @@ describe('PoolAllocationRequestsPollingService', () => {
   }));
 
   function createMock() {
-    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
   }
 
   function assertPoll(times: number, initialHaveBeenCalledTimes = 0): void {

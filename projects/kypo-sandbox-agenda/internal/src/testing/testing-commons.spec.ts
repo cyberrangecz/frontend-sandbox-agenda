@@ -1,7 +1,7 @@
 import { MetadataOverride } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { RequestedPagination } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common';
 import {
   AllocationRequestsApi,
   CleanupRequestsApi,
@@ -95,8 +95,8 @@ export function createErrorHandlerSpy(): jasmine.SpyObj<SandboxErrorHandler> {
   return jasmine.createSpyObj('SandboxErrorHandler', ['emit']);
 }
 
-export function createPagination(): RequestedPagination {
-  return new RequestedPagination(0, 5, '', '');
+export function createPagination(): OffsetPaginationEvent {
+  return new OffsetPaginationEvent(0, 5, '', '');
 }
 
 export function createSentinelTableOverride(): MetadataOverride<any> {

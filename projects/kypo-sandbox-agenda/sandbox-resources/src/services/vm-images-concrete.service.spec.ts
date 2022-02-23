@@ -1,5 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
-import { asyncData, PaginatedResource, SentinelPagination } from '@sentinel/common';
+import { asyncData, PaginatedResource, OffsetPagination } from '@sentinel/common';
 import { skip, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
@@ -81,6 +81,6 @@ describe('VMImagesConcreteService', () => {
   });
 
   function createMock() {
-    return new PaginatedResource([], new SentinelPagination(1, 0, 5, 5, 1));
+    return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
   }
 });

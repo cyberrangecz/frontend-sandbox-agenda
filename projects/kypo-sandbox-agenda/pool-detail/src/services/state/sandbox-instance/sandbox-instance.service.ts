@@ -1,4 +1,4 @@
-import { PaginatedResource, RequestedPagination, PaginatedResourcePollingService } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, OffsetPaginatedElementsPollingService } from '@sentinel/common';
 import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated sandbox instances and other operations to modify data.
  */
-export abstract class SandboxInstanceService extends PaginatedResourcePollingService<SandboxInstance> {
+export abstract class SandboxInstanceService extends OffsetPaginatedElementsPollingService<SandboxInstance> {
   protected constructor(pageSize: number, pollPeriod: number) {
     super(pageSize, pollPeriod);
   }
@@ -16,7 +16,7 @@ export abstract class SandboxInstanceService extends PaginatedResourcePollingSer
    * @param poolId id of a pool associated with sandbox instances
    * @param pagination requested pagination
    */
-  abstract getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<SandboxInstance>>;
+  abstract getAll(poolId: number, pagination: OffsetPaginationEvent): Observable<PaginatedResource<SandboxInstance>>;
 
   /**
    * Deletes a sandbox instance

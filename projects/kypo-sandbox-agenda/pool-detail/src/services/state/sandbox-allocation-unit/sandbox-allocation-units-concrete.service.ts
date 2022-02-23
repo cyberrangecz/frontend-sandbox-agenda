@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
 import { BehaviorSubject, EMPTY, merge, Observable, timer } from 'rxjs';
-import { PaginatedResource, RequestedPagination, SentinelPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, OffsetPagination } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
@@ -40,7 +40,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param poolId id of a pool associated with requests for sandbox allocation units for pool
    * @param pagination requested pagination
    */
-  getAll(poolId: number, pagination: RequestedPagination): Observable<PaginatedResource<SandboxAllocationUnit>> {
+  getAll(poolId: number, pagination: OffsetPaginationEvent): Observable<PaginatedResource<SandboxAllocationUnit>> {
     this.onManualResourceRefresh(pagination, poolId);
     return this.poolApi.getPoolsSandboxAllocationUnits(poolId, pagination).pipe(
       tap(
@@ -57,7 +57,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param pagination new requested pagination
    * @param params any other parameters required to update data in your concrete service
    */
-  protected onManualResourceRefresh(pagination: RequestedPagination, ...params: any[]): void {
+  protected onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void {
     this.lastPagination = pagination;
     if (this.hasErrorSubject$.getValue()) {
       this.retryPolling$.next(true);
@@ -71,7 +71,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param pageSize size of a page for pagination
    */
   protected initSubject(pageSize: number): PaginatedResource<SandboxAllocationUnit> {
-    return new PaginatedResource([], new SentinelPagination(0, 0, pageSize, 0, 0));
+    return new PaginatedResource([], new OffsetPagination(0, 0, pageSize, 0, 0));
   }
 
   /**

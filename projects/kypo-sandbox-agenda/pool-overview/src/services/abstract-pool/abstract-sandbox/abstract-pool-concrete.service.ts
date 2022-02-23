@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { RequestedPagination } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common';
 import { switchMap } from 'rxjs/operators';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolOverviewService } from '../../state/pool-overview/pool-overview.service';
@@ -10,7 +10,7 @@ import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/
 
 @Injectable()
 export class AbstractPoolConcreteService extends AbstractPoolService {
-  private lastPagination: RequestedPagination;
+  private lastPagination: OffsetPaginationEvent;
 
   constructor(
     private poolOverviewService: PoolOverviewService,
@@ -29,12 +29,12 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
    * @param poolId id of a pool associated with requests for sandbox allocation units for pool
    * @param pagination requested pagination
    */
-  getAll(pagination: RequestedPagination): Observable<any> {
+  getAll(pagination: OffsetPaginationEvent): Observable<any> {
     this.lastPagination = pagination;
     return combineLatest([
       this.poolOverviewService.getAll(pagination),
       this.sandboxLimitsService.getLimits(),
-      this.sandboxDefinitionService.getAll(new RequestedPagination(0, Number.MAX_SAFE_INTEGER)),
+      this.sandboxDefinitionService.getAll(new OffsetPaginationEvent(0, Number.MAX_SAFE_INTEGER)),
     ]);
   }
 
