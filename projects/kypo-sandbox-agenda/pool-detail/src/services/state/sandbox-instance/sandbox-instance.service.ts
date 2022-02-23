@@ -31,6 +31,12 @@ export abstract class SandboxInstanceService extends PaginatedResourcePollingSer
   abstract allocate(poolId: number): Observable<any>;
 
   /**
+   * Retries an allocation of a sandbox instance, informs about the result and updates list of requests or handles an error
+   * @param unitId id of a unit for which retry will be performed
+   */
+  abstract retryAllocate(unitId: number): Observable<PaginatedResource<SandboxInstance>>;
+
+  /**
    * Unlocks a sandbox instance making it available for modification
    * @param sandboxInstance a sandbox instance to be unlocked
    */

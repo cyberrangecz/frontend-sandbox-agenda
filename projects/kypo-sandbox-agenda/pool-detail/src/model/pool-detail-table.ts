@@ -39,6 +39,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   ): Row<PoolDetailRowAdapter> {
     const rowAdapter = new PoolDetailRowAdapter();
     const dateFormatter = new SentinelDateTimeFormatPipe('en-US');
+    rowAdapter.unitId = data.allocationRequest.id;
     rowAdapter.name = data.name;
     rowAdapter.lock = this.lockResolver(data.sandboxInstance);
     rowAdapter.created = dateFormatter.transform(data.allocationRequest.createdAt);

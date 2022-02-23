@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginatedResource, RequestedPagination, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { Pool, RequestStageState } from '@muni-kypo-crp/sandbox-model';
 import { LoadTableEvent, TableActionEvent } from '@sentinel/components/table';
-import { combineLatest, forkJoin, Observable, zip } from 'rxjs';
-import { map, take, takeWhile, tap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
 import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
@@ -22,6 +21,7 @@ import { PoolDetailTable } from '../model/pool-detail-table';
 import { AbstractSandbox } from '../model/abstract-sandbox';
 import { AbstractSandboxConcreteService } from '../services/abstract-sandbox/abstract-sandbox-concrete.service';
 import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sandbox.service';
+import { SelectedStage } from '../model/selected-stage';
 
 /**
  * Smart component of pool detail page
@@ -83,6 +83,12 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    */
   onTableAction(event: TableActionEvent<any>): void {
     event.action.result$.pipe(take(1)).subscribe();
+  }
+
+  onStageAction(selectedStage: SelectedStage): void {
+    if (selectedStage.state === RequestStageState.RETRY) {
+      this.abstractSandboxService.retryAllocate(selectedStage.unitId).pipe(take(1)).subscribe();
+    }
   }
 
   private initTables() {

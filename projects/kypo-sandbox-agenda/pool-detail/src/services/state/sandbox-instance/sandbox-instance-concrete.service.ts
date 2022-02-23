@@ -87,6 +87,20 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   }
 
   /**
+   * Retries an allocation of a sandbox instance, informs about the result and updates list of requests or handles an error
+   * @param unitId id of a unit for which retry will be performed
+   */
+  retryAllocate(unitId: number): Observable<PaginatedResource<SandboxInstance>> {
+    return this.sandboxAllocationUnitsApi.createRetryRequest(unitId).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Allocation of sandbox ${unitId} started`),
+        (err) => this.errorHandler.emit(err, `Allocating sandbox ${unitId}`)
+      ),
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+    );
+  }
+
+  /**
    * Unlocks a sandbox instance making it available for modification.
    * Informs about the result and updates list of requests or handles an error
    * @param sandboxInstance a sandbox instance to be unlocked
