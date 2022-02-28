@@ -1,3 +1,25 @@
+### 13.0.0 Update to Angular 13, CI/CD optimization, retry of allocation pipeline on fail supported, revision and id of SD added to pool creation
+* a86c690 -- [CI/CD] Update packages.json version based on GitLab tag.
+*   7d03735 -- Merge branch '13.0.0-release-tag' into 'master'
+|\  
+| * a1bcdb2 -- Tag message
+|/  
+*   8165cc9 -- Merge branch '83-update-to-angular-13' into 'master'
+|\  
+| * 01fbe6d -- Resolve "Update to Angular 13"
+|/  
+*   906099b -- Merge branch '81-add-retry-to-option-to-allocation-pipeline-on-fail' into 'master'
+|\  
+| * 2752444 -- Resolve "Add retry to option to allocation pipeline on fail"
+|/  
+*   c237a62 -- Merge branch '82-add-revision-and-id-to-sandbox-definition-in-pool-creation' into 'master'
+|\  
+| * 5783676 -- Resolve "Add revision and id to sandbox definition in pool creation"
+|/  
+* 17d2aa0 -- [CI/CD] CHANGELOG.md file updated with commits between the current and previous tag.
+* 8e05424 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 009dff0 -- Merge branch '80-fix-pagination' into 'master'
+* 5f1c79a -- Resolve "Fix pagination"
 ### 12.0.10 Fix pagination
 * 8e05424 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 009dff0 -- Merge branch '80-fix-pagination' into 'master'
