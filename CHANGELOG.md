@@ -1,3 +1,7 @@
+### 13.0.1 Fix peer dependencies of package
+* 1285bbc -- [CI/CD] Update packages.json version based on GitLab tag.
+* e3c2ad4 -- Merge branch 'fix-library-peerdependencies' into 'master'
+* fc132a8 -- Fix peer dependencies
 ### 13.0.0 Update to Angular 13, CI/CD optimization, retry of allocation pipeline on fail supported, revision and id of SD added to pool creation
 * a86c690 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   7d03735 -- Merge branch '13.0.0-release-tag' into 'master'
