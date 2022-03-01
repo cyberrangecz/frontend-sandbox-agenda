@@ -38,12 +38,11 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
   }
 
   ngOnInit(): void {
-    const pagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', '');
     this.definitions$ = this.definitionService.resource$;
     this.isLoading$ = this.definitionService.isLoading$;
     this.hasError$ = this.definitionService.hasError$;
     this.definitionService
-      .getAll(pagination)
+      .getAll(new OffsetPaginationEvent(0, Number.MAX_SAFE_INTEGER, '', ''))
       .pipe(
         map((resources) => {
           resources.elements.map(
@@ -59,7 +58,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
   fetch(pagination: OffsetPaginationEvent): void {
     this.paginationService.setPagination(pagination.size);
     this.definitionService
-      .getAll(pagination)
+      .getAll(new OffsetPaginationEvent(0, Number.MAX_SAFE_INTEGER, '', ''))
       .pipe(
         map((resources) => {
           resources.elements.map(
