@@ -1,3 +1,11 @@
+### 13.0.2 Fix pool creation pagination size for sandbox definition select
+* 22f3e58 -- [CI/CD] Update packages.json version based on GitLab tag.
+*   be266ea -- Merge branch '13.0.2-release-tag' into 'master'
+|\  
+| * 4e4c467 -- Tag message
+|/  
+* 407060d -- Merge branch '85-in-pool-creation-fix-pagination-size-for-sandbox-definition-select' into 'master'
+* 139369b -- Resolve "In pool creation fix pagination size for sandbox definition select"
 ### 13.0.1 Fix peer dependencies of package
 * 1285bbc -- [CI/CD] Update packages.json version based on GitLab tag.
 * e3c2ad4 -- Merge branch 'fix-library-peerdependencies' into 'master'
