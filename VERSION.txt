@@ -1,3 +1,4 @@
+13.0.2 Fix pool creation pagination size for sandbox definition select
 13.0.1 Fix peer dependencies of package
 13.0.0 Update to Angular 13, CI/CD optimization, retry of allocation pipeline on fail supported, revision and id of SD added to pool creation
 12.0.10 Fix pagination
