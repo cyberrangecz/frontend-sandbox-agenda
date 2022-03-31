@@ -8,8 +8,8 @@ import {
 } from '@sentinel/components/dialogs';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, Observable, of } from 'rxjs';
+import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { EMPTY, from, Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '../sandox-agenda-context.service';
@@ -91,5 +91,9 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
       ),
       switchMap(() => this.getAll(this.lastPagination))
     );
+  }
+
+  showTopology(sandboxDefinition: SandboxDefinition): Observable<any> {
+    return from(this.router.navigate([this.navigator.toSandboxDefinitionTopology(sandboxDefinition.id)]));
   }
 }

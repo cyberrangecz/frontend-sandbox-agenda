@@ -8,19 +8,19 @@ import {
   TopologyApiModule,
 } from '@muni-kypo-crp/topology-graph';
 import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxInstanceTopologyComponent } from './sandbox-instance-topology.component';
+import { SandboxTopologyComponent } from './sandbox-topology.component';
 
 /**
  * Module containing components and providers for sandbox instance topology page
  */
 @NgModule({
-  declarations: [SandboxInstanceTopologyComponent],
+  declarations: [SandboxTopologyComponent],
   imports: [CommonModule, MatCardModule, Kypo2TopologyGraphModule, Kypo2TopologyLegendModule, TopologyApiModule],
 })
-export class SandboxInstanceTopologyComponentsModule {
-  static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<SandboxInstanceTopologyComponentsModule> {
+export class SandboxTopologyComponentsModule {
+  static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<SandboxTopologyComponentsModule> {
     return {
-      ngModule: SandboxInstanceTopologyComponentsModule,
+      ngModule: SandboxTopologyComponentsModule,
       providers: [
         { provide: Kypo2TopologyGraphConfig, useValue: config.kypo2TopologyConfig },
         { provide: SandboxAgendaConfig, useValue: config },

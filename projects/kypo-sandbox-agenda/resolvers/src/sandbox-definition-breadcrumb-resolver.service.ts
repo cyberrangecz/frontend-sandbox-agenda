@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SANDBOX_TOPOLOGY_PATH } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxInstanceResolver } from './sandbox-instance-resolver.service';
+import { SandboxDefinitionResolver } from './sandbox-definition-resolver.service';
 
 /**
  * Router breadcrumb title provider
  */
 @Injectable()
-export class SandboxInstanceBreadcrumbResolver implements Resolve<string> {
-  constructor(private sandboxInstanceResolver: SandboxInstanceResolver) {}
+export class SandboxDefinitionBreadcrumbResolver implements Resolve<string> {
+  constructor(private sandboxDefinitionResolver: SandboxDefinitionResolver) {}
 
   /**
    * Retrieves a breadcrumb title based on provided url
@@ -22,7 +22,7 @@ export class SandboxInstanceBreadcrumbResolver implements Resolve<string> {
     if (state.url.endsWith(SANDBOX_TOPOLOGY_PATH)) {
       return 'Topology';
     }
-    const sandboxInstance$ = this.sandboxInstanceResolver.resolve(route) as Observable<SandboxInstance>;
-    return sandboxInstance$.pipe(map((sandboxInstance) => `Sandbox ${sandboxInstance.id}`));
+    const sandboxDefinition$ = this.sandboxDefinitionResolver.resolve(route) as Observable<SandboxDefinition>;
+    return sandboxDefinition$.pipe(map((sandboxDefinition) => `Sandbox Definition ${sandboxDefinition.id}`));
   }
 }

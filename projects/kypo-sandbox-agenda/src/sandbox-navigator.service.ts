@@ -36,6 +36,12 @@ export abstract class SandboxNavigator {
 
   /**
    * Returns route to sandbox instance topology page
+   * @param sandboxDefinitionId id of the sandbox definition
+   */
+  abstract toSandboxDefinitionTopology(sandboxDefinitionId: number | string): string;
+
+  /**
+   * Returns route to sandbox instance topology page
    * @param poolId id of the pool associated with the sandbox instance
    * @param sandboxId id of the sandbox
    */
