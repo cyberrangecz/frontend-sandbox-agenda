@@ -1,3 +1,7 @@
+### 13.1.0 Add display topology option for sandbox definitions in sandbox definition overview
+* 49f8332 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 2bf7e38 -- Merge branch '87-button-to-display-topology-in-sandbox-definition-overview' into 'master'
+* 0fc6f5b -- Display topology of the sandbox definition.
 ### 13.0.2 Fix pool creation pagination size for sandbox definition select
 * 22f3e58 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   be266ea -- Merge branch '13.0.2-release-tag' into 'master'
