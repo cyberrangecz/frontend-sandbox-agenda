@@ -2,6 +2,8 @@
  * Public API Surface of entry point kypo-sandbox-agenda/resolvers
  */
 
+export * from './sandbox-definition-breadcrumb-resolver.service';
+export * from './sandbox-definition-resolver.service';
 export * from './sandbox-instance-breadcrumb-resolver.service';
 export * from './sandbox-instance-resolver.service';
 export * from './request-breadcrumb-resolver.service';

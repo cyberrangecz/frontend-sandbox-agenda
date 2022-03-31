@@ -1,23 +1,28 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
-import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { Kypo2TopologyErrorService, TopologyApi } from '@muni-kypo-crp/topology-graph';
 import { Observable } from 'rxjs';
 import { map, take, takeWhile, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
+import {
+  SandboxErrorHandler,
+  SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME,
+  SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME,
+} from '@muni-kypo-crp/sandbox-agenda';
 
 /**
  * Smart component of sandbox instance topology page
  */
 @Component({
   selector: 'kypo-sandbox-instance-topology',
-  templateUrl: './sandbox-instance-topology.component.html',
-  styleUrls: ['./sandbox-instance-topology.component.scss'],
+  templateUrl: './sandbox-topology.component.html',
+  styleUrls: ['./sandbox-topology.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxInstanceTopologyComponent extends SentinelBaseDirective implements OnInit, AfterViewInit {
+export class SandboxTopologyComponent extends SentinelBaseDirective implements OnInit, AfterViewInit {
   sandboxInstance$: Observable<SandboxInstance>;
+  sandboxDefinition$: Observable<SandboxDefinition>;
   topologyWidth: number;
   topologyHeight: number;
   sandboxId: number;
@@ -35,14 +40,20 @@ export class SandboxInstanceTopologyComponent extends SentinelBaseDirective impl
     this.sandboxInstance$ = this.activeRoute.data.pipe(
       takeWhile(() => this.isAlive),
       map((data) => data[SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME]),
-      tap((data) => (this.sandboxId = data.id))
+      tap((data) => (this.sandboxId = data?.id))
+    );
+    this.sandboxDefinition$ = this.activeRoute.data.pipe(
+      takeWhile(() => this.isAlive),
+      map((data) => data[SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME])
     );
     this.calculateTopologySize();
     this.subscribeToTopologyErrorHandler();
   }
 
   ngAfterViewInit(): void {
-    this.loadConsoles(this.sandboxId).pipe(take(1)).subscribe();
+    if (this.sandboxId) {
+      this.loadConsoles(this.sandboxId).pipe(take(1)).subscribe();
+    }
   }
 
   @HostListener('window:resize', ['$event'])

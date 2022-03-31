@@ -11,6 +11,10 @@ import {
 } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxDefinitionDetailComponent } from './sandbox-definition-detail/sandbox-definition-detail.component';
 import { SandboxDefinitionOverviewComponent } from './sandbox-definition-overview.component';
+import {
+  SandboxDefinitionBreadcrumbResolver,
+  SandboxDefinitionResolver,
+} from '@muni-kypo-crp/sandbox-agenda/resolvers';
 
 /**
  * Module containing components and services for sandbox definition overview page
@@ -21,6 +25,8 @@ import { SandboxDefinitionOverviewComponent } from './sandbox-definition-overvie
   providers: [
     PaginationService,
     SandboxAgendaContext,
+    SandboxDefinitionResolver,
+    SandboxDefinitionBreadcrumbResolver,
     { provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService },
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },
   ],

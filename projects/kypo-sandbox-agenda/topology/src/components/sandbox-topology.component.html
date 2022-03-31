@@ -11,7 +11,8 @@
         [style.height.px]="topologyHeight"
         [width]="topologyWidth"
         [height]="topologyHeight"
-        [sandboxInstanceId]="(sandboxInstance$ | async)?.id">
+        [sandboxInstanceId]="(sandboxInstance$ | async)?.id"
+        [sandboxDefinitionId]="(sandboxDefinition$ | async)?.id">
       </kypo2-topology-graph>
     </div>
   </mat-card-content>

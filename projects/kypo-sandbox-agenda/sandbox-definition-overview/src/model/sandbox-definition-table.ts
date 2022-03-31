@@ -1,6 +1,6 @@
 import { PaginatedResource } from '@sentinel/common';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
-import { Column, SentinelTable, Row, RowExpand, DeleteAction } from '@sentinel/components/table';
+import { Column, SentinelTable, Row, RowExpand, DeleteAction, RowAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxDefinitionDetailComponent } from '../components/sandbox-definition-detail/sandbox-definition-detail.component';
 import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -29,6 +29,15 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
     service: SandboxDefinitionOverviewService
   ): Row<SandboxDefinitionRowAdapter> {
     const actions = [
+      new RowAction(
+        'topology',
+        'Topology',
+        'device_hub',
+        'primary',
+        'Display topology',
+        of(false),
+        defer(() => service.showTopology(sandboxDefinition))
+      ),
       new DeleteAction(
         'Delete sandbox definition',
         of(false),

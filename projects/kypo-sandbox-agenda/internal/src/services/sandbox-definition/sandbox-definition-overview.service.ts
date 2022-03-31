@@ -4,7 +4,7 @@ import {
   OffsetPaginatedElementsService,
   PaginationBaseEvent,
 } from '@sentinel/common';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 
 /**
@@ -32,4 +32,6 @@ export abstract class SandboxDefinitionOverviewService extends OffsetPaginatedEl
    * Creates a  new sandbox definition
    */
   abstract create(): Observable<any>;
+
+  abstract showTopology(sandboxDefinition: SandboxDefinition): Observable<any>;
 }

@@ -6,7 +6,7 @@ import {
   SANDBOX_DEFINITION_NEW_PATH,
   SANDBOX_DEFINITION_PATH,
   SANDBOX_INSTANCE_PATH,
-  SANDBOX_INSTANCE_TOPOLOGY_PATH,
+  SANDBOX_TOPOLOGY_PATH,
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH,
   SANDBOX_RESOURCES_PATH,
@@ -57,11 +57,19 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
 
   /**
    * Returns route to sandbox instance topology page
+   * @param sandboxDefinitionId id of the sandbox definition
+   */
+  toSandboxDefinitionTopology(sandboxDefinitionId: number | string): string {
+    return `${SANDBOX_DEFINITION_PATH}/${sandboxDefinitionId}/${SANDBOX_TOPOLOGY_PATH}`;
+  }
+
+  /**
+   * Returns route to sandbox instance topology page
    * @param poolId id of the pool associated with the sandbox instance
    * @param sandboxId id of the sandbox
    */
   toSandboxInstanceTopology(poolId: number | string, sandboxId: number | string): string {
-    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_INSTANCE_PATH}/${sandboxId}/${SANDBOX_INSTANCE_TOPOLOGY_PATH}`;
+    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_INSTANCE_PATH}/${sandboxId}/${SANDBOX_TOPOLOGY_PATH}`;
   }
 
   /**
