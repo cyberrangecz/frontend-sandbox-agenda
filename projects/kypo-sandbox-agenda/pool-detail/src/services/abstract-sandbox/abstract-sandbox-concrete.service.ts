@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, from, Observable } from 'rxjs';
 import { OffsetPaginationEvent } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -80,7 +80,7 @@ export class AbstractSandboxConcreteService extends AbstractSandboxService {
     return this.sandboxInstanceService.getUserSshAccess(sandboxId);
   }
 
-  showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<any> {
+  showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<boolean> {
     return this.sandboxInstanceService.showTopology(poolId, sandboxInstance);
   }
 
@@ -88,5 +88,9 @@ export class AbstractSandboxConcreteService extends AbstractSandboxService {
     return this.allocationUnitsService
       .cleanupMultiple(poolId, unitIds, force)
       .pipe(switchMap(() => this.getAll(this.lastPoolId, this.lastPagination)));
+  }
+
+  navigateToStage(poolId: number, sandboxId: number, stageOrder: number): Observable<boolean> {
+    return this.sandboxInstanceService.navigateToStage(poolId, sandboxId, stageOrder);
   }
 }

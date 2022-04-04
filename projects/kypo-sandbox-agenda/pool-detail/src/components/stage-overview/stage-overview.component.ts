@@ -37,7 +37,7 @@ export class StageOverviewComponent implements OnChanges {
     }
   }
 
-  stageSelect(state: string): void {
-    this.stageSelected.emit(new SelectedStage(this.unitId, state));
+  stageSelect(stage, order): void {
+    this.stageSelected.emit(new SelectedStage(this.unitId, stage, order));
   }
 }

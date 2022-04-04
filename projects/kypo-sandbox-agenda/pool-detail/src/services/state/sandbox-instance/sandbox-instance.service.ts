@@ -54,5 +54,7 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
    */
   abstract getUserSshAccess(sandboxId: number): Observable<boolean>;
 
-  abstract showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<any>;
+  abstract showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<boolean>;
+
+  abstract navigateToStage(poolId: number, sandboxId: number, stageOrder: number): Observable<boolean>;
 }

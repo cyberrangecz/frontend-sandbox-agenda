@@ -5,5 +5,6 @@ export interface StageAdapter extends RequestStage {
   title: string;
   hasDetail: boolean;
   hasError: boolean;
+  isExpanded: boolean;
   detailDisabled: boolean;
 }

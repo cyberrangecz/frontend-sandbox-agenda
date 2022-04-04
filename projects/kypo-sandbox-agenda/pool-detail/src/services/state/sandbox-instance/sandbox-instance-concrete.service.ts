@@ -10,7 +10,7 @@ import {
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, from, Observable } from 'rxjs';
+import { EMPTY, from, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -141,8 +141,22 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     );
   }
 
-  showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<any> {
+  showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<boolean> {
     return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, sandboxInstance.id)]));
+  }
+
+  navigateToStage(poolId: number, sandboxId: number, stageOrder: number): Observable<boolean> {
+    let path;
+    switch (stageOrder) {
+      case 0:
+      case 1:
+      case 2:
+        path = this.navigator.toAllocationRequest(poolId, sandboxId);
+        break;
+      default:
+        path = '';
+    }
+    return path !== '' ? from(this.router.navigate([path], { fragment: `stage-${stageOrder}` })) : of(false);
   }
 
   protected refreshResource(): Observable<PaginatedResource<SandboxInstance>> {

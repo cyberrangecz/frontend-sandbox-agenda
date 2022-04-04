@@ -1,16 +1,21 @@
-<ng-container *ngIf="(request$ | async) as request">
+<ng-container *ngIf="request$ | async as request">
   <ng-container *ngIf="hasError$ | async">
     <mat-card class="error">
       <span>We had some trouble loading the data.</span>
       <button mat-icon-button (click)="reloadStages()" color="primary"><mat-icon>refresh</mat-icon></button>
     </mat-card>
   </ng-container>
-  <ng-container *ngIf="(stages$ | async) as stages">
-    <div *ngIf="stages?.length > 0 else noStages">
-      <kypo-request-stage *ngFor="let stage of stages.values(); trackBy: trackByFn; let i = index;"
-                          [stage]="stage"
-                          (stageDetailPanelChange)="onStageDetailPanelChange($event, stage)">
-      </kypo-request-stage>
+  <ng-container *ngIf="stages$ | async as stages">
+    <div *ngIf="stages?.length > 0; else noStages">
+      <ng-container *ngFor="let stage of stages.values(); trackBy: trackByFn; let i = index">
+        <kypo-request-stage
+          *ngIf="(fragment && 'stage-' + i === fragment) || !fragment"
+          id="{{ 'stage-' + i }}"
+          [stage]="stage"
+          (stageDetailPanelChange)="onStageDetailPanelChange($event, stage, i)"
+        >
+        </kypo-request-stage>
+      </ng-container>
     </div>
     <ng-template #noStages>
       <h2 *ngIf="(isLoading$ | async) === false">Request has no stages</h2>

@@ -3,9 +3,9 @@ import {
   ANSIBLE_NETWORKING_TYPES,
   ANSIBLE_STAGE_TYPES,
   ANSIBLE_USER_TYPES,
-  OPENSTACK_STAGE_TYPES,
+  TERRAFORM_STAGE_TYPES,
 } from '../utils/stage-types';
-import { ANSIBLE_LOGO_SRC, OPENSTACK_LOGO_SRC } from '../utils/stage-logos';
+import { ANSIBLE_LOGO_SRC, TERRAFORM_LOGO_SRC } from '../utils/stage-logos';
 import { StageAdapter } from './stage-adapter';
 
 export class StageAdapterMapper {
@@ -19,16 +19,16 @@ export class StageAdapterMapper {
   }
 
   private static resolveLogoSrc(stage: RequestStage): string {
-    if (OPENSTACK_STAGE_TYPES.includes(stage.type)) {
-      return OPENSTACK_LOGO_SRC;
+    if (TERRAFORM_STAGE_TYPES.includes(stage.type)) {
+      return TERRAFORM_LOGO_SRC;
     } else if (ANSIBLE_STAGE_TYPES.includes(stage.type)) {
       return ANSIBLE_LOGO_SRC;
     }
   }
 
   private static resolveTitle(stage: RequestStage): string {
-    if (OPENSTACK_STAGE_TYPES.includes(stage.type)) {
-      return `OpenStack Stage ${stage.id}`;
+    if (TERRAFORM_STAGE_TYPES.includes(stage.type)) {
+      return `Terraform Stage ${stage.id}`;
     } else if (ANSIBLE_NETWORKING_TYPES.includes(stage.type)) {
       return `Networking Ansible Stage ${stage.id}`;
     } else if (ANSIBLE_USER_TYPES.includes(stage.type)) {
