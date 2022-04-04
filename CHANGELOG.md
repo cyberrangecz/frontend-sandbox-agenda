@@ -1,3 +1,7 @@
+### 13.2.0 Change openstack allocation stage to terraform and adjust stage information. Fix retry stage for pool overview. Add redirect to stage detail upon selecting it in pipeline.
+* c5191fe -- [CI/CD] Update packages.json version based on GitLab tag.
+* 138ea29 -- Merge branch '86-replace-openstack-with-terraform-and-add-separate-stage-view' into 'master'
+* 999501e -- Resolve "Replace openstack with terraform and add separate stage view"
 ### 13.1.0 Add display topology option for sandbox definitions in sandbox definition overview
 * 49f8332 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 2bf7e38 -- Merge branch '87-button-to-display-topology-in-sandbox-definition-overview' into 'master'
