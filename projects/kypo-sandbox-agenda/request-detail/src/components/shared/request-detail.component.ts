@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { Request } from '@muni-kypo-crp/sandbox-model';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
-import { Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { RequestStagesService } from '../../services/state/request-stages.service';
@@ -17,6 +17,7 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
   stages$: Observable<StageAdapter[]>;
   hasError$: Observable<boolean>;
   isLoading$: Observable<boolean>;
+  fragment: string;
 
   private request: Request;
 
@@ -26,6 +27,9 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
     protected stageDetailRegistry?: StagesDetailPollRegistry
   ) {
     super();
+    this.activeRoute.fragment.subscribe((fragment) => {
+      this.fragment = fragment;
+    });
     this.init();
   }
   /**
@@ -47,8 +51,9 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
       .subscribe();
   }
 
-  onStageDetailPanelChange(opened: boolean, stage: RequestStage): void {
+  onStageDetailPanelChange(opened: boolean, stage: RequestStage, order: number): void {
     if (opened) {
+      // TODO scroll to view
       this.stageDetailRegistry.add(stage);
     } else {
       this.stageDetailRegistry.remove(stage);
@@ -56,7 +61,18 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
   }
 
   private init() {
-    this.stages$ = this.requestStagesService.stages$;
+    this.stages$ = this.requestStagesService.stages$.pipe(
+      switchMap((stages) => {
+        return this.activeRoute.fragment.pipe(
+          map((fragment) => {
+            stages.map((stage, index) => {
+              stage.isExpanded = fragment === `stage-${index}`;
+            });
+            return stages;
+          })
+        );
+      })
+    );
     this.hasError$ = this.requestStagesService.hasError$;
     this.isLoading$ = this.requestStagesService.isLoading$;
 

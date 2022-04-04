@@ -95,7 +95,9 @@ export abstract class AbstractSandboxService {
    */
   abstract getUserSshAccess(sandboxId: number): Observable<boolean>;
 
-  abstract showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<any>;
+  abstract showTopology(poolId: number, sandboxInstance: SandboxInstance): Observable<boolean>;
 
   abstract cleanupMultiple(poolId: number, unitIds: number[], force?: boolean): Observable<any>;
+
+  abstract navigateToStage(poolId: number, sandboxId: number, stageOrder: number): Observable<boolean>;
 }

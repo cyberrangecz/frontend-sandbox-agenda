@@ -90,6 +90,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     if (selectedStage.state === RequestStageState.RETRY) {
       this.abstractSandboxService.retryAllocate(selectedStage.unitId).pipe(take(1)).subscribe();
     }
+    this.abstractSandboxService
+      .navigateToStage(this.pool.id, selectedStage.unitId, selectedStage.order)
+      .pipe(take(1))
+      .subscribe();
   }
 
   private initTables() {

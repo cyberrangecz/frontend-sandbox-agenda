@@ -1,33 +1,31 @@
+import { Injectable } from '@angular/core';
 import { StageDetailService } from './stage-detail.service';
 import { AllocationRequestsApi } from '@muni-kypo-crp/sandbox-api';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { Observable } from 'rxjs';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
+import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
 
 @Injectable()
-export class OpenStackResourcesService extends StageDetailService {
+export class TerraformOutputsService extends StageDetailService {
   constructor(
     private api: AllocationRequestsApi,
     private context: SandboxAgendaContext,
     protected pollRegistry: StagesDetailPollRegistry
   ) {
-    super(pollRegistry, 500, context.config.pollingPeriod);
+    super(pollRegistry, Number.MAX_SAFE_INTEGER, context.config.pollingPeriod);
   }
 
   protected callApiToGetStageDetail(
     stage: RequestStage,
     requestedPagination: OffsetPaginationEvent
   ): Observable<PaginatedResource<string>> {
-    return this.api.getOpenStackResources(stage.requestId, requestedPagination).pipe(
+    return this.api.getTerraformOutputs(stage.requestId, requestedPagination).pipe(
       map((paginatedResources) => {
-        const formattedResources = paginatedResources.elements.map(
-          (resource) => `${resource.name} ${resource.type} ${resource.status}`
-        );
-        return new PaginatedResource<string>(formattedResources, paginatedResources.pagination);
+        const formattedEvents = paginatedResources.elements.map((event) => `${event.content}`);
+        return new PaginatedResource<string>(formattedEvents, paginatedResources.pagination);
       })
     );
   }

@@ -10,8 +10,8 @@ export class StageComponentResolver {
       case RequestStageType.USER_ANSIBLE_ALLOCATION: {
         return StageDetailComponentEnum.ANSIBLE_ALLOCATION;
       }
-      case RequestStageType.OPEN_STACK_ALLOCATION: {
-        return StageDetailComponentEnum.OPEN_STACK_ALLOCATION;
+      case RequestStageType.TERRAFORM_ALLOCATION: {
+        return StageDetailComponentEnum.TERRAFORM_ALLOCATION;
       }
     }
   }

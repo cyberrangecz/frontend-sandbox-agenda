@@ -33,7 +33,7 @@ export class CleanupStagesConcreteService extends RequestStagesService {
 
   protected callApiToGetStages(request: Request): Observable<StageAdapter[]> {
     return zip(
-      this.api.getOpenStackStage(request.id),
+      this.api.getTerraformStage(request.id),
       this.api.getNetworkingAnsibleStage(request.id),
       this.api.getUserAnsibleStage(request.id)
     ).pipe(map((stages) => stages.map((stage) => StageAdapterMapper.fromStage(stage))));

@@ -1,7 +1,7 @@
 import { StageAdapter } from './stage-adapter';
-import { UserAnsibleAllocationStage } from '@muni-kypo-crp/sandbox-model';
+import { TerraformAllocationStage } from '@muni-kypo-crp/sandbox-model';
 
-export class AnsibleStageAdapter extends UserAnsibleAllocationStage implements StageAdapter {
+export class TerraformStageAdapter extends TerraformAllocationStage implements StageAdapter {
   detailDisabled: boolean;
   hasDetail: boolean;
   logoSrc: string;
