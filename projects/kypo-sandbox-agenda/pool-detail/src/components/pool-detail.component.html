@@ -6,6 +6,7 @@
                   [titlecasedActions]=false
                   elevation="0"
                   (rowAction)="onTableAction($event)"
+                  (tableLoad)="onLoadEvent($event)"
                   (refresh)="onLoadEvent($event)">
                   <ng-container *sentinelRow="'stages'; template: stagesTemplate"></ng-container>
   </sentinel-table>
