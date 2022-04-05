@@ -2,6 +2,7 @@
 <sentinel-table
   [data] ="sandboxDefinitions$ | async"
   [hasError]="hasError$ | async"
+  (tableLoad)="onLoadEvent($event)"
   (refresh)="onLoadEvent($event)"
   (rowAction)="onTableAction($event)">
 </sentinel-table>

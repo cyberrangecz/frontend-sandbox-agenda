@@ -4,5 +4,6 @@
   [hasError]="hasError$ | async"
   [titlecasedActions]=false
   (rowAction)="onPoolAction($event)"
+  (tableLoad)="onLoadEvent($event)"
   (refresh)="onLoadEvent($event)">
 </sentinel-table>
