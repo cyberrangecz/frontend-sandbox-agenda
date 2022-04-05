@@ -1,3 +1,7 @@
+### 13.2.1 Fix table reload on pagination change
+* 65feaad -- [CI/CD] Update packages.json version based on GitLab tag.
+* 68c8365 -- Merge branch '88-fix-table-reload-on-pagination-change' into 'master'
+* e5112d4 -- Resolve "Fix table reload on pagination change"
 ### 13.2.0 Change openstack allocation stage to terraform and adjust stage information. Fix retry stage for pool overview. Add redirect to stage detail upon selecting it in pipeline.
 * c5191fe -- [CI/CD] Update packages.json version based on GitLab tag.
 * 138ea29 -- Merge branch '86-replace-openstack-with-terraform-and-add-separate-stage-view' into 'master'
