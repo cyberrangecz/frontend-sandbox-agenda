@@ -7,11 +7,11 @@
       <mat-form-field appearance="outline" hintLabel="Pool of sandboxes that
           can be allocated" class="multi-line-hint">
         <mat-label>Sandbox Pool Size</mat-label>
-        <input matInput placeholder="Sandbox pool size" type="number" max="64"
+        <input matInput placeholder="Sandbox pool size" type="number"
                min="1" formControlName="poolSize" required>
-        <mat-error *ngIf="poolSize.hasError('max') ||
-            poolSize.hasError('min')">Pool size must be number in range from
-          {{poolSize.hasError('min')}} to {{poolSize.hasError('max')}}</mat-error>
+        <mat-error *ngIf="poolSize.hasError('min')">
+          Pool size must be number larger than 0
+        </mat-error>
         <mat-error *ngIf="poolSize.hasError('required')">This field is required</mat-error>
       </mat-form-field>
 
