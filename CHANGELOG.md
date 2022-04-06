@@ -1,3 +1,7 @@
+### 13.2.2 Remove pool size max limitation
+* a9e3595 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 09b456c -- Merge branch '89-remove-maximal-pool-size' into 'master'
+* 8e046fb -- Resolve "Remove maximal pool size"
 ### 13.2.1 Fix table reload on pagination change
 * 65feaad -- [CI/CD] Update packages.json version based on GitLab tag.
 * 68c8365 -- Merge branch '88-fix-table-reload-on-pagination-change' into 'master'
