@@ -115,7 +115,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
         );
 
         return new PoolDetailTable(
-          new PaginatedResource<AbstractSandbox>(data, resource[1].pagination),
+          new PaginatedResource<AbstractSandbox>(data, resource[0].pagination),
           this.abstractSandboxService,
           this.navigator
         );
