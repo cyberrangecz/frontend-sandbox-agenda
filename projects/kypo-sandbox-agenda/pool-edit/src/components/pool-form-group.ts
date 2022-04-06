@@ -6,7 +6,7 @@ export class PoolFormGroup {
 
   constructor() {
     this.formGroup = new FormGroup({
-      poolSize: new FormControl(1, [Validators.required, Validators.min(1), Validators.max(64)]),
+      poolSize: new FormControl(1, [Validators.required, Validators.min(1)]),
       sandboxDefinition: new FormControl(undefined, [Validators.required]),
     });
   }

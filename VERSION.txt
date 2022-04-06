@@ -1,3 +1,4 @@
+13.2.2 Remove pool size max limitation
 13.2.1 Fix table reload on pagination change
 13.2.0 Change openstack allocation stage to terraform and adjust stage information. Fix retry stage for pool overview. Add redirect to stage detail upon selecting it in pipeline.
 13.1.0 Add display topology option for sandbox definitions in sandbox definition overview
