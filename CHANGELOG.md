@@ -1,3 +1,11 @@
+### 13.2.3 Bump version of topology graph
+* 47bdb1a -- [CI/CD] Update packages.json version based on GitLab tag.
+*   b4859aa -- Merge branch '91-bump-version-of-topology-graph' into 'master'
+|\  
+| * 760a501 -- Resolve "Bump version of topology  graph"
+|/  
+* 162899f -- Merge branch '90-fix-pagination-for-sandbox-instances' into 'master'
+* 9457d9b -- Resolve "Fix pagination for sandbox instances"
 ### 13.2.2 Remove pool size max limitation
 * a9e3595 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 09b456c -- Merge branch '89-remove-maximal-pool-size' into 'master'
