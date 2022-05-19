@@ -49,7 +49,7 @@ export const environment = {
         backgroundColor: '#002776',
         tokenRefreshTime: 30000, // how often check if tokens are still valid
         oidcConfig: {
-          issuer: 'https://172.19.0.22:8443/csirtmu-dummy-issuer-server/',
+          issuer: 'https://172.19.0.22:443/csirtmu-dummy-issuer-server/',
           clientId: '1be61a0a-8cdd-4a58-ab19-2c2f54265b5a',
           redirectUri: homeURL, // redirect after successful login
           scope: 'openid email profile',

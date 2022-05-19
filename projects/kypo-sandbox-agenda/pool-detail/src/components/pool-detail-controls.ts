@@ -39,13 +39,7 @@ export class PoolDetailControls {
         'Delete All',
         'warn',
         of(PoolDetailControls.someSandboxHasNoRunningCleanup(sandboxes)),
-        defer(() =>
-          abstractSandboxService.cleanupMultiple(
-            pool.id,
-            sandboxes.map((sandbox) => sandbox.id),
-            true
-          )
-        )
+        defer(() => abstractSandboxService.cleanupMultiple(pool.id, [], true))
       ),
     ];
   }

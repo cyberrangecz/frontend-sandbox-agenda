@@ -4,6 +4,7 @@
   <sentinel-table [data]="instances$ | async"
                   [hasError]="instancesTableHasError$ | async"
                   [titlecasedActions]=false
+                  [displayedActionsCount]="4"
                   elevation="0"
                   (rowAction)="onTableAction($event)"
                   (tableLoad)="onLoadEvent($event)"

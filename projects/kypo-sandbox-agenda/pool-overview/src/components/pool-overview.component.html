@@ -3,6 +3,7 @@
   [data]="pools$ | async"
   [hasError]="hasError$ | async"
   [titlecasedActions]=false
+  [displayedActionsCount]="6"
   (rowAction)="onPoolAction($event)"
   (tableLoad)="onLoadEvent($event)"
   (refresh)="onLoadEvent($event)">
