@@ -1,3 +1,7 @@
+### 13.2.4 Show additional actions in tables.
+* 38d3ad5 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 010437a -- Merge branch '92-show-additional-actions-in-tables' into 'master'
+* a869435 -- Resolve "Show additional actions in tables"
 ### 13.2.3 Bump version of topology graph
 * 47bdb1a -- [CI/CD] Update packages.json version based on GitLab tag.
 *   b4859aa -- Merge branch '91-bump-version-of-topology-graph' into 'master'
