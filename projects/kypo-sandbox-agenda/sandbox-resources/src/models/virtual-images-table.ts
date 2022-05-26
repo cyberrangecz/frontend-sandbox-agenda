@@ -20,6 +20,8 @@ export class VirtualImagesTable extends SentinelTable<VMImagesRowAdapter> {
     super(rows, columns);
     this.pagination = resource.pagination;
     this.expand = new RowExpand(VMImageDetailComponent);
+    this.filterable = true;
+    this.filterLabel = 'Filter by name';
   }
 
   private static createRow(image: VirtualImage): Row<VMImagesRowAdapter> {

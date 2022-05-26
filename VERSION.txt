@@ -1,3 +1,4 @@
+13.2.5 Improve images table.
 13.2.4 Show additional actions in tables.
 13.2.3 Bump version of topology graph
 13.2.2 Remove pool size max limitation

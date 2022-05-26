@@ -22,5 +22,10 @@ export abstract class VMImagesService extends OffsetPaginatedElementsService<Vir
    * Retrieves paginated available virtual machine images
    * @param pagination requested pagination
    */
-  abstract getAvailableImages(pagination: PaginationBaseEvent): Observable<PaginatedResource<VirtualImage>>;
+  abstract getAvailableImages(
+    pagination: PaginationBaseEvent,
+    onlyKypoImages?: boolean,
+    cached?: boolean,
+    filter?: string
+  ): Observable<PaginatedResource<VirtualImage>>;
 }
