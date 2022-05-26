@@ -1,7 +1,7 @@
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { takeWhile, map } from 'rxjs/operators';
+import { takeWhile, map, take } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
+import { SentinelBaseDirective, OffsetPaginationEvent, IPaginationEvent } from '@sentinel/common';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';
@@ -24,6 +24,9 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   isLoadingImages$: Observable<boolean>;
 
   resources$: Observable<Resources>;
+  kypoImages = false;
+
+  private lastFilter: string;
 
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
@@ -45,24 +48,45 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
 
   onTableLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
+    this.lastFilter = loadEvent.filter;
     this.vmImagesService
-      .getAvailableImages(loadEvent.pagination)
+      .getAvailableImages(loadEvent.pagination, this.kypoImages, true, loadEvent.filter)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe();
+  }
+
+  kypoImagesToggled(): void {
+    this.kypoImages = !this.kypoImages;
+    this.vmImagesService
+      .getAvailableImages(this.getInitialPaginationEvent(), this.kypoImages, true, this.lastFilter)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
 
   private initTable(): void {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(
-        0,
-        this.paginationService.getPagination(),
-        this.INIT_SORT_NAME,
-        this.INIT_SORT_DIR
-      ),
+      pagination: this.getInitialPaginationEvent(),
     };
 
     this.images$ = this.vmImagesService.resource$.pipe(map((resource) => new VirtualImagesTable(resource)));
     this.imagesTableHasError$ = this.vmImagesService.hasError$;
-    this.onTableLoadEvent(initialLoadEvent);
+    this.initialTableLoadEvent(initialLoadEvent);
+  }
+
+  initialTableLoadEvent(loadEvent: TableLoadEvent): void {
+    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.vmImagesService
+      .getAvailableImages(loadEvent.pagination, this.kypoImages, false)
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe();
+  }
+
+  private getInitialPaginationEvent(): OffsetPaginationEvent {
+    return new OffsetPaginationEvent(
+      0,
+      this.paginationService.getPagination(),
+      this.INIT_SORT_NAME,
+      this.INIT_SORT_DIR
+    );
   }
 }

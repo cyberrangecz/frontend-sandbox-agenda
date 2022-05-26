@@ -5,8 +5,9 @@ import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, SentinelFilter } from '@sentinel/common';
 import { VMImagesService } from './vm-images.service';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class VMImagesConcreteService extends VMImagesService {
@@ -22,9 +23,15 @@ export class VMImagesConcreteService extends VMImagesService {
    * Retrieves paginated available virtual machine images
    * @param pagination requested pagination
    */
-  getAvailableImages(pagination: OffsetPaginationEvent): Observable<PaginatedResource<VirtualImage>> {
+  getAvailableImages(
+    pagination: OffsetPaginationEvent,
+    onlyKypoImages?: boolean,
+    cached?: boolean,
+    filter?: string
+  ): Observable<PaginatedResource<VirtualImage>> {
     this.isLoadingSubject$.next(true);
-    return this.vmImagesApi.getAvailableImages(pagination).pipe(
+    const filters = filter ? [new SentinelFilter('name', filter)] : [];
+    return this.vmImagesApi.getAvailableImages(pagination, onlyKypoImages, cached, filters).pipe(
       tap(
         (resource) => {
           this.resourceSubject$.next(resource);

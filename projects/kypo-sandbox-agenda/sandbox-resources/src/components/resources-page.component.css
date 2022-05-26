@@ -8,3 +8,8 @@
   margin-bottom: 100px;
   width: 100%;
 }
+
+.kypo-images {
+  display: flex;
+  justify-content: end;
+}
