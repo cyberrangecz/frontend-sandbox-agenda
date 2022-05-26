@@ -1,3 +1,7 @@
+### 13.2.5 Improve images table.
+* d3de7a6 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 6336751 -- Merge branch '94-improve-the-images-list' into 'master'
+* 76e326d -- Resolve "Improve the images list"
 ### 13.2.4 Show additional actions in tables.
 * 38d3ad5 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 010437a -- Merge branch '92-show-additional-actions-in-tables' into 'master'
