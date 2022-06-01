@@ -1,3 +1,7 @@
+### 13.2.6 Bump topology graph to resolve problems with console selection.
+* 2f6ec16 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 0bf5298 -- Merge branch '95-bump-topology-graph-patch-version' into 'master'
+* 9dd07a4 -- Resolve "Bump topology graph patch version"
 ### 13.2.5 Improve images table.
 * d3de7a6 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 6336751 -- Merge branch '94-improve-the-images-list' into 'master'
