@@ -1,3 +1,7 @@
+### 14.0.0 Update to Angular 14.
+* a2c4b69 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 1e049d2 -- Merge branch '96-update-to-angular-14' into 'master'
+* 9f0ebfd -- Resolve "Update to Angular 14"
 ### 13.2.6 Bump topology graph to resolve problems with console selection.
 * 2f6ec16 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 0bf5298 -- Merge branch '95-bump-topology-graph-patch-version' into 'master'
