@@ -1,13 +1,13 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 
 export class PoolFormGroup {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   constructor() {
-    this.formGroup = new FormGroup({
-      poolSize: new FormControl(1, [Validators.required, Validators.min(1)]),
-      sandboxDefinition: new FormControl(undefined, [Validators.required]),
+    this.formGroup = new UntypedFormGroup({
+      poolSize: new UntypedFormControl(1, [Validators.required, Validators.min(1)]),
+      sandboxDefinition: new UntypedFormControl(undefined, [Validators.required]),
     });
   }
 

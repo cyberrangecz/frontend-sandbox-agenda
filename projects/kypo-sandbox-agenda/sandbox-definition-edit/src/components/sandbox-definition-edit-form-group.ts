@@ -1,16 +1,16 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 /**
  * Sandbox Definition create form
  */
 export class SandboxDefinitionFormGroup {
-  formGroup: FormGroup;
+  formGroup: UntypedFormGroup;
 
   constructor() {
-    this.formGroup = new FormGroup({
-      gitlabUrl: new FormControl('', Validators.required),
-      revision: new FormControl('', Validators.required),
+    this.formGroup = new UntypedFormGroup({
+      gitlabUrl: new UntypedFormControl('', Validators.required),
+      revision: new UntypedFormControl('', Validators.required),
     });
   }
 

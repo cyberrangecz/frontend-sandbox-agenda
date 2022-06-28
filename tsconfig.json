@@ -10,7 +10,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2018",
+    "target": "es2020",
     "paths": {
       "@muni-kypo-crp/sandbox-agenda": ["./src/public_api.ts"],
       "@muni-kypo-crp/sandbox-agenda/internal": ["./internal/src/public_api.ts"],

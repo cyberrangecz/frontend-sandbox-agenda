@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -32,7 +32,7 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
   let routerSpy: jasmine.SpyObj<Router>;
   let service: SandboxDefinitionOverviewConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     errorHandlerSpy = createErrorHandlerSpy();
     notificationSpy = createNotificationSpy();
     navigatorSpy = createNavigatorSpy();
@@ -61,7 +61,7 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should call error handler on err', (done) => {
+  it('should call error handler on err', waitForAsync(() => {
     const pagination = createPagination();
     apiSpy.getAll.and.returnValue(throwError(null));
 
@@ -69,23 +69,21 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
       () => fail,
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-        done();
       }
     );
     expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
-  });
+  }));
 
-  it('should emit next value on update (sandboxDefinitions)', (done) => {
+  it('should emit next value on update (sandboxDefinitions)', waitForAsync(() => {
     const pagination = createPagination();
     const mockData = createMockData();
     apiSpy.getAll.and.returnValue(asyncData(mockData));
 
     service.resource$.pipe(skip(1)).subscribe((emitted) => {
       expect(emitted).toBe(mockData);
-      done();
     }, fail);
-    service.getAll(pagination).subscribe(() => done(), fail);
-  });
+    service.getAll(pagination).subscribe();
+  }));
 
   function createPagination(): OffsetPaginationEvent {
     return new OffsetPaginationEvent(1, 5, '', '');
