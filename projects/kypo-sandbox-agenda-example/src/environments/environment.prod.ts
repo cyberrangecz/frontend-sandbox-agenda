@@ -9,7 +9,7 @@ export const homeURL = 'https://localhost:4200';
 export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
 export const userAngGroupURL = baseURL + 'kypo-rest-user-and-group/api/v1/';
 
-export const kypo2TopologyConfig = {
+export const kypoTopologyConfig = {
   topologyRestUrl: sandboxesURL,
   decoratorsRestUrl: '', // OBSOLETE
   defaultDecoratorRefreshPeriodInSeconds: 3, // OBSOLETE
@@ -27,7 +27,7 @@ export const environment = {
   sandboxAgendaConfig: {
     pollingPeriod: 5000,
     defaultPaginationSize: 10,
-    kypo2TopologyConfig,
+    kypoTopologyConfig,
   },
   sandboxApiConfig: {
     sandboxRestBasePath: sandboxesURL,

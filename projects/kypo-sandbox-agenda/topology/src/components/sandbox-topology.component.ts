@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, OnInit
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { Kypo2TopologyErrorService, TopologyApi } from '@muni-kypo-crp/topology-graph';
+import { KypoTopologyErrorService, TopologyApi } from '@muni-kypo-crp/topology-graph';
 import { Observable } from 'rxjs';
 import { map, take, takeWhile, tap } from 'rxjs/operators';
 import {
@@ -29,7 +29,7 @@ export class SandboxTopologyComponent extends SentinelBaseDirective implements O
 
   constructor(
     private activeRoute: ActivatedRoute,
-    private topologyErrorService: Kypo2TopologyErrorService,
+    private topologyErrorService: KypoTopologyErrorService,
     private errorHandler: SandboxErrorHandler,
     private topologyService: TopologyApi
   ) {

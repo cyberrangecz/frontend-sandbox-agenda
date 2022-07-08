@@ -7,10 +7,10 @@ $warn: mat.get-color-from-palette(sentinel.$sentinel-warn-palette);
 $success: #6df000;
 $non-accent: #808080;
 
-$kypo2-white-primary-palette: mat.define-palette(mat.$gray-palette, A100);
-$primary-inverted: mat.get-color-from-palette($kypo2-white-primary-palette);
-$accent-inverted: mat.get-color-from-palette($kypo2-white-primary-palette);
-$warn-inverted: mat.get-color-from-palette($kypo2-white-primary-palette);
+$kypo-white-primary-palette: mat.define-palette(mat.$gray-palette, A100);
+$primary-inverted: mat.get-color-from-palette($kypo-white-primary-palette);
+$accent-inverted: mat.get-color-from-palette($kypo-white-primary-palette);
+$warn-inverted: mat.get-color-from-palette($kypo-white-primary-palette);
 
 $darker-white-primary-palette: mat.define-palette(mat.$gray-palette, 200);
 $breadcrumbs-primary: mat.get-color-from-palette($darker-white-primary-palette);
