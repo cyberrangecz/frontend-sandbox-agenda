@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import {
-  Kypo2TopologyGraphConfig,
-  Kypo2TopologyGraphModule,
-  Kypo2TopologyLegendModule,
+  KypoTopologyGraphConfig,
+  KypoTopologyGraphModule,
+  KypoTopologyLegendModule,
   TopologyApiModule,
 } from '@muni-kypo-crp/topology-graph';
 import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
@@ -15,16 +15,16 @@ import { SandboxTopologyComponent } from './sandbox-topology.component';
  */
 @NgModule({
   declarations: [SandboxTopologyComponent],
-  imports: [CommonModule, MatCardModule, Kypo2TopologyGraphModule, Kypo2TopologyLegendModule, TopologyApiModule],
+  imports: [CommonModule, MatCardModule, KypoTopologyGraphModule, KypoTopologyLegendModule, TopologyApiModule],
 })
 export class SandboxTopologyComponentsModule {
   static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<SandboxTopologyComponentsModule> {
     return {
       ngModule: SandboxTopologyComponentsModule,
       providers: [
-        { provide: Kypo2TopologyGraphConfig, useValue: config.kypo2TopologyConfig },
+        { provide: KypoTopologyGraphConfig, useValue: config.kypoTopologyConfig },
         { provide: SandboxAgendaConfig, useValue: config },
-        TopologyApiModule.forRoot(config.kypo2TopologyConfig).providers,
+        TopologyApiModule.forRoot(config.kypoTopologyConfig).providers,
       ],
     };
   }

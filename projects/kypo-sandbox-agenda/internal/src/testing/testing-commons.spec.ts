@@ -12,7 +12,7 @@ import {
   SandboxInstanceApi,
   VMImagesApi,
 } from '@muni-kypo-crp/sandbox-api';
-import { Kypo2TopologyGraphConfig } from '@muni-kypo-crp/topology-graph';
+import { KypoTopologyGraphConfig } from '@muni-kypo-crp/topology-graph';
 import { SandboxAgendaConfig } from '../../../src/sandbox-agenda-config';
 import { SandboxErrorHandler } from '../../../src/sandbox-error-handler.service';
 import { SandboxNavigator } from '../../../src/sandbox-navigator.service';
@@ -79,7 +79,7 @@ export function createContextSpy(): jasmine.SpyObj<SandboxAgendaContext> {
   const config = new SandboxAgendaConfig();
   config.pollingPeriod = 5000;
   config.defaultPaginationSize = 20;
-  config.kypo2TopologyConfig = new Kypo2TopologyGraphConfig();
+  config.kypoTopologyConfig = new KypoTopologyGraphConfig();
   return new SandboxAgendaContext(config);
 }
 
