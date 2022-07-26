@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PaginatedResource, OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, RequestStageState } from '@muni-kypo-crp/sandbox-model';
-import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
-import { combineLatest, forkJoin, Observable, zip } from 'rxjs';
-import { map, take, takeWhile, tap } from 'rxjs/operators';
-import { SandboxNavigator, POOL_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
-import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
+import { Observable } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
+import { POOL_DATA_ATTRIBUTE_NAME, SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
+import { PaginationService, ResourcePollingService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
@@ -20,8 +19,6 @@ import { CleanupRequestsConcreteService } from '../services/state/request/cleanu
 import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
 import { PoolDetailTable } from '../model/pool-detail-table';
 import { AbstractSandbox } from '../model/abstract-sandbox';
-import { AbstractSandboxConcreteService } from '../services/abstract-sandbox/abstract-sandbox-concrete.service';
-import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sandbox.service';
 import { SelectedStage } from '../model/selected-stage';
 
 /**
@@ -33,11 +30,11 @@ import { SelectedStage } from '../model/selected-stage';
   styleUrls: ['./pool-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
+    ResourcePollingService,
     { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
     { provide: SandboxAllocationUnitsService, useClass: SandboxAllocationUnitsConcreteService },
     { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
-    { provide: AbstractSandboxService, useClass: AbstractSandboxConcreteService },
   ],
 })
 export class PoolDetailComponent extends SentinelBaseDirective implements OnInit {
@@ -49,7 +46,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
   controls: SentinelControlItem[];
 
   constructor(
-    private abstractSandboxService: AbstractSandboxService,
+    private sandboxInstanceService: SandboxInstanceService,
     private paginationService: PaginationService,
     private navigator: SandboxNavigator,
     private activeRoute: ActivatedRoute
@@ -68,8 +65,8 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    */
   onLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
-    this.abstractSandboxService
-      .getAll(this.pool.id, loadEvent.pagination)
+    this.sandboxInstanceService
+      .getAllUnits(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }
@@ -88,9 +85,9 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
 
   onStageAction(selectedStage: SelectedStage): void {
     if (selectedStage.state === RequestStageState.RETRY) {
-      this.abstractSandboxService.retryAllocate(selectedStage.unitId).pipe(take(1)).subscribe();
+      this.sandboxInstanceService.retryAllocate(selectedStage.unitId).pipe(take(1)).subscribe();
     }
-    this.abstractSandboxService
+    this.sandboxInstanceService
       .navigateToStage(this.pool.id, selectedStage.unitId, selectedStage.order)
       .pipe(take(1))
       .subscribe();
@@ -105,42 +102,27 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
       this.onLoadEvent(initialLoadEvent);
     });
 
-    this.instances$ = combineLatest([
-      this.abstractSandboxService.allocationUnits$,
-      this.abstractSandboxService.sandboxInstances$,
-    ]).pipe(
+    this.instances$ = this.sandboxInstanceService.allocationUnits$.pipe(
       map((resource) => {
-        const data = resource[0].elements.map(
-          (_, index) => new AbstractSandbox(resource[0].elements[index], resource[1].elements[index])
-        );
-
+        const data = resource.elements.map((allocationUnit) => new AbstractSandbox(allocationUnit));
         return new PoolDetailTable(
-          new PaginatedResource<AbstractSandbox>(data, resource[0].pagination),
-          this.abstractSandboxService,
+          new PaginatedResource<AbstractSandbox>(data, resource.pagination),
+          this.sandboxInstanceService,
           this.navigator
         );
       })
     );
-
-    //this.instancesTableHasError$ = this.abstractSandboxService.hasError$;
   }
 
   private initControls() {
-    const sandboxes$ = combineLatest([
-      this.abstractSandboxService.allocationUnits$,
-      this.abstractSandboxService.sandboxInstances$,
-    ]).pipe(
+    const sandboxes$ = this.sandboxInstanceService.allocationUnits$.pipe(
       map((resource) => {
         this.controls = PoolDetailControls.create(
           this.pool,
-          resource[0].elements.map(
-            (_, index) => new AbstractSandbox(resource[0].elements[index], resource[1].elements[index])
-          ),
-          this.abstractSandboxService
+          resource.elements.map((allocationUnit) => new AbstractSandbox(allocationUnit)),
+          this.sandboxInstanceService
         );
-        return resource[0].elements.map(
-          (_, index) => new AbstractSandbox(resource[0].elements[index], resource[1].elements[index])
-        );
+        return resource.elements.map((allocationUnit) => new AbstractSandbox(allocationUnit));
       })
     );
     sandboxes$.pipe(takeWhile(() => this.isAlive)).subscribe();

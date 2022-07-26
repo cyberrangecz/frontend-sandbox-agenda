@@ -25,6 +25,7 @@ export const environment = {
   production: false,
   sandboxAgendaConfig: {
     pollingPeriod: 10000,
+    retryAttempts: 3,
     defaultPaginationSize: 10,
     kypoTopologyConfig,
   },
@@ -45,7 +46,7 @@ export const environment = {
         backgroundColor: '#002776',
         oidcConfig: {
           issuer: 'https://172.19.0.22:443/csirtmu-dummy-issuer-server/',
-          clientId: 'bxPXhdWNeqhWssxbSGiRjQbnQqmqxDdiTTDJ',
+          clientId: 'ztJxraMTteXYGOiJreWjFfvmJhHXhHiRhcXo',
           redirectUri: homeURL, // redirect after successful login
           scope: 'openid email profile',
           logoutUrl: 'https://172.19.0.22/csirtmu-dummy-issuer-server/endsession/endsession',

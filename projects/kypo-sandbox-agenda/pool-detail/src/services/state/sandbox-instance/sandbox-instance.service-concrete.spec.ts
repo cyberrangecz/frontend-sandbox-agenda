@@ -14,13 +14,16 @@ import {
   createNavigatorSpy,
   createNotificationSpy,
   createPoolApiSpy,
+  createSandboxAllocationUnitsServiceSpy,
   createSauApiSpy,
   createSiApiSpy,
 } from '../../../../../internal/src/testing/testing-commons.spec';
 import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
+import { SandboxAllocationUnitsService } from '../sandbox-allocation-unit/sandbox-allocation-units.service';
 
 describe('SandboxInstanceConcreteService', () => {
   let sandboxInstanceApiSpy: jasmine.SpyObj<SandboxInstanceApi>;
+  let sandboxAllocationUnitsServiceSpy: jasmine.SpyObj<SandboxAllocationUnitsService>;
   let poolApiSpy: jasmine.SpyObj<PoolApi>;
   let sauApiSpy: jasmine.SpyObj<SandboxAllocationUnitsApi>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
@@ -32,6 +35,7 @@ describe('SandboxInstanceConcreteService', () => {
 
   beforeEach(async(() => {
     poolApiSpy = createPoolApiSpy();
+    sandboxAllocationUnitsServiceSpy = createSandboxAllocationUnitsServiceSpy();
     sandboxInstanceApiSpy = createSiApiSpy();
     sauApiSpy = createSauApiSpy();
     dialogSpy = createMatDialogSpy();
@@ -45,6 +49,7 @@ describe('SandboxInstanceConcreteService', () => {
       providers: [
         SandboxInstanceConcreteService,
         { provide: SandboxInstanceApi, useValue: sandboxInstanceApiSpy },
+        { provide: SandboxAllocationUnitsService, useValue: sandboxAllocationUnitsServiceSpy },
         { provide: PoolApi, useValue: poolApiSpy },
         { provide: SandboxAllocationUnitsApi, useValue: sauApiSpy },
         { provide: MatDialog, useValue: dialogSpy },
@@ -65,7 +70,7 @@ describe('SandboxInstanceConcreteService', () => {
     const pagination = createPagination();
     sandboxInstanceApiSpy.getSandboxes.and.returnValue(asyncData(null));
 
-    service.getAll(0, pagination).subscribe(() => done(), fail);
+    service.getAllSandboxes(0, pagination).subscribe(() => done(), fail);
     expect(sandboxInstanceApiSpy.getSandboxes).toHaveBeenCalledTimes(1);
   });
 
@@ -78,14 +83,14 @@ describe('SandboxInstanceConcreteService', () => {
       expect(emitted).toEqual(mockData);
       done();
     }, fail);
-    service.getAll(0, pagination).subscribe((_) => _, fail);
+    service.getAllSandboxes(0, pagination).subscribe((_) => _, fail);
   });
 
   it('should call error handler on err', (done) => {
     const pagination = createPagination();
     sandboxInstanceApiSpy.getSandboxes.and.returnValue(throwError(null));
 
-    service.getAll(0, pagination).subscribe(
+    service.getAllSandboxes(0, pagination).subscribe(
       () => fail,
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
@@ -108,7 +113,7 @@ describe('SandboxInstanceConcreteService', () => {
         },
         () => fail
       );
-    service.getAll(0, pagination).subscribe(
+    service.getAllSandboxes(0, pagination).subscribe(
       () => fail,
       (_) => _
     );

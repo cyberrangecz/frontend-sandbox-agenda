@@ -1,41 +1,28 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { OffsetPaginationEvent } from '@sentinel/common';
 import { switchMap } from 'rxjs/operators';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolOverviewService } from '../../state/pool-overview/pool-overview.service';
 import { AbstractPoolService } from './abstract-pool.service';
-import { SandboxLimitsService } from '../../state/resources/sandbox-resources.service';
-import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
 
 @Injectable()
 export class AbstractPoolConcreteService extends AbstractPoolService {
   private lastPagination: OffsetPaginationEvent;
 
-  constructor(
-    private poolOverviewService: PoolOverviewService,
-    private sandboxLimitsService: SandboxLimitsService,
-    private sandboxDefinitionService: SandboxDefinitionOverviewService
-  ) {
+  constructor(private poolOverviewService: PoolOverviewService) {
     super();
     this.pools$ = poolOverviewService.resource$;
-    this.limits$ = sandboxLimitsService.limits$;
-    this.sandboxDefinitions$ = sandboxDefinitionService.resource$;
     this.poolsHasError$ = poolOverviewService.hasError$;
   }
 
   /**
-   * Gets all sandbox allocation units for pool with passed pagination and updates related observables or handles an error
-   * @param poolId id of a pool associated with requests for sandbox allocation units for pool
+   * Gets all pools with passed pagination.
    * @param pagination requested pagination
    */
   getAll(pagination: OffsetPaginationEvent): Observable<any> {
     this.lastPagination = pagination;
-    return combineLatest([
-      this.poolOverviewService.getAll(pagination),
-      this.sandboxLimitsService.getLimits(),
-      this.sandboxDefinitionService.getAll(new OffsetPaginationEvent(0, Number.MAX_SAFE_INTEGER)),
-    ]);
+    return this.poolOverviewService.getAll(pagination);
   }
 
   /**

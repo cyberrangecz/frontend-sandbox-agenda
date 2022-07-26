@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, Observable, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of, tap } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
   SandboxErrorHandler,
@@ -24,8 +24,12 @@ export class PoolResolver implements Resolve<Pool> {
     private router: Router
   ) {}
 
+  private poolSubject$: BehaviorSubject<Pool> = new BehaviorSubject(null);
+  pool$: Observable<Pool> = this.poolSubject$.asObservable();
+
   /**
    * Retrieves a specific resource based on id provided in url. Navigates to a resource overview if no resource with such id exists.
+   * Stores resource after first invocation and resets it after second.
    * @param route route snapshot
    * @param state router state snapshot
    */
@@ -35,15 +39,22 @@ export class PoolResolver implements Resolve<Pool> {
     }
     if (route.paramMap.has(SANDBOX_POOL_ID_SELECTOR)) {
       const id = Number(route.paramMap.get(SANDBOX_POOL_ID_SELECTOR));
-      return this.api.getPool(id).pipe(
-        take(1),
-        mergeMap((pool) => (pool ? of(pool) : this.navigateToOverview())),
-        catchError((err) => {
-          this.errorHandler.emit(err, 'Sandbox pool resolver');
-          this.navigateToOverview();
-          return EMPTY;
-        })
-      );
+      if (this.poolSubject$.getValue()?.id === id) {
+        const pool = this.poolSubject$.getValue();
+        this.poolSubject$.next(null);
+        return pool;
+      } else {
+        return this.api.getPool(id).pipe(
+          take(1),
+          mergeMap((pool) => (pool ? of(pool) : this.navigateToOverview())),
+          tap((pool) => this.poolSubject$.next(pool)),
+          catchError((err) => {
+            this.errorHandler.emit(err, 'Sandbox pool resolver');
+            this.navigateToOverview();
+            return EMPTY;
+          })
+        );
+      }
     }
     return this.navigateToOverview();
   }

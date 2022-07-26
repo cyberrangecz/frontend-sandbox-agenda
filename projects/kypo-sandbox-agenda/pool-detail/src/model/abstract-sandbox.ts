@@ -11,20 +11,20 @@ export class AbstractSandbox {
   id: number;
   poolId: number;
   name: string;
+  locked: boolean;
   createdAt: Date;
   createdBy: string;
   state: string;
-  sandboxInstance: SandboxInstance;
   allocationRequest: AllocationRequest;
   cleanupRequest: CleanupRequest;
 
-  constructor(allocationUnit: SandboxAllocationUnit, sandboxInstance: SandboxInstance) {
+  constructor(allocationUnit: SandboxAllocationUnit) {
     this.id = allocationUnit.id;
     this.name = `Sandbox ${allocationUnit.id}`;
+    this.locked = allocationUnit.locked;
     this.createdAt = allocationUnit.allocationRequest.createdAt;
     this.createdBy = allocationUnit.createdBy.fullName;
     this.poolId = allocationUnit.poolId;
-    this.sandboxInstance = sandboxInstance;
     this.allocationRequest = allocationUnit.allocationRequest;
     this.cleanupRequest = allocationUnit.cleanupRequest;
     this.state = this.stateResolver();

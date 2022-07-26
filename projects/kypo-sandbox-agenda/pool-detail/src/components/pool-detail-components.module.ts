@@ -6,7 +6,6 @@ import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import {
   SandboxInstanceResolver,
   SandboxInstanceBreadcrumbResolver,
-  PoolResolver,
   RequestResolver,
   RequestBreadcrumbResolver,
 } from '@muni-kypo-crp/sandbox-agenda/resolvers';
@@ -19,13 +18,7 @@ import { StageOverviewComponent } from './stage-overview/stage-overview.componen
 @NgModule({
   declarations: [PoolDetailComponent, StageOverviewComponent],
   imports: [CommonModule, SentinelTableModule, PoolDetailMaterialModule, SentinelControlsModule],
-  providers: [
-    PoolResolver,
-    RequestResolver,
-    RequestBreadcrumbResolver,
-    SandboxInstanceResolver,
-    SandboxInstanceBreadcrumbResolver,
-  ],
+  providers: [RequestResolver, RequestBreadcrumbResolver, SandboxInstanceResolver, SandboxInstanceBreadcrumbResolver],
 })
 export class PoolDetailComponentsModule {
   static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<PoolDetailComponentsModule> {
