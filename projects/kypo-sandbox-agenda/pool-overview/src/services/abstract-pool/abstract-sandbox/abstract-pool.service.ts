@@ -3,31 +3,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HardwareUsage, Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class AbstractPoolService {
-  protected limitsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  limitsHasError$: Observable<boolean> = this.limitsHasErrorSubject$.asObservable();
-
   protected poolsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   poolsHasError$: Observable<boolean> = this.poolsHasErrorSubject$.asObservable();
-
-  protected sandboxDefinitionsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  sandboxDefinitionsHasError$: Observable<boolean> = this.sandboxDefinitionsHasErrorSubject$.asObservable();
-
-  protected limitsSubject$: BehaviorSubject<HardwareUsage>;
-
-  limits$: Observable<HardwareUsage>;
 
   protected poolsSubject$: BehaviorSubject<PaginatedResource<Pool>>;
 
   pools$: Observable<PaginatedResource<Pool>>;
 
-  protected sandboxDefinitionsSubject$: BehaviorSubject<IPaginatedElements<SandboxDefinition>>;
-
-  sandboxDefinitions$: Observable<IPaginatedElements<SandboxDefinition>>;
-
   /**
+   * Gets all pools with passed pagination.
    * @param pagination requested pagination
    */
   abstract getAll(pagination: PaginationBaseEvent): Observable<any>;

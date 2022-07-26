@@ -1,5 +1,5 @@
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 export class PoolFormGroup {
   formGroup: UntypedFormGroup;
@@ -13,7 +13,8 @@ export class PoolFormGroup {
 
   createPoolFromValues(): Pool {
     const pool = new Pool();
-    pool.definitionId = this.formGroup.get('sandboxDefinition').value?.id;
+    pool.definition = new SandboxDefinition();
+    pool.definition.id = this.formGroup.get('sandboxDefinition').value?.id;
     pool.maxSize = this.formGroup.get('poolSize').value;
     return pool;
   }

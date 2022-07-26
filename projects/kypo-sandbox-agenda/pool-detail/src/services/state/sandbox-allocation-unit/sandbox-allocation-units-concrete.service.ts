@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
-import { BehaviorSubject, EMPTY, merge, Observable, timer } from 'rxjs';
-import { PaginatedResource, OffsetPaginationEvent, OffsetPagination } from '@sentinel/common';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { retryWhen, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   SentinelConfirmationDialogComponent,
@@ -14,16 +14,19 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { MatDialog } from '@angular/material/dialog';
+import { ResourcePollingService } from '@muni-kypo-crp/sandbox-agenda/internal';
 
 @Injectable()
 export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnitsService {
   private lastPoolId: number;
   private poolPeriod: number;
+  private retryAttempts: number;
 
   constructor(
     private poolApi: PoolApi,
     private sauApi: SandboxAllocationUnitsApi,
     private allocationRequestsApi: AllocationRequestsApi,
+    private resourcePollingService: ResourcePollingService,
     private dialog: MatDialog,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
@@ -32,7 +35,8 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     super();
     this.unitsSubject$ = new BehaviorSubject(this.initSubject(10));
     this.poolPeriod = context.config.pollingPeriod;
-    this.units$ = merge(this.createPoll(), this.unitsSubject$.asObservable());
+    this.retryAttempts = context.config.retryAttempts;
+    this.units$ = this.unitsSubject$.asObservable();
   }
 
   /**
@@ -41,29 +45,17 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param pagination requested pagination
    */
   getAll(poolId: number, pagination: OffsetPaginationEvent): Observable<PaginatedResource<SandboxAllocationUnit>> {
-    this.onManualResourceRefresh(pagination, poolId);
-    return this.poolApi.getPoolsSandboxAllocationUnits(poolId, pagination).pipe(
+    this.lastPagination = pagination;
+    this.lastPoolId = poolId;
+    const observable$: Observable<PaginatedResource<SandboxAllocationUnit>> = this.poolApi
+      .getPoolsSandboxAllocationUnits(poolId, pagination)
+      .pipe(tap((paginatedRequests) => this.unitsSubject$.next(paginatedRequests)));
+    return this.resourcePollingService.startPolling(observable$, this.poolPeriod, this.retryAttempts).pipe(
       tap(
-        (paginatedRequests) => {
-          this.unitsSubject$.next(paginatedRequests);
-        },
+        (_) => _,
         (err) => this.onGetAllError(err)
       )
     );
-  }
-
-  /**
-   * Performs necessary operations and updates state of the service.
-   * @param pagination new requested pagination
-   * @param params any other parameters required to update data in your concrete service
-   */
-  protected onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void {
-    this.lastPagination = pagination;
-    if (this.hasErrorSubject$.getValue()) {
-      this.retryPolling$.next(true);
-    }
-    this.hasErrorSubject$.next(false);
-    this.lastPoolId = params[0];
   }
 
   /**
@@ -72,28 +64,6 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    */
   protected initSubject(pageSize: number): PaginatedResource<SandboxAllocationUnit> {
     return new PaginatedResource([], new OffsetPagination(0, 0, pageSize, 0, 0));
-  }
-
-  /**
-   * Repeats last get all request for polling purposes
-   */
-  protected refreshResources(): Observable<PaginatedResource<SandboxAllocationUnit>> {
-    this.hasErrorSubject$.next(false);
-    return this.poolApi
-      .getPoolsSandboxAllocationUnits(this.lastPoolId, this.lastPagination)
-      .pipe(tap({ error: (err) => this.onGetAllError(err) }));
-  }
-
-  /**
-   * Creates poll observable using a timer. You can extend the behaviour by piping the observable and applying
-   * RxJs operators on it (e.g. takeWhile to stop polling on specific conditions)
-   */
-  protected createPoll(): Observable<PaginatedResource<SandboxAllocationUnit>> {
-    // The initial delay is set to synchronize it with pools from other tables
-    return timer(this.poolPeriod, this.poolPeriod).pipe(
-      switchMap(() => this.refreshResources()),
-      retryWhen(() => this.retryPolling$)
-    );
   }
 
   private displayConfirmationDialog(sandboxIds: number[], title: string): Observable<SentinelDialogResultEnum> {

@@ -1,5 +1,5 @@
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 
 export abstract class SandboxAllocationUnitsService {
@@ -8,11 +8,6 @@ export abstract class SandboxAllocationUnitsService {
    * Last pagination used when requesting new data
    */
   protected lastPagination: OffsetPaginationEvent;
-
-  /**
-   * Observable triggering retry of polling after it was interrupted (e.g. by error)
-   */
-  protected retryPolling$: Subject<boolean> = new Subject<boolean>();
 
   /**
    * True if server returned error response on the latest request, false otherwise
@@ -49,27 +44,6 @@ export abstract class SandboxAllocationUnitsService {
     poolId: number,
     pagination: OffsetPaginationEvent
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
-
-  /**
-   * Performs necessary operations and updates state of the service.
-   * @contract Needs to update lastPagination attribute, hasError subject and retry polling
-   * if it was previously interrupted
-   * @param pagination new requested pagination
-   * @param params any other parameters required to update data in your concrete service
-   */
-  protected abstract onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void;
-
-  /**
-   * @contract must update resource and hasErrorSubject
-   * Repeats last get all request for polling purposes
-   */
-  protected abstract refreshResources(): Observable<PaginatedResource<SandboxAllocationUnit>>;
-
-  /**
-   * Creates poll observable using a timer. You can extend the behaviour by piping the observable and applying
-   * RxJs operators on it (e.g. takeWhile to stop polling on specific conditions)
-   */
-  protected abstract createPoll(): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**
    * Initializes default resources with given pageSize

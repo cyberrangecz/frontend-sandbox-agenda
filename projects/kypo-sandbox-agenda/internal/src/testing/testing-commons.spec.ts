@@ -18,6 +18,9 @@ import { SandboxErrorHandler } from '../../../src/sandbox-error-handler.service'
 import { SandboxNavigator } from '../../../src/sandbox-navigator.service';
 import { SandboxNotificationService } from '../../../src/sandbox-notification.service';
 import { SandboxAgendaContext } from '../services/sandox-agenda-context.service';
+import { ResourcePollingService } from '../services/resource-polling.service';
+import { SandboxAllocationUnitsService } from '../../../pool-detail/src/services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
+import { Observable } from 'rxjs';
 
 export const SENTINEL_TABLE_COMPONENT_SELECTOR = 'sentinel-table';
 export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
@@ -51,6 +54,10 @@ export function createAllocationRequestApiSpy(): jasmine.SpyObj<AllocationReques
   return jasmine.createSpyObj('AllocationRequestsApi', ['cancel']);
 }
 
+export function createResourcePollingServiceSpy(): jasmine.SpyObj<ResourcePollingService> {
+  return jasmine.createSpyObj('ResourcePollingService', ['startPolling']);
+}
+
 export function createCleanupRequestApiSpy(): jasmine.SpyObj<CleanupRequestsApi> {
   return jasmine.createSpyObj('CleanupRequestsApi', ['cancel']);
 }
@@ -73,6 +80,10 @@ export function createNotificationSpy(): jasmine.SpyObj<SandboxNotificationServi
 
 export function createMatDialogSpy(): jasmine.SpyObj<MatDialog> {
   return jasmine.createSpyObj('MatDialog', ['open']);
+}
+
+export function createSandboxAllocationUnitsServiceSpy(): jasmine.SpyObj<SandboxAllocationUnitsService> {
+  return jasmine.createSpyObj('SandboxAllocationUnitsService', ['getAll', 'cleanupMultiple']);
 }
 
 export function createContextSpy(): jasmine.SpyObj<SandboxAgendaContext> {

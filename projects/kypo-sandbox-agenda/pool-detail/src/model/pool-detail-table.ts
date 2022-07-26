@@ -6,7 +6,7 @@ import { defer, of } from 'rxjs';
 import { PoolDetailRowAdapter } from './pool-detail-row-adapter';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { AbstractSandbox } from './abstract-sandbox';
-import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sandbox.service';
+import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 
 /**
  * @dynamic
@@ -14,7 +14,7 @@ import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sa
 export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   constructor(
     resource: PaginatedResource<AbstractSandbox>,
-    abstractSandboxService: AbstractSandboxService,
+    sandboxInstanceService: SandboxInstanceService,
     navigator: SandboxNavigator
   ) {
     const columns = [
@@ -26,7 +26,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
       new Column('stages', 'stages', false),
     ];
     const rows = resource.elements.map((element) =>
-      PoolDetailTable.createRow(element, abstractSandboxService, navigator)
+      PoolDetailTable.createRow(element, sandboxInstanceService, navigator)
     );
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -34,29 +34,29 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
 
   private static createRow(
     data: AbstractSandbox,
-    abstractSandboxService: AbstractSandboxService,
+    sandboxInstanceService: SandboxInstanceService,
     navigator: SandboxNavigator
   ): Row<PoolDetailRowAdapter> {
     const rowAdapter = new PoolDetailRowAdapter();
     const dateFormatter = new SentinelDateTimeFormatPipe('en-US');
     rowAdapter.unitId = data.allocationRequest.id;
     rowAdapter.name = data.name;
-    rowAdapter.lock = this.lockResolver(data.sandboxInstance);
+    rowAdapter.lock = data.locked ? 'locked' : 'unlocked';
     rowAdapter.created = dateFormatter.transform(data.allocationRequest.createdAt);
     rowAdapter.createdBy = data.createdBy;
     rowAdapter.state = data.stateResolver();
     rowAdapter.stages = this.requestStageResolver(data);
-    const row = new Row(rowAdapter, this.createActions(data, abstractSandboxService));
+    const row = new Row(rowAdapter, this.createActions(data, sandboxInstanceService));
     row.addLink('name', navigator.toAllocationRequest(data.poolId, data.allocationRequest.id));
     return row;
   }
 
-  private static createActions(data: AbstractSandbox, abstractSandboxService: AbstractSandboxService): RowAction[] {
+  private static createActions(data: AbstractSandbox, sandboxInstanceService: SandboxInstanceService): RowAction[] {
     const actions = [
       new DeleteAction(
         'Delete sandbox instance',
         of(data.cleanupRequest != null),
-        defer(() => abstractSandboxService.cleanupMultiple(data.poolId, [data.id], true))
+        defer(() => sandboxInstanceService.cleanupMultiple(data.poolId, [data.id], true))
       ),
       new RowAction(
         'topology',
@@ -65,7 +65,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Display topology',
         of(!data.buildFinished()),
-        defer(() => abstractSandboxService.showTopology(data.poolId, data.sandboxInstance))
+        defer(() => sandboxInstanceService.showTopology(data.poolId, data.id))
       ),
       new RowAction(
         'download_user_ssh_config',
@@ -74,24 +74,34 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Download user SSH config',
         of(!data.buildFinished()),
-        defer(() => abstractSandboxService.getUserSshAccess(data.id))
+        defer(() => sandboxInstanceService.getUserSshAccess(data.id))
       ),
-      this.createLockAction(data.sandboxInstance, abstractSandboxService),
+      this.createLockAction(
+        data.id,
+        data.locked,
+        data.cleanupRunning() || data.allocationRunning(),
+        sandboxInstanceService
+      ),
     ];
 
     return actions;
   }
 
-  private static createLockAction(instance: SandboxInstance, service: AbstractSandboxService): RowAction {
-    if (instance && instance.isLocked()) {
+  private static createLockAction(
+    allocationUnitId: number,
+    locked: boolean,
+    stateChanging: boolean,
+    service: SandboxInstanceService
+  ): RowAction {
+    if (locked) {
       return new RowAction(
         'unlock',
         'Unlock',
         'lock_open',
         'primary',
         'Unlock sandbox instance',
-        of(instance == null),
-        defer(() => service.unlock(instance))
+        of(!locked || stateChanging),
+        defer(() => service.unlock(allocationUnitId))
       );
     } else {
       return new RowAction(
@@ -100,8 +110,8 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'lock',
         'primary',
         'Lock sandbox instance',
-        of(instance == null),
-        defer(() => service.lock(instance))
+        of(locked || stateChanging),
+        defer(() => service.lock(allocationUnitId))
       );
     }
   }

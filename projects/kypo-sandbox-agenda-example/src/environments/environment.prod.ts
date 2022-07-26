@@ -26,6 +26,7 @@ export const environment = {
   production: true,
   sandboxAgendaConfig: {
     pollingPeriod: 5000,
+    retryAttempts: 3,
     defaultPaginationSize: 10,
     kypoTopologyConfig,
   },

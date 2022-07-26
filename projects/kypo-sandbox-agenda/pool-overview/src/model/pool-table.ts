@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common';
-import { HardwareUsage, Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
@@ -13,14 +13,10 @@ import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/
 export class PoolTable extends SentinelTable<PoolRowAdapter> {
   constructor(
     resource: PaginatedResource<Pool>,
-    sandboxLimits: HardwareUsage,
-    sandboxDefinitions: SandboxDefinition[],
     abstractPoolService: AbstractPoolService,
     navigator: SandboxNavigator
   ) {
-    const rows = resource.elements.map((element) =>
-      PoolTable.createRow(element, sandboxLimits, sandboxDefinitions, abstractPoolService, navigator)
-    );
+    const rows = resource.elements.map((element) => PoolTable.createRow(element, abstractPoolService, navigator));
     const columns = [
       new Column('title', 'title', false),
       new Column('createdByName', 'created by', false),
@@ -37,27 +33,16 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
 
   private static createRow(
     pool: Pool,
-    sandboxLimits: HardwareUsage,
-    sandboxDefinitions: SandboxDefinition[],
     abstractPoolService: AbstractPoolService,
     navigator: SandboxNavigator
   ): Row<PoolRowAdapter> {
     const rowAdapter = pool as PoolRowAdapter;
     rowAdapter.title = `Pool ${rowAdapter.id}`;
     rowAdapter.createdByName = pool.createdBy.fullName;
-    rowAdapter.sandboxDefinitionName = sandboxDefinitions.find(
-      (definiton) => definiton.id === pool.definitionId
-    )?.title;
-    rowAdapter.instancesUtilization = `${(
-      ((pool.hardwareUsage.instances * pool.usedSize) / sandboxLimits.instances) *
-      100
-    ).toFixed(1)}%`;
-
-    rowAdapter.cpuUtilization = `${(((pool.hardwareUsage.vcpu * pool.usedSize) / sandboxLimits.vcpu) * 100).toFixed(
-      1
-    )}%`;
-
-    rowAdapter.ramUtilization = `${(((pool.hardwareUsage.ram * pool.usedSize) / sandboxLimits.ram) * 100).toFixed(1)}%`;
+    rowAdapter.sandboxDefinitionName = pool.definition.title;
+    rowAdapter.instancesUtilization = `${(pool.hardwareUsage.instances * 100).toFixed(1)}%`;
+    rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
+    rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
 
     const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService));
     row.addLink('title', navigator.toPool(rowAdapter.id));

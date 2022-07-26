@@ -2,7 +2,7 @@ import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { defer, of } from 'rxjs';
 import { AbstractSandbox } from '../model/abstract-sandbox';
-import { AbstractSandboxService } from '../services/abstract-sandbox/abstract-sandbox.service';
+import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 
 /**
  * @dynamic
@@ -15,7 +15,7 @@ export class PoolDetailControls {
   static create(
     pool: Pool,
     sandboxes: AbstractSandbox[],
-    abstractSandboxService: AbstractSandboxService
+    sandboxInstanceService: SandboxInstanceService
   ): SentinelControlItem[] {
     return [
       new SentinelControlItem(
@@ -23,7 +23,7 @@ export class PoolDetailControls {
         'Allocate All',
         'primary',
         of(pool.maxSize === sandboxes.length),
-        defer(() => abstractSandboxService.allocate(pool.id))
+        defer(() => sandboxInstanceService.allocate(pool.id))
       ),
       new SentinelControlItem(
         this.DELETE_FAILED_ACTION_ID,
@@ -31,7 +31,7 @@ export class PoolDetailControls {
         'warn',
         of(PoolDetailControls.someSandboxFailedAndHasNoRunningCleanup(sandboxes)),
         defer(() =>
-          abstractSandboxService.cleanupMultiple(pool.id, PoolDetailControls.getFailedSandboxesIds(sandboxes), true)
+          sandboxInstanceService.cleanupMultiple(pool.id, PoolDetailControls.getFailedSandboxesIds(sandboxes), true)
         )
       ),
       new SentinelControlItem(
@@ -39,7 +39,7 @@ export class PoolDetailControls {
         'Delete All',
         'warn',
         of(PoolDetailControls.someSandboxHasNoRunningCleanup(sandboxes)),
-        defer(() => abstractSandboxService.cleanupMultiple(pool.id, [], true))
+        defer(() => sandboxInstanceService.cleanupMultiple(pool.id, [], true))
       ),
     ];
   }

@@ -17,15 +17,13 @@
     "build-and-pack": "npm install && npm run build-library && npm run create-package",
     "ci-update-version": "cd ./projects/kypo-sandbox-agenda/ && npm version $TAG_VERSION",
     "ci-build-and-pack": "npm ci --cache .npm --prefer-offline && npm run build-library && npm run create-package",
-    "ci-publish-package": "cd dist/kypo-sandbox-agenda && npm publish"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run prettier-check"
-    }
+    "ci-publish-package": "cd dist/kypo-sandbox-agenda && npm publish",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
+    "@muni-kypo-crp/sandbox-api": "~14.1.0",
+    "@muni-kypo-crp/sandbox-model": "~14.1.0",
     "@angular/animations": "^14.0.5",
     "@angular/cdk": "^14.0.4",
     "@angular/common": "^14.0.5",
@@ -36,8 +34,6 @@
     "@angular/platform-browser": "^14.0.5",
     "@angular/platform-browser-dynamic": "^14.0.5",
     "@angular/router": "^14.0.5",
-    "@muni-kypo-crp/sandbox-api": "~14.0.0",
-    "@muni-kypo-crp/sandbox-model": "~14.0.0",
     "@muni-kypo-crp/topology-graph": "~14.0.2",
     "@muni-kypo-crp/topology-model": "~14.0.2",
     "@sentinel/auth": "~14.0.0",

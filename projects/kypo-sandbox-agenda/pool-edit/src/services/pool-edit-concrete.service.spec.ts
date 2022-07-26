@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { CreatedBy, Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolEditConcreteService } from './pool-edit-concrete.service';
 import {
   createErrorHandlerSpy,
@@ -13,6 +13,7 @@ import {
   createNotificationSpy,
   createPoolApiSpy,
 } from '../../../internal/src/testing/testing-commons.spec';
+import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
 describe('PoolEditConcreteService', () => {
   let dialogSpy: jasmine.SpyObj<MatDialog>;
@@ -57,9 +58,16 @@ describe('PoolEditConcreteService', () => {
   });
 
   function createMock() {
+    const sandboxDefinition = new SandboxDefinition();
+    sandboxDefinition.id = 1;
+    sandboxDefinition.rev = 'master';
+    sandboxDefinition.title = 'small-sandbox';
+    sandboxDefinition.createdBy = new CreatedBy();
+    sandboxDefinition.url = 'gitlab@gitlab.com';
+
     const pool = new Pool();
     pool.id = 1;
-    pool.definitionId = 1;
+    pool.definition = sandboxDefinition;
     pool.lockId = 1;
     pool.usedSize = 10;
     pool.maxSize = 20;
