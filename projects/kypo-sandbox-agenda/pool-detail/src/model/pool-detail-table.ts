@@ -18,11 +18,11 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     navigator: SandboxNavigator
   ) {
     const columns = [
-      new Column('name', 'name', false),
-      new Column('lock', 'lock', false),
-      new Column('created', 'created', false),
-      new Column('createdBy', 'created by', false),
-      new Column('state', 'state', false),
+      new Column('name', 'name', true),
+      new Column('lock', 'lock', true),
+      new Column('created', 'created', true),
+      new Column('createdBy', 'created by', true, 'createdBy'),
+      new Column('state', 'state', true),
       new Column('stages', 'stages', false),
     ];
     const rows = resource.elements.map((element) =>
