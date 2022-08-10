@@ -1,10 +1,10 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { KypoTopologyErrorService, TopologyApi } from '@muni-kypo-crp/topology-graph';
+import { KypoTopologyErrorService } from '@muni-kypo-crp/topology-graph';
 import { Observable } from 'rxjs';
-import { map, take, takeWhile, tap } from 'rxjs/operators';
+import { map, takeWhile, tap } from 'rxjs/operators';
 import {
   SandboxErrorHandler,
   SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME,
@@ -20,7 +20,7 @@ import {
   styleUrls: ['./sandbox-topology.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxTopologyComponent extends SentinelBaseDirective implements OnInit, AfterViewInit {
+export class SandboxTopologyComponent extends SentinelBaseDirective implements OnInit {
   sandboxInstance$: Observable<SandboxInstance>;
   sandboxDefinition$: Observable<SandboxDefinition>;
   topologyWidth: number;
@@ -30,8 +30,7 @@ export class SandboxTopologyComponent extends SentinelBaseDirective implements O
   constructor(
     private activeRoute: ActivatedRoute,
     private topologyErrorService: KypoTopologyErrorService,
-    private errorHandler: SandboxErrorHandler,
-    private topologyService: TopologyApi
+    private errorHandler: SandboxErrorHandler
   ) {
     super();
   }
@@ -50,12 +49,6 @@ export class SandboxTopologyComponent extends SentinelBaseDirective implements O
     this.subscribeToTopologyErrorHandler();
   }
 
-  ngAfterViewInit(): void {
-    if (this.sandboxId) {
-      this.loadConsoles(this.sandboxId).pipe(take(1)).subscribe();
-    }
-  }
-
   @HostListener('window:resize', ['$event'])
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-unused-vars
   onResize(event): void {
@@ -72,19 +65,5 @@ export class SandboxTopologyComponent extends SentinelBaseDirective implements O
       next: (event) => this.errorHandler.emit(event.err, event.action),
       error: (err) => this.errorHandler.emit(err, 'There is a problem with topology error handler.'),
     });
-  }
-
-  private loadConsoles(sandboxId: number) {
-    /**
-     * Preloads VM console for user and stores it into browser storage for further use in topology.
-     * @param sandboxId id of sandbox in which the vm exists
-     */
-    const storage = window.localStorage;
-    return this.topologyService.getVMConsolesUrl(sandboxId).pipe(
-      tap(
-        (consoles) => storage.setItem('vm-consoles', JSON.stringify(consoles)),
-        (err) => this.errorHandler.emit(err, 'Obtaining console URL')
-      )
-    );
   }
 }

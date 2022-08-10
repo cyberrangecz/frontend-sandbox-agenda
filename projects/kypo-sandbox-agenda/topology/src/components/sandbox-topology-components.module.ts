@@ -15,7 +15,7 @@ import { SandboxTopologyComponent } from './sandbox-topology.component';
  */
 @NgModule({
   declarations: [SandboxTopologyComponent],
-  imports: [CommonModule, MatCardModule, KypoTopologyGraphModule, KypoTopologyLegendModule, TopologyApiModule],
+  imports: [CommonModule, MatCardModule, KypoTopologyGraphModule, KypoTopologyLegendModule],
 })
 export class SandboxTopologyComponentsModule {
   static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<SandboxTopologyComponentsModule> {
@@ -24,7 +24,6 @@ export class SandboxTopologyComponentsModule {
       providers: [
         { provide: KypoTopologyGraphConfig, useValue: config.kypoTopologyConfig },
         { provide: SandboxAgendaConfig, useValue: config },
-        TopologyApiModule.forRoot(config.kypoTopologyConfig).providers,
       ],
     };
   }
