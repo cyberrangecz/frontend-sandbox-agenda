@@ -1,3 +1,11 @@
+### 14.1.0 Optimize calls, polling and move spice console loading to topology.
+* f538996 -- [CI/CD] Update packages.json version based on GitLab tag.
+*   c81af15 -- Merge branch '100-disable-spice-console-when-it-is-not-ready' into 'master'
+|\  
+| * 6abf4c5 -- Resolve "Disable spice console when it is not ready"
+|/  
+* cd5e512 -- Merge branch '97-optimize-api-calls' into 'master'
+* f875e0d -- Resolve "Optimize API calls"
 ### 14.0.1 Rename from kypo2 to kypo.
 * 6fe346b -- [CI/CD] Update packages.json version based on GitLab tag.
 * e6af314 -- Merge branch '98-rename-from-kypo2-to-kypo' into 'master'
