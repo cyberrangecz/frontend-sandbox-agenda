@@ -103,6 +103,12 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
   abstract cleanupMultiple(poolId: number, unitIds: number[], force: boolean): Observable<any>;
 
   /**
+   * Starts cleanup for sandbox specified in @unitIds.
+   * @param unitId allocation unit id which should be deleted
+   */
+  abstract createCleanup(unitId: number): Observable<any>;
+
+  /**
    * Redirects to desired detail of stage of the allocation unit.
    * @param poolId id of the pool
    * @param sandboxId id of allocation unit
