@@ -174,6 +174,20 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   }
 
   /**
+   * Starts cleanup for sandbox specified in @unitIds.
+   * @param unitId allocation unit id which should be deleted
+   */
+  createCleanup(unitId: number): Observable<any> {
+    return this.sandboxAllocationUnitsApi.createCleanupRequest(unitId).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Sandbox ${unitId} was deleted`),
+        (err) => this.errorHandler.emit(err, `Deleting sandbox ${unitId}`)
+      ),
+      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+    );
+  }
+
+  /**
    * Redirects to desired detail of stage of the allocation unit.
    * @param poolId id of the pool
    * @param sandboxId id of allocation unit
