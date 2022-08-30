@@ -1,3 +1,7 @@
+### 14.1.1 Fix problem with delete action of sandbox instance at pool detail table.
+* e4021a8 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 3bc240e -- Merge branch 'fix-sandbox-allocation-unit-delete' into 'master'
+* 5b0967f -- Fix sandbox allocation unit delete
 ### 14.1.0 Optimize calls, polling and move spice console loading to topology.
 * f538996 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   c81af15 -- Merge branch '100-disable-spice-console-when-it-is-not-ready' into 'master'
