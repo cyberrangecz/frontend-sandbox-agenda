@@ -1,3 +1,7 @@
+### 14.1.2 Fix polling problem caused by pagination setting.
+* 8fd2ebc -- [CI/CD] Update packages.json version based on GitLab tag.
+* 10342d4 -- Merge branch 'fix-polling' into 'master'
+* 4edf98c -- Fix polling
 ### 14.1.1 Fix problem with delete action of sandbox instance at pool detail table.
 * e4021a8 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 3bc240e -- Merge branch 'fix-sandbox-allocation-unit-delete' into 'master'
