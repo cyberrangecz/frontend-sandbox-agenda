@@ -1,3 +1,4 @@
+14.1.2 Fix polling problem caused by pagination setting.
 14.1.1 Fix problem with delete action of sandbox instance at pool detail table.
 14.1.0 Optimize calls, polling and move spice console loading to topology.
 14.0.1 Rename from kypo2 to kypo.
