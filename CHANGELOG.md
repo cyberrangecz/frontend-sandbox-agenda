@@ -1,3 +1,7 @@
+### 14.1.3 Address changes in delete failed, unlocked and all allocation units.
+* a088278 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 1b539f2 -- Merge branch '105-address-cleanup-multiple-endpoint-change' into 'master'
+* 3605ec5 -- Resolve "Address cleanup multiple endpoint change"
 ### 14.1.2 Fix polling problem caused by pagination setting.
 * 8fd2ebc -- [CI/CD] Update packages.json version based on GitLab tag.
 * 10342d4 -- Merge branch 'fix-polling' into 'master'
