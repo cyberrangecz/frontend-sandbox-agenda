@@ -46,10 +46,29 @@ export abstract class SandboxAllocationUnitsService {
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**
+   * Starts cleanup requests for all allocation units in a given pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup requests are created
+   * @param force when set to true force delete is used
+   */
+  abstract cleanupMultiple(poolId: number, force?: boolean): Observable<any>;
+
+  /**
+   * Starts cleanup requests for all failed allocation units in a given pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup requests are created
+   * @param force when set to true force delete is used
+   */
+  abstract cleanupFailed(poolId: number, force: boolean): Observable<any>;
+
+  /**
+   * Starts cleanup requests for all unlocked allocation units in a given pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup requests are created
+   * @param force when set to true force delete is used
+   */
+  abstract cleanupUnlocked(poolId: number, force: boolean): Observable<any>;
+
+  /**
    * Initializes default resources with given pageSize
    * @param pageSize size of a page for pagination
    */
   protected abstract initSubject(pageSize: number): PaginatedResource<SandboxAllocationUnit>;
-
-  abstract cleanupMultiple(poolId: number, unitIds: number[], force?: boolean): Observable<any>;
 }

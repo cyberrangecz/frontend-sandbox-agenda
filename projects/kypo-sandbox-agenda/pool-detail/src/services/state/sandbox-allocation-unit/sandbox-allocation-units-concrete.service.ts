@@ -59,6 +59,45 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   }
 
   /**
+   * Starts cleanup requests for all allocation units in a given pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup requests are created
+   * @param force when set to true force delete is used
+   */
+  cleanupMultiple(poolId: number, force: boolean): Observable<any> {
+    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+      switchMap((result) =>
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, force) : EMPTY
+      )
+    );
+  }
+
+  /**
+   * Starts cleanup requests for all failed allocation units in a given pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup requests are created
+   * @param force when set to true force delete is used
+   */
+  cleanupFailed(poolId: number, force: boolean): Observable<any> {
+    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+      switchMap((result) =>
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupFailed(poolId, force) : EMPTY
+      )
+    );
+  }
+
+  /**
+   * Starts cleanup requests for all unlocked allocation units in a given pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup requests are created
+   * @param force when set to true force delete is used
+   */
+  cleanupUnlocked(poolId: number, force: boolean): Observable<any> {
+    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+      switchMap((result) =>
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupUnlocked(poolId, force) : EMPTY
+      )
+    );
+  }
+
+  /**
    * Initializes default resources with given pageSize
    * @param pageSize size of a page for pagination
    */
@@ -66,11 +105,11 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     return new PaginatedResource([], new OffsetPagination(0, 0, pageSize, 0, 0));
   }
 
-  private displayConfirmationDialog(sandboxIds: number[], title: string): Observable<SentinelDialogResultEnum> {
+  private displayConfirmationDialog(poolId: number, title: string): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${title} Cleanup Request`,
-        `Do you want to delete ${sandboxIds.length === 1 ? 'Sandbox ' : 'Sandboxes '}${sandboxIds.toString()}?`,
+        `Do you want to delete all sandboxes for pool ${poolId}?`,
         'Cancel',
         'Delete'
       ),
@@ -93,20 +132,24 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     this.hasErrorSubject$.next(true);
   }
 
-  cleanupMultiple(poolId: number, unitIds: number[], force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(unitIds, 'Create').pipe(
-      switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, unitIds, force) : EMPTY
-      )
-    );
+  private callApiToCleanupMultiple(poolId: number, force: boolean): any {
+    return this.handleApiRequests(this.poolApi.createMultipleCleanupRequests(poolId, force), poolId);
   }
 
-  private callApiToCleanupMultiple(poolId: number, unitIds: number[], force: boolean): any {
-    return this.poolApi.createMultipleCleanupRequests(poolId, unitIds, force).pipe(
-      tap(
-        () => this.notificationService.emit('success', `Cleanup request for allocation units ${unitIds.toString()}`),
-        (err) => this.errorHandler.emit(err, 'Creating cleanup request for allocation units ' + unitIds.toString())
-      ),
+  private callApiToCleanupFailed(poolId: number, force: boolean): any {
+    return this.handleApiRequests(this.poolApi.createFailedCleanupRequests(poolId, force), poolId);
+  }
+
+  private callApiToCleanupUnlocked(poolId: number, force: boolean): any {
+    return this.handleApiRequests(this.poolApi.createUnlockedCleanupRequests(poolId, force), poolId);
+  }
+
+  private handleApiRequests(request: Observable<any>, poolId: number): any {
+    return request.pipe(
+      tap({
+        next: () => this.notificationService.emit('success', `Cleanup request for pool ${poolId}`),
+        error: (err) => this.errorHandler.emit(err, `Creating cleanup request for pool ${poolId}`),
+      }),
       switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
     );
   }

@@ -30,16 +30,14 @@ export class PoolDetailControls {
         'Delete Failed',
         'warn',
         of(PoolDetailControls.someSandboxFailedAndHasNoRunningCleanup(sandboxes)),
-        defer(() =>
-          sandboxInstanceService.cleanupMultiple(pool.id, PoolDetailControls.getFailedSandboxesIds(sandboxes), true)
-        )
+        defer(() => sandboxInstanceService.cleanupFailed(pool.id, true))
       ),
       new SentinelControlItem(
         this.DELETE_ALL_ACTION_ID,
         'Delete All',
         'warn',
         of(PoolDetailControls.someSandboxHasNoRunningCleanup(sandboxes)),
-        defer(() => sandboxInstanceService.cleanupMultiple(pool.id, [], true))
+        defer(() => sandboxInstanceService.cleanupMultiple(pool.id, true))
       ),
     ];
   }
@@ -50,9 +48,5 @@ export class PoolDetailControls {
 
   private static someSandboxHasNoRunningCleanup(sandboxes: AbstractSandbox[]) {
     return !sandboxes.some((sandbox) => !sandbox.cleanupRunning());
-  }
-
-  private static getFailedSandboxesIds(sandboxes: AbstractSandbox[]) {
-    return sandboxes.filter((sandbox) => sandbox.allocationFailed()).map((sandbox) => sandbox.id);
   }
 }

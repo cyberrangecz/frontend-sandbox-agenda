@@ -161,15 +161,35 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   }
 
   /**
-   * Starts cleanup for multiple sandboxes specified in @unitIds. If left as empty array deletes
-   * all allocation units in pool identified by @poolId
+   * Starts cleanup for all allocation units in pool identified by @poolId
    * @param poolId id of pool for which the cleanup request of units is created
-   * @param unitIds array of allocation unit ids which should be deleted
    * @param force when set to true force delete is used
    */
-  cleanupMultiple(poolId: number, unitIds: number[], force: boolean): Observable<any> {
+  cleanupMultiple(poolId: number, force: boolean): Observable<any> {
     return this.allocationUnitsService
-      .cleanupMultiple(poolId, unitIds, force)
+      .cleanupMultiple(poolId, force)
+      .pipe(switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)));
+  }
+
+  /**
+   * Starts cleanup requests for all failed allocation requests for pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup request of units is created
+   * @param force when set to true force delete is used
+   */
+  cleanupFailed(poolId: number, force: boolean): Observable<any> {
+    return this.allocationUnitsService
+      .cleanupFailed(poolId, force)
+      .pipe(switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)));
+  }
+
+  /**
+   * Starts cleanup requests for all unlocked allocation requests for pool specified by @poolId.
+   * @param poolId id of pool for which the cleanup request of units is created
+   * @param force when set to true force delete is used
+   */
+  cleanupUnlocked(poolId: number, force: boolean): Observable<any> {
+    return this.allocationUnitsService
+      .cleanupUnlocked(poolId, force)
       .pipe(switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)));
   }
 
