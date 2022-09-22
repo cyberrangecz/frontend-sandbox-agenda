@@ -1,3 +1,7 @@
+### 14.2.0 Refactor resources page. Add information about GUI access and version to image. Rearrange information in image column and detail. Add checkbox to filter images with GUI access. Add Header to Images table.
+* 5a6b2d5 -- [CI/CD] Update packages.json version based on GitLab tag.
+* a24af56 -- Merge branch '101-refactor-resources-page' into 'master'
+* 54ae6bb -- Resolve "Refactor Resources page"
 ### 14.1.3 Address changes in delete failed, unlocked and all allocation units.
 * a088278 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 1b539f2 -- Merge branch '105-address-cleanup-multiple-endpoint-change' into 'master'
