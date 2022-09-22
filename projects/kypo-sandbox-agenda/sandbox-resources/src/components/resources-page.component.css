@@ -9,7 +9,11 @@
   width: 100%;
 }
 
-.kypo-images {
-  display: flex;
-  justify-content: end;
+.checkbox-images {
+  float: right;
+  display: grid;
+}
+
+h1 {
+  text-align: center;
 }
