@@ -11,11 +11,9 @@ export class VirtualImagesTable extends SentinelTable<VMImagesRowAdapter> {
     const columns = [
       new Column('name', 'name', true, 'name'),
       new Column('defaultUser', 'default user', false),
-      new Column('updatedAtFormatted', 'updated at', false),
-      new Column('minDisk', 'min disk', false),
-      new Column('minRam', 'min ram', false),
-      new Column('status', 'status', false),
-      new Column('visibility', 'visibility', false),
+      new Column('updatedAtFormatted', 'updated at', true, 'updated_at'),
+      new Column('guiAccessFormatted', 'GUI access', false),
+      new Column('size', 'size (GB)', false),
     ];
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -28,6 +26,7 @@ export class VirtualImagesTable extends SentinelTable<VMImagesRowAdapter> {
     const rowAdapter = image as VMImagesRowAdapter;
     rowAdapter.updatedAtFormatted = formatDate(rowAdapter.updatedAt, 'd MMM yyyy H:mm', 'en-US');
     rowAdapter.createdAtFormatted = formatDate(rowAdapter.createdAt, 'd MMM yyyy H:mm', 'en-US');
+    rowAdapter.guiAccessFormatted = image.ownerSpecified.guiAccess ? 'Yes' : 'No';
     return new Row<VMImagesRowAdapter>(rowAdapter);
   }
 }
