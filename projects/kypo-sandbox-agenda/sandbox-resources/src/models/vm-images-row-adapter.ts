@@ -4,4 +4,5 @@ export class VMImagesRowAdapter extends VirtualImage {
   updatedAtFormatted: string;
   createdAtFormatted: string;
   guiAccessFormatted: string;
+  sizeFormatted: number;
 }
