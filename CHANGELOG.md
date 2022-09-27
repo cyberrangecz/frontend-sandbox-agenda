@@ -1,3 +1,27 @@
+### 14.2.0 Refactor resources page. Add information about GUI access and version to image. Rearrange information in image column and detail. Add checkbox to filter images with GUI access. Add Header to Images table.
+* 5a6b2d5 -- [CI/CD] Update packages.json version based on GitLab tag.
+* a24af56 -- Merge branch '101-refactor-resources-page' into 'master'
+* 54ae6bb -- Resolve "Refactor Resources page"
+### 14.1.3 Address changes in delete failed, unlocked and all allocation units.
+* a088278 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 1b539f2 -- Merge branch '105-address-cleanup-multiple-endpoint-change' into 'master'
+* 3605ec5 -- Resolve "Address cleanup multiple endpoint change"
+### 14.1.2 Fix polling problem caused by pagination setting.
+* 8fd2ebc -- [CI/CD] Update packages.json version based on GitLab tag.
+* 10342d4 -- Merge branch 'fix-polling' into 'master'
+* 4edf98c -- Fix polling
+### 14.1.1 Fix problem with delete action of sandbox instance at pool detail table.
+* e4021a8 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 3bc240e -- Merge branch 'fix-sandbox-allocation-unit-delete' into 'master'
+* 5b0967f -- Fix sandbox allocation unit delete
+### 14.1.0 Optimize calls, polling and move spice console loading to topology.
+* f538996 -- [CI/CD] Update packages.json version based on GitLab tag.
+*   c81af15 -- Merge branch '100-disable-spice-console-when-it-is-not-ready' into 'master'
+|\  
+| * 6abf4c5 -- Resolve "Disable spice console when it is not ready"
+|/  
+* cd5e512 -- Merge branch '97-optimize-api-calls' into 'master'
+* f875e0d -- Resolve "Optimize API calls"
 ### 14.0.1 Rename from kypo2 to kypo.
 * 6fe346b -- [CI/CD] Update packages.json version based on GitLab tag.
 * e6af314 -- Merge branch '98-rename-from-kypo2-to-kypo' into 'master'

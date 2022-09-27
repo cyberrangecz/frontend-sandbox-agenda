@@ -2,7 +2,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { Request } from '@muni-kypo-crp/sandbox-model';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
-import { Observable, zip } from 'rxjs';
+import { exhaustMap, Observable } from 'rxjs';
 import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { RequestStagesService } from '../../services/state/request-stages.service';
@@ -13,7 +13,6 @@ import { StagesDetailPollRegistry } from '../../services/state/detail/stages-det
  * Smart component for pool request detail page
  */
 export abstract class RequestDetailComponent extends SentinelBaseDirective {
-  request$: Observable<Request>;
   stages$: Observable<StageAdapter[]>;
   hasError$: Observable<boolean>;
   isLoading$: Observable<boolean>;
@@ -45,10 +44,7 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
    * Reloads stages of pool request
    */
   reloadStages(): void {
-    this.requestStagesService
-      .getAll(this.request)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.stages$ = this.requestStagesService.getAll(this.request);
   }
 
   onStageDetailPanelChange(opened: boolean, stage: RequestStage, order: number): void {
@@ -71,23 +67,15 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
             return stages;
           })
         );
-      })
-    );
-    this.hasError$ = this.requestStagesService.hasError$;
-    this.isLoading$ = this.requestStagesService.isLoading$;
-
-    const data$ = this.activeRoute.data;
-    this.request$ = data$.pipe(
+      }),
+      exhaustMap(() => this.activeRoute.data),
       tap((data) => {
         this.request = data[POOL_REQUEST_DATA_ATTRIBUTE_NAME];
       }),
-      map((data) => data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])
+      switchMap((data) => this.requestStagesService.getAll(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
+      takeWhile(() => this.isAlive)
     );
-    data$
-      .pipe(
-        switchMap((data) => this.requestStagesService.getAll(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
-        takeWhile(() => this.isAlive)
-      )
-      .subscribe();
+    this.hasError$ = this.requestStagesService.hasError$;
+    this.isLoading$ = this.requestStagesService.isLoading$;
   }
 }

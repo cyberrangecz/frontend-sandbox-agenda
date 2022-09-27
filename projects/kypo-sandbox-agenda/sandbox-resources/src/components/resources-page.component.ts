@@ -1,7 +1,7 @@
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { map, takeWhile } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginationBaseEvent, SentinelBaseDirective } from '@sentinel/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';
@@ -24,6 +24,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   isLoadingImages$: Observable<boolean>;
 
   resources$: Observable<Resources>;
+  guiAccess = false;
   kypoImages = false;
 
   private lastFilter: string;
@@ -49,18 +50,17 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   onTableLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
     this.lastFilter = loadEvent.filter;
-    this.vmImagesService
-      .getAvailableImages(loadEvent.pagination, this.kypoImages, true, loadEvent.filter)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.getAvailableImages(loadEvent.pagination, true, loadEvent.filter);
   }
 
   kypoImagesToggled(): void {
     this.kypoImages = !this.kypoImages;
-    this.vmImagesService
-      .getAvailableImages(this.getInitialPaginationEvent(), this.kypoImages, true, this.lastFilter)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.getAvailableImages(this.getInitialPaginationEvent(), true, this.lastFilter);
+  }
+
+  guiAccessToggled(): void {
+    this.guiAccess = !this.guiAccess;
+    this.getAvailableImages(this.getInitialPaginationEvent(), true, this.lastFilter);
   }
 
   private initTable(): void {
@@ -75,8 +75,12 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
 
   initialTableLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
+    this.getAvailableImages(loadEvent.pagination, false);
+  }
+
+  private getAvailableImages(pagination: PaginationBaseEvent, cached: boolean, filter?: string): void {
     this.vmImagesService
-      .getAvailableImages(loadEvent.pagination, this.kypoImages, false)
+      .getAvailableImages(pagination, this.kypoImages, this.guiAccess, cached, filter)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();
   }

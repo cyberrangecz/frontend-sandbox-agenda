@@ -145,7 +145,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   }
 
   private callApiToClear(poolId: number): any {
-    return this.poolApi.createMultipleCleanupRequests(poolId, [], true).pipe(
+    return this.poolApi.createMultipleCleanupRequests(poolId, true).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool ${poolId} has been cleared`),
         (err) => this.errorHandler.emit(err, 'Clearing pool ' + poolId.toString())

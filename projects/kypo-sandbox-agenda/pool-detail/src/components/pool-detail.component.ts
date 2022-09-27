@@ -4,7 +4,7 @@ import { OffsetPaginationEvent, PaginatedResource, SentinelBaseDirective } from 
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, RequestStageState } from '@muni-kypo-crp/sandbox-model';
 import { TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { POOL_DATA_ATTRIBUTE_NAME, SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService, ResourcePollingService } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -45,6 +45,8 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
 
   controls: SentinelControlItem[];
 
+  private subscription: Subscription;
+
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
     private paginationService: PaginationService,
@@ -65,7 +67,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
    */
   onLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
-    this.sandboxInstanceService
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    this.subscription = this.sandboxInstanceService
       .getAllUnits(this.pool.id, loadEvent.pagination)
       .pipe(takeWhile(() => this.isAlive))
       .subscribe();

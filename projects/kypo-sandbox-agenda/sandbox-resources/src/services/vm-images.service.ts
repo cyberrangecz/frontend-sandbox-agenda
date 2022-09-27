@@ -1,11 +1,6 @@
 import { Observable } from 'rxjs';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import {
-  PaginatedResource,
-  OffsetPaginationEvent,
-  OffsetPaginatedElementsService,
-  PaginationBaseEvent,
-} from '@sentinel/common';
+import { PaginatedResource, OffsetPaginatedElementsService, PaginationBaseEvent } from '@sentinel/common';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
@@ -21,10 +16,16 @@ export abstract class VMImagesService extends OffsetPaginatedElementsService<Vir
   /**
    * Retrieves paginated available virtual machine images
    * @param pagination requested pagination
+   * @param onlyKypoImages filters images belonging to KYPO
+   * @param onlyGuiAccess filters images with GUI access
+   * @param cached Performs the faster version of this endpoint but does not retrieve a fresh list of images
+   * @param filter list of sentinel filters to filter results
+   *
    */
   abstract getAvailableImages(
     pagination: PaginationBaseEvent,
     onlyKypoImages?: boolean,
+    onlyGuiAccess?: boolean,
     cached?: boolean,
     filter?: string
   ): Observable<PaginatedResource<VirtualImage>>;
