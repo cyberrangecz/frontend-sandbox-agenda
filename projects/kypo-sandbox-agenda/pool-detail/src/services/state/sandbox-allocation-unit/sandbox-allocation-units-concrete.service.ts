@@ -64,7 +64,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param force when set to true force delete is used
    */
   cleanupMultiple(poolId: number, force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+    return this.displayConfirmationDialog(poolId, 'Create', '').pipe(
       switchMap((result) =>
         result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, force) : EMPTY
       )
@@ -77,7 +77,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param force when set to true force delete is used
    */
   cleanupFailed(poolId: number, force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+    return this.displayConfirmationDialog(poolId, 'Create', 'failed ').pipe(
       switchMap((result) =>
         result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupFailed(poolId, force) : EMPTY
       )
@@ -90,7 +90,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param force when set to true force delete is used
    */
   cleanupUnlocked(poolId: number, force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+    return this.displayConfirmationDialog(poolId, 'Create', 'unlocked ').pipe(
       switchMap((result) =>
         result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupUnlocked(poolId, force) : EMPTY
       )
@@ -105,11 +105,15 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     return new PaginatedResource([], new OffsetPagination(0, 0, pageSize, 0, 0));
   }
 
-  private displayConfirmationDialog(poolId: number, title: string): Observable<SentinelDialogResultEnum> {
+  private displayConfirmationDialog(
+    poolId: number,
+    title: string,
+    specifier: string
+  ): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${title} Cleanup Request`,
-        `Do you want to delete all sandboxes for pool ${poolId}?`,
+        `Do you want to delete all ${specifier}sandboxes for pool ${poolId}?`,
         'Cancel',
         'Delete'
       ),
