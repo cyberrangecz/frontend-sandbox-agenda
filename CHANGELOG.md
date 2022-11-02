@@ -1,3 +1,7 @@
+### 14.3.0 Replace sandbox id with sandbox uuid.
+* f7af18f -- [CI/CD] Update packages.json version based on GitLab tag.
+* b92dba2 -- Merge branch '104-change-sandbox-id-to-uuid-and-use-string-data-type' into 'master'
+* a9653e5 -- Resolve "Change sandbox id to uuid and use string data type"
 ### 14.2.1 Change delete allocation units buttons to one expandable button with options to delete all, unlocked and failed.
 * 1136845 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   388c034 -- Merge branch '103-in-the-pool-detail-page-add-delete-all-unlocked-button' into 'master'
