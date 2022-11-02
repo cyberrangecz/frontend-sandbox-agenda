@@ -35,8 +35,8 @@ export class SandboxInstanceResolver implements Resolve<SandboxInstance> {
       return this.navigateToPool(poolId);
     }
 
-    const sandboxId = Number(route.paramMap.get(SANDBOX_INSTANCE_ID_SELECTOR));
-    return this.api.getSandbox(sandboxId).pipe(
+    const sandboxUuid = route.paramMap.get(SANDBOX_INSTANCE_ID_SELECTOR);
+    return this.api.getSandbox(sandboxUuid).pipe(
       take(1),
       mergeMap((sandbox) => (sandbox ? of(sandbox) : this.navigateToPool(poolId))),
       catchError((err) => {

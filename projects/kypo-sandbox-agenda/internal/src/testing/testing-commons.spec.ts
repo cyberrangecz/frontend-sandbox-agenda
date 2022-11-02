@@ -39,6 +39,7 @@ export function createPoolApiSpy(): jasmine.SpyObj<PoolApi> {
     'allocateSandboxes',
     'getManagementSshAccess',
     'getPools',
+    'getPoolsSandboxes',
   ]);
 }
 

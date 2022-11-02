@@ -9,6 +9,7 @@ import { AbstractSandboxState } from './enums/abstract-sandox-state.enum';
 
 export class AbstractSandbox {
   id: number;
+  uuid: string;
   poolId: number;
   name: string;
   locked: boolean;
@@ -20,6 +21,7 @@ export class AbstractSandbox {
 
   constructor(allocationUnit: SandboxAllocationUnit) {
     this.id = allocationUnit.id;
+    this.uuid = allocationUnit.sandboxUuid;
     this.name = `Sandbox ${allocationUnit.id}`;
     this.locked = allocationUnit.locked;
     this.createdAt = allocationUnit.allocationRequest.createdAt;
