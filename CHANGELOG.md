@@ -1,3 +1,11 @@
+### 14.3.1 Add option to sort the pool detail table by Create By, Name and Created.
+* 0887e16 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 3a10fd6 -- Merge branch '102-add-sorting-options-to-the-pool-detail-table' into 'master'
+* 8c22033 -- Merge branch 'master' into 102-add-sorting-options-to-the-pool-detail-table
+* fdb83ec -- Change sorting of created by from id to first name and added tag message
+* dd0abae -- Updated sorting table values.
+* 1a6a24a -- Merge branch 'master' into 102-add-sorting-options-to-the-pool-detail-table merging latest changes from master.
+* 5ab89d5 -- added sorting options for several columns in pool-detail-table
 ### 14.3.0 Replace sandbox id with sandbox uuid.
 * f7af18f -- [CI/CD] Update packages.json version based on GitLab tag.
 * b92dba2 -- Merge branch '104-change-sandbox-id-to-uuid-and-use-string-data-type' into 'master'
