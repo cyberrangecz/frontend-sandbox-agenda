@@ -1,3 +1,15 @@
+### 14.3.0 Replace sandbox id with sandbox uuid.
+* f7af18f -- [CI/CD] Update packages.json version based on GitLab tag.
+* b92dba2 -- Merge branch '104-change-sandbox-id-to-uuid-and-use-string-data-type' into 'master'
+* a9653e5 -- Resolve "Change sandbox id to uuid and use string data type"
+### 14.2.1 Change delete allocation units buttons to one expandable button with options to delete all, unlocked and failed.
+* 1136845 -- [CI/CD] Update packages.json version based on GitLab tag.
+*   388c034 -- Merge branch '103-in-the-pool-detail-page-add-delete-all-unlocked-button' into 'master'
+|\  
+| * d238f23 -- Resolve "In the Pool Detail page, add "Delete All Unlocked" button"
+|/  
+* 57cfbbb -- Merge branch '101-refactor-resources-page' into 'master'
+* cb9bee4 -- Resolve "Refactor Resources page"
 ### 14.2.0 Refactor resources page. Add information about GUI access and version to image. Rearrange information in image column and detail. Add checkbox to filter images with GUI access. Add Header to Images table.
 * 5a6b2d5 -- [CI/CD] Update packages.json version based on GitLab tag.
 * a24af56 -- Merge branch '101-refactor-resources-page' into 'master'

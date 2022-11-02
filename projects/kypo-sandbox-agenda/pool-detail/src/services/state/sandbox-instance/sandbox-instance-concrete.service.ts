@@ -140,12 +140,12 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
 
   /**
    * Gets zip file that contains configurations, key and script for remote ssh access for user
-   * @param sandboxId id of the sandbox for which remote ssh access is demanded
+   * @param sandboxUuid id of the sandbox for which remote ssh access is demanded
    */
-  getUserSshAccess(sandboxId: number): Observable<boolean> {
-    return this.sandboxApi.getUserSshAccess(sandboxId).pipe(
+  getUserSshAccess(sandboxUuid: string): Observable<boolean> {
+    return this.sandboxApi.getUserSshAccess(sandboxUuid).pipe(
       catchError((err) => {
-        this.errorHandler.emit(err, `Management SSH Access for pool: ${sandboxId}`);
+        this.errorHandler.emit(err, `User SSH Access for sandbox: ${sandboxUuid}`);
         return EMPTY;
       })
     );
@@ -154,10 +154,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   /**
    * Redirects to topology associated with given allocation unit of the given pool
    * @param poolId id of the pool
-   * @param allocationUnitId id of the allocation unit
+   * @param sandboxUuid uuid of the sandbox
    */
-  showTopology(poolId: number, allocationUnitId: number): Observable<boolean> {
-    return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, allocationUnitId)]));
+  showTopology(poolId: number, sandboxUuid: string): Observable<boolean> {
+    return from(this.router.navigate([this.navigator.toSandboxInstanceTopology(poolId, sandboxUuid)]));
   }
 
   /**
@@ -239,11 +239,11 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
       .pipe(tap({ error: (err) => this.onGetAllError(err) }));
   }
 
-  private displayConfirmationDialog(allocationUnitId: number, action: string): Observable<SentinelDialogResultEnum> {
+  private displayConfirmationDialog(id: number | string, action: string): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${action} sandbox`,
-        `Do you want to ${action} sandbox ${allocationUnitId}"?`,
+        `Do you want to ${action} sandbox ${id}"?`,
         'Cancel',
         action
       ),

@@ -82,16 +82,16 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
 
   /**
    * Gets zip file that contains configurations, key and script for remote ssh access for user
-   * @param sandboxId id of the sandbox for which remote ssh access is demanded
+   * @param sandboxUuid id of the sandbox for which remote ssh access is demanded
    */
-  abstract getUserSshAccess(sandboxId: number): Observable<boolean>;
+  abstract getUserSshAccess(sandboxUuid: string): Observable<boolean>;
 
   /**
    * Redirects to topology associated with given allocation unit of the given pool
    * @param poolId id of the pool
-   * @param allocationUnitId id of the allocation unit
+   * @param sandboxUuid id of the sandbox
    */
-  abstract showTopology(poolId: number, allocationUnitId: number): Observable<boolean>;
+  abstract showTopology(poolId: number, sandboxUuid: string): Observable<boolean>;
 
   /**
    * Starts cleanup for all allocation units in pool identified by @poolId

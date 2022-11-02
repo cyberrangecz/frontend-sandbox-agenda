@@ -65,7 +65,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Display topology',
         of(!data.buildFinished()),
-        defer(() => sandboxInstanceService.showTopology(data.poolId, data.id))
+        defer(() => sandboxInstanceService.showTopology(data.poolId, data.uuid))
       ),
       new RowAction(
         'download_user_ssh_config',
@@ -74,7 +74,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Download user SSH config',
         of(!data.buildFinished()),
-        defer(() => sandboxInstanceService.getUserSshAccess(data.id))
+        defer(() => sandboxInstanceService.getUserSshAccess(data.uuid))
       ),
       this.createLockAction(
         data.id,

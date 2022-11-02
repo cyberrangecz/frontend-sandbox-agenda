@@ -66,10 +66,10 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
   /**
    * Returns route to sandbox instance topology page
    * @param poolId id of the pool associated with the sandbox instance
-   * @param sandboxId id of the sandbox
+   * @param sandboxUuid id of the sandbox
    */
-  toSandboxInstanceTopology(poolId: number | string, sandboxId: number | string): string {
-    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_INSTANCE_PATH}/${sandboxId}/${SANDBOX_TOPOLOGY_PATH}`;
+  toSandboxInstanceTopology(poolId: number | string, sandboxUuid: number | string): string {
+    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_INSTANCE_PATH}/${sandboxUuid}/${SANDBOX_TOPOLOGY_PATH}`;
   }
 
   /**

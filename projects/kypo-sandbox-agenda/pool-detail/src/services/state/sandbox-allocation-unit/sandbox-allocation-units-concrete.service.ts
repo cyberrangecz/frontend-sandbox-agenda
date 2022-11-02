@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, concat, EMPTY, mergeMap, Observable, zip, zipWith } from 'rxjs';
 import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   SentinelConfirmationDialogComponent,
@@ -49,7 +49,17 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     this.lastPoolId = poolId;
     const observable$: Observable<PaginatedResource<SandboxAllocationUnit>> = this.poolApi
       .getPoolsSandboxAllocationUnits(poolId, pagination)
-      .pipe(tap((paginatedRequests) => this.unitsSubject$.next(paginatedRequests)));
+      .pipe(
+        combineLatestWith(this.poolApi.getPoolsSandboxes(poolId, pagination)),
+        map(([units, sandboxes]) => {
+          units.elements.map((unit) => {
+            const uuid = sandboxes.elements.find((sandbox) => sandbox.allocationUnitId === unit.id);
+            unit.sandboxUuid = uuid ? uuid.id : '';
+          });
+          return units;
+        }),
+        tap((paginatedRequests) => this.unitsSubject$.next(paginatedRequests))
+      );
     return this.resourcePollingService.startPolling(observable$, this.poolPeriod, this.retryAttempts).pipe(
       tap(
         (_) => _,
@@ -64,7 +74,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param force when set to true force delete is used
    */
   cleanupMultiple(poolId: number, force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+    return this.displayConfirmationDialog(poolId, 'Create', '').pipe(
       switchMap((result) =>
         result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, force) : EMPTY
       )
@@ -77,7 +87,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param force when set to true force delete is used
    */
   cleanupFailed(poolId: number, force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+    return this.displayConfirmationDialog(poolId, 'Create', 'failed ').pipe(
       switchMap((result) =>
         result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupFailed(poolId, force) : EMPTY
       )
@@ -90,7 +100,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
    * @param force when set to true force delete is used
    */
   cleanupUnlocked(poolId: number, force: boolean): Observable<any> {
-    return this.displayConfirmationDialog(poolId, 'Create').pipe(
+    return this.displayConfirmationDialog(poolId, 'Create', 'unlocked ').pipe(
       switchMap((result) =>
         result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupUnlocked(poolId, force) : EMPTY
       )
@@ -105,11 +115,15 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     return new PaginatedResource([], new OffsetPagination(0, 0, pageSize, 0, 0));
   }
 
-  private displayConfirmationDialog(poolId: number, title: string): Observable<SentinelDialogResultEnum> {
+  private displayConfirmationDialog(
+    poolId: number,
+    title: string,
+    specifier: string
+  ): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${title} Cleanup Request`,
-        `Do you want to delete all sandboxes for pool ${poolId}?`,
+        `Do you want to delete all ${specifier}sandboxes for pool ${poolId}?`,
         'Cancel',
         'Delete'
       ),

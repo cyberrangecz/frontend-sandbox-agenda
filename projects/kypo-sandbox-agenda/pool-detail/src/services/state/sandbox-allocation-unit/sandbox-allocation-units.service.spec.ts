@@ -74,7 +74,7 @@ describe('SandboxAllocationUnitsService', () => {
       .pipe(take(1))
       .subscribe(
         () => {
-          expect(poolApiSpy.getPoolsSandboxAllocationUnits).toHaveBeenCalledTimes(1);
+          expect(poolApiSpy.getPoolsSandboxes).toHaveBeenCalledTimes(1);
           done();
         },
         () => fail
