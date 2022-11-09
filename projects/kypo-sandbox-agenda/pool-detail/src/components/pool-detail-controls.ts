@@ -12,7 +12,8 @@ import { SandboxInstanceService } from '../services/state/sandbox-instance/sandb
  * @dynamic
  */
 export class PoolDetailControls {
-  static readonly ALLOCATE_ACTION_ID = 'allocate';
+  static readonly ALLOCATE_ALL_ACTION_ID = 'allocate_all';
+  static readonly ALLOCATE_SOME_ACTION_ID = 'allocate_some';
   static readonly DELETE_ACTION_ID = 'delete_menu';
   static readonly DELETE_FAILED_ACTION_ID = 'delete_failed';
   static readonly DELETE_ALL_ACTION_ID = 'delete_all';
@@ -25,11 +26,11 @@ export class PoolDetailControls {
   ): SentinelControlItem[] {
     return [
       new SentinelControlItem(
-        this.ALLOCATE_ACTION_ID,
-        'Allocate All',
+        this.ALLOCATE_SOME_ACTION_ID,
+        'Allocate',
         'primary',
         of(pool.maxSize === sandboxes.length),
-        defer(() => sandboxInstanceService.allocate(pool.id))
+        defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - sandboxes.length))
       ),
       new SentinelExpandableControlItem(
         this.DELETE_ACTION_ID,

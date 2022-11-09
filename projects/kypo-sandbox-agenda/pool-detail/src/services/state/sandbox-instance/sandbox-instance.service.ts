@@ -63,6 +63,12 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
   abstract allocate(poolId: number): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**
+   * Starts allocation of specified number of sandbox instances in a provided pool
+   * @param poolId id of a pool in which the allocation will take place
+   * @param total total number of sandboxes that can be allocated
+   */
+  abstract allocateSpecified(poolId: number, total: number): Observable<PaginatedResource<SandboxAllocationUnit>>;
+  /**
    * Retries an allocation of a sandbox instance, informs about the result and updates list of requests or handles an error
    * @param unitId id of a unit for which retry will be performed
    */

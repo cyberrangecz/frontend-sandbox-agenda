@@ -5,6 +5,7 @@ import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolRowAdapter } from './pool-row-adapter';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
+import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 
 /**
  * Helper class transforming paginated resource to class for common table component
@@ -14,9 +15,12 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
   constructor(
     resource: PaginatedResource<Pool>,
     abstractPoolService: AbstractPoolService,
+    sandboxInstanceService: SandboxInstanceService,
     navigator: SandboxNavigator
   ) {
-    const rows = resource.elements.map((element) => PoolTable.createRow(element, abstractPoolService, navigator));
+    const rows = resource.elements.map((element) =>
+      PoolTable.createRow(element, abstractPoolService, sandboxInstanceService, navigator)
+    );
     const columns = [
       new Column('title', 'title', false),
       new Column('createdByName', 'created by', false),
@@ -34,6 +38,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
   private static createRow(
     pool: Pool,
     abstractPoolService: AbstractPoolService,
+    sandboxInstanceService: SandboxInstanceService,
     navigator: SandboxNavigator
   ): Row<PoolRowAdapter> {
     const rowAdapter = pool as PoolRowAdapter;
@@ -44,12 +49,16 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
     rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
 
-    const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService));
+    const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService, sandboxInstanceService));
     row.addLink('title', navigator.toPool(rowAdapter.id));
     return row;
   }
 
-  private static createActions(pool: Pool, abstractPoolService: AbstractPoolService): RowAction[] {
+  private static createActions(
+    pool: Pool,
+    abstractPoolService: AbstractPoolService,
+    sandboxInstanceService: SandboxInstanceService
+  ): RowAction[] {
     return [
       new DeleteAction(
         'Delete Pool',
@@ -63,7 +72,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'primary',
         'Allocate sandboxes',
         of(pool.isFull()),
-        defer(() => abstractPoolService.allocate(pool))
+        defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - pool.usedSize))
       ),
       new RowAction(
         'allocate_one',
