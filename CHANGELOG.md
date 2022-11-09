@@ -1,3 +1,7 @@
+### 14.4.0 Added dynamic allocation of sandboxes through the dialog window with slider.
+* 82bfbd9 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 8483d1a -- Merge branch '106-option-to-allocate-specified-number-of-sandboxes' into 'master'
+* 060d966 -- Resolve "Option to allocate specified number of sandboxes"
 ### 14.3.1 Add option to sort the pool detail table by Create By, Name and Created.
 * 0887e16 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 3a10fd6 -- Merge branch '102-add-sorting-options-to-the-pool-detail-table' into 'master'
