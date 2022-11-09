@@ -9,6 +9,7 @@ import {
   PaginationService,
   SandboxDefinitionOverviewConcreteService,
   SandboxDefinitionOverviewService,
+  ResourcePollingService,
 } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolResolver, PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
@@ -16,7 +17,12 @@ import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/
 import { AbstractPoolConcreteService } from '../services/abstract-pool/abstract-sandbox/abstract-pool-concrete.service';
 import { PoolOverviewService } from '../services/state/pool-overview/pool-overview.service';
 import { PoolOverviewConcreteService } from '../services/state/pool-overview/pool-overview-concrete.service';
-
+import {
+  SandboxAllocationUnitsConcreteService,
+  SandboxAllocationUnitsService,
+  SandboxInstanceService,
+} from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
@@ -28,8 +34,11 @@ import { PoolOverviewConcreteService } from '../services/state/pool-overview/poo
     PaginationService,
     PoolBreadcrumbResolver,
     SandboxAgendaContext,
+    ResourcePollingService,
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },
     { provide: PoolOverviewService, useClass: PoolOverviewConcreteService },
+    { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
+    { provide: SandboxAllocationUnitsService, useClass: SandboxAllocationUnitsConcreteService },
     { provide: AbstractPoolService, useClass: AbstractPoolConcreteService },
     { provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService },
   ],

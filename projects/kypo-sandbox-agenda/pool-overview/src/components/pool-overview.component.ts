@@ -3,12 +3,13 @@ import { OffsetPaginationEvent, SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
-import { combineLatest, defer, Observable, of } from 'rxjs';
+import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
+import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 
 /**
  * Smart component of sandbox pool overview page
@@ -27,6 +28,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
 
   constructor(
     private abstractPoolService: AbstractPoolService,
+    private sandboxInstanceService: SandboxInstanceService,
     private navigator: SandboxNavigator,
     private paginationService: PaginationService
   ) {
@@ -67,7 +69,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
       pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', ''),
     };
     this.pools$ = this.abstractPoolService.pools$.pipe(
-      map((resource) => new PoolTable(resource, this.abstractPoolService, this.navigator))
+      map((resource) => new PoolTable(resource, this.abstractPoolService, this.sandboxInstanceService, this.navigator))
     );
     this.hasError$ = this.abstractPoolService.poolsHasError$;
     this.onLoadEvent(initialLoadEvent);

@@ -16,6 +16,8 @@ import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } fro
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxInstanceService } from './sandbox-instance.service';
 import { SandboxAllocationUnitsService } from '../sandbox-allocation-unit/sandbox-allocation-units.service';
+import { AllocateVariableSandboxesDialogComponent } from '../../../components/allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';
+import { AllocateVariableSandboxesDialogResult } from '../../../components/allocate-variable-sandboxes/allocateVariableSandboxesDialogResult';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -93,6 +95,35 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
       ),
       switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+    );
+  }
+
+  /**
+   * Starts an allocation of specified number of sandboxes of a sandbox instance,
+   * informs about the result and updates list of requests or handles an error
+   * @param poolId id of a pool in which the allocation will take place
+   * @param total number of sandboxes that are left to allocate
+   */
+  allocateSpecified(poolId: number, total: number): Observable<PaginatedResource<SandboxAllocationUnit>> {
+    return this.getNumberOfSandboxes(total).pipe(
+      switchMap((result) =>
+        result.result !== null
+          ? this.poolApi.allocateSandboxes(poolId, result.result).pipe(
+              tap(
+                () =>
+                  this.notificationService.emit(
+                    'success',
+                    `Allocation of specified sandboxes of pool ${poolId} started`
+                  ),
+                (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
+              ),
+              switchMap(() => {
+                this.lastPoolId = this.lastPoolId ?? poolId;
+                return this.getAllUnits(this.lastPoolId, this.lastPagination);
+              })
+            )
+          : EMPTY
+      )
     );
   }
 
@@ -237,6 +268,15 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.sandboxApi
       .getSandboxes(this.lastPoolId, this.lastPagination)
       .pipe(tap({ error: (err) => this.onGetAllError(err) }));
+  }
+
+  private getNumberOfSandboxes(maximum: number): Observable<AllocateVariableSandboxesDialogResult> {
+    const dialogRef = this.dialog.open(AllocateVariableSandboxesDialogComponent, {
+      data: maximum,
+      width: 'auto',
+      height: 'auto',
+    });
+    return dialogRef.afterClosed();
   }
 
   private displayConfirmationDialog(id: number | string, action: string): Observable<SentinelDialogResultEnum> {
