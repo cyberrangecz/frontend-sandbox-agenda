@@ -2,26 +2,28 @@
   <h1 mat-dialog-title>Allocate sandboxes</h1>
 
   <div mat-dialog-content class="dialog-content">
-    <div class="allocate-container">
-      <h3>Selected number of sandboxes to allocate:</h3>
-      <mat-form-field appearance="outline">
-        <input
-          matInput
-          placeholder="Number of Sandboxes"
-          [(ngModel)]="selected"
-        />
-        <mat-error *ngIf="selected < 0">
-          Allocation size must be number larger than 0
-        </mat-error>
-      </mat-form-field>
-    </div>
+    <form [formGroup]="sandboxAllocationFormGroup.formGroup">
+      <div class="allocate-container">
+        <h3>Selected number of sandboxes to allocate:</h3>
+        <mat-form-field appearance="outline" (keydown.enter)="$event.preventDefault()">
+          <input
+            matInput
+            placeholder="Number of Sandboxes"
+            formControlName="allocationSize"
+          />
+          <mat-error *ngIf="allocationSize.hasError">
+            Invalid allocation size.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
 
     <div class="slider-container">
       <mat-slider class="slider"
                   min="0"
                   max="{{data}}"
                   step="1"
-                  value="{{selected}}"
+                  value="{{allocationSize.value}}"
                   (input)="getSliderValue($event)"></mat-slider>
       <div class="icon-container">
         <mat-icon (click)="changeAllocationValue(1)">add_circle</mat-icon>
@@ -34,6 +36,6 @@
   <div mat-dialog-actions>
     <button mat-button color="warn" (click)="cancel()">Cancel</button>
     <span class="spacer"></span>
-    <button mat-button color="primary" (click)="confirm()" [disabled]="!selected || selected === 0">Allocate</button>
+    <button mat-button color="primary" (click)="confirm()" [disabled]="!sandboxAllocationFormGroup.formGroup.valid">Allocate</button>
   </div>
 </div>

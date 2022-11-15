@@ -8,7 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Material components imports for sandbox pool detail module
@@ -25,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     MatSliderModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MatButtonModule,
@@ -37,6 +38,7 @@ import { FormsModule } from '@angular/forms';
     MatSliderModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class PoolDetailMaterialModule {}
