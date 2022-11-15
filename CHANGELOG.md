@@ -1,3 +1,7 @@
+### 14.4.1 Resolve problems with guacamole. Fix restrictions for the allocation dialogue and fix force delete for sandbox under allocation.
+* 96561b0 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 769a7fc -- Merge branch 'fix-problems-found-during-release-testing' into 'master'
+* 3f9488f -- Fix problems found during release testing
 ### 14.4.0 Added dynamic allocation of sandboxes through the dialog window with slider.
 * 82bfbd9 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 8483d1a -- Merge branch '106-option-to-allocate-specified-number-of-sandboxes' into 'master'
