@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SentinelBaseDirective } from '@sentinel/common';
+import { SandboxAllocationFormGroup } from './sandbox-allocation-form-group';
+import { AbstractControl } from '@angular/forms';
+import { takeWhile } from 'rxjs/operators';
 /**
  * Popup dialog to choose number of sandboxes to allocate
  */
@@ -10,26 +13,35 @@ import { SentinelBaseDirective } from '@sentinel/common';
   styleUrls: ['./allocate-variable-sandboxes-dialog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AllocateVariableSandboxesDialogComponent extends SentinelBaseDirective {
+export class AllocateVariableSandboxesDialogComponent extends SentinelBaseDirective implements OnInit {
+  sandboxAllocationFormGroup: SandboxAllocationFormGroup;
   count: number;
-  selected: number;
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: number,
     public dialogRef: MatDialogRef<AllocateVariableSandboxesDialogComponent>
   ) {
     super();
-    this.selected = data;
+    this.sandboxAllocationFormGroup = new SandboxAllocationFormGroup(this.data);
+    this.allocationSize.setValue(data);
+  }
+
+  get allocationSize(): AbstractControl {
+    return this.sandboxAllocationFormGroup.formGroup.get('allocationSize');
+  }
+
+  ngOnInit() {
+    this.sandboxAllocationFormGroup.formGroup.valueChanges
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe((_) => console.log(_));
   }
 
   getSliderValue(event) {
-    this.selected = event.value;
+    this.allocationSize.setValue(event.value);
   }
 
   changeAllocationValue(value: number) {
-    if (this.selected + value >= 0 && this.selected + value <= this.data) {
-      this.selected += value;
-    }
+    this.allocationSize.setValue(this.allocationSize.value + value);
   }
 
   /**
@@ -38,7 +50,7 @@ export class AllocateVariableSandboxesDialogComponent extends SentinelBaseDirect
   confirm(): void {
     const result = {
       type: 'confirm',
-      result: this.selected,
+      result: this.allocationSize.value,
     };
     this.dialogRef.close(result);
   }

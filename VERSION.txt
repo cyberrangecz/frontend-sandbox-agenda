@@ -1,3 +1,4 @@
+14.4.1 Resolve problems with guacamole. Fix restrictions for the allocation dialogue and fix force delete for sandbox under allocation.
 14.4.0 Added dynamic allocation of sandboxes through the dialog window with slider.
 14.3.1 Add option to sort the pool detail table by Create By, Name and Created.
 14.3.0 Replace sandbox id with sandbox uuid.
