@@ -1,3 +1,7 @@
+### 14.4.2 Bump topology version to address fix of collapsed subnet size number.
+* d92305f -- [CI/CD] Update packages.json version based on GitLab tag.
+* 62b9aa3 -- Merge branch 'bump-topology-version' into 'master'
+* b495a1f -- Bump topology version
 ### 14.4.1 Resolve problems with guacamole. Fix restrictions for the allocation dialogue and fix force delete for sandbox under allocation.
 * 96561b0 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 769a7fc -- Merge branch 'fix-problems-found-during-release-testing' into 'master'
