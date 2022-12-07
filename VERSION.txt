@@ -1,3 +1,4 @@
+14.4.3 Fix sandboxes sorting in pool detail table.
 14.4.2 Bump topology version to address fix of collapsed subnet size number.
 14.4.1 Resolve problems with guacamole. Fix restrictions for the allocation dialogue and fix force delete for sandbox under allocation.
 14.4.0 Added dynamic allocation of sandboxes through the dialog window with slider.
