@@ -1,3 +1,7 @@
+### 14.4.3 Fix sandboxes sorting in pool detail table.
+* ed38765 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 637400c -- Merge branch 'fix-sandboxes-sorting' into 'master'
+* 0bec373 -- Bump sandbox api
 ### 14.4.2 Bump topology version to address fix of collapsed subnet size number.
 * d92305f -- [CI/CD] Update packages.json version based on GitLab tag.
 * 62b9aa3 -- Merge branch 'bump-topology-version' into 'master'
