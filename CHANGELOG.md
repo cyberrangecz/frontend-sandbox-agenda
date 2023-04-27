@@ -1,3 +1,7 @@
+### 14.4.4 Update topology view with new legend
+* 25099bb -- [CI/CD] Update packages.json version based on GitLab tag.
+* f3b6a8e -- Merge branch '110-update-topology-component-with-new-legend' into 'master'
+* cf6bd4e -- Update with new style of topology legend display
 ### 14.4.3 Fix sandboxes sorting in pool detail table.
 * ed38765 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 637400c -- Merge branch 'fix-sandboxes-sorting' into 'master'
