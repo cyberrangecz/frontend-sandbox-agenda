@@ -44,6 +44,12 @@ export class SandboxDefinitionEditComponent extends SentinelBaseDirective implem
     control.result$.pipe(takeWhile(() => this.isAlive)).subscribe();
   }
 
+  keyDownAction(event: KeyboardEvent): void {
+    if (this.sandboxDefinitionFormGroup.formGroup.valid && event.key === 'Enter') {
+      this.controls[0].result$.pipe(takeWhile(() => this.isAlive)).subscribe();
+    }
+  }
+
   private initControls() {
     this.controls = [
       new SentinelControlItem(
