@@ -1,7 +1,7 @@
 <mat-card>
   <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
 
-  <form [formGroup]="sandboxDefinitionFormGroup.formGroup">
+  <form [formGroup]="sandboxDefinitionFormGroup.formGroup" (keydown)="keyDownAction($event)">
     <div class="content">
       <!-- URL field-->
       <mat-form-field appearance="outline"
