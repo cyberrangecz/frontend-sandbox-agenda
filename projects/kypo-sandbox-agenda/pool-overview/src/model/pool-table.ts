@@ -25,6 +25,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       new Column('title', 'title', false),
       new Column('createdByName', 'created by', false),
       new Column('sandboxDefinitionName', 'sandbox definition', false),
+      new Column('sandboxDefinitionRevision', 'revision', false),
       new Column('lockState', 'state', false),
       new Column('usedAndMaxSize', 'size', false),
       new Column('instancesUtilization', 'Instances util.', false),
@@ -45,6 +46,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     rowAdapter.title = `Pool ${rowAdapter.id}`;
     rowAdapter.createdByName = pool.createdBy.fullName;
     rowAdapter.sandboxDefinitionName = pool.definition.title;
+    rowAdapter.sandboxDefinitionRevision = pool.definition.rev;
     rowAdapter.instancesUtilization = `${(pool.hardwareUsage.instances * 100).toFixed(1)}%`;
     rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
     rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
