@@ -105,6 +105,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * @param total number of sandboxes that are left to allocate
    */
   allocateSpecified(poolId: number, total: number): Observable<PaginatedResource<SandboxAllocationUnit>> {
+    if (total == 1) {
+      return this.allocate(poolId);
+    }
     return this.getNumberOfSandboxes(total).pipe(
       switchMap((result) =>
         result.result !== null
