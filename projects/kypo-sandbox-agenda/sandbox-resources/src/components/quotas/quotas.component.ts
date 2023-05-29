@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 export class QuotasComponent extends SentinelBaseDirective {
   @Input() resources;
 
-  displayedResources = ['instances', 'vcpu', 'ram'];
+  displayedResources = ['instances', 'vcpu', 'ram', 'port', 'network'];
 
   constructor() {
     super();
