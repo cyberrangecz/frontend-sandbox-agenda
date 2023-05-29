@@ -79,6 +79,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
       this.createLockAction(
         data.id,
         data.locked,
+        data.allocationFailed(),
         data.cleanupRunning() || data.allocationRunning(),
         sandboxInstanceService
       ),
@@ -90,6 +91,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   private static createLockAction(
     allocationUnitId: number,
     locked: boolean,
+    allocationFailed: boolean,
     stateChanging: boolean,
     service: SandboxInstanceService
   ): RowAction {
@@ -110,7 +112,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'lock',
         'primary',
         'Lock sandbox instance',
-        of(locked || stateChanging),
+        of(locked || stateChanging || allocationFailed),
         defer(() => service.lock(allocationUnitId))
       );
     }
