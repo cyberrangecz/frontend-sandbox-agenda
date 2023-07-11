@@ -16,8 +16,8 @@ export class SandboxDefinitionFormGroup {
 
   createFromValues(): SandboxDefinition {
     const definition = new SandboxDefinition();
-    definition.url = this.formGroup.get('gitlabUrl').value;
-    definition.rev = this.formGroup.get('revision').value;
+    definition.url = this.formGroup.get('gitlabUrl').value.trim();
+    definition.rev = this.formGroup.get('revision').value.trim();
     return definition;
   }
 }
