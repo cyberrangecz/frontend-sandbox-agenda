@@ -10,7 +10,7 @@ export class VirtualImagesTable extends SentinelTable<VMImagesRowAdapter> {
     const rows = resource.elements.map((element) => VirtualImagesTable.createRow(element));
     const columns = [
       new Column('name', 'name', true, 'name'),
-      new Column('defaultUser', 'default user', false),
+      new Column('defaultUser', 'default user', true, 'defaultUser'),
       new Column('updatedAtFormatted', 'updated at', true, 'updated_at'),
       new Column('guiAccessFormatted', 'GUI access', false),
       new Column('sizeFormatted', 'size (GB)', false),
