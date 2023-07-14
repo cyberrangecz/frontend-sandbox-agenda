@@ -1,3 +1,4 @@
+14.4.6 Add sorting options for pool, sandbox definition and resources tables.
 14.4.5 Add option to confirm sandbox definition creation by pressing enter and added whitespace trimming. Added ports and networks to resources. Added revision to pool overview. Enhanced sandbox allocation confirmation dialog. Disabled lock option when allocation fails.
 14.4.4 Update topology view with new legend
 14.4.3 Fix sandboxes sorting in pool detail table.
