@@ -12,9 +12,9 @@ import { SandboxDefinitionRowAdapter } from './sandbox-definition-row-adapter';
 export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
   constructor(resource: PaginatedResource<SandboxDefinition>, service: SandboxDefinitionOverviewService) {
     const columns = [
-      new Column('id', 'id', false),
-      new Column('title', 'title', false),
-      new Column('createdByName', 'Created by', false),
+      new Column('id', 'id', true),
+      new Column('title', 'title', true, 'name'),
+      new Column('createdByName', 'Created by', true, 'created_by'),
     ];
     const rows = resource.elements.map((element) => SandboxDefinitionTable.createRow(element, service));
     super(rows, columns);

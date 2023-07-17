@@ -22,12 +22,12 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       PoolTable.createRow(element, abstractPoolService, sandboxInstanceService, navigator)
     );
     const columns = [
-      new Column('title', 'title', false),
-      new Column('createdByName', 'created by', false),
-      new Column('sandboxDefinitionName', 'sandbox definition', false),
-      new Column('sandboxDefinitionRevision', 'revision', false),
-      new Column('lockState', 'state', false),
-      new Column('usedAndMaxSize', 'size', false),
+      new Column('title', 'title', true, 'id'),
+      new Column('createdByName', 'created by', true, 'created_by__username'),
+      new Column('sandboxDefinitionName', 'sandbox definition', true, 'definition__name'),
+      new Column('sandboxDefinitionRevision', 'revision', true, 'rev'),
+      new Column('lockState', 'state', true, 'lock'),
+      new Column('usedAndMaxSize', 'size', true, 'max_size'),
       new Column('instancesUtilization', 'Instances util.', false),
       new Column('cpuUtilization', 'CPU util.', false),
       new Column('ramUtilization', 'RAM util.', false),
