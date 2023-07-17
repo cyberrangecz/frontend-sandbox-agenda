@@ -1,3 +1,9 @@
+### 14.4.6 Add sorting options for pool, sandbox definition and resources tables.
+* 20b199c -- [CI/CD] Update packages.json version based on GitLab tag.
+* 8e61c02 -- Merge branch '115-add-relevant-sorting-options-for-tables' into 'master'
+* d721d2b -- Update version.
+* b7b1f7d -- Revert resources table sorting change.
+* e69ff9f -- Add sorting options for pool, sandbox definition and resources tables.
 ### 14.4.5 Add option to confirm sandbox definition creation by pressing enter and added whitespace trimming. Added ports and networks to resources. Added revision to pool overview. Enhanced sandbox allocation confirmation dialog. Disabled lock option when allocation fails.
 * f2ecb72 -- [CI/CD] Update packages.json version based on GitLab tag.
 * ec782e7 -- Merge branch 'develop' into 'master'
