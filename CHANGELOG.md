@@ -1,3 +1,7 @@
+### 14.4.7 Fix the retrieval of poolId upon a single sandbox allocation.
+* e07c548 -- [CI/CD] Update packages.json version based on GitLab tag.
+* f8140b0 -- Merge branch '116-allocating-a-single-sandbox-returns-error' into 'master'
+* 18922bd -- Fix poolId retrieval for sandbox allocation
 ### 14.4.6 Add sorting options for pool, sandbox definition and resources tables.
 * 20b199c -- [CI/CD] Update packages.json version based on GitLab tag.
 * 8e61c02 -- Merge branch '115-add-relevant-sorting-options-for-tables' into 'master'
