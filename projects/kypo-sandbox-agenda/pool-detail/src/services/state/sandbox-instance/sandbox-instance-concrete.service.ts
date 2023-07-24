@@ -94,7 +94,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         () => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
         (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => {
+        this.lastPoolId = this.lastPoolId ?? poolId;
+        return this.getAllUnits(this.lastPoolId, this.lastPagination);
+      })
     );
   }
 
