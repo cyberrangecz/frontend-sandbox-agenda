@@ -18,6 +18,7 @@ import { SandboxInstanceService } from './sandbox-instance.service';
 import { SandboxAllocationUnitsService } from '../sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AllocateVariableSandboxesDialogComponent } from '../../../components/allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';
 import { AllocateVariableSandboxesDialogResult } from '../../../components/allocate-variable-sandboxes/allocateVariableSandboxesDialogResult';
+import { PoolOverviewService } from '../../../../../pool-overview/src/services/state/pool-overview/pool-overview.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -31,6 +32,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   constructor(
     private sandboxApi: SandboxInstanceApi,
     private poolApi: PoolApi,
+    private poolOverviewService: PoolOverviewService,
     private sandboxAllocationUnitsApi: SandboxAllocationUnitsApi,
     private allocationUnitsService: SandboxAllocationUnitsService,
     private router: Router,
@@ -87,14 +89,18 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   /**
    * Starts an allocation of a sandbox instance, informs about the result and updates list of requests or handles an error
    * @param poolId id of a pool in which the allocation will take place
+   * @param count final number of sandboxes for allocation
    */
-  allocate(poolId: number): Observable<PaginatedResource<SandboxAllocationUnit>> {
-    return this.poolApi.allocateSandboxes(poolId).pipe(
+  allocate(poolId: number, count: number): Observable<PaginatedResource<SandboxAllocationUnit>> {
+    return this.poolApi.allocateSandboxes(poolId, count).pipe(
       tap(
         () => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
         (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => {
+        this.lastPoolId = this.lastPoolId ?? poolId;
+        return this.getAllUnits(this.lastPoolId, this.lastPagination);
+      })
     );
   }
 
@@ -102,32 +108,15 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
    * Starts an allocation of specified number of sandboxes of a sandbox instance,
    * informs about the result and updates list of requests or handles an error
    * @param poolId id of a pool in which the allocation will take place
-   * @param total number of sandboxes that are left to allocate
+   * @param total maximum number of sandboxes that are left to allocate
    */
   allocateSpecified(poolId: number, total: number): Observable<PaginatedResource<SandboxAllocationUnit>> {
-    if (total == 1) {
-      return this.allocate(poolId);
-    }
-    return this.getNumberOfSandboxes(total).pipe(
-      switchMap((result) =>
-        result.result !== null
-          ? this.poolApi.allocateSandboxes(poolId, result.result).pipe(
-              tap(
-                () =>
-                  this.notificationService.emit(
-                    'success',
-                    `Allocation of specified sandboxes of pool ${poolId} started`
-                  ),
-                (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
-              ),
-              switchMap(() => {
-                this.lastPoolId = this.lastPoolId ?? poolId;
-                return this.getAllUnits(this.lastPoolId, this.lastPagination);
-              })
-            )
-          : EMPTY
-      )
-    );
+    return total == 1
+      ? this.allocate(poolId, 1) // if there is a request for a single sandbox, skip the dialog
+      : this.getNumberOfSandboxes(total).pipe(
+          // otherwise, ask for specification of the number of allocated sandboxes
+          switchMap((result) => (result.result !== null ? this.allocate(poolId, result.result) : EMPTY))
+        );
   }
 
   /**
