@@ -14,6 +14,7 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
+import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 
 /**
  * Basic implementation of a layer between a component and an API service.
