@@ -14,7 +14,6 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
     const columns = [
       new Column('id', 'id', false),
       new Column('titleWithRevision', 'title', false),
-      new Column('rev', 'revision', false),
       new Column('createdByName', 'Created by', false),
     ];
     const rows = resource.elements.map((element) => SandboxDefinitionTable.createRow(element, service));
