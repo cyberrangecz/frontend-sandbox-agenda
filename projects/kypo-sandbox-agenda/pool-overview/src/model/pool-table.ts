@@ -50,6 +50,8 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     rowAdapter.instancesUtilization = `${(pool.hardwareUsage.instances * 100).toFixed(1)}%`;
     rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
     rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
+    rowAdapter.portsUtilization = `${(pool.hardwareUsage.port * 100).toFixed(1)}%`;
+    rowAdapter.networksUtilization = `${(pool.hardwareUsage.network * 100).toFixed(1)}%`;
 
     const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService, sandboxInstanceService));
     row.addLink('title', navigator.toPool(rowAdapter.id));
