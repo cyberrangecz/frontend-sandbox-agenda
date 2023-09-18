@@ -13,7 +13,7 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
   constructor(resource: PaginatedResource<SandboxDefinition>, service: SandboxDefinitionOverviewService) {
     const columns = [
       new Column('id', 'id', false),
-      new Column('title', 'title', false),
+      new Column('titleWithRevision', 'title', false),
       new Column('createdByName', 'Created by', false),
     ];
     const rows = resource.elements.map((element) => SandboxDefinitionTable.createRow(element, service));
@@ -46,6 +46,7 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
     ];
     const rowAdapter = sandboxDefinition as SandboxDefinitionRowAdapter;
     rowAdapter.createdByName = sandboxDefinition.createdBy.fullName;
+    rowAdapter.titleWithRevision = sandboxDefinition.title + ' (' + sandboxDefinition.rev + ')';
     const row = new Row(rowAdapter, actions);
     row.addLink('title', this.parseUrl(sandboxDefinition.url), '_blank');
     return row;
