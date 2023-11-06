@@ -18,10 +18,8 @@ import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination
 import { skip, take } from 'rxjs/operators';
 import { SandboxAllocationUnitsConcreteService } from './sandbox-allocation-units-concrete.service';
 import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
-import { EMPTY, of, throwError } from 'rxjs';
+import { EMPTY, throwError } from 'rxjs';
 import { ResourcePollingService } from '../../../../../internal/src/services/resource-polling.service';
-import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
-import { AllocationRequest } from '@muni-kypo-crp/sandbox-model';
 
 describe('SandboxAllocationUnitsService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;

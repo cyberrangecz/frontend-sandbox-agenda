@@ -20,7 +20,6 @@ import { SandboxNotificationService } from '../../../src/sandbox-notification.se
 import { SandboxAgendaContext } from '../services/sandox-agenda-context.service';
 import { ResourcePollingService } from '../services/resource-polling.service';
 import { SandboxAllocationUnitsService } from '../../../pool-detail/src/services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
-import { Observable } from 'rxjs';
 
 export const SENTINEL_TABLE_COMPONENT_SELECTOR = 'sentinel-table';
 export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';

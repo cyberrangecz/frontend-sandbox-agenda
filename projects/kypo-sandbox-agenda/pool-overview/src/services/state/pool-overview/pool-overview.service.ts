@@ -29,7 +29,7 @@ export abstract class PoolOverviewService extends OffsetPaginatedElementsService
    * @param pool a pool to be allocated
    * @param count number of sandbox instance to be allocated
    */
-  abstract allocate(pool: Pool, count?: number): Observable<any>;
+  abstract allocate(pool: Pool, count: number): Observable<any>;
 
   /**
    * Clears a pool by deleting all sandbox instances

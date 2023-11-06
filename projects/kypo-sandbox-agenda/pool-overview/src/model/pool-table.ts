@@ -59,7 +59,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
   private static createActions(
     pool: Pool,
     abstractPoolService: AbstractPoolService,
-    sandboxInstanceService: SandboxInstanceService
+    //sandboxInstanceService: SandboxInstanceService
   ): RowAction[] {
     return [
       new DeleteAction(
@@ -74,7 +74,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'primary',
         'Allocate sandboxes',
         of(pool.isFull()),
-        defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - pool.usedSize))
+        defer(() => abstractPoolService.allocateSpecified(pool, pool.maxSize - pool.usedSize))
       ),
       new RowAction(
         'allocate_one',
