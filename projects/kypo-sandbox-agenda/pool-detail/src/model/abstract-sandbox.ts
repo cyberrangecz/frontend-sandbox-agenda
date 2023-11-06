@@ -2,7 +2,7 @@ import {
   AllocationRequest,
   CleanupRequest,
   RequestStageState,
-  SandboxAllocationUnit
+  SandboxAllocationUnit,
 } from '@muni-kypo-crp/sandbox-model';
 import { AbstractSandboxState } from './enums/abstract-sandox-state.enum';
 

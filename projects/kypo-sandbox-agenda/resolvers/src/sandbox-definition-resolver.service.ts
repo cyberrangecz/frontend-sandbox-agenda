@@ -4,11 +4,7 @@ import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
-import {
-  SandboxErrorHandler,
-  SandboxNavigator,
-  SANDBOX_DEFINITION_ID_SELECTOR,
-} from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxErrorHandler, SandboxNavigator, SANDBOX_DEFINITION_ID_SELECTOR } from '@muni-kypo-crp/sandbox-agenda';
 /**
  * Router data provider
  */
