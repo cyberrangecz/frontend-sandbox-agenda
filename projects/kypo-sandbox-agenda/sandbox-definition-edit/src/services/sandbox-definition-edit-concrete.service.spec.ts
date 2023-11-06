@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { asyncData } from '@sentinel/common';
+import { asyncData } from '@sentinel/common/testing';
 import { throwError } from 'rxjs';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';

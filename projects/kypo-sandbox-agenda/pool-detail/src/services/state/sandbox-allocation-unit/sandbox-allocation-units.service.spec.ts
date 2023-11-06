@@ -13,7 +13,8 @@ import {
   createSauApiSpy,
 } from '../../../../../internal/src/testing/testing-commons.spec';
 import { MatDialog } from '@angular/material/dialog';
-import { asyncData, OffsetPagination, PaginatedResource } from '@sentinel/common';
+import { asyncData } from '@sentinel/common/testing';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
 import { skip, take } from 'rxjs/operators';
 import { SandboxAllocationUnitsConcreteService } from './sandbox-allocation-units-concrete.service';
 import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';

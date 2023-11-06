@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OffsetPaginationEvent } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { switchMap } from 'rxjs/operators';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolOverviewService } from '../../state/pool-overview/pool-overview.service';

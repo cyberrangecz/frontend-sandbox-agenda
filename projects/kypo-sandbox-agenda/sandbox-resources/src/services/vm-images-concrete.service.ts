@@ -5,7 +5,8 @@ import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, OffsetPaginationEvent, SentinelFilter } from '@sentinel/common';
+import { SentinelFilter } from '@sentinel/common/filter';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { VMImagesService } from './vm-images.service';
 
 @Injectable()

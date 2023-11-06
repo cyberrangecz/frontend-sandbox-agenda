@@ -1,7 +1,8 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { asyncData, OffsetPaginationEvent } from '@sentinel/common';
+import { asyncData } from '@sentinel/common/testing';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { PoolOverviewConcreteService } from './pool-overview-concrete.service';
@@ -66,6 +67,6 @@ describe('PoolOverviewConcreteService', () => {
   });
 
   function createPagination(): OffsetPaginationEvent {
-    return new OffsetPaginationEvent(1, 5, '', '');
+    return new OffsetPaginationEvent(1, 5, '', 'asc');
   }
 });

@@ -6,7 +6,7 @@
     "kypo-sandbox-agenda": {
       "projectType": "library",
       "root": "projects/kypo-sandbox-agenda",
-      "sourceRoot": "projects/kypo-sandbox-agenda/src",
+      "sourceRoot": "projects/kypo-sandbox-agenda",
       "prefix": "kypo",
       "architect": {
         "build": {
@@ -163,6 +163,17 @@
           }
         }
       }
+    }
+  },
+  "cli": {
+    "analytics": false
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
     }
   }
 }

@@ -7,7 +7,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable, of } from 'rxjs';
@@ -18,7 +18,6 @@ import { SandboxInstanceService } from './sandbox-instance.service';
 import { SandboxAllocationUnitsService } from '../sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AllocateVariableSandboxesDialogComponent } from '../../../components/allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';
 import { AllocateVariableSandboxesDialogResult } from '../../../components/allocate-variable-sandboxes/allocateVariableSandboxesDialogResult';
-import { PoolOverviewService } from '../../../../../pool-overview/src/services/state/pool-overview/pool-overview.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -32,7 +31,6 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   constructor(
     private sandboxApi: SandboxInstanceApi,
     private poolApi: PoolApi,
-    private poolOverviewService: PoolOverviewService,
     private sandboxAllocationUnitsApi: SandboxAllocationUnitsApi,
     private allocationUnitsService: SandboxAllocationUnitsService,
     private router: Router,

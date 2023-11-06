@@ -1,4 +1,4 @@
-import { IPaginatedElements, PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
+import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HardwareUsage, Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 

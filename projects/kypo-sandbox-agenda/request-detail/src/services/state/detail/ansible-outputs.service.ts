@@ -1,6 +1,6 @@
 import { StageDetailService } from './stage-detail.service';
 import { RequestStage, RequestStageType } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { Observable } from 'rxjs';
 import { AllocationRequestsApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
