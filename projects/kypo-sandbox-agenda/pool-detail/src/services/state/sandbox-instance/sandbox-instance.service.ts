@@ -1,9 +1,5 @@
-import {
-  PaginatedResource,
-  OffsetPaginationEvent,
-  OffsetPaginatedElementsPollingService,
-  PaginationBaseEvent,
-} from '@sentinel/common';
+import { OffsetPaginatedElementsPollingService } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -59,14 +55,13 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
   /**
    * Starts allocation of a sandbox instance in a provided pool
    * @param poolId id of a pool in which the allocation will take place
-   * @param count count final number of sandboxes for allocation
    */
-  abstract allocate(poolId: number, count: number): Observable<PaginatedResource<SandboxAllocationUnit>>;
+  abstract allocate(poolId: number): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**
    * Starts allocation of specified number of sandbox instances in a provided pool
    * @param poolId id of a pool in which the allocation will take place
-   * @param total maximum total number of sandboxes that can be allocated
+   * @param total total number of sandboxes that can be allocated
    */
   abstract allocateSpecified(poolId: number, total: number): Observable<PaginatedResource<SandboxAllocationUnit>>;
   /**

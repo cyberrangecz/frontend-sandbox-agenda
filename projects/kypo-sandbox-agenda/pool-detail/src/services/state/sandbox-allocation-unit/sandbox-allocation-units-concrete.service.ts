@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
 import { BehaviorSubject, combineLatestWith, concat, EMPTY, mergeMap, Observable, zip, zipWith } from 'rxjs';
-import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';

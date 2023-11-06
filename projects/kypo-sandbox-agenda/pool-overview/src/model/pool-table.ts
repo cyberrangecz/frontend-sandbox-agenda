@@ -1,4 +1,4 @@
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
@@ -74,7 +74,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'primary',
         'Allocate sandboxes',
         of(pool.isFull()),
-        defer(() => abstractPoolService.allocateSpecified(pool, pool.maxSize - pool.usedSize))
+        defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - pool.usedSize))
       ),
       new RowAction(
         'allocate_one',

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
-import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import {
@@ -28,7 +28,7 @@ import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/po
  */
 @NgModule({
   declarations: [PoolOverviewComponent],
-  imports: [CommonModule, SentinelTableModule, SentinelControlsModule, MatDialogModule],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, MatDialogModule],
   providers: [
     PoolResolver,
     PaginationService,

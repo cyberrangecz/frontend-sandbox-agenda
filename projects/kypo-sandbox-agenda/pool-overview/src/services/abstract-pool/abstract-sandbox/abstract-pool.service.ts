@@ -1,4 +1,4 @@
-import { IPaginatedElements, PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common';
+import { IPaginatedElements, PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HardwareUsage, Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 
@@ -28,14 +28,8 @@ export abstract class AbstractPoolService {
    * @param pool a pool to be allocated
    * @param count number of sandbox instance to be allocated
    */
-  abstract allocate(pool: Pool, count: number): Observable<any>;
+  abstract allocate(pool: Pool, count?: number): Observable<any>;
 
-  /**
-   * Starts an allocation of specified number of sandboxes of a sandbox instance
-   * @param pool a pool to be allocated
-   * @param total number of sandboxes that are left to allocate
-   */
-  abstract allocateSpecified(pool: Pool, total: number): Observable<any>;
   /**
    * Clears a pool by deleting all sandbox instances
    * @param pool a pool to be cleared

@@ -1,4 +1,5 @@
-import { PaginatedResource, OffsetPaginatedElementsService, OffsetPaginationEvent } from '@sentinel/common';
+import { OffsetPaginatedElementsService } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 
@@ -28,7 +29,7 @@ export abstract class PoolOverviewService extends OffsetPaginatedElementsService
    * @param pool a pool to be allocated
    * @param count number of sandbox instance to be allocated
    */
-  abstract allocate(pool: Pool, count: number): Observable<any>;
+  abstract allocate(pool: Pool, count?: number): Observable<any>;
 
   /**
    * Clears a pool by deleting all sandbox instances

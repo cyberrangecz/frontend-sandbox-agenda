@@ -6,7 +6,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
@@ -14,7 +14,6 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
-import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 
 /**
  * Basic implementation of a layer between a component and an API service.

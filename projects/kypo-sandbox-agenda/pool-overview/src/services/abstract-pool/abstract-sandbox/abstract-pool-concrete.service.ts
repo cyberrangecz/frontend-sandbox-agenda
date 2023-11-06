@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OffsetPaginationEvent } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { switchMap } from 'rxjs/operators';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { PoolOverviewService } from '../../state/pool-overview/pool-overview.service';
 import { AbstractPoolService } from './abstract-pool.service';
-import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 
 @Injectable()
 export class AbstractPoolConcreteService extends AbstractPoolService {
   private lastPagination: OffsetPaginationEvent;
 
-  constructor(
-    private poolOverviewService: PoolOverviewService,
-    private sandboxInstanceService: SandboxInstanceService
-  ) {
+  constructor(private poolOverviewService: PoolOverviewService) {
     super();
     this.pools$ = poolOverviewService.resource$;
     this.poolsHasError$ = poolOverviewService.hasError$;
@@ -34,17 +30,8 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
    * @param pool a pool to be allocated with sandbox instances
    * @param count number of sandbox instances to be allocated
    */
-  allocate(pool: Pool, count: number): Observable<any> {
+  allocate(pool: Pool, count = -1): Observable<any> {
     return this.poolOverviewService.allocate(pool, count).pipe(switchMap(() => this.getAll(this.lastPagination)));
-  }
-
-  /**
-   * Starts an allocation of specified number of sandboxes for a sandbox instance
-   * @param pool a pool to be allocated
-   * @param total number of sandboxes that are left to allocate
-   */
-  allocateSpecified(pool: Pool, total: number) {
-    return this.sandboxInstanceService.allocateSpecified(pool.id, total);
   }
 
   /**
