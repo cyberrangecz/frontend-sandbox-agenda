@@ -7,7 +7,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable, of } from 'rxjs';
@@ -115,19 +115,19 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
       switchMap((result) =>
         result.result !== null
           ? this.poolApi.allocateSandboxes(poolId, result.result).pipe(
-            tap(
-              () =>
-                this.notificationService.emit(
-                  'success',
-                  `Allocation of specified sandboxes of pool ${poolId} started`
-                ),
-              (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
-            ),
-            switchMap(() => {
-              this.lastPoolId = this.lastPoolId ?? poolId;
-              return this.getAllUnits(this.lastPoolId, this.lastPagination);
-            })
-          )
+              tap(
+                () =>
+                  this.notificationService.emit(
+                    'success',
+                    `Allocation of specified sandboxes of pool ${poolId} started`
+                  ),
+                (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
+              ),
+              switchMap(() => {
+                this.lastPoolId = this.lastPoolId ?? poolId;
+                return this.getAllUnits(this.lastPoolId, this.lastPagination);
+              })
+            )
           : EMPTY
       )
     );
