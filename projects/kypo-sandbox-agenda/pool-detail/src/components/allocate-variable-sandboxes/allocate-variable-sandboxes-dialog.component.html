@@ -22,9 +22,13 @@
       <mat-slider class="slider"
                   min="1"
                   max="{{data}}"
-                  step="1"
-                  value="{{allocationSize.value}}"
-                  (input)="getSliderValue($event)"></mat-slider>
+                  step="1" #ngSlider>
+        <input
+          matSliderThumb
+          value="{{allocationSize.value}}"
+          (input)="getSliderValue({source: ngSliderThumb, parent: ngSlider, value: ngSliderThumb.value})"
+          #ngSliderThumb="matSliderThumb" />
+      </mat-slider>
       <div class="icon-container">
         <mat-icon (click)="changeAllocationValue(1)">add_circle</mat-icon>
         <mat-icon (click)="changeAllocationValue(-1)">remove_circle</mat-icon>

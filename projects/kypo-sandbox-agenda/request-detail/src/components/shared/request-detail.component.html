@@ -1,6 +1,6 @@
 <ng-container *ngIf="stages$ | async as stages">
   <ng-container *ngIf="hasError$ | async">
-    <mat-card class="error">
+    <mat-card appearance="outlined" class="error">
       <span>We had some trouble loading the data.</span>
       <button mat-icon-button (click)="reloadStages()" color="primary"><mat-icon>refresh</mat-icon></button>
     </mat-card>
@@ -11,7 +11,7 @@
         *ngIf="(fragment && 'stage-' + i === fragment) || !fragment"
         id="{{ 'stage-' + i }}"
         [stage]="stage"
-        (stageDetailPanelChange)="onStageDetailPanelChange($event, stage, i)"
+        (stageDetailPanelChange)="onStageDetailPanelChange($event, stage)"
       >
       </kypo-request-stage>
     </ng-container>

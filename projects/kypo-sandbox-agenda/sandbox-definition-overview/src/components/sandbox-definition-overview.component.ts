@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective, OffsetPaginationEvent } from '@sentinel/common';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
@@ -69,7 +70,9 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
     this.sandboxDefinitions$ = this.sandboxDefinitionService.resource$.pipe(
       map((resource) => new SandboxDefinitionTable(resource, this.sandboxDefinitionService))
     );
-    this.lastLoadEvent = { pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', '') };
+    this.lastLoadEvent = {
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
+    };
     this.onLoadEvent(this.lastLoadEvent);
     this.hasError$ = this.sandboxDefinitionService.hasError$;
   }

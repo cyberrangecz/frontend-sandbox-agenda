@@ -1,7 +1,8 @@
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { map, takeWhile } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { OffsetPaginationEvent, PaginationBaseEvent, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';

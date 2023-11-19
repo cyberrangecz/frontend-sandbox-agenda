@@ -1,6 +1,6 @@
 import { VMImagesRowAdapter } from './vm-images-row-adapter';
 import { Column, Row, SentinelTable, RowExpand } from '@sentinel/components/table';
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
 import { VMImageDetailComponent } from '../components/vm-image-detail/vm-image-detail.component';
 import { formatDate } from '@angular/common';

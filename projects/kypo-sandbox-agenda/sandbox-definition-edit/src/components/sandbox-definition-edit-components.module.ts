@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SandboxNavigator, SandboxDefaultNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxDefinitionEditConcreteService } from '../services/sandbox-definition-edit-concrete.service';
@@ -13,7 +13,7 @@ import { SandboxDefinitionEditComponent } from './sandbox-definition-edit.compon
  * Module for create sandbox definition page and components
  */
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CreateSandboxDefinitionMaterial, SentinelControlsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CreateSandboxDefinitionMaterial, SentinelControlsComponent],
   declarations: [SandboxDefinitionEditComponent],
   providers: [
     SandboxAgendaContext,

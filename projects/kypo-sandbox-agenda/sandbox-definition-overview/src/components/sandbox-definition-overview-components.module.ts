@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxNavigator, SandboxDefaultNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import {
@@ -20,7 +20,7 @@ import {
  * Module containing components and services for sandbox definition overview page
  */
 @NgModule({
-  imports: [CommonModule, SentinelTableModule, SentinelControlsModule],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent],
   declarations: [SandboxDefinitionOverviewComponent, SandboxDefinitionDetailComponent],
   providers: [
     PaginationService,

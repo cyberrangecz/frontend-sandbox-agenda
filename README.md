@@ -89,7 +89,9 @@ export class SandboxDefinitionOverviewRoutingModule {}
 To see the library in work and to see example setup, you can run the example app.
 To run the example you need to run [KYPO Sandbox service](https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service) or have access to a running instance and provide the URL to the service in when importing API module.
 
+Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [kypo-trainings](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/kypo-trainings) project and can be run via `npm run api`.
+
 1. Clone this repository
 1. Run `npm install`
-1. Run `ng serve --ssl`
+1. Run `ng serve --configuration local --ssl`
 1. See the app at `https://localhost:4200`

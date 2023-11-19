@@ -5,7 +5,6 @@ import {
   KypoTopologyGraphConfig,
   KypoTopologyGraphModule,
   KypoTopologyLegendModule,
-  TopologyApiModule,
 } from '@muni-kypo-crp/topology-graph';
 import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxTopologyComponent } from './sandbox-topology.component';

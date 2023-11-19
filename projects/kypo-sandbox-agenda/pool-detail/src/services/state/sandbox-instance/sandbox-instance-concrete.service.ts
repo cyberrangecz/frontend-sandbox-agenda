@@ -7,7 +7,7 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
 import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable, of } from 'rxjs';
@@ -94,7 +94,10 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         () => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
         (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => {
+        this.lastPoolId = this.lastPoolId ?? poolId;
+        return this.getAllUnits(this.lastPoolId, this.lastPagination);
+      })
     );
   }
 

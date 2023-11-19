@@ -1,6 +1,5 @@
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { ResourcePollingService } from './resource-polling.service';
-import { Observable, of } from 'rxjs';
 
 describe('ResourcePollingService', () => {
   let service: ResourcePollingService;

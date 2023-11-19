@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SentinelBaseDirective, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { TerraformStageAdapter } from '../../../../model/adapters/terraform-stage-adapter';
 import { Observable } from 'rxjs';
 import { TerraformOutputsService } from '../../../../services/state/detail/terraform-outputs.service';
@@ -33,7 +34,7 @@ export class TerraformAllocationStageDetailComponent extends SentinelBaseDirecti
   }
 
   init(): void {
-    const initialPagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', '');
+    const initialPagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', 'asc');
     this.onFetchEvents(initialPagination);
 
     this.outputs$ = this.outputsService.resource$.pipe(takeWhile(() => this.isAlive));
