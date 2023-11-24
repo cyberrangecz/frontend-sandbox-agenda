@@ -1,3 +1,4 @@
+15.0.0 Update to Angular 15.
 14.4.7 Fix the retrieval of poolId upon a single sandbox allocation.
 14.4.6 Add sorting options for pool, sandbox definition and resources tables.
 14.4.5 Add option to confirm sandbox definition creation by pressing enter and added whitespace trimming. Added ports and networks to resources. Added revision to pool overview. Enhanced sandbox allocation confirmation dialog. Disabled lock option when allocation fails.

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { StageDetailService } from './stage-detail.service';
 import { AllocationRequestsApi } from '@muni-kypo-crp/sandbox-api';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';

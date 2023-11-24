@@ -1,4 +1,5 @@
-import { PaginatedResource, OffsetPaginatedElementsPollingService, OffsetPaginationEvent } from '@sentinel/common';
+import { OffsetPaginatedElementsPollingService } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { Request } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 

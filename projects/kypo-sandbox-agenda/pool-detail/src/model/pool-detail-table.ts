@@ -1,7 +1,8 @@
 import { CleanupRequest, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
-import { PaginatedResource, SentinelDateTimeFormatPipe } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
+import { SentinelDateTimeFormatPipe } from '@sentinel/common/pipes';
 import { defer, of } from 'rxjs';
 import { PoolDetailRowAdapter } from './pool-detail-row-adapter';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SentinelBaseDirective, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { AnsibleStageAdapter } from '../../../../model/adapters/ansible-stage-adapter';
 import { Observable } from 'rxjs';
 import { AnsibleOutputsService } from '../../../../services/state/detail/ansible-outputs.service';
@@ -33,7 +34,7 @@ export class AnsibleAllocationStageDetailComponent extends SentinelBaseDirective
   }
 
   init(): void {
-    const initialPagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', '');
+    const initialPagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', 'asc');
     this.onFetch(initialPagination);
     this.outputs$ = this.outputsService.resource$.pipe(takeWhile(() => this.isAlive));
     this.hasOutputs$ = this.outputs$.pipe(map((outputs) => outputs.elements.length > 0));

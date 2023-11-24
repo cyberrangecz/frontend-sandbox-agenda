@@ -1,4 +1,4 @@
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Column, SentinelTable, Row, RowExpand, DeleteAction, RowAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
@@ -12,9 +12,9 @@ import { SandboxDefinitionRowAdapter } from './sandbox-definition-row-adapter';
 export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
   constructor(resource: PaginatedResource<SandboxDefinition>, service: SandboxDefinitionOverviewService) {
     const columns = [
-      new Column('id', 'id', true),
-      new Column('title', 'title', true, 'name'),
-      new Column('createdByName', 'Created by', true, 'created_by'),
+      new Column('id', 'id', false),
+      new Column('titleWithRevision', 'title', false),
+      new Column('createdByName', 'Created by', false),
     ];
     const rows = resource.elements.map((element) => SandboxDefinitionTable.createRow(element, service));
     super(rows, columns);
@@ -46,6 +46,7 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
     ];
     const rowAdapter = sandboxDefinition as SandboxDefinitionRowAdapter;
     rowAdapter.createdByName = sandboxDefinition.createdBy.fullName;
+    rowAdapter.titleWithRevision = sandboxDefinition.title + ' (' + sandboxDefinition.rev + ')';
     const row = new Row(rowAdapter, actions);
     row.addLink('title', this.parseUrl(sandboxDefinition.url), '_blank');
     return row;

@@ -1,7 +1,7 @@
 import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { asyncData } from '@sentinel/common';
+import { asyncData } from '@sentinel/common/testing';
 import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { CreatedBy, Pool } from '@muni-kypo-crp/sandbox-model';

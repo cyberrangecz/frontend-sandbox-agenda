@@ -47,7 +47,10 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
     this.stages$ = this.requestStagesService.getAll(this.request);
   }
 
-  onStageDetailPanelChange(opened: boolean, stage: RequestStage, order: number): void {
+  onStageDetailPanelChange(
+    opened: boolean,
+    stage: RequestStage //, order: number
+  ): void {
     if (opened) {
       // TODO scroll to view
       this.stageDetailRegistry.add(stage);

@@ -1,4 +1,4 @@
-import { PaginatedResource } from '@sentinel/common';
+import { PaginatedResource } from '@sentinel/common/pagination';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
