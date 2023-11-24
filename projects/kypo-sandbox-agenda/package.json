@@ -1,6 +1,6 @@
 {
   "name": "@muni-kypo-crp/sandbox-agenda",
-  "version": "14.4.7",
+  "version": "15.0.0",
   "peerDependencies": {
     "@angular/common": "^14.0.5",
     "@angular/core": "^14.0.5",
