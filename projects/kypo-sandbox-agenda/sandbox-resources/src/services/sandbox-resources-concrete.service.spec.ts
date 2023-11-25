@@ -1,5 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
-import { asyncData } from '@sentinel/common';
+import { asyncData } from '@sentinel/common/testing';
 import { take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';

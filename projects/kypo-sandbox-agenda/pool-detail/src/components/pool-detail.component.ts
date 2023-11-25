@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OffsetPaginationEvent, PaginatedResource, SentinelBaseDirective } from '@sentinel/common';
+import { SentinelBaseDirective } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, RequestStageState } from '@muni-kypo-crp/sandbox-model';
 import { TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
@@ -100,7 +101,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
 
   private initTables() {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', ''),
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
     };
     this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];

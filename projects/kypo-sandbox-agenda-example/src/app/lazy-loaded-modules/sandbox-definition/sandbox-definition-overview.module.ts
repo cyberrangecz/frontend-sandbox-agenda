@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { KypoSandboxApiModule } from '@muni-kypo-crp/sandbox-api';
 import { SandboxDefinitionOverviewComponentsModule } from '@muni-kypo-crp/sandbox-agenda/sandbox-definition-overview';
-import { environment } from '../../../environments/environment';
+import { environmentLocal } from '../../../environments/environment.local';
 import { SharedProvidersModule } from '../shared-providers.module';
 import { SandboxDefinitionOverviewRoutingModule } from './sandbox-definition-overview-routing.module';
 
 @NgModule({
   imports: [
     SharedProvidersModule,
-    KypoSandboxApiModule.forRoot(environment.sandboxApiConfig),
-    SandboxDefinitionOverviewComponentsModule.forRoot(environment.sandboxAgendaConfig),
+    KypoSandboxApiModule.forRoot(environmentLocal.sandboxApiConfig),
+    SandboxDefinitionOverviewComponentsModule.forRoot(environmentLocal.sandboxAgendaConfig),
     SandboxDefinitionOverviewRoutingModule,
   ],
 })

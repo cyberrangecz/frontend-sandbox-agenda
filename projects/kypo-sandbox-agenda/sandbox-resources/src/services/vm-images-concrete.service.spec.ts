@@ -1,5 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
-import { asyncData, PaginatedResource, OffsetPagination } from '@sentinel/common';
+import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
+import { asyncData } from '@sentinel/common/testing';
 import { skip, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';

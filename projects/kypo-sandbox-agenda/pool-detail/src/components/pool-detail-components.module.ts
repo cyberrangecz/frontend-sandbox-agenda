@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { SentinelControlsModule } from '@sentinel/components/controls';
+import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import {
@@ -19,7 +19,7 @@ import { AllocateVariableSandboxesDialogComponent } from './allocate-variable-sa
  */
 @NgModule({
   declarations: [PoolDetailComponent, StageOverviewComponent, AllocateVariableSandboxesDialogComponent],
-  imports: [CommonModule, SentinelTableModule, PoolDetailMaterialModule, SentinelControlsModule],
+  imports: [CommonModule, SentinelTableModule, PoolDetailMaterialModule, SentinelControlsComponent],
   providers: [RequestResolver, RequestBreadcrumbResolver, SandboxInstanceResolver, SandboxInstanceBreadcrumbResolver],
 })
 export class PoolDetailComponentsModule {

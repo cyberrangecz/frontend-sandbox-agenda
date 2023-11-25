@@ -1,3 +1,38 @@
+### 14.4.7 Fix the retrieval of poolId upon a single sandbox allocation.
+* e07c548 -- [CI/CD] Update packages.json version based on GitLab tag.
+* f8140b0 -- Merge branch '116-allocating-a-single-sandbox-returns-error' into 'master'
+* 18922bd -- Fix poolId retrieval for sandbox allocation
+### 14.4.6 Add sorting options for pool, sandbox definition and resources tables.
+* 20b199c -- [CI/CD] Update packages.json version based on GitLab tag.
+* 8e61c02 -- Merge branch '115-add-relevant-sorting-options-for-tables' into 'master'
+* d721d2b -- Update version.
+* b7b1f7d -- Revert resources table sorting change.
+* e69ff9f -- Add sorting options for pool, sandbox definition and resources tables.
+### 14.4.5 Add option to confirm sandbox definition creation by pressing enter and added whitespace trimming. Added ports and networks to resources. Added revision to pool overview. Enhanced sandbox allocation confirmation dialog. Disabled lock option when allocation fails.
+* f2ecb72 -- [CI/CD] Update packages.json version based on GitLab tag.
+* ec782e7 -- Merge branch 'develop' into 'master'
+*   1064b12 -- Merge branch '108-trimming-of-whitespaces-in-sandbox-definition-create' into 'develop'
+|\  
+| * 13b08e9 -- Resolve "trimming of whitespaces in sandbox definition create"
+* |   37a9a3e -- Merge branch '112-disable-lock-button-when-topology-allocation-fails' into 'develop'
+|\ \  
+| * | d2e0e92 -- Resolve "Disable lock button when topology allocation fails"
+| |/  
+* |   17c745d -- Merge branch '114-enhancement-of-sandbox-detail-allocation-dialog' into 'develop'
+|\ \  
+| * | db458f0 -- Resolve "Enhancement of sandbox detail allocation dialog"
+| |/  
+* |   a39b55f -- Merge branch '113-add-revision-to-pool-overview' into 'develop'
+|\ \  
+| * | cbcda49 -- Resolve "Add revision to pool overview"
+| |/  
+* |   620f468 -- Merge branch '111-add-ports-and-networks-to-resources' into 'develop'
+|\ \  
+| |/  
+|/|   
+| * 6d3e357 -- Resolve "Add ports and networks to resources"
+* e93b876 -- Merge branch '109-adding-option-to-confirm-sd-creation-by-pressing-enter' into 'develop'
+* 56a9b4f -- Resolve "Adding option to confirm SD creation by pressing 'enter'."
 ### 14.4.4 Update topology view with new legend
 * 25099bb -- [CI/CD] Update packages.json version based on GitLab tag.
 * f3b6a8e -- Merge branch '110-update-topology-component-with-new-legend' into 'master'

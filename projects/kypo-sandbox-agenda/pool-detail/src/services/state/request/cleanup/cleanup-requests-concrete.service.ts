@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
 import { CleanupRequest, Request } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
