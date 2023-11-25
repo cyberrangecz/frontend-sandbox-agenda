@@ -1,4 +1,4 @@
-15.0.1 Add ports and networks usage to pool table.
+15.0.1 Add ports and networks usage to pool table. Move revision to title column.
 15.0.0 Update to Angular 15.
 14.4.7 Fix the retrieval of poolId upon a single sandbox allocation.
 14.4.6 Add sorting options for pool, sandbox definition and resources tables.
