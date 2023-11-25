@@ -1,4 +1,6 @@
-14.4.7 Add ports and networks usage to pool table.
+15.0.1 Add ports and networks usage to pool table.
+15.0.0 Update to Angular 15.
+14.4.7 Fix the retrieval of poolId upon a single sandbox allocation.
 14.4.6 Move revision from sandbox definition detail to column.
 14.4.5 Add option to confirm sandbox definition creation by pressing enter and added whitespace trimming. Added ports and networks to resources. Added revision to pool overview. Enhanced sandbox allocation confirmation dialog. Disabled lock option when allocation fails.
 14.4.4 Update topology view with new legend
