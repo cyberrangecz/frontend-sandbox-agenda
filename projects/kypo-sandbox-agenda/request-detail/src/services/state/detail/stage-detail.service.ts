@@ -1,5 +1,6 @@
 import { merge, Observable } from 'rxjs';
-import { PaginatedResource, OffsetPaginatedElementsPollingService, OffsetPaginationEvent } from '@sentinel/common';
+import { OffsetPaginatedElementsPollingService } from '@sentinel/common';
+import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';

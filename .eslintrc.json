@@ -19,6 +19,7 @@
       ],
       "rules": {
         "max-len": ["error", { "code": 140, "ignorePattern": "import .*" }],
+        "@typescript-eslint/no-explicit-any": "off",
         "@angular-eslint/directive-selector": [
           "error",
           { "type": "attribute", "prefix": "app", "style": "camelCase" }

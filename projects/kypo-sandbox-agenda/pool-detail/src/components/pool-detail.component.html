@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card appearance="outlined">
   <h3>Sandbox Instances</h3>
   <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
   <sentinel-table [data]="instances$ | async"

@@ -6,9 +6,9 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';

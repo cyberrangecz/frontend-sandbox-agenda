@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, OffsetPaginatedElementsService, PaginationBaseEvent } from '@sentinel/common';
+import { OffsetPaginatedElementsService } from '@sentinel/common';
+import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 
 /**
  * A layer between a component and an API service. Implement a concrete service by extending this class.
