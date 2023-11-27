@@ -3,3 +3,7 @@
   flex-flow: row wrap;
   justify-content: space-evenly;
 }
+
+mat-card {
+  padding: 16px;
+}
