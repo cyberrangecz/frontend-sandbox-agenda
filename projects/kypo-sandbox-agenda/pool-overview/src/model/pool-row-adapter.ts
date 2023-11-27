@@ -8,6 +8,5 @@ export class PoolRowAdapter extends Pool {
   ramUtilization: string;
   networksUtilization: string;
   portsUtilization: string;
-  sandboxDefinitionName: string;
-  sandboxDefinitionRevision: string;
+  sandboxDefinitionNameAndRevision: string;
 }
