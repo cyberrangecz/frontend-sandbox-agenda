@@ -6,6 +6,5 @@ export class PoolRowAdapter extends Pool {
   instancesUtilization: string;
   cpuUtilization: string;
   ramUtilization: string;
-  sandboxDefinitionName: string;
-  sandboxDefinitionRevision: string;
+  sandboxDefinitionNameAndRevision: string;
 }
