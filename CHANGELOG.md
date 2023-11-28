@@ -1,3 +1,7 @@
+### 15.0.1 Update agenda cards styling.
+* 993104f -- [CI/CD] Update packages.json version based on GitLab tag.
+* b5c38bf -- Merge branch '123-add-padding-to-new-material-cards' into 'master'
+* 566361a -- Update card styling
 ### 15.0.0 Update to Angular 15.
 * 0829601 -- [CI/CD] Update packages.json version based on GitLab tag.
 * e5a9a03 -- Merge branch '117-refactor-the-sandbox-allocation-calls' into 'master'
