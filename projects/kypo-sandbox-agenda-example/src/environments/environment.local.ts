@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Server url
-export const baseURL = 'http://localhost:3000/';
+export const baseURL = 'https://localhost:3000/';
 // Frontend url
 export const homeURL = 'https://localhost:4200';
 export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
@@ -47,11 +47,11 @@ export const environmentLocal = {
         textColor: 'white',
         backgroundColor: '#002776',
         oidcConfig: {
-          issuer: 'https://test.crp.kypo.muni.cz:443/csirtmu-dummy-issuer-server/',
+          issuer: 'https://oidc.muni.cz/oidc/',
           clientId: 'gtozHJjxkqMxMaKmvtAWzafYkRMSLcSWbAQF',
           redirectUri: homeURL, // redirect after successful login
           scope: 'openid email profile',
-          logoutUrl: 'https://test.crp.kypo.muni.cz/csirtmu-dummy-issuer-server/endsession/endsession',
+          logoutUrl: 'https://oidc.muni.cz/oidc/endsession',
           postLogoutRedirectUri: homeURL + '/logout-confirmed/',
           silentRefreshRedirectUri: homeURL + '/silent-refresh.html',
           clearHashAfterLogin: true, // remove token and other info from url after login
