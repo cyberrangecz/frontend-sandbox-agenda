@@ -22,10 +22,12 @@ export class ClientErrorHandlerService {
     if (action !== undefined) {
       notification.action = action;
     }
-    if (err.error.detail) {
-      notification.additionalInfo = [err.error.detail];
-    } else if (err.error.non_field_errors) {
-      notification.additionalInfo = [err.error.non_field_errors];
+    if (err.error) {
+      if (err.error.detail) {
+        notification.additionalInfo = [err.error.detail];
+      } else if (err.error.non_field_errors) {
+        notification.additionalInfo = [err.error.non_field_errors];
+      }
     }
     return this.notificationService
       .emit(notification)
