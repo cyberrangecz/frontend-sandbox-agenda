@@ -1,3 +1,29 @@
+### 15.0.1 Update agenda cards styling.
+* 993104f -- [CI/CD] Update packages.json version based on GitLab tag.
+* b5c38bf -- Merge branch '123-add-padding-to-new-material-cards' into 'master'
+* 566361a -- Update card styling
+### 15.0.0 Update to Angular 15.
+* 0829601 -- [CI/CD] Update packages.json version based on GitLab tag.
+* e5a9a03 -- Merge branch '117-refactor-the-sandbox-allocation-calls' into 'master'
+*   05c245a -- Merge branch '117-refactor-the-sandbox-allocation-calls' of gitlab.ics.muni.cz:muni-kypo-crp/frontend-angular/agendas/kypo-sandbox-agenda into 117-refactor-the-sandbox-allocation-calls
+|\  
+| *   a00d3ab -- Merge branch 'develop' into '117-refactor-the-sandbox-allocation-calls'
+| |\  
+| | * fa685d2 -- Merge branch '118-move-branch-from-sandbox-definition-detail-to-column' into 'develop'
+| | * fdf9104 -- bump version.
+| | * b34b30c -- Remove column revision.
+| | * 3b5117d -- Add revision column and Title modification.
+| *   87f4f66 -- Merge allocation process
+| |\  
+* | \   5d54ea5 -- Merge allocation process
+|\ \ \  
+| |/ /  
+|/| /   
+| |/    
+| * bfbe867 -- Update to Angular 15
+| * d1630af -- Refactor the pool allocation calls
+* 529cb80 -- Revert allocation merge
+* bb31f6f -- Refactor the pool allocation calls
 ### 14.4.7 Fix the retrieval of poolId upon a single sandbox allocation.
 * e07c548 -- [CI/CD] Update packages.json version based on GitLab tag.
 * f8140b0 -- Merge branch '116-allocating-a-single-sandbox-returns-error' into 'master'

@@ -13,3 +13,8 @@ h1 {
   align-items: baseline;
   margin: 20px 0;
 }
+
+mat-card {
+  padding: 16px;
+}
+
