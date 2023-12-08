@@ -1,3 +1,4 @@
+15.1.1 Fix sandbox definition faulty buttons.
 15.1.0 Adjust pool view to communicate with optimized sandbox service.
 15.0.1 Update agenda cards styling.
 15.0.0 Update to Angular 15.
