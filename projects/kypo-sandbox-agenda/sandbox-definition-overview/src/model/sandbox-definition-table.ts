@@ -48,7 +48,7 @@ export class SandboxDefinitionTable extends SentinelTable<SandboxDefinition> {
     rowAdapter.createdByName = sandboxDefinition.createdBy.fullName;
     rowAdapter.titleWithRevision = sandboxDefinition.title + ' (' + sandboxDefinition.rev + ')';
     const row = new Row(rowAdapter, actions);
-    row.addLink('title', this.parseUrl(sandboxDefinition.url), '_blank');
+    row.addLink('titleWithRevision', this.parseUrl(sandboxDefinition.url), '_blank');
     return row;
   }
 

@@ -24,8 +24,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     const columns = [
       new Column('title', 'title', true, 'id'),
       new Column('createdByName', 'created by', true, 'created_by__username'),
-      new Column('sandboxDefinitionName', 'sandbox definition', true, 'definition__name'),
-      new Column('sandboxDefinitionRevision', 'revision', true, 'rev'),
+      new Column('sandboxDefinitionNameAndRevision', 'sandbox definition', true, 'definition__name'),
       new Column('lockState', 'state', true, 'lock'),
       new Column('usedAndMaxSize', 'size', true, 'max_size'),
       new Column('instancesUtilization', 'Instances util.', false),
@@ -45,11 +44,12 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     const rowAdapter = pool as PoolRowAdapter;
     rowAdapter.title = `Pool ${rowAdapter.id}`;
     rowAdapter.createdByName = pool.createdBy.fullName;
-    rowAdapter.sandboxDefinitionName = pool.definition.title;
-    rowAdapter.sandboxDefinitionRevision = pool.definition.rev;
+    rowAdapter.sandboxDefinitionNameAndRevision = `${pool.definition.title} (${pool.definition.rev})`;
     rowAdapter.instancesUtilization = `${(pool.hardwareUsage.instances * 100).toFixed(1)}%`;
     rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
     rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
+    rowAdapter.portsUtilization = `${(pool.hardwareUsage.port * 100).toFixed(1)}%`;
+    rowAdapter.networksUtilization = `${(pool.hardwareUsage.network * 100).toFixed(1)}%`;
 
     const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService, sandboxInstanceService));
     row.addLink('title', navigator.toPool(rowAdapter.id));
