@@ -1,3 +1,6 @@
+### 15.1.2 Update sandbox api to accept paginated allocation units.
+* 0e7a7cf -- [CI/CD] Update packages.json version based on GitLab tag.
+* 2857338 -- Update sandbox api version
 ### 15.1.1 Fix sandbox definition faulty buttons.
 * d0df861 -- [CI/CD] Update packages.json version based on GitLab tag.
 * dbc8dc7 -- Merge branch 'develop' into 'master'
