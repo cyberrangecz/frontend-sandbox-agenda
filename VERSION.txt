@@ -1,3 +1,4 @@
+15.1.2 Update sandbox api to accept paginated allocation units.
 15.1.1 Fix sandbox definition faulty buttons.
 15.1.0 Adjust pool view to communicate with optimized sandbox service.
 15.0.1 Update agenda cards styling.
