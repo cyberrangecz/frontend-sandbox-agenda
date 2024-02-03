@@ -72,7 +72,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'Allocate All',
         'subscriptions',
         'primary',
-        'Allocate sandboxes',
+        this.createAllocationTooltip(pool.maxSize, pool.usedSize),
         of(pool.isFull()),
         defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - pool.usedSize))
       ),
@@ -105,6 +105,13 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       ),
       this.createLockAction(pool, abstractPoolService),
     ];
+  }
+
+  private static createAllocationTooltip(maxSandboxSize: number, usedSandboxSize: number): string {
+    if (maxSandboxSize - usedSandboxSize == 1) {
+      if (maxSandboxSize == 1) return 'Allocate sandbox immediately';
+      else return 'Allocate the last sandbox';
+    } else return 'Allocate a specific number of sandboxes';
   }
 
   private static createLockAction(pool: Pool, service: AbstractPoolService): RowAction {
