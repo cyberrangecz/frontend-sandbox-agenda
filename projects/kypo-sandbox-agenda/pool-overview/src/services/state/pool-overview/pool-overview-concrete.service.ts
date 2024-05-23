@@ -99,6 +99,10 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return from(this.router.navigate([this.navigator.toCreatePool()]));
   }
 
+  update(pool: Pool): Observable<any> {
+    return from(this.router.navigate([this.navigator.toUpdatePool(pool.id)]));
+  }
+
   lock(pool: Pool): Observable<any> {
     return this.poolApi.lockPool(pool.id).pipe(
       tap(

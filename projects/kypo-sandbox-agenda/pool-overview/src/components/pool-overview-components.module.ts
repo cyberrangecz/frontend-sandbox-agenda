@@ -23,12 +23,13 @@ import {
   SandboxInstanceService,
 } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { MatTooltipModule } from '@angular/material/tooltip';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
 @NgModule({
   declarations: [PoolOverviewComponent],
-  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, MatDialogModule],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, MatDialogModule, MatTooltipModule],
   providers: [
     PoolResolver,
     PaginationService,

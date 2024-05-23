@@ -65,6 +65,15 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
     controlItem.result$.pipe(take(1)).subscribe();
   }
 
+  trimComment(fullElement: any, trimSize: number) {
+    const comment = fullElement !== undefined ? fullElement.comment : '';
+    if (!comment || comment.length < 1) {
+      return '';
+    } else {
+      return comment.substring(0, trimSize) + '...';
+    }
+  }
+
   private initTable() {
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),

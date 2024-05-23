@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+} from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { defer, of } from 'rxjs';
-import { take, takeWhile } from 'rxjs/operators';
+import {defer, Observable} from 'rxjs';
+import {map, take, takeWhile} from 'rxjs/operators';
 import { PoolEditService } from '../services/pool-edit.service';
 import { PoolFormGroup } from './pool-form-group';
 import { AbstractControl } from '@angular/forms';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { ActivatedRoute } from '@angular/router';
+import {PoolChangedEvent} from "../../../pool-overview/src/model/pool-changed-event";
 
 /**
  * Component with form for creating pool
@@ -14,19 +20,27 @@ import { AbstractControl } from '@angular/forms';
   selector: 'kypo-sandbox-pool-create',
   templateUrl: './pool-edit.component.html',
   styleUrls: ['./pool-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolEditComponent extends SentinelBaseDirective implements OnInit {
+export class PoolEditComponent extends SentinelBaseDirective {
+  pool: Pool;
   poolFormGroup: PoolFormGroup;
+  editMode = false;
+  canDeactivatePoolEdit = true;
   controls: SentinelControlItem[];
 
-  constructor(private poolEditService: PoolEditService) {
+  constructor(private activeRoute: ActivatedRoute, private poolEditService: PoolEditService) {
     super();
-  }
-
-  ngOnInit(): void {
-    this.poolFormGroup = new PoolFormGroup();
-    this.initControls();
-    this.poolFormGroup.formGroup.valueChanges.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.initControls());
+    this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
+      this.pool = data.pool === undefined ? new Pool() : data.pool;
+      this.poolEditService.set(data.pool);
+      this.poolEditService.editMode$.subscribe((edit) => {
+        this.editMode = edit;
+        this.initControls(edit);
+        this.poolFormGroup = new PoolFormGroup(data.pool, edit);
+        this.poolFormGroup.formGroup.valueChanges.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.onChanged());
+      });
+    });
   }
 
   get sandboxDefinition(): AbstractControl {
@@ -35,6 +49,10 @@ export class PoolEditComponent extends SentinelBaseDirective implements OnInit {
 
   get poolSize(): AbstractControl {
     return this.poolFormGroup.formGroup.get('poolSize');
+  }
+
+  get comment(): AbstractControl {
+    return this.poolFormGroup.formGroup.get('comment');
   }
 
   onControlsAction(control: SentinelControlItem): void {
@@ -53,15 +71,25 @@ export class PoolEditComponent extends SentinelBaseDirective implements OnInit {
       });
   }
 
-  initControls(): void {
-    this.controls = [
-      new SentinelControlItem(
-        'create',
-        'Create',
-        'primary',
-        of(!this.poolFormGroup.formGroup.valid),
-        defer(() => this.poolEditService.create(this.poolFormGroup.createPoolFromValues()))
-      ),
-    ];
+  initControls(isEditMode: boolean): void {
+    const saveItem = new SentinelControlItem(
+      'save',
+      'Save',
+      'primary',
+      this.poolEditService.saveDisabled$,
+      defer(() => this.poolEditService.save())
+    );
+    if (!isEditMode) {
+      saveItem.id = 'create';
+      saveItem.label = 'Create';
+    }
+    this.controls = [saveItem];
+  }
+
+  private onChanged() {
+    this.poolFormGroup.setValuesToPool(this.pool);
+    this.canDeactivatePoolEdit = false;
+    const change: PoolChangedEvent = new PoolChangedEvent(this.pool, this.poolFormGroup.formGroup.valid);
+    this.poolEditService.change(change);
   }
 }

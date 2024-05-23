@@ -7,4 +7,11 @@
   (rowAction)="onPoolAction($event)"
   (tableLoad)="onLoadEvent($event)"
   (refresh)="onLoadEvent($event)">
+  <ng-container *sentinelRow="'comment'; template: accessToken"></ng-container>
 </sentinel-table>
+
+<ng-template #accessToken let-row>
+  <div class="access-token-container" matTooltip="{{ row.element.comment }}">
+     {{ trimComment(row.element, 10) }}
+  </div>
+</ng-template>

@@ -39,28 +39,25 @@ export class PoolResolver implements Resolve<Pool> {
     }
     if (route.paramMap.has(SANDBOX_POOL_ID_SELECTOR)) {
       const id = Number(route.paramMap.get(SANDBOX_POOL_ID_SELECTOR));
-      if (this.poolSubject$.getValue()?.id === id) {
-        const pool = this.poolSubject$.getValue();
-        this.poolSubject$.next(null);
-        return pool;
-      } else {
-        return this.api.getPool(id).pipe(
-          take(1),
-          mergeMap((pool) => (pool ? of(pool) : this.navigateToOverview())),
-          tap((pool) => this.poolSubject$.next(pool)),
-          catchError((err) => {
-            this.errorHandler.emit(err, 'Sandbox pool resolver');
-            this.navigateToOverview();
-            return EMPTY;
-          })
-        );
-      }
+      return this.api.getPool(id).pipe(
+        take(1),
+        mergeMap((pool) => (pool ? of(pool) : this.navigateToNew())),
+        catchError((err) => {
+          this.errorHandler.emit(err, 'Resolving pool');
+          return this.navigateToNew();
+        })
+      );
     }
     return this.navigateToOverview();
   }
 
   private navigateToOverview(): Observable<never> {
     this.router.navigate([this.navigator.toPoolOverview()]);
+    return EMPTY;
+  }
+
+  private navigateToNew(): Observable<never> {
+    this.router.navigate([this.navigator.toCreatePool()]);
     return EMPTY;
   }
 }

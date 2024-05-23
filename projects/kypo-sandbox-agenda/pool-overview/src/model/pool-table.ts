@@ -1,6 +1,6 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
+import { Column, SentinelTable, Row, RowAction, DeleteAction, EditAction } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolRowAdapter } from './pool-row-adapter';
@@ -25,6 +25,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       new Column('title', 'title', true, 'id'),
       new Column('createdByName', 'created by', true, 'created_by__username'),
       new Column('sandboxDefinitionNameAndRevision', 'sandbox definition', true, 'definition__name'),
+      new Column('comment', 'comment', false),
       new Column('lockState', 'state', true, 'lock'),
       new Column('usedAndMaxSize', 'size', true, 'max_size'),
       new Column('instancesUtilization', 'Instances util.', false),
@@ -45,6 +46,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     rowAdapter.title = `Pool ${rowAdapter.id}`;
     rowAdapter.createdByName = pool.createdBy.fullName;
     rowAdapter.sandboxDefinitionNameAndRevision = `${pool.definition.title} (${pool.definition.rev})`;
+    rowAdapter.comment = pool.comment;
     rowAdapter.instancesUtilization = `${(pool.hardwareUsage.instances * 100).toFixed(1)}%`;
     rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
     rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
@@ -62,6 +64,11 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     sandboxInstanceService: SandboxInstanceService
   ): RowAction[] {
     return [
+      new EditAction(
+        'Edit Pool',
+        of(false),
+        defer(() => abstractPoolService.updatePool(pool))
+      ),
       new DeleteAction(
         'Delete Pool',
         of(pool.usedSize !== 0),
