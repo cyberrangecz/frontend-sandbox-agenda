@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { defer, Observable, switchMap, takeUntil, tap } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { defer, switchMap, tap } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { PoolEditService } from '../services/pool-edit.service';
 import { PoolFormGroup } from './pool-form-group';
 import { AbstractControl } from '@angular/forms';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { ActivatedRoute } from '@angular/router';
-import { PoolChangedEvent } from '../../../pool-overview/src/model/pool-changed-event';
+import { PoolChangedEvent } from '../model/pool-changed-event';
 
 /**
  * Component with form for creating pool

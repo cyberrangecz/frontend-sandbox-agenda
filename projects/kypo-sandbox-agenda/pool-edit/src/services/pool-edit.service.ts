@@ -1,7 +1,7 @@
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
-import { PoolChangedEvent } from '../../../pool-overview/src/model/pool-changed-event';
+import { PoolChangedEvent } from '../model/pool-changed-event';
 
 export abstract class PoolEditService {
   /**

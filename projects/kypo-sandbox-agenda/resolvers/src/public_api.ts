@@ -9,4 +9,5 @@ export * from './sandbox-instance-resolver.service';
 export * from './request-breadcrumb-resolver.service';
 export * from './request-resolver.service';
 export * from './pool-breadcrumb-resolver.service';
+export * from './pool-comment-resolver.service';
 export * from './pool-resolver.service';

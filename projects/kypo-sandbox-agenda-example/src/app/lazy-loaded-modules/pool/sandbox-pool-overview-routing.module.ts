@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PoolOverviewComponent } from '@muni-kypo-crp/sandbox-agenda/pool-overview';
 import { SANDBOX_POOL_EDIT_PATH, SANDBOX_POOL_ID_SELECTOR, SANDBOX_POOL_NEW_PATH } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolBreadcrumbResolver, PoolResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { PoolCommentResolver } from '../../../../../kypo-sandbox-agenda/resolvers/src/pool-comment-resolver.service';
 
 const routes: Routes = [
   {
@@ -25,6 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./detail/sandbox-pool-detail.module').then((m) => m.SandboxPoolDetailModule),
     resolve: {
       breadcrumb: PoolBreadcrumbResolver,
+      subtitle: PoolCommentResolver,
     },
     data: {
       title: 'Pool Detail',

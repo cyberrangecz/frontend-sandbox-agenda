@@ -8,7 +8,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { SandboxDefinitionSelectComponent } from '../components/sandbox-definition-select/sandbox-definition-select.component';
 import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolEditService } from './pool-edit.service';
-import { PoolChangedEvent } from '../../../pool-overview/src/model/pool-changed-event';
+import { PoolChangedEvent } from '../model/pool-changed-event';
 
 @Injectable()
 export class PoolEditConcreteService extends PoolEditService {

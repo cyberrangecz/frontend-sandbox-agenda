@@ -11,7 +11,7 @@ import {
   SandboxDefinitionOverviewService,
   ResourcePollingService,
 } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { PoolResolver, PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+import { PoolResolver, PoolBreadcrumbResolver, PoolCommentResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { AbstractPoolConcreteService } from '../services/abstract-pool/abstract-sandbox/abstract-pool-concrete.service';
@@ -34,6 +34,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     PoolResolver,
     PaginationService,
     PoolBreadcrumbResolver,
+    PoolCommentResolver,
     SandboxAgendaContext,
     ResourcePollingService,
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },
