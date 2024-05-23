@@ -5,8 +5,8 @@ export class PoolFormGroup {
   formGroup: UntypedFormGroup;
 
   constructor(pool: Pool, editMode: boolean) {
-    const poolParams = { value: editMode ? pool.maxSize : 1, disabled: editMode};
-    const definitionParams = { value: editMode ? pool.definition : undefined, disabled: editMode};
+    const poolParams = { value: editMode ? pool.maxSize : 1, disabled: editMode };
+    const definitionParams = { value: editMode ? pool.definition : undefined, disabled: editMode };
     const comment = pool === undefined || pool.comment === undefined ? '' : pool.comment;
     this.formGroup = new UntypedFormGroup({
       poolSize: new UntypedFormControl(poolParams, [Validators.required, Validators.min(1)]),

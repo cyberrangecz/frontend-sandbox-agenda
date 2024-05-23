@@ -1,17 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import {defer, Observable} from 'rxjs';
-import {map, take, takeWhile} from 'rxjs/operators';
+import { defer, Observable, switchMap, takeUntil, tap } from 'rxjs';
+import { map, take, takeWhile } from 'rxjs/operators';
 import { PoolEditService } from '../services/pool-edit.service';
 import { PoolFormGroup } from './pool-form-group';
 import { AbstractControl } from '@angular/forms';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { ActivatedRoute } from '@angular/router';
-import {PoolChangedEvent} from "../../../pool-overview/src/model/pool-changed-event";
+import { PoolChangedEvent } from '../../../pool-overview/src/model/pool-changed-event';
 
 /**
  * Component with form for creating pool
@@ -31,16 +28,21 @@ export class PoolEditComponent extends SentinelBaseDirective {
 
   constructor(private activeRoute: ActivatedRoute, private poolEditService: PoolEditService) {
     super();
-    this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
-      this.pool = data.pool === undefined ? new Pool() : data.pool;
-      this.poolEditService.set(data.pool);
-      this.poolEditService.editMode$.subscribe((edit) => {
-        this.editMode = edit;
-        this.initControls(edit);
-        this.poolFormGroup = new PoolFormGroup(data.pool, edit);
-        this.poolFormGroup.formGroup.valueChanges.pipe(takeWhile(() => this.isAlive)).subscribe(() => this.onChanged());
-      });
-    });
+    this.activeRoute.data
+      .pipe(
+        tap((data) => {
+          this.pool = data.pool === undefined ? new Pool() : data.pool;
+          this.poolEditService.set(data.pool);
+        }),
+        switchMap((data) => this.poolEditService.editMode$),
+        tap((editMode) => {
+          this.editMode = editMode;
+          this.initControls(editMode);
+          this.poolFormGroup = new PoolFormGroup(this.pool, editMode);
+        }),
+        switchMap(() => this.poolFormGroup.formGroup.valueChanges)
+      )
+      .subscribe(() => this.onChanged());
   }
 
   get sandboxDefinition(): AbstractControl {
