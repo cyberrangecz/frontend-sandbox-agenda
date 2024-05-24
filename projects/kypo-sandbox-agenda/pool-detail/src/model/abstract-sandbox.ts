@@ -11,6 +11,7 @@ export class AbstractSandbox {
   uuid: string;
   poolId: number;
   name: string;
+  comment: string;
   locked: boolean;
   createdAt: Date;
   createdBy: string;
@@ -22,6 +23,7 @@ export class AbstractSandbox {
     this.id = allocationUnit.id;
     this.uuid = allocationUnit.sandboxUuid;
     this.name = `Sandbox ${allocationUnit.id}`;
+    this.comment = allocationUnit.comment;
     this.locked = allocationUnit.locked;
     this.createdAt = allocationUnit.allocationRequest.createdAt;
     this.createdBy = allocationUnit.createdBy.fullName;

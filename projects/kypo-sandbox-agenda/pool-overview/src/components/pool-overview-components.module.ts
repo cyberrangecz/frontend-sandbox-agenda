@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
@@ -23,13 +22,19 @@ import {
   SandboxInstanceService,
 } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {PoolCommentComponent} from './pool-comment/pool-comment.component';
+import {PoolOverviewMaterialModule} from './pool-overview-material.module';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
 @NgModule({
-  declarations: [PoolOverviewComponent],
-  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, MatDialogModule, MatTooltipModule],
+  declarations: [PoolOverviewComponent, PoolCommentComponent],
+  imports: [
+    CommonModule,
+    SentinelTableModule,
+    SentinelControlsComponent,
+    PoolOverviewMaterialModule
+  ],
   providers: [
     PoolResolver,
     PaginationService,

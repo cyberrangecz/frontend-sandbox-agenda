@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnInit
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
@@ -38,15 +43,14 @@ import { SelectedStage } from '../model/selected-stage';
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
   ],
 })
-export class PoolDetailComponent extends SentinelBaseDirective implements OnInit {
+export class PoolDetailComponent extends SentinelBaseDirective implements OnInit, AfterViewInit {
   pool: Pool;
-
   instances$: Observable<PoolDetailTable>;
   instancesTableHasError$: Observable<boolean>;
-
   controls: SentinelControlItem[];
-
+  commentTrim = 15;
   private subscription: Subscription;
+  private trimSpace = 8;
 
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
@@ -60,6 +64,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
   ngOnInit(): void {
     this.initTables();
     this.initControls();
+  }
+
+  ngAfterViewInit() {
+    this.computeCommentTrim();
   }
 
   /**
@@ -132,5 +140,15 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
       })
     );
     sandboxes$.pipe(takeWhile(() => this.isAlive)).subscribe();
+  }
+
+  /**
+   * Dynamically compute the length of comment to display
+   */
+  computeCommentTrim() {
+    const element = document.querySelector('.cdk-column-comment');
+    const columnWidth = parseFloat(getComputedStyle(element)['width']);
+    const fontSize = 9.5
+    this.commentTrim = +(columnWidth / fontSize).toFixed();
   }
 }

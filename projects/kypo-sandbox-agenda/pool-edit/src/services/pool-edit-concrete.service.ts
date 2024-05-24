@@ -85,7 +85,7 @@ export class PoolEditConcreteService extends PoolEditService {
    */
   save(): Observable<any> {
     return this.editModeSubject$.getValue()
-      ? this.update()
+      ? this.update().pipe(tap(() => this.router.navigate([this.navigator.toPoolOverview()])))
       : this.create().pipe(tap(() => this.router.navigate([this.navigator.toPoolOverview()])));
   }
 

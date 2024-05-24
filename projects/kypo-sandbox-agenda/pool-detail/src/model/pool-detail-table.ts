@@ -20,6 +20,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   ) {
     const columns = [
       new Column('name', 'name', true, 'id'),
+      new Column('comment', 'comment', false, 'comment'),
       new Column('lock', 'lock', false),
       new Column('created', 'created', true, 'allocation_request__created'),
       new Column('createdBy', 'created by', true, 'created_by__first_name'),
@@ -42,6 +43,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     const dateFormatter = new SentinelDateTimeFormatPipe('en-US');
     rowAdapter.unitId = data.allocationRequest.id;
     rowAdapter.name = data.name;
+    rowAdapter.comment = data.comment;
     rowAdapter.lock = data.locked ? 'locked' : 'unlocked';
     rowAdapter.created = dateFormatter.transform(data.allocationRequest.createdAt);
     rowAdapter.createdBy = data.createdBy;

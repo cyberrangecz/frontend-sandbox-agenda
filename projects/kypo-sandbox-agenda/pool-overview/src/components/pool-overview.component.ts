@@ -24,8 +24,8 @@ import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detai
 export class PoolOverviewComponent extends SentinelBaseDirective implements OnInit {
   pools$: Observable<SentinelTable<Pool>>;
   hasError$: Observable<boolean>;
-
   controls: SentinelControlItem[] = [];
+  readonly trimSize = 10;
 
   constructor(
     private abstractPoolService: AbstractPoolService,
@@ -63,15 +63,6 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
 
   onControls(controlItem: SentinelControlItem): void {
     controlItem.result$.pipe(take(1)).subscribe();
-  }
-
-  trimComment(fullElement: any, trimSize: number) {
-    const comment = fullElement !== undefined ? fullElement.comment : '';
-    if (!comment || comment.length < 1) {
-      return '';
-    } else {
-      return comment.substring(0, trimSize) + '...';
-    }
   }
 
   private initTable() {

@@ -166,4 +166,13 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       )
     );
   }
+
+  updateComment(pool: Pool): Observable<any> {
+    return this.poolApi.updatePool(pool).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Pool comment for ${pool.id} was updated`),
+        (err) => this.errorHandler.emit(err, 'Editing pool comment')
+      )
+    )
+  }
 }
