@@ -32,7 +32,7 @@ export class SandboxDefinitionEditComponent extends SentinelBaseDirective implem
       .subscribe(() => this.initControls());
   }
 
-  get gitlabUrl(): AbstractControl {
+  get gitUrl(): AbstractControl {
     return this.sandboxDefinitionFormGroup.formGroup.get('gitlabUrl');
   }
 
