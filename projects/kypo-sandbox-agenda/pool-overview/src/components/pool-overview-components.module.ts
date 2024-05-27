@@ -22,19 +22,14 @@ import {
   SandboxInstanceService,
 } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
-import {PoolCommentComponent} from './pool-comment/pool-comment.component';
-import {PoolOverviewMaterialModule} from './pool-overview-material.module';
+import { PoolCommentComponent } from './pool-comment/pool-comment.component';
+import { PoolOverviewMaterialModule } from './pool-overview-material.module';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
 @NgModule({
   declarations: [PoolOverviewComponent, PoolCommentComponent],
-  imports: [
-    CommonModule,
-    SentinelTableModule,
-    SentinelControlsComponent,
-    PoolOverviewMaterialModule
-  ],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, PoolOverviewMaterialModule],
   providers: [
     PoolResolver,
     PaginationService,

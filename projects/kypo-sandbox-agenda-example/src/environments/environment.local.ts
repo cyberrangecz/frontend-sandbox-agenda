@@ -47,14 +47,15 @@ export const environmentLocal = {
         textColor: 'white',
         backgroundColor: '#002776',
         oidcConfig: {
-          issuer: 'https://oidc.muni.cz/oidc/',
-          clientId: 'gtozHJjxkqMxMaKmvtAWzafYkRMSLcSWbAQF',
-          redirectUri: homeURL, // redirect after successful login
-          scope: 'openid email profile',
-          logoutUrl: 'https://oidc.muni.cz/oidc/endsession',
-          postLogoutRedirectUri: homeURL + '/logout-confirmed/',
-          silentRefreshRedirectUri: homeURL + '/silent-refresh.html',
-          clearHashAfterLogin: true, // remove token and other info from url after login
+          requireHttps: true,
+          issuer: baseURL + '/keycloak/realms/KYPO',
+          clientId: 'KYPO-client',
+          redirectUri: homeURL,
+          scope: 'openid email profile offline_access',
+          logoutUrl: baseURL + '/keycloak/realms/KYPO/protocol/openid-connect/logout',
+          silentRefreshRedirectUri: baseURL + '/silent-refresh.html',
+          postLogoutRedirectUri: homeURL + '/logout-confirmed',
+          clearHashAfterLogin: true,
         },
       },
     ],

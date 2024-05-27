@@ -1,14 +1,6 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
-import {
-  Column,
-  SentinelTable,
-  Row,
-  RowExpand,
-  DeleteAction,
-  RowAction,
-  ExpandableSentinelTable
-} from '@sentinel/components/table';
+import { Column, Row, RowExpand, DeleteAction, RowAction, ExpandableSentinelTable } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxDefinitionDetailComponent } from '../components/sandbox-definition-detail/sandbox-definition-detail.component';
 import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -17,7 +9,11 @@ import { SandboxDefinitionRowAdapter } from './sandbox-definition-row-adapter';
 /**
  * Helper class transforming paginated resource to class for common table component
  */
-export class SandboxDefinitionTable extends ExpandableSentinelTable<SandboxDefinition, SandboxDefinitionDetailComponent, null> {
+export class SandboxDefinitionTable extends ExpandableSentinelTable<
+  SandboxDefinition,
+  SandboxDefinitionDetailComponent,
+  null
+> {
   constructor(resource: PaginatedResource<SandboxDefinition>, service: SandboxDefinitionOverviewService) {
     const columns = [
       new Column('id', 'id', false),

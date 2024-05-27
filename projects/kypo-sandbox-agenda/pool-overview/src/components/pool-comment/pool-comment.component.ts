@@ -1,14 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PoolCommentFormGroup } from './pool-comment-form-group';
-import {ActivatedRoute} from "@angular/router";
-import {PoolEditService} from "@muni-kypo-crp/sandbox-agenda/pool-edit";
-import {PoolOverviewService} from "../../services/state/pool-overview/pool-overview.service";
-import {PoolChangedEvent} from "../../../../pool-edit/src/model/pool-changed-event";
-import {takeWhile} from "rxjs/operators";
-import {SentinelBaseDirective} from "@sentinel/common";
-import {switchMap, tap} from "rxjs";
-import {Pool} from "@muni-kypo-crp/sandbox-model";
-import {PoolFormGroup} from "../../../../pool-edit/src/components/pool-form-group";
+import { PoolOverviewService } from '../../services/state/pool-overview/pool-overview.service';
+import { SentinelBaseDirective } from '@sentinel/common';
 
 @Component({
   selector: 'kypo-pool-comment',

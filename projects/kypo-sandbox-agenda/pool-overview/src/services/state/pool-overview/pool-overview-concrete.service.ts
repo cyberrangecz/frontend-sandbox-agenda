@@ -173,6 +173,6 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         () => this.notificationService.emit('success', `Pool comment for ${pool.id} was updated`),
         (err) => this.errorHandler.emit(err, 'Editing pool comment')
       )
-    )
+    );
   }
 }

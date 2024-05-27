@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommentFormGroup } from './comment-form-group';
-import {SentinelBaseDirective} from "@sentinel/common";
-import {SandboxAllocationUnitsService} from "@muni-kypo-crp/sandbox-agenda/pool-detail";
-import {SandboxAllocationUnit } from "@muni-kypo-crp/sandbox-model";
+import { SentinelBaseDirective } from '@sentinel/common';
+import { SandboxAllocationUnitsService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
 
 @Component({
   selector: 'kypo-comment',

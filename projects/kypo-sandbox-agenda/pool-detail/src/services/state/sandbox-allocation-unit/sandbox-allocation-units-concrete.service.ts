@@ -78,7 +78,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
         () => this.notificationService.emit('success', `Sandbox ${unit.id} updated`),
         (err) => this.errorHandler.emit(err, `Updating sandbox ${unit.id}`)
       )
-    )
+    );
   }
 
   /**

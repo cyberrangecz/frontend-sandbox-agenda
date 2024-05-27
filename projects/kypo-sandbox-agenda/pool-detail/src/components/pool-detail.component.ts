@@ -1,9 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  OnInit
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
@@ -148,7 +143,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
   computeCommentTrim() {
     const element = document.querySelector('.cdk-column-comment');
     const columnWidth = parseFloat(getComputedStyle(element)['width']);
-    const fontSize = 9.5
+    const fontSize = 9.5;
     this.commentTrim = +(columnWidth / fontSize).toFixed();
   }
 }
