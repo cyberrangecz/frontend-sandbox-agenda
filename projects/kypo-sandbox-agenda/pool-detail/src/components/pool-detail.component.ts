@@ -13,9 +13,7 @@ import { AllocationRequestsService } from '../services/state/request/allocation/
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 import { PoolDetailControls } from './pool-detail-controls';
-import { SandboxAllocationUnitsService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AllocationRequestsConcreteService } from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
-import { SandboxAllocationUnitsConcreteService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units-concrete.service';
 import { CleanupRequestsConcreteService } from '../services/state/request/cleanup/cleanup-requests-concrete.service';
 import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
 import { PoolDetailTable } from '../model/pool-detail-table';
@@ -33,7 +31,6 @@ import { SelectedStage } from '../model/selected-stage';
   providers: [
     ResourcePollingService,
     { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
-    { provide: SandboxAllocationUnitsService, useClass: SandboxAllocationUnitsConcreteService },
     { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
   ],
