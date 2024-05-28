@@ -1,3 +1,10 @@
+### 15.2.0 Update sandbox definition placeholder url to http format.
+* 3204c17 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 79e904b -- Merge branch 'develop' into 'master'
+* 8a34271 -- Merge branch 'master' into 'develop'
+* 244b780 -- Merge branch '127-update-sandbox-definition-placeholder-url-to-https' into 'develop'
+* 8552cc0 -- update url variable names
+* 0baeb78 -- Change sandbox definition url placeholder to https
 ### 15.1.3 Adjust and specify sandbox allocation label and tooltip.
 * fc12ddd -- [CI/CD] Update packages.json version based on GitLab tag.
 * f96829c -- Merge branch '125-adjust-pool-allocation-tooltip' into 'master'
