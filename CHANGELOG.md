@@ -1,3 +1,16 @@
+### 15.1.3 Adjust and specify sandbox allocation label and tooltip.
+* fc12ddd -- [CI/CD] Update packages.json version based on GitLab tag.
+* f96829c -- Merge branch '125-adjust-pool-allocation-tooltip' into 'master'
+* d0bf8b7 -- Update version
+* 23502eb -- Adjust allocation text in pool agenda
+### 15.1.2 Update sandbox api to accept paginated allocation units.
+* 0e7a7cf -- [CI/CD] Update packages.json version based on GitLab tag.
+* 2857338 -- Update sandbox api version
+### 15.1.1 Fix sandbox definition faulty buttons.
+* d0df861 -- [CI/CD] Update packages.json version based on GitLab tag.
+* dbc8dc7 -- Merge branch 'develop' into 'master'
+* 497a2b3 -- Merge branch 'fix-button' into 'develop'
+* a30e9fe -- Fix faulty buttons
 ### 15.1.0 Adjust pool view to communicate with optimized sandbox service.
 * 21b5986 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   805c1fe -- Merge branch 'develop' into 'master'

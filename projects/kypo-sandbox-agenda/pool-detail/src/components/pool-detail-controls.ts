@@ -27,7 +27,7 @@ export class PoolDetailControls {
     return [
       new SentinelControlItem(
         this.ALLOCATE_SOME_ACTION_ID,
-        'Allocate',
+        'Allocate sandbox' + (pool.maxSize - sandboxes.length == 1 ? '' : 'es'),
         'primary',
         of(pool.maxSize === sandboxes.length),
         defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - sandboxes.length))
