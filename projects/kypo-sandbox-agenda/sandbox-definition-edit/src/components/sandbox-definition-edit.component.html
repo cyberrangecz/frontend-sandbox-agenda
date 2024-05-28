@@ -6,15 +6,15 @@
       <!-- URL field-->
       <mat-form-field appearance="outline"
                       (keydown.enter)="$event.preventDefault()">
-        <mat-label>Gitlab URL</mat-label>
+        <mat-label>Git URL</mat-label>
         <input matInput
-               placeholder="login@machine.tld:path/to/sandbox-definitions/sandbox_name.git"
-               formControlName="gitlabUrl" required>
-        <button *ngIf="gitlabUrl.value" matSuffix mat-icon-button
-                aria-label="Clear" (click)="gitlabUrl.setValue('');">
+               placeholder="https://git-service.com/path/to/sandbox-definitions/sandbox_name.git"
+               formControlName="gitUrl" required>
+        <button *ngIf="gitUrl.value" matSuffix mat-icon-button
+                aria-label="Clear" (click)="gitUrl.setValue('');">
           <mat-icon>close</mat-icon>
         </button>
-        <mat-error *ngIf="gitlabUrl.hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="gitUrl.hasError('required')">This field is required</mat-error>
       </mat-form-field>
 
       <!-- REVISION field-->
