@@ -1,3 +1,13 @@
+### 16.0.0 Update to Angular 16, add keycloak, introduce pool and sandbox comments, enable pool edition.
+* edc2a06 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 5533e81 -- Merge branch '126-add-an-option-to-comment-on-pools-and-sandbox-instances' into 'master'
+* c8d58c7 -- Merge branch 'master' into '126-add-an-option-to-comment-on-pools-and-sandbox-instances'
+* f91049f -- Fix library build
+* 028b9f2 -- Add keycloak as a substitute for local issuer, fix lint
+* a61938c -- Add comment display and edit form to individual sandboxes and pools, update to Angular 16
+* aec15e9 -- Add comment display in pool detail
+* e74a694 -- Refactor pool editation constructor
+* 410da9c -- Add comments column with pool editation form
 ### 15.2.0 Update sandbox definition placeholder url to http format.
 * 3204c17 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 79e904b -- Merge branch 'develop' into 'master'
