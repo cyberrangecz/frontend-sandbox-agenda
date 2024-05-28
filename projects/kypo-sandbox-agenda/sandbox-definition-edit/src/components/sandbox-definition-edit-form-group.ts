@@ -9,14 +9,14 @@ export class SandboxDefinitionFormGroup {
 
   constructor() {
     this.formGroup = new UntypedFormGroup({
-      gitlabUrl: new UntypedFormControl('', Validators.required),
+      gitUrl: new UntypedFormControl('', Validators.required),
       revision: new UntypedFormControl('', Validators.required),
     });
   }
 
   createFromValues(): SandboxDefinition {
     const definition = new SandboxDefinition();
-    definition.url = this.formGroup.get('gitlabUrl').value.trim();
+    definition.url = this.formGroup.get('gitUrl').value.trim();
     definition.rev = this.formGroup.get('revision').value.trim();
     return definition;
   }
