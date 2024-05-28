@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
@@ -13,9 +13,7 @@ import { AllocationRequestsService } from '../services/state/request/allocation/
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 import { PoolDetailControls } from './pool-detail-controls';
-import { SandboxAllocationUnitsService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AllocationRequestsConcreteService } from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
-import { SandboxAllocationUnitsConcreteService } from '../services/state/sandbox-allocation-unit/sandbox-allocation-units-concrete.service';
 import { CleanupRequestsConcreteService } from '../services/state/request/cleanup/cleanup-requests-concrete.service';
 import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
 import { PoolDetailTable } from '../model/pool-detail-table';
@@ -33,20 +31,18 @@ import { SelectedStage } from '../model/selected-stage';
   providers: [
     ResourcePollingService,
     { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
-    { provide: SandboxAllocationUnitsService, useClass: SandboxAllocationUnitsConcreteService },
     { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
   ],
 })
-export class PoolDetailComponent extends SentinelBaseDirective implements OnInit {
+export class PoolDetailComponent extends SentinelBaseDirective implements OnInit, AfterViewInit {
   pool: Pool;
-
   instances$: Observable<PoolDetailTable>;
   instancesTableHasError$: Observable<boolean>;
-
   controls: SentinelControlItem[];
-
+  commentTrim = 15;
   private subscription: Subscription;
+  private trimSpace = 8;
 
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
@@ -60,6 +56,10 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
   ngOnInit(): void {
     this.initTables();
     this.initControls();
+  }
+
+  ngAfterViewInit() {
+    this.computeCommentTrim();
   }
 
   /**
@@ -132,5 +132,15 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
       })
     );
     sandboxes$.pipe(takeWhile(() => this.isAlive)).subscribe();
+  }
+
+  /**
+   * Dynamically compute the length of comment to display
+   */
+  computeCommentTrim() {
+    const element = document.querySelector('.cdk-column-comment');
+    const columnWidth = parseFloat(getComputedStyle(element)['width']);
+    const fontSize = 9.5;
+    this.commentTrim = +(columnWidth / fontSize).toFixed();
   }
 }

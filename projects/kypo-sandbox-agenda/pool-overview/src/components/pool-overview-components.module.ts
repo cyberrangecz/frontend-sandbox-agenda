@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
 import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
@@ -11,7 +10,7 @@ import {
   SandboxDefinitionOverviewService,
   ResourcePollingService,
 } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { PoolResolver, PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+import { PoolResolver, PoolBreadcrumbResolver, PoolCommentResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { AbstractPoolConcreteService } from '../services/abstract-pool/abstract-sandbox/abstract-pool-concrete.service';
@@ -23,16 +22,19 @@ import {
   SandboxInstanceService,
 } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { PoolCommentComponent } from './pool-comment/pool-comment.component';
+import { PoolOverviewMaterialModule } from './pool-overview-material.module';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
 @NgModule({
-  declarations: [PoolOverviewComponent],
-  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, MatDialogModule],
+  declarations: [PoolOverviewComponent, PoolCommentComponent],
+  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, PoolOverviewMaterialModule],
   providers: [
     PoolResolver,
     PaginationService,
     PoolBreadcrumbResolver,
+    PoolCommentResolver,
     SandboxAgendaContext,
     ResourcePollingService,
     { provide: SandboxNavigator, useClass: SandboxDefaultNavigator },

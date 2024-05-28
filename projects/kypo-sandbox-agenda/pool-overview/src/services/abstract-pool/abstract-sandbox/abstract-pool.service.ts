@@ -43,4 +43,6 @@ export abstract class AbstractPoolService {
   abstract unlock(pool: Pool): Observable<any>;
 
   abstract getSshAccess(poolId: number): Observable<boolean>;
+
+  abstract updatePool(pool: Pool): Observable<any>;
 }

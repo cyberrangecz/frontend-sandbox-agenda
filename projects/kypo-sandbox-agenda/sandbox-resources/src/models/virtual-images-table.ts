@@ -1,11 +1,11 @@
 import { VMImagesRowAdapter } from './vm-images-row-adapter';
-import { Column, Row, SentinelTable, RowExpand } from '@sentinel/components/table';
+import { Column, Row, RowExpand, ExpandableSentinelTable } from '@sentinel/components/table';
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
 import { VMImageDetailComponent } from '../components/vm-image-detail/vm-image-detail.component';
 import { formatDate } from '@angular/common';
 
-export class VirtualImagesTable extends SentinelTable<VMImagesRowAdapter> {
+export class VirtualImagesTable extends ExpandableSentinelTable<VMImagesRowAdapter, VMImageDetailComponent, null> {
   constructor(resource: PaginatedResource<VirtualImage>) {
     const rows = resource.elements.map((element) => VirtualImagesTable.createRow(element));
     const columns = [
@@ -15,9 +15,9 @@ export class VirtualImagesTable extends SentinelTable<VMImagesRowAdapter> {
       new Column('guiAccessFormatted', 'GUI access', false),
       new Column('sizeFormatted', 'size (GB)', false),
     ];
-    super(rows, columns);
+    const expand = new RowExpand(VMImageDetailComponent, null);
+    super(rows, columns, expand);
     this.pagination = resource.pagination;
-    this.expand = new RowExpand(VMImageDetailComponent);
     this.filterable = true;
     this.filterLabel = 'Filter by name';
   }

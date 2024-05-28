@@ -10,6 +10,7 @@ import {
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH,
   SANDBOX_RESOURCES_PATH,
+  SANDBOX_POOL_EDIT_PATH,
 } from './default-paths';
 import { SandboxNavigator } from './sandbox-navigator.service';
 
@@ -53,6 +54,10 @@ export class SandboxDefaultNavigator extends SandboxNavigator {
 
   toCreatePool(): string {
     return `${SANDBOX_POOL_PATH}/${SANDBOX_POOL_NEW_PATH}`;
+  }
+
+  toUpdatePool(poolId: number): string {
+    return `${SANDBOX_POOL_PATH}/${poolId}/${SANDBOX_POOL_EDIT_PATH}`;
   }
 
   /**

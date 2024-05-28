@@ -10,6 +10,7 @@
                   (tableLoad)="onLoadEvent($event)"
                   (refresh)="onLoadEvent($event)">
                   <ng-container *sentinelRow="'stages'; template: stagesTemplate"></ng-container>
+                  <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
   </sentinel-table>
 </mat-card>
 
@@ -18,4 +19,9 @@
                        [unitId]="row.element.unitId"
                        (stageSelected)="onStageAction($event)">
   </kypo-stage-overview>
+</ng-template>
+
+<ng-template #comment let-row>
+  <kypo-comment [commentElement]="row.element">
+  </kypo-comment>
 </ng-template>

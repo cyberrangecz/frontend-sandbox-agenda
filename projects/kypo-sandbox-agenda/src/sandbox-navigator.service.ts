@@ -35,6 +35,12 @@ export abstract class SandboxNavigator {
   abstract toCreatePool(): string;
 
   /**
+   * Returns route to update pool page
+   * @param poolId id of the pool to update
+   */
+  abstract toUpdatePool(poolId: number): string;
+
+  /**
    * Returns route to sandbox instance topology page
    * @param sandboxDefinitionId id of the sandbox definition
    */

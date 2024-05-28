@@ -99,6 +99,10 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return from(this.router.navigate([this.navigator.toCreatePool()]));
   }
 
+  update(pool: Pool): Observable<any> {
+    return from(this.router.navigate([this.navigator.toUpdatePool(pool.id)]));
+  }
+
   lock(pool: Pool): Observable<any> {
     return this.poolApi.lockPool(pool.id).pipe(
       tap(
@@ -159,6 +163,15 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was unlocked`),
         (err) => this.errorHandler.emit(err, `Unlocking pool ${pool.id}`)
+      )
+    );
+  }
+
+  updateComment(pool: Pool): Observable<any> {
+    return this.poolApi.updatePool(pool).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Pool comment for ${pool.id} was updated`),
+        (err) => this.errorHandler.emit(err, 'Editing pool comment')
       )
     );
   }

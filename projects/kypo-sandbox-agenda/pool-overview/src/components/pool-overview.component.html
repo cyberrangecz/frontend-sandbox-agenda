@@ -7,4 +7,9 @@
   (rowAction)="onPoolAction($event)"
   (tableLoad)="onLoadEvent($event)"
   (refresh)="onLoadEvent($event)">
+  <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
 </sentinel-table>
+<ng-template #comment let-row>
+  <kypo-pool-comment [commentElement]="row.element">
+  </kypo-pool-comment>
+</ng-template>

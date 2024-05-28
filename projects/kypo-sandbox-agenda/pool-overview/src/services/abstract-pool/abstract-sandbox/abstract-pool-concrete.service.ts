@@ -78,4 +78,8 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
   unlock(pool: Pool): Observable<any> {
     return this.poolOverviewService.unlock(pool).pipe(switchMap(() => this.getAll(this.lastPagination)));
   }
+
+  updatePool(pool: Pool): Observable<any> {
+    return this.poolOverviewService.update(pool).pipe(switchMap(() => this.getAll(this.lastPagination)));
+  }
 }

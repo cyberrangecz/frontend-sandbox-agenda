@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PoolOverviewComponent } from '@muni-kypo-crp/sandbox-agenda/pool-overview';
-import { SANDBOX_POOL_ID_SELECTOR, SANDBOX_POOL_NEW_PATH } from '@muni-kypo-crp/sandbox-agenda';
-import { PoolBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+import { SANDBOX_POOL_EDIT_PATH, SANDBOX_POOL_ID_SELECTOR, SANDBOX_POOL_NEW_PATH } from '@muni-kypo-crp/sandbox-agenda';
+import { PoolBreadcrumbResolver, PoolResolver, PoolCommentResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {
@@ -24,9 +24,21 @@ const routes: Routes = [
     loadChildren: () => import('./detail/sandbox-pool-detail.module').then((m) => m.SandboxPoolDetailModule),
     resolve: {
       breadcrumb: PoolBreadcrumbResolver,
+      subtitle: PoolCommentResolver,
     },
     data: {
       title: 'Pool Detail',
+    },
+  },
+  {
+    path: `:${SANDBOX_POOL_ID_SELECTOR}/${SANDBOX_POOL_EDIT_PATH}`,
+    loadChildren: () => import('./edit/sandbox-pool-edit.module').then((m) => m.SandboxPoolEditModule),
+    resolve: {
+      breadcrumb: PoolBreadcrumbResolver,
+      pool: PoolResolver,
+    },
+    data: {
+      title: 'Edit Pool',
     },
   },
 ];

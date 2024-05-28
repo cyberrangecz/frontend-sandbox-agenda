@@ -13,12 +13,18 @@ import { PoolDetailMaterialModule } from './pool-detail-material.module';
 import { PoolDetailComponent } from './pool-detail.component';
 import { StageOverviewComponent } from './stage-overview/stage-overview.component';
 import { AllocateVariableSandboxesDialogComponent } from './allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';
+import { CommentComponent } from './comment/comment.component';
 
 /**
  * Module containing component and providers for sandbox pool detail page
  */
 @NgModule({
-  declarations: [PoolDetailComponent, StageOverviewComponent, AllocateVariableSandboxesDialogComponent],
+  declarations: [
+    PoolDetailComponent,
+    StageOverviewComponent,
+    AllocateVariableSandboxesDialogComponent,
+    CommentComponent,
+  ],
   imports: [CommonModule, SentinelTableModule, PoolDetailMaterialModule, SentinelControlsComponent],
   providers: [RequestResolver, RequestBreadcrumbResolver, SandboxInstanceResolver, SandboxInstanceBreadcrumbResolver],
 })

@@ -52,14 +52,15 @@ export const environment = {
         backgroundColor: '#002776',
         tokenRefreshTime: 30000, // how often check if tokens are still valid
         oidcConfig: {
-          issuer: 'https://172.19.0.22:443/csirtmu-dummy-issuer-server/',
-          clientId: '1be61a0a-8cdd-4a58-ab19-2c2f54265b5a',
-          redirectUri: homeURL, // redirect after successful login
-          scope: 'openid email profile',
-          logoutUrl: 'https://172.19.0.22/csirtmu-dummy-issuer-server/endsession/endsession',
-          postLogoutRedirectUri: homeURL + '/logout-confirmed/',
-          silentRefreshRedirectUri: homeURL + '/silent-refresh.html',
-          clearHashAfterLogin: true, // remove token and other info from url after login
+          requireHttps: true,
+          issuer: baseURL + '/keycloak/realms/KYPO',
+          clientId: 'KYPO-client',
+          redirectUri: homeURL,
+          scope: 'openid email profile offline_access',
+          logoutUrl: baseURL + '/keycloak/realms/KYPO/protocol/openid-connect/logout',
+          silentRefreshRedirectUri: baseURL + '/silent-refresh.html',
+          postLogoutRedirectUri: homeURL + '/logout-confirmed',
+          clearHashAfterLogin: true,
         },
       },
     ],

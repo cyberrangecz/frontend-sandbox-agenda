@@ -53,7 +53,7 @@ describe('PoolEditConcreteService', () => {
     poolApiSpy.createPool.and.returnValue(asyncData(mockData));
     navigatorSpy.toPoolOverview.and.returnValue('/');
 
-    service.create(mockData).subscribe(() => done(), fail);
+    service.create().subscribe(() => done(), fail);
     expect(poolApiSpy.createPool).toHaveBeenCalledTimes(1);
   });
 

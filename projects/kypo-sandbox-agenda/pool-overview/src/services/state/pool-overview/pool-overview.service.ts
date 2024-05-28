@@ -44,4 +44,8 @@ export abstract class PoolOverviewService extends OffsetPaginatedElementsService
   abstract unlock(pool: Pool): Observable<any>;
 
   abstract getSshAccess(poolId: number): Observable<boolean>;
+
+  abstract update(pool: Pool): Observable<any>;
+
+  abstract updateComment(pool: Pool): Observable<any>;
 }

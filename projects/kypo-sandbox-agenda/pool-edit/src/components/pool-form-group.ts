@@ -4,18 +4,25 @@ import { Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 export class PoolFormGroup {
   formGroup: UntypedFormGroup;
 
-  constructor() {
+  constructor(pool: Pool, editMode: boolean) {
+    const poolParams = { value: editMode ? pool.maxSize : 1, disabled: editMode };
+    const definitionParams = { value: editMode ? pool.definition : undefined, disabled: editMode };
+    const comment = pool === undefined || pool.comment === undefined ? '' : pool.comment;
     this.formGroup = new UntypedFormGroup({
-      poolSize: new UntypedFormControl(1, [Validators.required, Validators.min(1)]),
-      sandboxDefinition: new UntypedFormControl(undefined, [Validators.required]),
+      poolSize: new UntypedFormControl(poolParams, [Validators.required, Validators.min(1)]),
+      sandboxDefinition: new UntypedFormControl(definitionParams, [Validators.required]),
+      comment: new UntypedFormControl(comment, [Validators.maxLength(256)]),
     });
   }
 
-  createPoolFromValues(): Pool {
-    const pool = new Pool();
+  /**
+   * Sets values inserted to form inputs to pool object
+   * @param pool pool to be filled with form data
+   */
+  setValuesToPool(pool: Pool): void {
     pool.definition = new SandboxDefinition();
     pool.definition.id = this.formGroup.get('sandboxDefinition').value?.id;
     pool.maxSize = this.formGroup.get('poolSize').value;
-    return pool;
+    pool.comment = this.formGroup.get('comment').value;
   }
 }

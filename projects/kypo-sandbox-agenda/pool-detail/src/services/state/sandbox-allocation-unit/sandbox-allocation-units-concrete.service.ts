@@ -69,6 +69,19 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   }
 
   /**
+   * Update an existing allocation unit.
+   * @param unit a sandbox allocation unit to update
+   */
+  update(unit: SandboxAllocationUnit): Observable<SandboxAllocationUnit> {
+    return this.sauApi.update(unit).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Sandbox ${unit.id} updated`),
+        (err) => this.errorHandler.emit(err, `Updating sandbox ${unit.id}`)
+      )
+    );
+  }
+
+  /**
    * Starts cleanup requests for all allocation units in a given pool specified by @poolId.
    * @param poolId id of pool for which the cleanup requests are created
    * @param force when set to true force delete is used

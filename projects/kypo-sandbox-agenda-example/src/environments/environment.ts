@@ -2,11 +2,10 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// Server url
 export const baseURL = 'https://localhost:3000/';
-// Frontend url
 export const homeURL = 'https://localhost:4200';
 export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
+const authUrl = 'https://172.19.0.22';
 
 export const kypoTopologyConfig = {
   topologyRestUrl: sandboxesURL,
@@ -47,14 +46,15 @@ export const environmentLocal = {
         textColor: 'white',
         backgroundColor: '#002776',
         oidcConfig: {
-          issuer: 'https://oidc.muni.cz/oidc/',
-          clientId: 'gtozHJjxkqMxMaKmvtAWzafYkRMSLcSWbAQF',
-          redirectUri: homeURL, // redirect after successful login
-          scope: 'openid email profile',
-          logoutUrl: 'https://oidc.muni.cz/oidc/endsession',
-          postLogoutRedirectUri: homeURL + '/logout-confirmed/',
-          silentRefreshRedirectUri: homeURL + '/silent-refresh.html',
-          clearHashAfterLogin: true, // remove token and other info from url after login
+          requireHttps: true,
+          issuer: authUrl + '/keycloak/realms/KYPO',
+          clientId: 'KYPO-client',
+          redirectUri: homeURL,
+          scope: 'openid email profile offline_access',
+          logoutUrl: authUrl + '/keycloak/realms/KYPO/protocol/openid-connect/logout',
+          silentRefreshRedirectUri: authUrl + '/silent-refresh.html',
+          postLogoutRedirectUri: homeURL + '/logout-confirmed',
+          clearHashAfterLogin: true,
         },
       },
     ],
