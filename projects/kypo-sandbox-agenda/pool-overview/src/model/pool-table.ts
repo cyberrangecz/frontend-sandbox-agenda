@@ -71,7 +71,7 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       ),
       new DeleteAction(
         'Delete Pool',
-        of(pool.usedSize !== 0),
+        of(false),
         defer(() => abstractPoolService.delete(pool))
       ),
       new RowAction(
@@ -91,15 +91,6 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         'Allocate one sandbox',
         of(pool.isFull()),
         defer(() => abstractPoolService.allocate(pool, 1))
-      ),
-      new RowAction(
-        'clear',
-        'Clear',
-        'clear_all',
-        'warn',
-        'Remove all allocations',
-        of(false),
-        defer(() => abstractPoolService.clear(pool))
       ),
       new RowAction(
         'download_man_ssh_configs',

@@ -1,3 +1,4 @@
+16.0.1 Enable a force deletion of pools with allocations.
 16.0.0 Update to Angular 16, add keycloak, introduce pool and sandbox comments, enable pool edition.
 15.2.0 Update sandbox definition placeholder url to http format.
 15.1.3 Adjust and specify sandbox allocation label and tooltip.

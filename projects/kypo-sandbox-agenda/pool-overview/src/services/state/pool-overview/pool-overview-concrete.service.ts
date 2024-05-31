@@ -80,8 +80,11 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    * @param pool a pool to be deleted
    */
   delete(pool: Pool): Observable<any> {
-    return this.displayConfirmationDialog(pool, 'Delete').pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool) : EMPTY))
+    const forceDelete = pool.usedSize !== 0;
+    return this.displayDeleteDialog(pool, forceDelete).pipe(
+      switchMap((result) =>
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool, forceDelete) : EMPTY
+      )
     );
   }
 
@@ -131,7 +134,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${action} Pool`,
-        `Do you want to ${action} pool "${pool.id}"?`,
+        `Do you want to ${action.toLowerCase()} pool "${pool.id}"?`,
         'Cancel',
         action
       ),
@@ -139,8 +142,18 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return dialogRef.afterClosed();
   }
 
-  private callApiToDelete(pool: Pool): Observable<any> {
-    return this.poolApi.deletePool(pool.id).pipe(
+  private displayDeleteDialog(pool: Pool, force: boolean): Observable<SentinelDialogResultEnum> {
+    const action = force ? 'Delete with allocations' : 'Delete';
+    let message = `Do you want to delete pool "${pool.id}"`;
+    message += force ? ' with all its allocations?' : '?';
+    const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
+      data: new SentinelConfirmationDialogConfig(`Delete Pool`, message, 'Cancel', action),
+    });
+    return dialogRef.afterClosed();
+  }
+
+  private callApiToDelete(pool: Pool, forceDelete: boolean): Observable<any> {
+    return this.poolApi.deletePool(pool.id, forceDelete).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
         (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`)
