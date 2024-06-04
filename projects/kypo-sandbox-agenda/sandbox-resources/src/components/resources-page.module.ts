@@ -22,6 +22,7 @@ import { VMImagesConcreteService } from '../services/vm-images-concrete.service'
     { provide: SandboxResourcesService, useClass: SandboxResourcesConcreteService },
     { provide: VMImagesService, useClass: VMImagesConcreteService },
   ],
+  exports: [QuotasComponent],
 })
 export class ResourcesPageModule {
   static forRoot(config: SandboxAgendaConfig): ModuleWithProviders<ResourcesPageModule> {

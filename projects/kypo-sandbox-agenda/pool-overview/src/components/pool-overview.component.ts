@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take, takeWhile } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { SandboxResourcesService } from '../../../sandbox-resources/src/services/sandbox-resources.service';
 
 /**
  * Smart component of sandbox pool overview page
@@ -24,21 +25,25 @@ import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detai
 export class PoolOverviewComponent extends SentinelBaseDirective implements OnInit {
   pools$: Observable<SentinelTable<Pool>>;
   hasError$: Observable<boolean>;
+  resources$: Observable<Resources>;
   controls: SentinelControlItem[] = [];
   readonly trimSize = 10;
 
   constructor(
+    private sandboxResourcesService: SandboxResourcesService,
     private abstractPoolService: AbstractPoolService,
     private sandboxInstanceService: SandboxInstanceService,
     private navigator: SandboxNavigator,
     private paginationService: PaginationService
   ) {
     super();
+    this.resources$ = this.sandboxResourcesService.resources$;
   }
 
   ngOnInit(): void {
     this.initTable();
     this.initControls();
+    this.initResources();
   }
 
   /**
@@ -86,5 +91,12 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
         defer(() => this.abstractPoolService.create())
       ),
     ];
+  }
+
+  private initResources() {
+    this.sandboxResourcesService
+      .getResources()
+      .pipe(takeWhile(() => this.isAlive))
+      .subscribe();
   }
 }

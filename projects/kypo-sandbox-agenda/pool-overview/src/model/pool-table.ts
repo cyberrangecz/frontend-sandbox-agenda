@@ -1,17 +1,27 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { Column, SentinelTable, Row, RowAction, DeleteAction, EditAction } from '@sentinel/components/table';
-import { defer, of } from 'rxjs';
+import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
+import {
+  Column,
+  Row,
+  RowAction,
+  DeleteAction,
+  EditAction,
+  ExpandableSentinelTable,
+  RowExpand,
+} from '@sentinel/components/table';
+import { defer, Observable, of } from 'rxjs';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolRowAdapter } from './pool-row-adapter';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { PoolExpandDetailComponent } from '../components/pool-expand-detail/pool-expand-detail.component';
 
 /**
  * Helper class transforming paginated resource to class for common table component
  * @dynamic
  */
-export class PoolTable extends SentinelTable<PoolRowAdapter> {
+export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpandDetailComponent, null> {
+  resources$: Observable<Resources>;
   constructor(
     resource: PaginatedResource<Pool>,
     abstractPoolService: AbstractPoolService,
@@ -22,17 +32,18 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
       PoolTable.createRow(element, abstractPoolService, sandboxInstanceService, navigator)
     );
     const columns = [
-      new Column('title', 'title', true, 'id'),
-      new Column('createdByName', 'created by', true, 'created_by__username'),
-      new Column('sandboxDefinitionNameAndRevision', 'sandbox definition', true, 'definition__name'),
-      new Column('comment', 'comment', false),
-      new Column('lockState', 'state', true, 'lock'),
-      new Column('usedAndMaxSize', 'size', true, 'max_size'),
+      new Column('title', 'Title', true, 'id'),
+      new Column('createdByName', 'Created by', true, 'created_by__username'),
+      new Column('sandboxDefinitionNameAndRevision', 'Sandbox definition', true, 'definition__name'),
+      new Column('comment', 'Notes and comments', false),
+      new Column('lockState', 'State', true, 'lock'),
+      new Column('usedAndMaxSize', 'Size', true, 'max_size'),
       new Column('instancesUtilization', 'Instances util.', false),
       new Column('cpuUtilization', 'CPU util.', false),
       new Column('ramUtilization', 'RAM util.', false),
     ];
-    super(rows, columns);
+    const expand = new RowExpand(PoolExpandDetailComponent, null);
+    super(rows, columns, expand);
     this.pagination = resource.pagination;
   }
 
@@ -69,11 +80,6 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         of(false),
         defer(() => abstractPoolService.updatePool(pool))
       ),
-      new DeleteAction(
-        'Delete Pool',
-        of(false),
-        defer(() => abstractPoolService.delete(pool))
-      ),
       new RowAction(
         'allocate_all',
         'Allocate All',
@@ -92,12 +98,17 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
         of(pool.isFull()),
         defer(() => abstractPoolService.allocate(pool, 1))
       ),
+      new DeleteAction(
+        'Delete Pool',
+        of(false),
+        defer(() => abstractPoolService.delete(pool))
+      ),
       new RowAction(
         'download_man_ssh_configs',
-        'Get SSH Configs',
+        'Get management SSH Configs',
         'vpn_key',
         'primary',
-        'Download management SSH configs',
+        '',
         of(false),
         defer(() => abstractPoolService.getSshAccess(pool.id))
       ),
@@ -116,20 +127,20 @@ export class PoolTable extends SentinelTable<PoolRowAdapter> {
     if (pool.isLocked()) {
       return new RowAction(
         'unlock',
-        'Unlock',
+        'Unlock pool',
         'lock_open',
         'primary',
-        'Unlock pool',
+        '',
         of(false),
         defer(() => service.unlock(pool))
       );
     } else {
       return new RowAction(
         'lock',
-        'Lock',
+        'Lock pool',
         'lock',
         'primary',
-        'Lock pool',
+        '',
         of(false),
         defer(() => service.lock(pool))
       );

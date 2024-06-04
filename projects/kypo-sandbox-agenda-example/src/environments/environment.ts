@@ -5,7 +5,7 @@
 export const baseURL = 'https://localhost:3000/';
 export const homeURL = 'https://localhost:4200';
 export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
-const authUrl = 'https://172.19.0.22';
+export const authUrl = 'https://172.19.0.22';
 
 export const kypoTopologyConfig = {
   topologyRestUrl: sandboxesURL,

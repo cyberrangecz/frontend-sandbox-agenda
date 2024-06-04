@@ -24,12 +24,22 @@ import {
 import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { PoolCommentComponent } from './pool-comment/pool-comment.component';
 import { PoolOverviewMaterialModule } from './pool-overview-material.module';
+import { PoolExpandDetailComponent } from './pool-expand-detail/pool-expand-detail.component';
+import { ResourcesPageModule } from '../../../sandbox-resources/src/components/resources-page.module';
+import { SandboxResourcesService } from '../../../sandbox-resources/src/services/sandbox-resources.service';
+import { SandboxResourcesConcreteService } from '../../../sandbox-resources/src/services/sandbox-resources-concrete.service';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
 @NgModule({
-  declarations: [PoolOverviewComponent, PoolCommentComponent],
-  imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, PoolOverviewMaterialModule],
+  declarations: [PoolOverviewComponent, PoolCommentComponent, PoolExpandDetailComponent],
+  imports: [
+    CommonModule,
+    SentinelTableModule,
+    SentinelControlsComponent,
+    PoolOverviewMaterialModule,
+    ResourcesPageModule,
+  ],
   providers: [
     PoolResolver,
     PaginationService,
@@ -43,6 +53,7 @@ import { PoolOverviewMaterialModule } from './pool-overview-material.module';
     { provide: SandboxAllocationUnitsService, useClass: SandboxAllocationUnitsConcreteService },
     { provide: AbstractPoolService, useClass: AbstractPoolConcreteService },
     { provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService },
+    { provide: SandboxResourcesService, useClass: SandboxResourcesConcreteService },
   ],
 })
 export class PoolOverviewComponentsModule {

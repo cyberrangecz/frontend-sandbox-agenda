@@ -13,6 +13,7 @@ export class QuotaPieChartComponent implements AfterViewInit {
   @ViewChild('containerPieChart') element: ElementRef;
 
   @Input() quota: Quota;
+  @Input() quotaColor: string;
 
   private width: number;
   private height: number;
@@ -51,7 +52,7 @@ export class QuotaPieChartComponent implements AfterViewInit {
 
     const pie = d3.pie().sort(null);
 
-    const colorScale = d3.scaleOrdinal().domain(Object.values(this.data)).range(['#3D54AF', '#DDDDDD']);
+    const colorScale = d3.scaleOrdinal().domain(Object.values(this.data)).range([this.quotaColor, '#DDDDDD']);
 
     const arc = d3.arc().innerRadius(0).outerRadius(this.radius);
 

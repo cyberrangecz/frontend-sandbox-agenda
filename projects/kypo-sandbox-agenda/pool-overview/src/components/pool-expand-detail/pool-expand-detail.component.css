@@ -1,0 +1,19 @@
+.block-content {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+::ng-deep .mat-mdc-row.detail-row {
+  background-color: #f8f8f8;
+}
+
+.block-content {
+  width: 70vw;
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
+::ng-deep  .block-content  .mat-grid-tile-content {
+  align-items: normal;
+  justify-content: normal;
+}
