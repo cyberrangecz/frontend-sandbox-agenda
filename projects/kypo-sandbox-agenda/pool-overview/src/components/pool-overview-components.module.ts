@@ -25,9 +25,9 @@ import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/po
 import { PoolCommentComponent } from './pool-comment/pool-comment.component';
 import { PoolOverviewMaterialModule } from './pool-overview-material.module';
 import { PoolExpandDetailComponent } from './pool-expand-detail/pool-expand-detail.component';
-import { ResourcesPageModule } from '../../../sandbox-resources/src/components/resources-page.module';
-import { SandboxResourcesService } from '../../../sandbox-resources/src/services/sandbox-resources.service';
-import { SandboxResourcesConcreteService } from '../../../sandbox-resources/src/services/sandbox-resources-concrete.service';
+import { ResourcesPageModule } from '@muni-kypo-crp/sandbox-agenda/sandbox-resources';
+import { SandboxResourcesService } from '@muni-kypo-crp/sandbox-agenda/sandbox-resources';
+import { SandboxResourcesConcreteService } from '@muni-kypo-crp/sandbox-agenda/sandbox-resources';
 import { ResourceBarComponent } from './pool-expand-detail/resource-bar/resource-bar.component';
 /**
  * Module containing components and providers for sandbox pool overview page

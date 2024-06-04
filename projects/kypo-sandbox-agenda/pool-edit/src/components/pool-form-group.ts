@@ -8,10 +8,12 @@ export class PoolFormGroup {
     const poolParams = { value: editMode ? pool.maxSize : 1, disabled: editMode };
     const definitionParams = { value: editMode ? pool.definition : undefined, disabled: editMode };
     const comment = pool === undefined || pool.comment === undefined ? '' : pool.comment;
+    const notifyBuild = pool === undefined || pool.notifyBuild === undefined ? false : pool.notifyBuild;
     this.formGroup = new UntypedFormGroup({
       poolSize: new UntypedFormControl(poolParams, [Validators.required, Validators.min(1)]),
       sandboxDefinition: new UntypedFormControl(definitionParams, [Validators.required]),
       comment: new UntypedFormControl(comment, [Validators.maxLength(256)]),
+      notifyBuild: new UntypedFormControl(notifyBuild),
     });
   }
 
@@ -24,5 +26,6 @@ export class PoolFormGroup {
     pool.definition.id = this.formGroup.get('sandboxDefinition').value?.id;
     pool.maxSize = this.formGroup.get('poolSize').value;
     pool.comment = this.formGroup.get('comment').value;
+    pool.notifyBuild = this.formGroup.get('notifyBuild').value;
   }
 }

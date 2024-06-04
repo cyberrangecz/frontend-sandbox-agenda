@@ -8,6 +8,15 @@
         <input matInput placeholder="Pool comment" type="text" maxlength="256" formControlName="comment">
       </mat-form-field>
 
+      <!-- POOL NOTIFICATION field -->
+      <div class="form-line">
+        <mat-checkbox
+          formControlName="notifyBuild"
+          class="notify-build">
+          Send e-mail notifications upon build progression (only for the pool creator)
+        </mat-checkbox>
+      </div>
+
       <!-- POOL SIZE field -->
       <div class="form-line">
         <mat-form-field appearance="outline"
