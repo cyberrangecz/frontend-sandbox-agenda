@@ -1,3 +1,10 @@
+### 16.0.1 Enable a force deletion of pools with allocations.
+* f7657a2 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 4ee518b -- Merge branch '128-enable-force-delete-of-pools-with-allocations' into 'master'
+*   d0eb662 -- Merge branch '128-enable-force-delete-of-pools-with-allocations' of gitlab.ics.muni.cz:muni-kypo-crp/frontend-angular/agendas/kypo-sandbox-agenda into 128-enable-force-delete-of-pools-with-allocations
+|\  
+| * e2c1c4c -- Enable a force deletion of pools with allocations
+* bffbbf6 -- Enable a force deletion of pools with allocations
 ### 16.0.0 Update to Angular 16, add keycloak, introduce pool and sandbox comments, enable pool edition.
 * edc2a06 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 5533e81 -- Merge branch '126-add-an-option-to-comment-on-pools-and-sandbox-instances' into 'master'
