@@ -27,7 +27,6 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
   hasError$: Observable<boolean>;
   resources$: Observable<Resources>;
   controls: SentinelControlItem[] = [];
-  readonly trimSize = 10;
 
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
@@ -75,7 +74,16 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
       pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
     };
     this.pools$ = this.abstractPoolService.pools$.pipe(
-      map((resource) => new PoolTable(resource, this.abstractPoolService, this.sandboxInstanceService, this.navigator))
+      map(
+        (resource) =>
+          new PoolTable(
+            resource,
+            this.resources$,
+            this.abstractPoolService,
+            this.sandboxInstanceService,
+            this.navigator
+          )
+      )
     );
     this.hasError$ = this.abstractPoolService.poolsHasError$;
     this.onLoadEvent(initialLoadEvent);

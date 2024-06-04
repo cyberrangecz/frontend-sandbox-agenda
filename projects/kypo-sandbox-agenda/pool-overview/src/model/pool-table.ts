@@ -21,15 +21,15 @@ import { PoolExpandDetailComponent } from '../components/pool-expand-detail/pool
  * @dynamic
  */
 export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpandDetailComponent, null> {
-  resources$: Observable<Resources>;
   constructor(
-    resource: PaginatedResource<Pool>,
+    data: PaginatedResource<Pool>,
+    resources: Observable<Resources>,
     abstractPoolService: AbstractPoolService,
     sandboxInstanceService: SandboxInstanceService,
     navigator: SandboxNavigator
   ) {
-    const rows = resource.elements.map((element) =>
-      PoolTable.createRow(element, abstractPoolService, sandboxInstanceService, navigator)
+    const rows = data.elements.map((element) =>
+      PoolTable.createRow(element, resources, abstractPoolService, sandboxInstanceService, navigator)
     );
     const columns = [
       new Column('title', 'Title', true, 'id'),
@@ -38,17 +38,16 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
       new Column('comment', 'Notes and comments', false),
       new Column('lockState', 'State', true, 'lock'),
       new Column('usedAndMaxSize', 'Size', true, 'max_size'),
-      new Column('instancesUtilization', 'Instances util.', false),
-      new Column('cpuUtilization', 'CPU util.', false),
-      new Column('ramUtilization', 'RAM util.', false),
+      new Column('resourcesUtilization', 'Instances / VCPUs / RAM / ports / network utilization', false),
     ];
     const expand = new RowExpand(PoolExpandDetailComponent, null);
     super(rows, columns, expand);
-    this.pagination = resource.pagination;
+    this.pagination = data.pagination;
   }
 
   private static createRow(
     pool: Pool,
+    resources: Observable<Resources>,
     abstractPoolService: AbstractPoolService,
     sandboxInstanceService: SandboxInstanceService,
     navigator: SandboxNavigator
@@ -58,11 +57,18 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
     rowAdapter.createdByName = pool.createdBy.fullName;
     rowAdapter.sandboxDefinitionNameAndRevision = `${pool.definition.title} (${pool.definition.rev})`;
     rowAdapter.comment = pool.comment;
-    rowAdapter.instancesUtilization = `${(pool.hardwareUsage.instances * 100).toFixed(1)}%`;
-    rowAdapter.cpuUtilization = `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}%`;
-    rowAdapter.ramUtilization = `${(pool.hardwareUsage.ram * 100).toFixed(1)}%`;
-    rowAdapter.portsUtilization = `${(pool.hardwareUsage.port * 100).toFixed(1)}%`;
-    rowAdapter.networksUtilization = `${(pool.hardwareUsage.network * 100).toFixed(1)}%`;
+    rowAdapter.instancesUtilization = pool.hardwareUsage.instances * 100;
+    rowAdapter.vcpuUtilization = pool.hardwareUsage.vcpu * 100;
+    rowAdapter.ramUtilization = pool.hardwareUsage.ram * 100;
+    rowAdapter.portUtilization = pool.hardwareUsage.port * 100;
+    rowAdapter.networkUtilization = pool.hardwareUsage.network * 100;
+    rowAdapter.resourcesUtilization =
+      `${(pool.hardwareUsage.instances * 100).toFixed(1)}% / ` +
+      `${(pool.hardwareUsage.vcpu * 100).toFixed(1)}% / ` +
+      `${(pool.hardwareUsage.ram * 100).toFixed(1)}% / ` +
+      `${(pool.hardwareUsage.port * 100).toFixed(1)}% / ` +
+      `${(pool.hardwareUsage.network * 100).toFixed(1)}%`;
+    resources.subscribe((data) => (rowAdapter.resources = data));
 
     const row = new Row(rowAdapter, this.createActions(pool, abstractPoolService, sandboxInstanceService));
     row.addLink('title', navigator.toPool(rowAdapter.id));
@@ -103,6 +109,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         of(false),
         defer(() => abstractPoolService.delete(pool))
       ),
+      this.createLockAction(pool, abstractPoolService),
       new RowAction(
         'download_man_ssh_configs',
         'Get management SSH Configs',
@@ -112,7 +119,6 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         of(false),
         defer(() => abstractPoolService.getSshAccess(pool.id))
       ),
-      this.createLockAction(pool, abstractPoolService),
     ];
   }
 
@@ -130,7 +136,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         'Unlock pool',
         'lock_open',
         'primary',
-        '',
+        'Unlock pool',
         of(false),
         defer(() => service.unlock(pool))
       );
@@ -140,7 +146,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         'Lock pool',
         'lock',
         'primary',
-        '',
+        'Lock pool',
         of(false),
         defer(() => service.lock(pool))
       );

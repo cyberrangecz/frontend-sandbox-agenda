@@ -28,11 +28,12 @@ import { PoolExpandDetailComponent } from './pool-expand-detail/pool-expand-deta
 import { ResourcesPageModule } from '../../../sandbox-resources/src/components/resources-page.module';
 import { SandboxResourcesService } from '../../../sandbox-resources/src/services/sandbox-resources.service';
 import { SandboxResourcesConcreteService } from '../../../sandbox-resources/src/services/sandbox-resources-concrete.service';
+import { ResourceBarComponent } from './pool-expand-detail/resource-bar/resource-bar.component';
 /**
  * Module containing components and providers for sandbox pool overview page
  */
 @NgModule({
-  declarations: [PoolOverviewComponent, PoolCommentComponent, PoolExpandDetailComponent],
+  declarations: [PoolOverviewComponent, PoolCommentComponent, PoolExpandDetailComponent, ResourceBarComponent],
   imports: [
     CommonModule,
     SentinelTableModule,
