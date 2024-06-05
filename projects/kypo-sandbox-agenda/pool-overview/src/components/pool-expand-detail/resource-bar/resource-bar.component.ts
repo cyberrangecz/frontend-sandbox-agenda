@@ -28,8 +28,8 @@ export class ResourceBarComponent implements AfterViewInit {
 
   private setup(): void {
     this.height = 12;
-    const body = document.getElementsByTagName('table')[0];
-    this.width = (parseFloat(window.getComputedStyle(body)?.width) / 2) * 0.666;
+    const table = document.getElementsByTagName('table')[0];
+    this.width = parseFloat(window.getComputedStyle(table)?.width) / 4;
     this.data = this.prepareData();
   }
 

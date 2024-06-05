@@ -34,7 +34,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
     const columns = [
       new Column('title', 'Title', true, 'id'),
       new Column('createdByName', 'Created by', true, 'created_by__username'),
-      new Column('sandboxDefinitionNameAndRevision', 'Sandbox definition', true, 'definition__name'),
+      new Column('sandboxDefinitionNameAndRevision', 'Sandbox definition (revision)', true, 'definition__name'),
       new Column('comment', 'Notes and comments', false),
       new Column('lockState', 'State', true, 'lock'),
       new Column('usedAndMaxSize', 'Size', true, 'max_size'),

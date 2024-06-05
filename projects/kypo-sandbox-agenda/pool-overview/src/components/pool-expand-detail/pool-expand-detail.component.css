@@ -12,6 +12,10 @@
   margin-top: 15px;
 }
 
+.pool-expand-grid .mat-grid-tile {
+  overflow: auto;
+}
+
 ::ng-deep .block-content .mat-grid-tile-content {
   align-items: normal;
   justify-content: normal;

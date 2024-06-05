@@ -20,7 +20,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   ) {
     const columns = [
       new Column('name', 'name', true, 'id'),
-      new Column('comment', 'comment', false, 'comment'),
+      new Column('comment', 'notes and comments', false, 'comment'),
       new Column('lock', 'lock', false),
       new Column('created', 'created', true, 'allocation_request__created'),
       new Column('createdBy', 'created by', true, 'created_by__first_name'),
