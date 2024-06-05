@@ -106,7 +106,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
       ),
       new DeleteAction(
         'Delete Pool',
-        of(false),
+        of(pool.lockState == 'locked'),
         defer(() => abstractPoolService.delete(pool))
       ),
       this.createLockAction(pool, abstractPoolService),

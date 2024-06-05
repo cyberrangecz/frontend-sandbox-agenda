@@ -20,6 +20,7 @@ export class AbstractSandbox {
   cleanupRequest: CleanupRequest;
 
   constructor(allocationUnit: SandboxAllocationUnit) {
+    this.id = allocationUnit.id;
     this.uuid = allocationUnit.sandboxUuid;
     this.name = `Sandbox ${allocationUnit.id}`;
     this.comment = allocationUnit.comment;
