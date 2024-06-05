@@ -1,3 +1,6 @@
+### 16.0.3 Fix and unify acquisition of sandbox ids and pool deletion.
+* fe08edf -- [CI/CD] Update packages.json version based on GitLab tag.
+* 7ed11ff -- Fix and unify acquisition of sandbox ids and pool deletion
 ### 16.0.2 Add an extended graphical view for pool overview, enable sending notifications upon sandbox building.
 * 69a7d93 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 8981253 -- Merge branch '129-add-checkbox-for-pool-email-notifications' into 'master'
