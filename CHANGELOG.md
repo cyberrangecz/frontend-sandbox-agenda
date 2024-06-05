@@ -1,3 +1,9 @@
+### 16.0.2 Add an extended graphical view for pool overview, enable sending notifications upon sandbox building.
+* 69a7d93 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 8981253 -- Merge branch '129-add-checkbox-for-pool-email-notifications' into 'master'
+* 13c49db -- Adjust edit view for pools, export resources component
+* df2205f -- Add graphical resources to pool table
+* 5af5a4c -- Adjust pool table to show expanded content
 ### 16.0.1 Enable a force deletion of pools with allocations.
 * f7657a2 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 4ee518b -- Merge branch '128-enable-force-delete-of-pools-with-allocations' into 'master'
