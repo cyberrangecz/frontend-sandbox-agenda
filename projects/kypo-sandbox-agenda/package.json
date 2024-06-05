@@ -7,8 +7,8 @@
     "@angular/material": "^16.2.14",
     "@sentinel/common": "~16.2.3",
     "@sentinel/components": "~16.3.0",
-    "@muni-kypo-crp/sandbox-api": "~16.0.1",
-    "@muni-kypo-crp/sandbox-model": "~16.1.1",
+    "@muni-kypo-crp/sandbox-api": "~16.0.3",
+    "@muni-kypo-crp/sandbox-model": "~16.1.2",
     "@muni-kypo-crp/topology-graph": "~16.0.0",
     "@muni-kypo-crp/topology-model": "~16.0.0",
     "file-saver": "^2.0.5"

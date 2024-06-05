@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 /**
  * Material components imports for sandbox pool detail module
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatTooltipModule,
     MatInputModule,
+    MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
   ],
@@ -25,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatTooltipModule,
     MatInputModule,
+    MatGridListModule,
     FormsModule,
     ReactiveFormsModule,
   ],

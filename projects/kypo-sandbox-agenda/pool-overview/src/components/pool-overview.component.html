@@ -3,7 +3,8 @@
   [data]="pools$ | async"
   [hasError]="hasError$ | async"
   [titlecasedActions]=false
-  [displayedActionsCount]="6"
+  [titlecasedColumnHeaders]=false
+  [displayedActionsCount]="5"
   (rowAction)="onPoolAction($event)"
   (tableLoad)="onLoadEvent($event)"
   (refresh)="onLoadEvent($event)">
@@ -13,3 +14,5 @@
   <kypo-pool-comment [commentElement]="row.element">
   </kypo-pool-comment>
 </ng-template>
+<br>
+<kypo-quotas [resources]="resources$ | async"></kypo-quotas>
