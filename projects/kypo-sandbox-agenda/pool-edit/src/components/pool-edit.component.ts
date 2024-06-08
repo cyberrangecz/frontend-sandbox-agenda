@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { defer, switchMap, tap } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -19,7 +18,7 @@ import { PoolChangedEvent } from '../model/pool-changed-event';
   styleUrls: ['./pool-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolEditComponent extends SentinelBaseDirective {
+export class PoolEditComponent {
   pool: Pool;
   poolFormGroup: PoolFormGroup;
   editMode = false;
@@ -27,7 +26,6 @@ export class PoolEditComponent extends SentinelBaseDirective {
   controls: SentinelControlItem[];
 
   constructor(private activeRoute: ActivatedRoute, private poolEditService: PoolEditService) {
-    super();
     this.activeRoute.data
       .pipe(
         tap((data) => {
@@ -86,6 +84,14 @@ export class PoolEditComponent extends SentinelBaseDirective {
       saveItem.label = 'Create';
     }
     this.controls = [saveItem];
+  }
+
+  /**
+   * Check the amount of allocated sandboxes and make sure the user doesn't set the number below.
+   */
+  getMinimumPoolSize(): number {
+    const amount = this.pool ? this.pool.usedSize : 0;
+    return amount;
   }
 
   private onChanged() {

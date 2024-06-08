@@ -2,44 +2,53 @@
   <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
   <form [formGroup]="poolFormGroup.formGroup">
     <div class="form-content">
-      <!-- COMMENT field -->
-      <mat-form-field appearance="outline" hintLabel="A description/info regarding your pool">
-        <mat-label>Comment</mat-label>
-        <input matInput placeholder="Pool comment" type="text" maxlength="256" formControlName="comment">
-      </mat-form-field>
+      <mat-grid-list cols="2" rowHeight="2:1" class="pool-edit-grid">
+        <div class="form-line">
+          <mat-grid-tile>
+            <!-- POOL SIZE field -->
+            <mat-form-field appearance="outline"
+                            [hintLabel]="editMode ? '' : 'Pool of sandboxes that can be allocated'"
+                            class="multi-line-hint">
+              <mat-label>Sandbox Pool Size</mat-label>
+              <input matInput placeholder="Sandbox pool size" type="number"
+                     min="1" formControlName="poolSize" required>
+              <mat-error *ngIf="poolSize.hasError('min')">
+                Pool size must be number larger than {{getMinimumPoolSize()}}
+                {{ editMode ? '(amount of currently allocated sandboxes)' : ''}}
+              </mat-error>
+              <mat-error *ngIf="poolSize.hasError('required')">This field is required</mat-error>
+            </mat-form-field>
 
-      <!-- POOL NOTIFICATION field -->
-      <div class="form-line">
-        <mat-checkbox
-          formControlName="notifyBuild"
-          class="notify-build">
-          Send e-mail notifications upon build progression (only for the pool creator)
-        </mat-checkbox>
-      </div>
+            <!-- COMMENT field -->
+            <mat-form-field appearance="outline" hintLabel="A description/info regarding your pool">
+              <mat-label>Comment</mat-label>
+              <textarea matInput placeholder="Pool comment" type="text" maxlength="256" formControlName="comment"></textarea>
+            </mat-form-field>
 
-      <!-- POOL SIZE field -->
-      <div class="form-line">
-        <mat-form-field appearance="outline"
-                        [hintLabel]="editMode ? '' : 'Pool of sandboxes that can be allocated'"
-                        class="multi-line-hint">
-          <mat-label>Sandbox Pool Size</mat-label>
-          <input matInput placeholder="Sandbox pool size" type="number"
-                 min="1" formControlName="poolSize" required>
-          <mat-error *ngIf="poolSize.hasError('min')">
-            Pool size must be number larger than 0
-          </mat-error>
-          <mat-error *ngIf="poolSize.hasError('required')">This field is required</mat-error>
-        </mat-form-field>
-      </div>
+            <!-- SANDBOX DEFINITION field-->
+            <div class="form-line">
+              <p *ngIf="sandboxDefinition.value else noSandboxDefinitionTitle">Sandbox Definition ID: {{ sandboxDefinition.value?.id }}</p>
+              <button *ngIf="!editMode" (click)="selectSandboxDefinition()"
+                      mat-button color="accent">
+                Select
+              </button>
+            </div>
+          </mat-grid-tile>
 
-      <!-- SANDBOX DEFINITION field-->
-      <div class="form-line">
-        <p *ngIf="sandboxDefinition.value else noSandboxDefinitionTitle">Sandbox Definition ID: {{ sandboxDefinition.value?.id }}</p>
-        <button *ngIf="!editMode" (click)="selectSandboxDefinition()"
-                mat-button color="accent">
-          Select
-        </button>
-      </div>
+          <mat-grid-tile>
+            <!-- POOL NOTIFICATION field -->
+              <mat-checkbox
+                formControlName="notifyBuild"
+                matTooltip="Sends e-mails to the user who triggers the allocation"
+                class="notify-build">
+                Send e-mail notifications upon build progression
+              </mat-checkbox>
+          </mat-grid-tile>
+
+        </div>
+        </mat-grid-list>
+
+
     </div>
   </form>
 </mat-card>

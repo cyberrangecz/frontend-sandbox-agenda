@@ -1,3 +1,4 @@
+16.1.0 Enable pool size change for existing pool with allocations.
 16.0.4 Adjust styling of pool overview components.
 16.0.3 Fix and unify acquisition of sandbox ids and pool deletion.
 16.0.2 Add an extended graphical view for pool overview, enable sending notifications upon sandbox building.

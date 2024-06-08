@@ -1,22 +1,19 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PoolCommentFormGroup } from './pool-comment-form-group';
 import { PoolOverviewService } from '../../services/state/pool-overview/pool-overview.service';
-import { SentinelBaseDirective } from '@sentinel/common';
 
 @Component({
   selector: 'kypo-pool-comment',
   templateUrl: './pool-comment.component.html',
   styleUrls: ['./pool-comment.component.css'],
 })
-export class PoolCommentComponent extends SentinelBaseDirective implements OnInit {
+export class PoolCommentComponent implements OnInit {
   @Input() commentElement: any;
   commentFormGroup: PoolCommentFormGroup;
   editOpacity = 0;
   editionEnabled = false;
 
-  constructor(private poolOverviewService: PoolOverviewService) {
-    super();
-  }
+  constructor(private poolOverviewService: PoolOverviewService) {}
 
   ngOnInit() {
     this.commentFormGroup = new PoolCommentFormGroup(this.commentElement.comment);

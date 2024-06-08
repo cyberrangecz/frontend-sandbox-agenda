@@ -8,7 +8,7 @@ import { SelectedStage } from '../../model/selected-stage';
   styleUrls: ['./stage-overview.component.scss'],
 })
 export class StageOverviewComponent implements OnChanges {
-  @Input() stages;
+  @Input() stages: string[];
   @Input() unitId: number;
   @Output() stageSelected: EventEmitter<SelectedStage> = new EventEmitter();
 
@@ -37,7 +37,7 @@ export class StageOverviewComponent implements OnChanges {
     }
   }
 
-  stageSelect(stage, order): void {
+  stageSelect(stage: string, order: number): void {
     this.stageSelected.emit(new SelectedStage(this.unitId, stage, order));
   }
 }

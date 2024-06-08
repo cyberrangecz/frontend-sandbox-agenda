@@ -5,12 +5,12 @@ export class PoolFormGroup {
   formGroup: UntypedFormGroup;
 
   constructor(pool: Pool, editMode: boolean) {
-    const poolParams = { value: editMode ? pool.maxSize : 1, disabled: editMode };
+    const poolParams = { value: editMode ? pool.maxSize : 1, disabled: false };
     const definitionParams = { value: editMode ? pool.definition : undefined, disabled: editMode };
     const comment = pool === undefined || pool.comment === undefined ? '' : pool.comment;
     const notifyBuild = pool === undefined || pool.notifyBuild === undefined ? false : pool.notifyBuild;
     this.formGroup = new UntypedFormGroup({
-      poolSize: new UntypedFormControl(poolParams, [Validators.required, Validators.min(1)]),
+      poolSize: new UntypedFormControl(poolParams, [Validators.required, Validators.min(editMode ? pool.usedSize : 1)]),
       sandboxDefinition: new UntypedFormControl(definitionParams, [Validators.required]),
       comment: new UntypedFormControl(comment, [Validators.maxLength(256)]),
       notifyBuild: new UntypedFormControl(notifyBuild),
