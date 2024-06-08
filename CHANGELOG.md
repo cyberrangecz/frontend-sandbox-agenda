@@ -1,3 +1,7 @@
+### 16.1.0 Enable pool size change for existing pool with allocations.
+* a1399e1 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 06b7f4d -- Merge branch 'master' of gitlab.ics.muni.cz:muni-kypo-crp/frontend-angular/agendas/kypo-sandbox-agenda
+* b0ae695 -- Enable pool size change for existing pool with allocations
 ### 16.0.4 Adjust styling of pool overview components.
 * 06b313a -- [CI/CD] Update packages.json version based on GitLab tag.
 * db338a8 -- Adjust styling of pool overview components
