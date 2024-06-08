@@ -1,3 +1,6 @@
+### 16.0.4 Adjust styling of pool overview components.
+* 06b313a -- [CI/CD] Update packages.json version based on GitLab tag.
+* db338a8 -- Adjust styling of pool overview components
 ### 16.0.3 Fix and unify acquisition of sandbox ids and pool deletion.
 * fe08edf -- [CI/CD] Update packages.json version based on GitLab tag.
 * 7ed11ff -- Fix and unify acquisition of sandbox ids and pool deletion
