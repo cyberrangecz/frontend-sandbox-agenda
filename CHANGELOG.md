@@ -1,3 +1,8 @@
+### 16.1.1 Update all components to work without a deprecated Sentinel directive.
+* c45a50c -- [CI/CD] Update packages.json version based on GitLab tag.
+* ee79266 -- Merge branch '130-remove-all-deprecated-sentinel-base-dependencies' into 'master'
+* 3a7928d -- Fix sandbox definition url parser
+* 0b57318 -- Remove all deprecated Sentinel base directives
 ### 16.1.0 Enable pool size change for existing pool with allocations.
 * a1399e1 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 06b7f4d -- Merge branch 'master' of gitlab.ics.muni.cz:muni-kypo-crp/frontend-angular/agendas/kypo-sandbox-agenda
