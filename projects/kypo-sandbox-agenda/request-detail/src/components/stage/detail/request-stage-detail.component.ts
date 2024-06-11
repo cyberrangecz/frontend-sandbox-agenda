@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { StageDetailComponentEnum } from '../../../model/utils/stage-detail-component-enum';
 import { StageAdapter } from '../../../model/adapters/stage-adapter';
 import { StageComponentResolver } from '../../../model/utils/stage-component-resolver';
@@ -13,7 +12,7 @@ import { StageComponentResolver } from '../../../model/utils/stage-component-res
   styleUrls: ['./request-stage-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestStageDetailComponent extends SentinelBaseDirective implements OnChanges {
+export class RequestStageDetailComponent implements OnChanges {
   @Input() stage: StageAdapter;
   stageComponents = StageDetailComponentEnum;
   stageComponentToDisplay: StageDetailComponentEnum;

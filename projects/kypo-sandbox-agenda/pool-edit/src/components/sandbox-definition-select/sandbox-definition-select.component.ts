@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
   PaginationService,
   SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
 } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-sandbox-definition-select',
@@ -18,7 +18,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService }],
 })
-export class SandboxDefinitionSelectComponent extends SentinelBaseDirective implements OnInit {
+export class SandboxDefinitionSelectComponent implements OnInit {
   readonly PAGE_SIZE: number;
 
   definitions$: Observable<PaginatedResource<SandboxDefinition>>;
@@ -26,6 +26,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
   hasError$: Observable<boolean>;
 
   selected: SandboxDefinition[];
+  destroyRef = inject(DestroyRef);
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public preselected: SandboxDefinition,
@@ -33,7 +34,6 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
     private paginationService: PaginationService,
     private definitionService: SandboxDefinitionOverviewService
   ) {
-    super();
     this.selected = [preselected];
     this.PAGE_SIZE = this.paginationService.getPagination();
   }
@@ -51,7 +51,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
           );
           return resources;
         }),
-        takeWhile(() => this.isAlive)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }
@@ -67,7 +67,7 @@ export class SandboxDefinitionSelectComponent extends SentinelBaseDirective impl
           );
           return resources;
         }),
-        takeWhile(() => this.isAlive)
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe();
   }

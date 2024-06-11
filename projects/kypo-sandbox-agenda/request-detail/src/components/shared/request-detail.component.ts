@@ -1,22 +1,24 @@
 import { ActivatedRoute } from '@angular/router';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { Request } from '@muni-kypo-crp/sandbox-model';
 import { RequestStage } from '@muni-kypo-crp/sandbox-model';
 import { exhaustMap, Observable } from 'rxjs';
-import { map, switchMap, takeWhile, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
 import { RequestStagesService } from '../../services/state/request-stages.service';
 import { StageAdapter } from '../../model/adapters/stage-adapter';
 import { StagesDetailPollRegistry } from '../../services/state/detail/stages-detail-poll-registry.service';
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Smart component for pool request detail page
  */
-export abstract class RequestDetailComponent extends SentinelBaseDirective {
+export abstract class RequestDetailComponent {
   stages$: Observable<StageAdapter[]>;
   hasError$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   fragment: string;
+  destroyRef = inject(DestroyRef);
 
   private request: Request;
 
@@ -25,7 +27,6 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
     protected requestStagesService: RequestStagesService,
     protected stageDetailRegistry?: StagesDetailPollRegistry
   ) {
-    super();
     this.activeRoute.fragment.subscribe((fragment) => {
       this.fragment = fragment;
     });
@@ -76,7 +77,7 @@ export abstract class RequestDetailComponent extends SentinelBaseDirective {
         this.request = data[POOL_REQUEST_DATA_ATTRIBUTE_NAME];
       }),
       switchMap((data) => this.requestStagesService.getAll(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
-      takeWhile(() => this.isAlive)
+      takeUntilDestroyed(this.destroyRef)
     );
     this.hasError$ = this.requestStagesService.hasError$;
     this.isLoading$ = this.requestStagesService.isLoading$;

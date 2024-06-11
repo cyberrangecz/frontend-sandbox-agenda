@@ -1,15 +1,15 @@
-import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { KypoTopologyErrorService } from '@muni-kypo-crp/topology-graph';
 import { Observable } from 'rxjs';
-import { map, takeWhile, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import {
   SandboxErrorHandler,
   SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME,
   SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME,
 } from '@muni-kypo-crp/sandbox-agenda';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Smart component of sandbox instance topology page
@@ -20,29 +20,28 @@ import {
   styleUrls: ['./sandbox-topology.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxTopologyComponent extends SentinelBaseDirective implements OnInit {
+export class SandboxTopologyComponent implements OnInit {
   sandboxInstance$: Observable<SandboxInstance>;
   sandboxDefinition$: Observable<SandboxDefinition>;
   topologyWidth: number;
   topologyHeight: number;
   sandboxId: number;
+  destroyRef = inject(DestroyRef);
 
   constructor(
     private activeRoute: ActivatedRoute,
     private topologyErrorService: KypoTopologyErrorService,
     private errorHandler: SandboxErrorHandler
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.sandboxInstance$ = this.activeRoute.data.pipe(
-      takeWhile(() => this.isAlive),
+      takeUntilDestroyed(this.destroyRef),
       map((data) => data[SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME]),
       tap((data) => (this.sandboxId = data?.id))
     );
     this.sandboxDefinition$ = this.activeRoute.data.pipe(
-      takeWhile(() => this.isAlive),
+      takeUntilDestroyed(this.destroyRef),
       map((data) => data[SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME])
     );
     this.calculateTopologySize();
@@ -61,7 +60,7 @@ export class SandboxTopologyComponent extends SentinelBaseDirective implements O
   }
 
   private subscribeToTopologyErrorHandler() {
-    this.topologyErrorService.error$.pipe(takeWhile(() => this.isAlive)).subscribe({
+    this.topologyErrorService.error$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (event) => this.errorHandler.emit(event.err, event.action),
       error: (err) => this.errorHandler.emit(err, 'There is a problem with topology error handler.'),
     });

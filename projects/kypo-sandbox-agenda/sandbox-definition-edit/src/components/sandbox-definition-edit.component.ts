@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { defer, of } from 'rxjs';
 import { takeWhile } from 'rxjs/operators';
 import { SandboxDefinitionEditService } from '../services/sandbox-definition-edit.service';
 import { SandboxDefinitionFormGroup } from './sandbox-definition-edit-form-group';
 import { AbstractControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Component with form for creating new sandbox definition
@@ -16,19 +16,18 @@ import { AbstractControl } from '@angular/forms';
   styleUrls: ['./sandbox-definition-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxDefinitionEditComponent extends SentinelBaseDirective implements OnInit {
+export class SandboxDefinitionEditComponent implements OnInit {
   sandboxDefinitionFormGroup: SandboxDefinitionFormGroup;
   controls: SentinelControlItem[];
+  destroyRef = inject(DestroyRef);
 
-  constructor(private sandboxDefinitionService: SandboxDefinitionEditService) {
-    super();
-  }
+  constructor(private sandboxDefinitionService: SandboxDefinitionEditService) {}
 
   ngOnInit(): void {
     this.sandboxDefinitionFormGroup = new SandboxDefinitionFormGroup();
     this.initControls();
     this.sandboxDefinitionFormGroup.formGroup.valueChanges
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.initControls());
   }
 
@@ -41,12 +40,12 @@ export class SandboxDefinitionEditComponent extends SentinelBaseDirective implem
   }
 
   onControlsAction(control: SentinelControlItem): void {
-    control.result$.pipe(takeWhile(() => this.isAlive)).subscribe();
+    control.result$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   keyDownAction(event: KeyboardEvent): void {
     if (this.sandboxDefinitionFormGroup.formGroup.valid && event.key === 'Enter') {
-      this.controls[0].result$.pipe(takeWhile(() => this.isAlive)).subscribe();
+      this.controls[0].result$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     }
   }
 

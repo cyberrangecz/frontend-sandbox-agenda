@@ -1,17 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { SandboxResourcesService } from '@muni-kypo-crp/sandbox-agenda/sandbox-resources';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Smart component of sandbox pool overview page
@@ -22,11 +22,12 @@ import { SandboxResourcesService } from '@muni-kypo-crp/sandbox-agenda/sandbox-r
   styleUrls: ['./pool-overview.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolOverviewComponent extends SentinelBaseDirective implements OnInit {
+export class PoolOverviewComponent implements OnInit {
   pools$: Observable<SentinelTable<Pool>>;
   hasError$: Observable<boolean>;
   resources$: Observable<Resources>;
   controls: SentinelControlItem[] = [];
+  destroyRef = inject(DestroyRef);
 
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
@@ -35,7 +36,6 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
     private navigator: SandboxNavigator,
     private paginationService: PaginationService
   ) {
-    super();
     this.resources$ = this.sandboxResourcesService.resources$;
   }
 
@@ -51,10 +51,7 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
    */
   onLoadEvent(loadEvent: TableLoadEvent): void {
     this.paginationService.setPagination(loadEvent.pagination.size);
-    this.abstractPoolService
-      .getAll(loadEvent.pagination)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.abstractPoolService.getAll(loadEvent.pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   /**
@@ -102,9 +99,6 @@ export class PoolOverviewComponent extends SentinelBaseDirective implements OnIn
   }
 
   private initResources() {
-    this.sandboxResourcesService
-      .getResources()
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.sandboxResourcesService.getResources().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 }

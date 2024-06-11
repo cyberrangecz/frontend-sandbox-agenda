@@ -1,14 +1,14 @@
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { map, takeWhile } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';
 import { SentinelTable, TableLoadEvent } from '@sentinel/components/table';
 import { VMImagesService } from '../services/vm-images.service';
 import { VirtualImagesTable } from '../models/virtual-images-table';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-resources-page',
@@ -16,7 +16,7 @@ import { VirtualImagesTable } from '../models/virtual-images-table';
   styleUrls: ['./resources-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResourcesPageComponent extends SentinelBaseDirective implements OnInit {
+export class ResourcesPageComponent implements OnInit {
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
@@ -27,6 +27,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   resources$: Observable<Resources>;
   guiAccess = false;
   kypoImages = false;
+  destroyRef = inject(DestroyRef);
 
   private lastFilter: string;
 
@@ -35,16 +36,12 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
     private vmImagesService: VMImagesService,
     private paginationService: PaginationService
   ) {
-    super();
     this.resources$ = this.sandboxResourcesService.resources$;
     this.isLoadingImages$ = vmImagesService.isLoading$;
   }
 
   ngOnInit(): void {
-    this.sandboxResourcesService
-      .getResources()
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.sandboxResourcesService.getResources().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     this.initTable();
   }
 
@@ -82,7 +79,7 @@ export class ResourcesPageComponent extends SentinelBaseDirective implements OnI
   private getAvailableImages(pagination: PaginationBaseEvent, cached: boolean, filter?: string): void {
     this.vmImagesService
       .getAvailableImages(pagination, this.kypoImages, this.guiAccess, cached, filter)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
