@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { SandboxAllocationFormGroup } from './sandbox-allocation-form-group';
 import { AbstractControl } from '@angular/forms';
-import { takeWhile } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 /**
  * Popup dialog to choose number of sandboxes to allocate
  */
@@ -13,15 +12,15 @@ import { takeWhile } from 'rxjs/operators';
   styleUrls: ['./allocate-variable-sandboxes-dialog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AllocateVariableSandboxesDialogComponent extends SentinelBaseDirective implements OnInit {
+export class AllocateVariableSandboxesDialogComponent implements OnInit {
   sandboxAllocationFormGroup: SandboxAllocationFormGroup;
   count: number;
+  destroyRef = inject(DestroyRef);
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: number,
     public dialogRef: MatDialogRef<AllocateVariableSandboxesDialogComponent>
   ) {
-    super();
     this.sandboxAllocationFormGroup = new SandboxAllocationFormGroup(this.data);
     this.allocationSize.setValue(data);
   }
@@ -32,7 +31,7 @@ export class AllocateVariableSandboxesDialogComponent extends SentinelBaseDirect
 
   ngOnInit() {
     this.sandboxAllocationFormGroup.formGroup.valueChanges
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((_) => console.log(_));
   }
 

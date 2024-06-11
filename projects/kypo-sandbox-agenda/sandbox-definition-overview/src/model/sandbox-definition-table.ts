@@ -57,11 +57,11 @@ export class SandboxDefinitionTable extends ExpandableSentinelTable<
   }
 
   private static parseUrl(gitUrl: string): string {
-    let res = gitUrl;
-    res = res.replace('git@', '');
-    res = res.replace(':', '/');
-    res = res.replace('.git', '');
-    res = 'https://' + res;
-    return res;
+    // handle git@ URLs
+    gitUrl = gitUrl.replace(/^git@(.*?):/, 'https://$1/');
+    // remove the .git suffix
+    gitUrl = gitUrl.replace(/\.git$/, '');
+
+    return gitUrl;
   }
 }

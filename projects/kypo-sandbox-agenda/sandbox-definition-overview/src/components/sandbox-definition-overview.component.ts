@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { SandboxDefinitionTable } from '../model/sandbox-definition-table';
 import { PaginationService, SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview-controls';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-sandbox-definition-overview',
@@ -20,19 +20,18 @@ import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview
  * Component displaying overview of sandbox definitions. Contains button for create sandbox definitions,
  * table with all sandbox definitions and possible actions on sandbox definition.
  */
-export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective implements OnInit {
+export class SandboxDefinitionOverviewComponent implements OnInit {
   controls: SentinelControlItem[];
   sandboxDefinitions$: Observable<SentinelTable<SandboxDefinition>>;
   hasError$: Observable<boolean>;
+  destroyRef = inject(DestroyRef);
 
   private lastLoadEvent: TableLoadEvent;
 
   constructor(
     private sandboxDefinitionService: SandboxDefinitionOverviewService,
     private paginationService: PaginationService
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.controls = SandboxDefinitionOverviewControls.create(this.sandboxDefinitionService);
@@ -45,10 +44,7 @@ export class SandboxDefinitionOverviewComponent extends SentinelBaseDirective im
    */
   onLoadEvent(event: TableLoadEvent): void {
     this.paginationService.setPagination(event.pagination.size);
-    this.sandboxDefinitionService
-      .getAll(event.pagination)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.sandboxDefinitionService.getAll(event.pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   /**

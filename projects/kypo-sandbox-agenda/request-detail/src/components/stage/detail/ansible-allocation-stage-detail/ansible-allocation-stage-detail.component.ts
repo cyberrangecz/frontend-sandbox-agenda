@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { AnsibleStageAdapter } from '../../../../model/adapters/ansible-stage-adapter';
 import { Observable } from 'rxjs';
 import { AnsibleOutputsService } from '../../../../services/state/detail/ansible-outputs.service';
-import { map, takeWhile } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'kypo-ansible-allocation-stage-detail',
@@ -13,7 +13,7 @@ import { map, takeWhile } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [AnsibleOutputsService],
 })
-export class AnsibleAllocationStageDetailComponent extends SentinelBaseDirective implements OnChanges {
+export class AnsibleAllocationStageDetailComponent implements OnChanges {
   readonly PAGE_SIZE = Number.MAX_SAFE_INTEGER;
 
   @Input() stage: AnsibleStageAdapter;
@@ -22,10 +22,9 @@ export class AnsibleAllocationStageDetailComponent extends SentinelBaseDirective
   isLoading$: Observable<boolean>;
   hasError$: Observable<boolean>;
   hasOutputs$: Observable<boolean>;
+  destroyRef = inject(DestroyRef);
 
-  constructor(private outputsService: AnsibleOutputsService) {
-    super();
-  }
+  constructor(private outputsService: AnsibleOutputsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.stage && 'stage' in changes && changes['stage'].isFirstChange()) {
@@ -36,16 +35,13 @@ export class AnsibleAllocationStageDetailComponent extends SentinelBaseDirective
   init(): void {
     const initialPagination = new OffsetPaginationEvent(0, this.PAGE_SIZE, '', 'asc');
     this.onFetch(initialPagination);
-    this.outputs$ = this.outputsService.resource$.pipe(takeWhile(() => this.isAlive));
+    this.outputs$ = this.outputsService.resource$.pipe(takeUntilDestroyed(this.destroyRef));
     this.hasOutputs$ = this.outputs$.pipe(map((outputs) => outputs.elements.length > 0));
-    this.isLoading$ = this.outputsService.isLoading$.pipe(takeWhile(() => this.isAlive));
-    this.hasError$ = this.outputsService.hasError$.pipe(takeWhile(() => this.isAlive));
+    this.isLoading$ = this.outputsService.isLoading$.pipe(takeUntilDestroyed(this.destroyRef));
+    this.hasError$ = this.outputsService.hasError$.pipe(takeUntilDestroyed(this.destroyRef));
   }
 
   onFetch(requestedPagination: OffsetPaginationEvent): void {
-    this.outputsService
-      .getAll(this.stage, requestedPagination)
-      .pipe(takeWhile(() => this.isAlive))
-      .subscribe();
+    this.outputsService.getAll(this.stage, requestedPagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 }

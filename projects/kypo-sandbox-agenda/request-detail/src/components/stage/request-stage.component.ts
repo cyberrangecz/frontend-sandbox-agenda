@@ -1,6 +1,5 @@
 /* eslint-disable @angular-eslint/no-output-on-prefix */
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { StageAdapter } from '../../model/adapters/stage-adapter';
 
 /**
@@ -12,7 +11,7 @@ import { StageAdapter } from '../../model/adapters/stage-adapter';
   styleUrls: ['./request-stage.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestStageComponent extends SentinelBaseDirective {
+export class RequestStageComponent {
   @Input() stage: StageAdapter;
   @Output() stageDetailPanelChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

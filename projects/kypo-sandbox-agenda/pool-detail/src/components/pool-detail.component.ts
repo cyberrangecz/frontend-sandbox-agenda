@@ -1,12 +1,11 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SentinelBaseDirective } from '@sentinel/common';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, RequestStageState } from '@muni-kypo-crp/sandbox-model';
 import { TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { Observable, Subscription } from 'rxjs';
-import { map, take, takeWhile } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { POOL_DATA_ATTRIBUTE_NAME, SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService, ResourcePollingService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AllocationRequestsService } from '../services/state/request/allocation/requests/allocation-requests.service';
@@ -19,6 +18,7 @@ import { SandboxInstanceConcreteService } from '../services/state/sandbox-instan
 import { PoolDetailTable } from '../model/pool-detail-table';
 import { AbstractSandbox } from '../model/abstract-sandbox';
 import { SelectedStage } from '../model/selected-stage';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**
  * Smart component of pool detail page
@@ -35,12 +35,13 @@ import { SelectedStage } from '../model/selected-stage';
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
   ],
 })
-export class PoolDetailComponent extends SentinelBaseDirective implements OnInit, AfterViewInit {
+export class PoolDetailComponent implements OnInit, AfterViewInit {
   pool: Pool;
   instances$: Observable<PoolDetailTable>;
   instancesTableHasError$: Observable<boolean>;
   controls: SentinelControlItem[];
   commentTrim = 15;
+  destroyRef = inject(DestroyRef);
   private subscription: Subscription;
   private trimSpace = 8;
 
@@ -49,9 +50,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     private paginationService: PaginationService,
     private navigator: SandboxNavigator,
     private activeRoute: ActivatedRoute
-  ) {
-    super();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initTables();
@@ -73,12 +72,12 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     }
     this.subscription = this.sandboxInstanceService
       .getAllUnits(this.pool.id, loadEvent.pagination)
-      .pipe(takeWhile(() => this.isAlive))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 
   onControlsAction(control: SentinelControlItem): void {
-    control.result$.pipe(takeWhile(() => this.isAlive)).subscribe();
+    control.result$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   /**
@@ -103,7 +102,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
     const initialLoadEvent: TableLoadEvent = {
       pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
     };
-    this.activeRoute.data.pipe(takeWhile(() => this.isAlive)).subscribe((data) => {
+    this.activeRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];
       this.onLoadEvent(initialLoadEvent);
     });
@@ -131,7 +130,7 @@ export class PoolDetailComponent extends SentinelBaseDirective implements OnInit
         return resource.elements.map((allocationUnit) => new AbstractSandbox(allocationUnit));
       })
     );
-    sandboxes$.pipe(takeWhile(() => this.isAlive)).subscribe();
+    sandboxes$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   /**
