@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, OnInit, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, Input, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
@@ -19,6 +19,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   providers: [{ provide: SandboxDefinitionOverviewService, useClass: SandboxDefinitionOverviewConcreteService }],
 })
 export class SandboxDefinitionSelectComponent implements OnInit {
+  @Input() paginationId = 'kypo-sandbox-definition-select';
   readonly PAGE_SIZE: number;
 
   definitions$: Observable<PaginatedResource<SandboxDefinition>>;
@@ -35,7 +36,7 @@ export class SandboxDefinitionSelectComponent implements OnInit {
     private definitionService: SandboxDefinitionOverviewService
   ) {
     this.selected = [preselected];
-    this.PAGE_SIZE = this.paginationService.getPagination();
+    this.PAGE_SIZE = this.paginationService.getPagination(this.paginationId);
   }
 
   ngOnInit(): void {
@@ -57,7 +58,7 @@ export class SandboxDefinitionSelectComponent implements OnInit {
   }
 
   fetch(pagination: OffsetPaginationEvent): void {
-    this.paginationService.setPagination(pagination.size);
+    this.paginationService.setPagination(this.paginationId, pagination.size);
     this.definitionService
       .getAll(new OffsetPaginationEvent(0, Number.MAX_SAFE_INTEGER, '', 'asc'))
       .pipe(

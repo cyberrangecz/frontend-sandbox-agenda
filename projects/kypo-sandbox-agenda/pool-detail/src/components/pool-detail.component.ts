@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
@@ -36,6 +36,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
 })
 export class PoolDetailComponent implements OnInit, AfterViewInit {
+  @Input() paginationId = 'kypo-pool-detail';
   pool: Pool;
   instances$: Observable<PoolDetailTable>;
   instancesTableHasError$: Observable<boolean>;
@@ -66,7 +67,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
    * @param loadEvent load event emitted from sandbox instances table
    */
   onLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
@@ -100,7 +101,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
 
   private initTables() {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(this.paginationId), '', 'asc'),
     };
     this.activeRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];

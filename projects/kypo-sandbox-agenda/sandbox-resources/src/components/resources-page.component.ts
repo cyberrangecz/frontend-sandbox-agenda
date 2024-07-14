@@ -2,7 +2,7 @@ import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { map } from 'rxjs/operators';
 import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
 import { OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SandboxResourcesService } from '../services/sandbox-resources.service';
 import { SentinelTable, TableLoadEvent } from '@sentinel/components/table';
@@ -17,6 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResourcesPageComponent implements OnInit {
+  @Input() paginationId = 'kypo-resources-page';
   readonly INIT_SORT_NAME = 'name';
   readonly INIT_SORT_DIR = 'asc';
 
@@ -46,7 +47,7 @@ export class ResourcesPageComponent implements OnInit {
   }
 
   onTableLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.lastFilter = loadEvent.filter;
     this.getAvailableImages(loadEvent.pagination, true, loadEvent.filter);
   }
@@ -72,7 +73,7 @@ export class ResourcesPageComponent implements OnInit {
   }
 
   initialTableLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.getAvailableImages(loadEvent.pagination, false);
   }
 
@@ -86,7 +87,7 @@ export class ResourcesPageComponent implements OnInit {
   private getInitialPaginationEvent(): OffsetPaginationEvent {
     return new OffsetPaginationEvent(
       0,
-      this.paginationService.getPagination(),
+      this.paginationService.getPagination(this.paginationId),
       this.INIT_SORT_NAME,
       this.INIT_SORT_DIR
     );
