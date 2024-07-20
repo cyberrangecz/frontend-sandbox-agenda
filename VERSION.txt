@@ -1,4 +1,4 @@
-16.1.2 Save pagination size by component id.
+16.1.2 Update pagination to save size by component id.
 16.1.1 Update all components to work without a deprecated Sentinel directive.
 16.1.0 Enable pool size change for existing pool with allocations.
 16.0.4 Adjust styling of pool overview components.
