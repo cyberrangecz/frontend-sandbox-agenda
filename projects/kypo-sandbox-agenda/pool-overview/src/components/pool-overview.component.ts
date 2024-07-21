@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
@@ -23,6 +23,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PoolOverviewComponent implements OnInit {
+  @Input() paginationId = 'kypo-sandbox-pool-overview';
   pools$: Observable<SentinelTable<Pool>>;
   hasError$: Observable<boolean>;
   resources$: Observable<Resources>;
@@ -50,7 +51,7 @@ export class PoolOverviewComponent implements OnInit {
    * @param loadEvent load data event from table component
    */
   onLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.abstractPoolService.getAll(loadEvent.pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
@@ -68,7 +69,7 @@ export class PoolOverviewComponent implements OnInit {
 
   private initTable() {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(this.paginationId), '', 'asc'),
     };
     this.pools$ = this.abstractPoolService.pools$.pipe(
       map(

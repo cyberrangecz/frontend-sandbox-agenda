@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
@@ -21,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
  * table with all sandbox definitions and possible actions on sandbox definition.
  */
 export class SandboxDefinitionOverviewComponent implements OnInit {
+  @Input() paginationId = 'kypo-sandbox-definition-overview';
   controls: SentinelControlItem[];
   sandboxDefinitions$: Observable<SentinelTable<SandboxDefinition>>;
   hasError$: Observable<boolean>;
@@ -43,7 +44,7 @@ export class SandboxDefinitionOverviewComponent implements OnInit {
    * @param event to load data
    */
   onLoadEvent(event: TableLoadEvent): void {
-    this.paginationService.setPagination(event.pagination.size);
+    this.paginationService.setPagination(this.paginationId, event.pagination.size);
     this.sandboxDefinitionService.getAll(event.pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
@@ -67,7 +68,7 @@ export class SandboxDefinitionOverviewComponent implements OnInit {
       map((resource) => new SandboxDefinitionTable(resource, this.sandboxDefinitionService))
     );
     this.lastLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
+      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(this.paginationId), '', 'asc'),
     };
     this.onLoadEvent(this.lastLoadEvent);
     this.hasError$ = this.sandboxDefinitionService.hasError$;
