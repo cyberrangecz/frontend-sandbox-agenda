@@ -46,6 +46,9 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
   private subscription: Subscription;
   private trimSpace = 8;
 
+  readonly DEFAULT_SORT_COLUMN = 'id';
+  readonly DEFAULT_SORT_DIRECTION = 'asc';
+
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
     private paginationService: PaginationService,
@@ -101,7 +104,12 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
 
   private initTables() {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(this.paginationId), '', 'asc'),
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(this.paginationId),
+        this.DEFAULT_SORT_COLUMN,
+        this.DEFAULT_SORT_DIRECTION
+      ),
     };
     this.activeRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.pool = data[POOL_DATA_ATTRIBUTE_NAME];
