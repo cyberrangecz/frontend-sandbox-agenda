@@ -18,8 +18,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class ResourcesPageComponent implements OnInit {
   @Input() paginationId = 'kypo-resources-page';
-  readonly INIT_SORT_NAME = 'name';
-  readonly INIT_SORT_DIR = 'asc';
 
   images$: Observable<SentinelTable<VirtualImage>>;
   imagesTableHasError$: Observable<boolean>;
@@ -31,6 +29,9 @@ export class ResourcesPageComponent implements OnInit {
   destroyRef = inject(DestroyRef);
 
   private lastFilter: string;
+
+  readonly DEFAULT_SORT_COLUMN = 'name';
+  readonly DEFAULT_SORT_DIRECTION = 'asc';
 
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
@@ -88,8 +89,8 @@ export class ResourcesPageComponent implements OnInit {
     return new OffsetPaginationEvent(
       0,
       this.paginationService.getPagination(this.paginationId),
-      this.INIT_SORT_NAME,
-      this.INIT_SORT_DIR
+      this.DEFAULT_SORT_COLUMN,
+      this.DEFAULT_SORT_DIRECTION
     );
   }
 }

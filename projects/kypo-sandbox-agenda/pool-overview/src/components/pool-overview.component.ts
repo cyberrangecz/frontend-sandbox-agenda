@@ -30,6 +30,9 @@ export class PoolOverviewComponent implements OnInit {
   controls: SentinelControlItem[] = [];
   destroyRef = inject(DestroyRef);
 
+  readonly DEFAULT_SORT_COLUMN = 'id';
+  readonly DEFAULT_SORT_DIRECTION = 'asc';
+
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
     private abstractPoolService: AbstractPoolService,
@@ -69,7 +72,12 @@ export class PoolOverviewComponent implements OnInit {
 
   private initTable() {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(this.paginationId), '', 'asc'),
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(this.paginationId),
+        this.DEFAULT_SORT_COLUMN,
+        this.DEFAULT_SORT_DIRECTION
+      ),
     };
     this.pools$ = this.abstractPoolService.pools$.pipe(
       map(
