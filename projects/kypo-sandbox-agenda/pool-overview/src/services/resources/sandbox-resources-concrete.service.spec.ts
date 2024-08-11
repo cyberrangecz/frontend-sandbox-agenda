@@ -6,7 +6,7 @@ import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
 import { ResourcesApi } from '@muni-kypo-crp/sandbox-api';
 import { Resources } from '@muni-kypo-crp/sandbox-model';
 import { SandboxResourcesConcreteService } from './sandbox-resources-concrete.service';
-import { createErrorHandlerSpy, createResourcesApiSpy } from '../../../internal/src/testing/testing-commons.spec';
+import { createErrorHandlerSpy, createResourcesApiSpy } from '../../../../internal/src/testing/testing-commons.spec';
 
 describe('SandboxResourcesConcreteService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;

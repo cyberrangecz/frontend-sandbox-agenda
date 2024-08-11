@@ -13,4 +13,4 @@ export const SANDBOX_POOL_ID_SELECTOR = 'poolId';
 export const SANDBOX_DEFINITION_ID_SELECTOR = 'sandboxDefinitionId';
 export const SANDBOX_POOL_NEW_PATH = 'create';
 export const SANDBOX_POOL_EDIT_PATH = 'edit';
-export const SANDBOX_RESOURCES_PATH = 'resources';
+export const SANDBOX_IMAGES_PATH = 'images';

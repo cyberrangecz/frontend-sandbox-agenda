@@ -1,29 +1,27 @@
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { map } from 'rxjs/operators';
-import { Resources, VirtualImage } from '@muni-kypo-crp/sandbox-model';
+import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
 import { OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SandboxResourcesService } from '../services/sandbox-resources.service';
 import { SentinelTable, TableLoadEvent } from '@sentinel/components/table';
 import { VMImagesService } from '../services/vm-images.service';
 import { VirtualImagesTable } from '../models/virtual-images-table';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'kypo-resources-page',
-  templateUrl: './resources-page.component.html',
-  styleUrls: ['./resources-page.component.css'],
+  selector: 'kypo-images-page',
+  templateUrl: './images-page.component.html',
+  styleUrls: ['./images-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResourcesPageComponent implements OnInit {
+export class ImagesPageComponent implements OnInit {
   @Input() paginationId = 'kypo-resources-page';
 
   images$: Observable<SentinelTable<VirtualImage>>;
   imagesTableHasError$: Observable<boolean>;
   isLoadingImages$: Observable<boolean>;
 
-  resources$: Observable<Resources>;
   guiAccess = false;
   kypoImages = false;
   destroyRef = inject(DestroyRef);
@@ -33,17 +31,11 @@ export class ResourcesPageComponent implements OnInit {
   readonly DEFAULT_SORT_COLUMN = 'name';
   readonly DEFAULT_SORT_DIRECTION = 'asc';
 
-  constructor(
-    private sandboxResourcesService: SandboxResourcesService,
-    private vmImagesService: VMImagesService,
-    private paginationService: PaginationService
-  ) {
-    this.resources$ = this.sandboxResourcesService.resources$;
+  constructor(private vmImagesService: VMImagesService, private paginationService: PaginationService) {
     this.isLoadingImages$ = vmImagesService.isLoading$;
   }
 
   ngOnInit(): void {
-    this.sandboxResourcesService.getResources().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     this.initTable();
   }
 
