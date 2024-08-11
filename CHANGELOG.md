@@ -1,3 +1,20 @@
+### 16.2.0 Changes resources tab to images and remove resources overview from it.
+* ee1be55 -- [CI/CD] Update packages.json version based on GitLab tag.
+* cbdb0d1 -- Merge branch 'develop' into 'master'
+*   5c6cb1f -- Merge branch '131-update-resources-tab' into 'develop'
+|\  
+| * ac97a21 -- Resolve "Update resources tab"
+|/  
+*   b65c380 -- Merge branch '135-fix-default-and-initial-sorting-direction' into 'develop'
+|\  
+| * d777129 -- Update VERSION.txt
+| * 310d0da -- Ensure default sort direction and column is set
+|/  
+* c7bde4c -- Merge branch '132-implement-per-id-pagination-size' into 'develop'
+* bc234a2 -- Update VERSION.txt
+* 7a83d9a -- Update VERSION.txt
+* a09695f -- Add per id pagination to components
+* 36a5143 -- Rework pagination.service.ts
 ### 16.1.1 Update all components to work without a deprecated Sentinel directive.
 * c45a50c -- [CI/CD] Update packages.json version based on GitLab tag.
 * ee79266 -- Merge branch '130-remove-all-deprecated-sentinel-base-dependencies' into 'master'
