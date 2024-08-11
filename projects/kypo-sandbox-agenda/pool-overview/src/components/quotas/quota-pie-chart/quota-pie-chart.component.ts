@@ -1,4 +1,4 @@
-import { ChartData } from './../../../models/chart-data';
+import { ChartData } from '../../../model/chart-data';
 import { Component, ViewChild, ElementRef, AfterViewInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import * as d3 from 'd3';
 import { Quota } from '@muni-kypo-crp/sandbox-model';

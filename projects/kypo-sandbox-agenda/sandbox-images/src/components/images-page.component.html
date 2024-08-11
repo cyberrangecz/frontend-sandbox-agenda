@@ -1,8 +1,6 @@
 <div class="content">
-  <kypo-quotas [resources]="resources$ | async"></kypo-quotas>
 
   <div>
-    <h1>Images Overview</h1>
     <div class="checkbox-images">
       <mat-checkbox (change)="kypoImagesToggled()">Only KYPO images</mat-checkbox>
       <mat-checkbox (change)="guiAccessToggled()">Only GUI access</mat-checkbox>

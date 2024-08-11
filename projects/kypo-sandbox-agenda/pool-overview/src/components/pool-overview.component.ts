@@ -10,8 +10,8 @@ import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
-import { SandboxResourcesService } from '@muni-kypo-crp/sandbox-agenda/sandbox-resources';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SandboxResourcesService } from '../services/resources/sandbox-resources.service';
 
 /**
  * Smart component of sandbox pool overview page
