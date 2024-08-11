@@ -5,6 +5,8 @@
                   [hasError]="instancesTableHasError$ | async"
                   [titlecasedActions]=false
                   [displayedActionsCount]="4"
+                  [defaultSortDirection]="DEFAULT_SORT_DIRECTION"
+                  [defaultSortName]="DEFAULT_SORT_COLUMN"
                   elevation="0"
                   (rowAction)="onTableAction($event)"
                   (tableLoad)="onLoadEvent($event)"

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
@@ -10,8 +10,8 @@ import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
-import { SandboxResourcesService } from '@muni-kypo-crp/sandbox-agenda/sandbox-resources';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SandboxResourcesService } from '../services/resources/sandbox-resources.service';
 
 /**
  * Smart component of sandbox pool overview page
@@ -23,11 +23,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PoolOverviewComponent implements OnInit {
+  @Input() paginationId = 'kypo-sandbox-pool-overview';
   pools$: Observable<SentinelTable<Pool>>;
   hasError$: Observable<boolean>;
   resources$: Observable<Resources>;
   controls: SentinelControlItem[] = [];
   destroyRef = inject(DestroyRef);
+
+  readonly DEFAULT_SORT_COLUMN = 'id';
+  readonly DEFAULT_SORT_DIRECTION = 'asc';
 
   constructor(
     private sandboxResourcesService: SandboxResourcesService,
@@ -50,7 +54,7 @@ export class PoolOverviewComponent implements OnInit {
    * @param loadEvent load data event from table component
    */
   onLoadEvent(loadEvent: TableLoadEvent): void {
-    this.paginationService.setPagination(loadEvent.pagination.size);
+    this.paginationService.setPagination(this.paginationId, loadEvent.pagination.size);
     this.abstractPoolService.getAll(loadEvent.pagination).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
@@ -68,7 +72,12 @@ export class PoolOverviewComponent implements OnInit {
 
   private initTable() {
     const initialLoadEvent: TableLoadEvent = {
-      pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(), '', 'asc'),
+      pagination: new OffsetPaginationEvent(
+        0,
+        this.paginationService.getPagination(this.paginationId),
+        this.DEFAULT_SORT_COLUMN,
+        this.DEFAULT_SORT_DIRECTION
+      ),
     };
     this.pools$ = this.abstractPoolService.pools$.pipe(
       map(

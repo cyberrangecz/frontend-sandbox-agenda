@@ -31,14 +31,12 @@ const routes: Routes = [
     },
   },
   {
-    path: 'resources',
+    path: 'images',
     loadChildren: () =>
-      import('./lazy-loaded-modules/sandbox-resources/sandbox-resources.module').then(
-        (m) => m.SandboxResourcesOverviewModule
-      ),
+      import('./lazy-loaded-modules/sandbox-images/sandbox-images.module').then((m) => m.SandboxImagesOverviewModule),
     data: {
-      breadcrumb: 'Resources',
-      title: 'Resources Overview',
+      breadcrumb: 'Images',
+      title: 'Images Overview',
     },
   },
   {
