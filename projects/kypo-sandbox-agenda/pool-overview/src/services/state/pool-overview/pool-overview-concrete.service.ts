@@ -14,6 +14,7 @@ import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
+import { TrainingInstanceApi } from '@muni-kypo-crp/training-api';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -24,6 +25,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   private lastPagination: OffsetPaginationEvent;
 
   constructor(
+    private trainingInstanceApi: TrainingInstanceApi,
     private poolApi: PoolApi,
     private dialog: MatDialog,
     private context: SandboxAgendaContext,
