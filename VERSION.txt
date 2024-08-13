@@ -1,4 +1,4 @@
-16.2.5 Revert pool locking changes.
+16.2.6 Revert pool locking changes.
 16.2.4 Fix incorrect training api provisioning.
 16.2.3 Revert package-lock version.
 16.2.2 Revert gitlab-ci change.
