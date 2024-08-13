@@ -8,21 +8,16 @@ import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { PoolOverviewConcreteService } from './pool-overview-concrete.service';
 import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
 import {
-  createAdaptiveInstanceApiSpy,
   createContextSpy,
   createErrorHandlerSpy,
   createMatDialogSpy,
   createNavigatorSpy,
   createNotificationSpy,
   createPoolApiSpy,
-  createTrainingInstanceApiSpy,
 } from '../../../../../internal/src/testing/testing-commons.spec';
-import { AdaptiveInstanceApi, TrainingInstanceApi } from '@muni-kypo-crp/training-api';
 
 describe('PoolOverviewConcreteService', () => {
   let poolApiSpy: jasmine.SpyObj<PoolApi>;
-  let trainingInstanceApiSpy: jasmine.SpyObj<TrainingInstanceApi>;
-  let adaptiveInstanceApiSpy: jasmine.SpyObj<AdaptiveInstanceApi>;
   let dialogSpy: jasmine.SpyObj<MatDialog>;
   let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
   let navigatorSpy: jasmine.SpyObj<SandboxNavigator>;
@@ -32,8 +27,6 @@ describe('PoolOverviewConcreteService', () => {
 
   beforeEach(async(() => {
     poolApiSpy = createPoolApiSpy();
-    trainingInstanceApiSpy = createTrainingInstanceApiSpy();
-    adaptiveInstanceApiSpy = createAdaptiveInstanceApiSpy();
     dialogSpy = createMatDialogSpy();
     contextSpy = createContextSpy();
     navigatorSpy = createNavigatorSpy();
@@ -49,8 +42,6 @@ describe('PoolOverviewConcreteService', () => {
         { provide: SandboxAgendaContext, useValue: contextSpy },
         { provide: SandboxNavigator, useValue: navigatorSpy },
         { provide: SandboxNotificationService, useValue: notificationSpy },
-        { provide: TrainingInstanceApi, useValue: trainingInstanceApiSpy },
-        { provide: AdaptiveInstanceApi, useValue: adaptiveInstanceApiSpy },
         { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
       ],
     });
