@@ -112,7 +112,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return this.trainingInstanceApi.getByPoolId(pool.id).pipe(
       switchMap((trainingInstance) => {
         if (trainingInstance) {
-          return this.poolApi.lockPool(pool.id).pipe(
+          return this.poolApi.lockPool(pool.id, trainingInstance.accessToken).pipe(
             tap(
               () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
               (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
