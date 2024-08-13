@@ -9,7 +9,7 @@ import {
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, from, Observable } from 'rxjs';
+import { EMPTY, from, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
@@ -109,11 +109,23 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   }
 
   lock(pool: Pool): Observable<any> {
-    return this.poolApi.lockPool(pool.id).pipe(
-      tap(
-        () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
-        (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
-      )
+    return this.trainingInstanceApi.getByPoolId(pool.id).pipe(
+      switchMap((trainingInstance) => {
+        if (trainingInstance) {
+          return this.poolApi.lockPool(pool.id).pipe(
+            tap(
+              () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
+              (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
+            )
+          );
+        } else {
+          return of(new Error(`No training instance found for pool ${pool.id}`));
+        }
+      }),
+      catchError((err) => {
+        this.errorHandler.emit(err, `Failed to lock pool ${pool.id}`);
+        return of(err);
+      })
     );
   }
 
