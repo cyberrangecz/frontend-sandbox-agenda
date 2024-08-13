@@ -10,7 +10,7 @@ import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagin
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
 import { EMPTY, from, Observable, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
@@ -123,7 +123,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         }
       }),
       catchError((err) => {
-        this.errorHandler.emit(err, `Failed to lock pool ${pool.id}`);
+        this.errorHandler.emit(err, `No training instance for pool ${pool.id}`);
         return of(err);
       })
     );
@@ -200,6 +200,19 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         () => this.notificationService.emit('success', `Pool comment for ${pool.id} was updated`),
         (err) => this.errorHandler.emit(err, 'Editing pool comment')
       )
+    );
+  }
+
+  /**
+   * Checks whether pool has a training instance associated
+   * @param poolId id of the pool
+   * @returns observable of boolean representing whether pool has training instances
+   */
+  hasTrainingInstances(poolId: number): Observable<boolean> {
+    return this.trainingInstanceApi.getByPoolId(poolId).pipe(
+      //handle error without throwing, and return false
+      map((trainingInstances) => trainingInstances !== null),
+      catchError(() => of(false))
     );
   }
 }

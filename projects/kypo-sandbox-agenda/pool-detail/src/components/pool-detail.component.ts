@@ -19,6 +19,7 @@ import { PoolDetailTable } from '../model/pool-detail-table';
 import { AbstractSandbox } from '../model/abstract-sandbox';
 import { SelectedStage } from '../model/selected-stage';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AbstractPoolService } from '../../../pool-overview/src/services/abstract-pool/abstract-sandbox/abstract-pool.service';
 
 /**
  * Smart component of pool detail page
@@ -51,6 +52,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
 
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
+    private poolService: AbstractPoolService,
     private paginationService: PaginationService,
     private navigator: SandboxNavigator,
     private activeRoute: ActivatedRoute
@@ -122,6 +124,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         return new PoolDetailTable(
           new PaginatedResource<AbstractSandbox>(data, resource.pagination),
           this.sandboxInstanceService,
+          this.poolService,
           this.navigator
         );
       })
