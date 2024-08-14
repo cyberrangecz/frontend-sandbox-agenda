@@ -9,12 +9,12 @@ import {
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, from, Observable, of } from 'rxjs';
+import { EMPTY, forkJoin, from, mergeAll, Observable, of, switchAll } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
-import { TrainingInstanceApi } from '@muni-kypo-crp/training-api';
+import { AdaptiveInstanceApi, TrainingInstanceApi } from '@muni-kypo-crp/training-api';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -26,6 +26,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
 
   constructor(
     private trainingInstanceApi: TrainingInstanceApi,
+    private adaptiveInstanceApi: AdaptiveInstanceApi,
     private poolApi: PoolApi,
     private dialog: MatDialog,
     private context: SandboxAgendaContext,
@@ -118,7 +119,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   }
 
   lock(pool: Pool): Observable<any> {
-    return this.trainingInstanceApi.getTrainingAccessTokenByPoolId(pool.id).pipe(
+    return this.getAccessToken(pool.id).pipe(
       switchMap((token) => {
         if (token) {
           return this.poolApi.lockPool(pool.id, token).pipe(
@@ -167,16 +168,21 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
 
   /**
    * Gets access token for a pool already associated with a training instance
+   * by checking both linear and adaptive instances
    * @param poolId id of the pool
    * @returns observable of access token or null if no training instance is associated
    */
   private getAccessToken(poolId: number): Observable<string | null> {
-    return this.trainingInstanceApi.getTrainingAccessTokenByPoolId(poolId).pipe(
-      map((accessToken) => accessToken || null),
+    return forkJoin({
+      linear: this.trainingInstanceApi.getTrainingAccessTokenByPoolId(poolId),
+      adaptive: this.adaptiveInstanceApi.getTrainingAccessTokenByPoolId(poolId),
+    }).pipe(
+      map((result) => {
+        return result.linear || result.adaptive || null;
+      }),
       catchError((err) => {
-        this.errorHandler.emit(err, `Getting access token for pool ${poolId}`);
-        console.error(err);
-        return of(err);
+        this.errorHandler.emit(err, `Fetching training instance for pool ${poolId}`);
+        return EMPTY;
       })
     );
   }
