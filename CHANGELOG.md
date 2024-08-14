@@ -1,3 +1,34 @@
+### 16.2.3 Revert package-lock version.
+* 8c2b018 -- [CI/CD] Update packages.json version based on GitLab tag.
+*   046e0bc -- Merge branch 'develop' into 'master'
+|\  
+| * 810b35d -- add sentinel layout
+| * ea6dca3 -- revert package-lock version
+| * af09901 -- revert package-lock
+* | 4af768d -- Merge branch 'develop' into 'master'
+|\| 
+| * 57085c9 -- update version
+| * c826dbe -- revert gitlab-ci change
+* | ff89e4d -- Merge branch 'develop' into 'master'
+|/  
+* 8c7cb71 -- Merge branch '136-update-pool-api-calls' into 'develop'
+* 3cff929 -- Add duplicate service for pool overview to pool detail
+* f656b2e -- Fix tests
+* 09ab3ea -- Update prod environment
+* 0b89fa2 -- Regenerate package-lock.json
+* db74c80 -- Add legacy peer deps switch to pipeline
+* 1bbecf0 -- Remove duplicate dependency
+* 4fa681b -- Update config
+* daa1383 -- Update dependencies
+* 5f2fce4 -- Pull access token from adaptive api as well
+* c40b8ce -- Fix missing training-model package-lock
+* d2c57bb -- Update VERSION.txt
+* bc13b59 -- Fix throwing not found error when checking whether can lock
+* 3ea1709 -- Add disabling lock button
+* 543eebd -- Implement new api
+* 2f9b586 -- Add training model
+* 575ea82 -- add training api call to fetch training instance by poolId
+* 956f733 -- Add training instance api do sandbox agenda
 ### 16.2.0 Changes resources tab to images and remove resources overview from it.
 * ee1be55 -- [CI/CD] Update packages.json version based on GitLab tag.
 * cbdb0d1 -- Merge branch 'develop' into 'master'
