@@ -83,7 +83,12 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
     return this.poolOverviewService.update(pool).pipe(switchMap(() => this.getAll(this.lastPagination)));
   }
 
+  /**
+   * Checks whether pool has a training instance associated
+   * @param poolId id of the pool
+   * @returns observable of boolean representing whether pool has training instances
+   */
   hasTrainingInstances(poolId: number): Observable<boolean> {
-    return this.poolOverviewService.hasTrainingInstances(poolId);
+    return this.poolOverviewService.hasTrainingInstance(poolId);
   }
 }

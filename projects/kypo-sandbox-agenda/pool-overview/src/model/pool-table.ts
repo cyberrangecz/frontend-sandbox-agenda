@@ -132,7 +132,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
 
   private static createLockAction(
     pool: Pool,
-    hasInstancesObservable: Observable<boolean>,
+    hasInstanceObservable: Observable<boolean>,
     service: AbstractPoolService
   ): RowAction {
     if (pool.isLocked()) {
@@ -152,7 +152,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         'lock',
         'primary',
         'Lock pool',
-        hasInstancesObservable.pipe(map((hasInstances) => !hasInstances)),
+        hasInstanceObservable.pipe(map((hasInstances) => !hasInstances)),
         defer(() => service.lock(pool))
       );
     }

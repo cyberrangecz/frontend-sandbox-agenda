@@ -108,11 +108,20 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return from(this.router.navigate([this.navigator.toUpdatePool(pool.id)]));
   }
 
+  /**
+   * Checks whether pool has a training instance associated
+   * @param poolId id of the pool
+   * @returns observable of boolean representing whether pool has a training instance associated
+   */
+  hasTrainingInstance(poolId: number): Observable<boolean> {
+    return this.getAccessToken(poolId).pipe(map((accessToken) => !!accessToken));
+  }
+
   lock(pool: Pool): Observable<any> {
-    return this.trainingInstanceApi.getByPoolId(pool.id).pipe(
-      switchMap((trainingInstance) => {
-        if (trainingInstance) {
-          return this.poolApi.lockPool(pool.id, trainingInstance.accessToken).pipe(
+    return this.trainingInstanceApi.getTrainingAccessTokenByPoolId(pool.id).pipe(
+      switchMap((token) => {
+        if (token) {
+          return this.poolApi.lockPool(pool.id, token).pipe(
             tap(
               () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
               (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
@@ -123,7 +132,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         }
       }),
       catchError((err) => {
-        this.errorHandler.emit(err, `No training instance for pool ${pool.id}`);
+        this.errorHandler.emit(err, `Failed to fetch associated training instance details for pool ${pool.id}`);
         return of(err);
       })
     );
@@ -154,6 +163,22 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       ),
     });
     return dialogRef.afterClosed();
+  }
+
+  /**
+   * Gets access token for a pool already associated with a training instance
+   * @param poolId id of the pool
+   * @returns observable of access token or null if no training instance is associated
+   */
+  private getAccessToken(poolId: number): Observable<string | null> {
+    return this.trainingInstanceApi.getTrainingAccessTokenByPoolId(poolId).pipe(
+      map((accessToken) => accessToken || null),
+      catchError((err) => {
+        this.errorHandler.emit(err, `Getting access token for pool ${poolId}`);
+        console.error(err);
+        return of(err);
+      })
+    );
   }
 
   private displayDeleteDialog(pool: Pool, force: boolean): Observable<SentinelDialogResultEnum> {
@@ -200,19 +225,6 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         () => this.notificationService.emit('success', `Pool comment for ${pool.id} was updated`),
         (err) => this.errorHandler.emit(err, 'Editing pool comment')
       )
-    );
-  }
-
-  /**
-   * Checks whether pool has a training instance associated
-   * @param poolId id of the pool
-   * @returns observable of boolean representing whether pool has training instances
-   */
-  hasTrainingInstances(poolId: number): Observable<boolean> {
-    return this.trainingInstanceApi.getByPoolId(poolId).pipe(
-      //handle error without throwing, and return false
-      map((trainingInstances) => trainingInstances !== null),
-      catchError(() => of(false))
     );
   }
 }

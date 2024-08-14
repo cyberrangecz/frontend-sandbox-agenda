@@ -105,7 +105,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     locked: boolean,
     allocationFailed: boolean,
     stateChanging: boolean,
-    hasInstancesObservable: Observable<boolean>,
+    hasInstanceObservable: Observable<boolean>,
     service: SandboxInstanceService
   ): RowAction {
     if (locked) {
@@ -125,9 +125,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'lock',
         'primary',
         'Lock sandbox instance',
-        hasInstancesObservable.pipe(
-          map((hasInstances) => !hasInstances || locked || stateChanging || allocationFailed)
-        ),
+        hasInstanceObservable.pipe(map((hasInstances) => !hasInstances || locked || stateChanging || allocationFailed)),
         defer(() => service.lock(allocationUnitId))
       );
     }
