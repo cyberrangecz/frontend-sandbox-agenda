@@ -9,7 +9,7 @@ import { CleanupRequestsService } from '../services/state/request/cleanup/cleanu
 import { AbstractSandbox } from './abstract-sandbox';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 import { map } from 'rxjs/operators';
-import { AbstractPoolService } from '../../../pool-overview/src/services/abstract-pool/abstract-sandbox/abstract-pool.service';
+import { PoolDetailService } from '../services/pool/pool-detail.service';
 
 /**
  * @dynamic
@@ -18,7 +18,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   constructor(
     resource: PaginatedResource<AbstractSandbox>,
     sandboxInstanceService: SandboxInstanceService,
-    poolService: AbstractPoolService,
+    poolService: PoolDetailService,
     navigator: SandboxNavigator
   ) {
     const columns = [
@@ -40,7 +40,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   private static createRow(
     data: AbstractSandbox,
     sandboxInstanceService: SandboxInstanceService,
-    poolService: AbstractPoolService,
+    poolService: PoolDetailService,
     navigator: SandboxNavigator
   ): Row<PoolDetailRowAdapter> {
     const rowAdapter = new PoolDetailRowAdapter();
@@ -61,7 +61,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   private static createActions(
     data: AbstractSandbox,
     sandboxInstanceService: SandboxInstanceService,
-    poolService: AbstractPoolService
+    poolService: PoolDetailService
   ): RowAction[] {
     const actions = [
       new DeleteAction(
@@ -92,7 +92,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         data.locked,
         data.allocationFailed(),
         data.cleanupRunning() || data.allocationRunning(),
-        poolService.hasTrainingInstances(data.poolId),
+        poolService.hasTrainingInstance(data.poolId),
         sandboxInstanceService
       ),
     ];
