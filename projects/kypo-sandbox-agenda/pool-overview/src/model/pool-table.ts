@@ -2,11 +2,11 @@ import { PaginatedResource } from '@sentinel/common/pagination';
 import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
 import {
   Column,
-  Row,
-  RowAction,
   DeleteAction,
   EditAction,
   ExpandableSentinelTable,
+  Row,
+  RowAction,
   RowExpand,
 } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
@@ -15,6 +15,7 @@ import { PoolRowAdapter } from './pool-row-adapter';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { PoolExpandDetailComponent } from '../components/pool-expand-detail/pool-expand-detail.component';
+import { map } from 'rxjs/operators';
 
 /**
  * Helper class transforming paginated resource to class for common table component
@@ -109,7 +110,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         of(pool.lockState == 'locked'),
         defer(() => abstractPoolService.delete(pool))
       ),
-      this.createLockAction(pool, abstractPoolService),
+      this.createLockAction(pool, abstractPoolService.hasTrainingInstances(pool.id), abstractPoolService),
       new RowAction(
         'download_man_ssh_configs',
         'Get management SSH Configs',
@@ -129,7 +130,11 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
     } else return 'Allocate a specific number of sandboxes';
   }
 
-  private static createLockAction(pool: Pool, service: AbstractPoolService): RowAction {
+  private static createLockAction(
+    pool: Pool,
+    hasInstanceObservable: Observable<boolean>,
+    service: AbstractPoolService
+  ): RowAction {
     if (pool.isLocked()) {
       return new RowAction(
         'unlock',
@@ -147,7 +152,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         'lock',
         'primary',
         'Lock pool',
-        of(false),
+        hasInstanceObservable.pipe(map((hasInstances) => !hasInstances)),
         defer(() => service.lock(pool))
       );
     }

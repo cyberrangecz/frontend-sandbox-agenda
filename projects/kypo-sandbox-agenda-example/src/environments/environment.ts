@@ -2,10 +2,14 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const baseURL = 'https://localhost:3000/';
+export const baseURL = 'https://localhost:3000';
 export const homeURL = 'https://localhost:4200';
-export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
+export const sandboxesURL = baseURL + '/kypo-sandbox-service/api/v1/';
 export const authUrl = 'https://172.19.0.22';
+
+export const trainingURL = baseURL + '/kypo-rest-training/api/v1/';
+export const adaptiveTrainingURL = baseURL + '/kypo-adaptive-training/api/v1/';
+export const mitreTechniquesURL = baseURL + '/kypo-mitre-technique-service/api/v1/';
 
 export const kypoTopologyConfig = {
   topologyRestUrl: sandboxesURL,
@@ -33,12 +37,17 @@ export const environmentLocal = {
   sandboxApiConfig: {
     sandboxRestBasePath: sandboxesURL,
   },
+  trainingApiConfig: {
+    trainingBasePath: trainingURL,
+    adaptiveBasePath: adaptiveTrainingURL,
+    mitreTechniqueBasePath: mitreTechniquesURL,
+  },
   authConfig: {
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
     interceptorAllowedUrls: [baseURL],
     authorizationStrategyConfig: {
-      authorizationUrl: baseURL + 'kypo-rest-user-and-group/api/v1/users/info',
+      authorizationUrl: baseURL + '/kypo-rest-user-and-group/api/v1/users/info',
     },
     providers: [
       {

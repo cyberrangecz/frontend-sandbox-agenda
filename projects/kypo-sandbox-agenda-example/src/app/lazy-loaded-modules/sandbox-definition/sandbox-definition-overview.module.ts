@@ -4,11 +4,13 @@ import { SandboxDefinitionOverviewComponentsModule } from '@muni-kypo-crp/sandbo
 import { environmentLocal } from '../../../environments/environment.local';
 import { SharedProvidersModule } from '../shared-providers.module';
 import { SandboxDefinitionOverviewRoutingModule } from './sandbox-definition-overview-routing.module';
+import { KypoTrainingApiModule } from '@muni-kypo-crp/training-api';
 
 @NgModule({
   imports: [
     SharedProvidersModule,
     KypoSandboxApiModule.forRoot(environmentLocal.sandboxApiConfig),
+    KypoTrainingApiModule.forRoot(environmentLocal.trainingApiConfig),
     SandboxDefinitionOverviewComponentsModule.forRoot(environmentLocal.sandboxAgendaConfig),
     SandboxDefinitionOverviewRoutingModule,
   ],

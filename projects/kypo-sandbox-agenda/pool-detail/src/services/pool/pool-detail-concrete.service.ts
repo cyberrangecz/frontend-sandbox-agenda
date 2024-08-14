@@ -9,19 +9,19 @@ import {
 import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, forkJoin, from, mergeAll, Observable, of, switchAll } from 'rxjs';
+import { EMPTY, forkJoin, from, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { PoolOverviewService } from './pool-overview.service';
 import { AdaptiveInstanceApi, TrainingInstanceApi } from '@muni-kypo-crp/training-api';
+import { PoolDetailService } from './pool-detail.service';
 
 /**
  * Basic implementation of a layer between a component and an API service.
  * Can manually get pools and perform various operations to modify them.
  */
 @Injectable()
-export class PoolOverviewConcreteService extends PoolOverviewService {
+export class PoolDetailConcreteService extends PoolDetailService {
   private lastPagination: OffsetPaginationEvent;
 
   constructor(

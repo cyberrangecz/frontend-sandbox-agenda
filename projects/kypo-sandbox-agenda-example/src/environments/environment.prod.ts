@@ -3,11 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 // Server url
-export const baseURL = 'https://172.19.0.22/';
+export const baseURL = 'https://172.19.0.22';
 // Frontend url
 export const homeURL = 'https://localhost:4200';
-export const sandboxesURL = baseURL + 'kypo-sandbox-service/api/v1/';
-export const userAngGroupURL = baseURL + 'kypo-rest-user-and-group/api/v1/';
+export const sandboxesURL = baseURL + '/kypo-sandbox-service/api/v1/';
+export const userAngGroupURL = baseURL + '/kypo-rest-user-and-group/api/v1/';
+
+export const trainingURL = baseURL + '/kypo-rest-training/api/v1/';
+export const adaptiveTrainingURL = baseURL + '/kypo-adaptive-training/api/v1/';
+export const mitreTechniquesURL = baseURL + '/kypo-mitre-technique-service/api/v1/';
 
 export const kypoTopologyConfig = {
   topologyRestUrl: sandboxesURL,
@@ -34,6 +38,11 @@ export const environment = {
   },
   sandboxApiConfig: {
     sandboxRestBasePath: sandboxesURL,
+  },
+  trainingApiConfig: {
+    trainingBasePath: trainingURL,
+    adaptiveBasePath: adaptiveTrainingURL,
+    mitreTechniqueBasePath: mitreTechniquesURL,
   },
   authConfig: {
     maxRetryAttempts: 3, // How many attempts to try to get user info from user and group service before emitting error

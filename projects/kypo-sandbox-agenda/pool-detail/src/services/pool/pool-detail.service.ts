@@ -7,8 +7,10 @@ import { Observable } from 'rxjs';
  * A layer between a component and an API service. Implement a concrete service by extending this class.
  * Provide a concrete class in Angular Module. For more info see https://angular.io/guide/dependency-injection-providers.
  * You can use get methods to get paginated pools and other operations to modify data.
+ *
+ * This is a duplicate service of pool-overview
  */
-export abstract class PoolOverviewService extends OffsetPaginatedElementsService<Pool> {
+export abstract class PoolDetailService extends OffsetPaginatedElementsService<Pool> {
   protected constructor(pageSize: number) {
     super(pageSize);
   }
