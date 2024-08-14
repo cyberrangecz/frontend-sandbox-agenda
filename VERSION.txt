@@ -1,3 +1,4 @@
+16.2.3 Revert package-lock version.
 16.2.2 Revert gitlab-ci change.
 16.2.1 Implement new endpoints and improve pool locking.
 16.2.0 Changes resources tab to images and remove resources overview from it.
