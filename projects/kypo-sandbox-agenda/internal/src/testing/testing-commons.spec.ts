@@ -20,6 +20,7 @@ import { SandboxNotificationService } from '../../../src/sandbox-notification.se
 import { SandboxAgendaContext } from '../services/sandox-agenda-context.service';
 import { ResourcePollingService } from '../services/resource-polling.service';
 import { SandboxAllocationUnitsService } from '../../../pool-detail/src/services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
+import { AdaptiveInstanceApi, TrainingInstanceApi } from '@muni-kypo-crp/training-api';
 
 export const SENTINEL_TABLE_COMPONENT_SELECTOR = 'sentinel-table';
 export const SENTINEL_CONTROLS_COMPONENT_SELECTOR = 'sentinel-controls';
@@ -39,6 +40,25 @@ export function createPoolApiSpy(): jasmine.SpyObj<PoolApi> {
     'getManagementSshAccess',
     'getPools',
     'getPoolsSandboxes',
+  ]);
+}
+
+export function createTrainingInstanceApiSpy(): jasmine.SpyObj<TrainingInstanceApi> {
+  return jasmine.createSpyObj('TrainingInstanceApi', [
+    'getTrainingAccessTokenByPoolId',
+    'getAssociatedTrainingRuns',
+    'assignPool',
+    'unassignPool',
+    'exportScore',
+  ]);
+}
+
+export function createAdaptiveInstanceApiSpy(): jasmine.SpyObj<AdaptiveInstanceApi> {
+  return jasmine.createSpyObj('AdaptiveInstanceApi', [
+    'getTrainingAccessTokenByPoolId',
+    'getAssociatedTrainingRuns',
+    'assignPool',
+    'unassignPool',
   ]);
 }
 
