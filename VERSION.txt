@@ -1,3 +1,4 @@
+16.2.4 Fix incorrect training api provisioning.
 16.2.3 Revert package-lock version.
 16.2.2 Revert gitlab-ci change.
 16.2.1 Implement new endpoints and improve pool locking.
