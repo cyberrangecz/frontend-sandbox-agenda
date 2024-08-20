@@ -20,6 +20,7 @@ import { AbstractSandbox } from '../model/abstract-sandbox';
 import { SelectedStage } from '../model/selected-stage';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PoolDetailService } from '../services/pool/pool-detail.service';
+import { PoolDetailConcreteService } from '../services/pool/pool-detail-concrete.service';
 
 /**
  * Smart component of pool detail page
@@ -34,6 +35,7 @@ import { PoolDetailService } from '../services/pool/pool-detail.service';
     { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
     { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
+    { provide: PoolDetailService, useClass: PoolDetailConcreteService },
   ],
 })
 export class PoolDetailComponent implements OnInit, AfterViewInit {
