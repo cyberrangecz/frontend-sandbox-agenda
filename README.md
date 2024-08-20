@@ -28,16 +28,16 @@ To use the library you need to have installed:
 To use the sandbox agenda in your Angular application follow these steps:
 
 1. Run `npm install @muni-kypo-crp/sandbox-agenda`
-1. Install all peer dependencies
-1. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
+2. Install all peer dependencies
+3. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
     +   pollingPeriod
     +   defaultPaginationSize
     +   kypoTopologyConfig
-1. Import specific modules containing components (for example `SandboxDefinitionOverviewComponentsModule`) and provide config through `.forRoot()` method.
-1. If you do not override the services, you will also need to provide API service. See [kypo-sandbox-api library](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-sandbox-api).
-1. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
-1. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
-1. Optionally, cou can override and provide own implementation of services
+4. Import specific modules containing components (for example `SandboxDefinitionOverviewComponentsModule`) and provide config through `.forRoot()` method.
+5. If you do not override the services, you will also need to provide API service. See [kypo-sandbox-api libraries](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-sandbox-api). Additionally, PoolDetailComponentsModule and PoolOverviewComponentsModule also require provision of [kypo-training-api](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/apis/kypo-training-api).
+6. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
+7. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
+8. Optionally, cou can override and provide own implementation of services
 
 For example, you would add `SandboxDefinitionOverviewComponent` like this:
 
@@ -59,7 +59,7 @@ For example, you would add `SandboxDefinitionOverviewComponent` like this:
 export class SandboxDefinitionOverviewModule {}
 ```
 
-1. Create routing module importing the `SandboxDefinitionOverviewModule`
+2. Create routing module importing the `SandboxDefinitionOverviewModule`
 
 ```
 const routes: Routes = [
@@ -75,7 +75,7 @@ const routes: Routes = [
 export class SandboxDefinitionOverviewRoutingModule {}
 ```
 
-1. Lazy load the module in the parent routing module
+3. Lazy load the module in the parent routing module
 
 ```
   {
@@ -87,7 +87,7 @@ export class SandboxDefinitionOverviewRoutingModule {}
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
-To run the example you need to run [KYPO Sandbox service](https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service) or have access to a running instance and provide the URL to the service in when importing API module.
+To run the example you need to run [KYPO Sandbox service](https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service), [KYPO Training service](https://gitlab.ics.muni.cz/muni-kypo-crp/backend-java/kypo-training) and [KYPO Adaptive Training service](https://gitlab.ics.muni.cz/muni-kypo-crp/backend-java/kypo-adaptive-training) or have access to a running instances and provide the URLs to the services when importing API modules.
 
 Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [kypo-trainings](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/kypo-trainings) project and can be run via `npm run api`.
 
