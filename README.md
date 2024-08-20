@@ -37,7 +37,7 @@ To use the sandbox agenda in your Angular application follow these steps:
 5. If you do not override the services, you will also need to provide API service. See [kypo-sandbox-api libraries](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-sandbox-api). Additionally, PoolDetailComponentsModule and PoolOverviewComponentsModule also require provision of [kypo-training-api](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/apis/kypo-training-api).
 6. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
 7. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
-8. Optionally, cou can override and provide own implementation of services
+8. Optionally, you can override and provide own implementation of services.
 
 For example, you would add `SandboxDefinitionOverviewComponent` like this:
 
