@@ -1,3 +1,13 @@
+### 16.2.4 Fix incorrect training api provisioning.
+* fac658a -- [CI/CD] Update packages.json version based on GitLab tag.
+* 0204975 -- Merge branch 'develop' into 'master'
+*   fce2597 -- Merge branch 'fix-training-api-provision' into 'develop'
+|\  
+| * be85944 -- Update VERSION.txt
+| * 40463ad -- Provide training api in correct places
+* 4943755 -- Merge branch 'readme-include-training-api' into 'develop'
+* d6a24bf -- Fix typos
+* 88e6006 -- Update README.md to include dependency on kypo-training-service.
 ### 16.2.3 Revert package-lock version.
 * 8c2b018 -- [CI/CD] Update packages.json version based on GitLab tag.
 *   046e0bc -- Merge branch 'develop' into 'master'
