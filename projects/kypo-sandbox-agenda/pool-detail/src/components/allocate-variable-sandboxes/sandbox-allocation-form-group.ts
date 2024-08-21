@@ -14,7 +14,6 @@ export class SandboxAllocationFormGroup {
   }
 
   createFormValues(): number {
-    const size = this.formGroup.get('allocationSize').value;
-    return size;
+    return this.formGroup.get('allocationSize').value;
   }
 }

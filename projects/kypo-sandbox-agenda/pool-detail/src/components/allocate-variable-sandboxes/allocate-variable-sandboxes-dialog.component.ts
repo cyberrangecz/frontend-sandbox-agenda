@@ -14,7 +14,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AllocateVariableSandboxesDialogComponent implements OnInit {
   sandboxAllocationFormGroup: SandboxAllocationFormGroup;
-  count: number;
   destroyRef = inject(DestroyRef);
 
   constructor(
@@ -40,7 +39,18 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
   }
 
   changeAllocationValue(value: number) {
-    this.allocationSize.setValue(this.allocationSize.value + value);
+    this.allocationSize.setValue(this.correctToBounds(this.allocationSize.value + value));
+  }
+
+  onChange() {
+    const currentValue = this.allocationSize.value;
+    if (!currentValue) {
+      return;
+    }
+    const valueWithinBounds = this.correctToBounds(currentValue);
+    if (currentValue !== valueWithinBounds) {
+      this.allocationSize.setValue(valueWithinBounds);
+    }
   }
 
   /**
@@ -64,4 +74,10 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
     };
     this.dialogRef.close(result);
   }
+
+  private correctToBounds(value: number): number {
+    return Math.min(Math.max(value, 1), this.data);
+  }
+
+  protected readonly event = event;
 }
