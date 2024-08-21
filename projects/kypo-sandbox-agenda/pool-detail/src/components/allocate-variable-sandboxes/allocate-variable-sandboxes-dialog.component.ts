@@ -29,9 +29,7 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sandboxAllocationFormGroup.formGroup.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((_) => console.log(_));
+    this.sandboxAllocationFormGroup.formGroup.valueChanges.pipe(takeUntilDestroyed(this.destroyRef));
   }
 
   getSliderValue(event) {
