@@ -5,11 +5,15 @@
     <form [formGroup]="sandboxAllocationFormGroup.formGroup">
       <div class="allocate-container">
         <h3>Selected number of sandboxes to allocate:</h3>
-        <mat-form-field appearance="outline" (keydown.enter)="$event.preventDefault()">
+        <mat-form-field class="input-form-field" appearance="outline" (keydown.enter)="$event.preventDefault()">
           <input
             matInput
+            class="no-spin-buttons"
             formControlName="allocationSize"
-            (input)="onChange()"
+            type="number"
+            min="1"
+            max="{{data}}"
+            (input)="onChange($event)"
           />
           <mat-error *ngIf="allocationSize.hasError">
             Invalid allocation size.

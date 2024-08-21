@@ -40,9 +40,9 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
     this.allocationSize.setValue(this.correctToBounds(this.allocationSize.value + value));
   }
 
-  onChange() {
-    const currentValue = this.allocationSize.value;
-    if (!currentValue) {
+  onChange(ev: Event) {
+    const currentValue = ev.target['value'];
+    if (!currentValue || isNaN(currentValue)) {
       return;
     }
     const valueWithinBounds = this.correctToBounds(currentValue);
@@ -73,9 +73,12 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
     this.dialogRef.close(result);
   }
 
+  /**
+   * Corrects the value to be within 1 and the maximum number of sandboxes that can be allocated
+   * @param value the input value
+   * @returns a value within the bounds closest to the input value
+   */
   private correctToBounds(value: number): number {
     return Math.min(Math.max(value, 1), this.data);
   }
-
-  protected readonly event = event;
 }
