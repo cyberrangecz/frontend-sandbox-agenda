@@ -40,9 +40,9 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
     this.allocationSize.setValue(this.correctToBounds(this.allocationSize.value + value));
   }
 
-  onChange(ev: Event) {
-    const currentValue = ev.target['value'];
-    if (!currentValue || isNaN(currentValue)) {
+  onChange(event: Event) {
+    const currentValue = (event.target as HTMLInputElement).valueAsNumber;
+    if (!currentValue) {
       return;
     }
     const valueWithinBounds = this.correctToBounds(currentValue);
