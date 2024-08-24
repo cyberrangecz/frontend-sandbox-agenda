@@ -6,15 +6,14 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { PoolApi } from '@muni-kypo-crp/sandbox-api';
 import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { EMPTY, forkJoin, from, mergeAll, Observable, of, switchAll } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { SandboxNavigator, SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
+import { EMPTY, from, Observable } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
 import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
-import { AdaptiveInstanceApi, TrainingInstanceApi } from '@muni-kypo-crp/training-api';
 
 /**
  * Basic implementation of a layer between a component and an API service.
@@ -25,11 +24,9 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
   private lastPagination: OffsetPaginationEvent;
 
   constructor(
-    private trainingInstanceApi: TrainingInstanceApi,
-    private adaptiveInstanceApi: AdaptiveInstanceApi,
+    context: SandboxAgendaContext,
     private poolApi: PoolApi,
     private dialog: MatDialog,
-    private context: SandboxAgendaContext,
     private router: Router,
     private navigator: SandboxNavigator,
     private notificationService: SandboxNotificationService,
@@ -109,33 +106,12 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return from(this.router.navigate([this.navigator.toUpdatePool(pool.id)]));
   }
 
-  /**
-   * Checks whether pool has a training instance associated
-   * @param poolId id of the pool
-   * @returns observable of boolean representing whether pool has a training instance associated
-   */
-  hasTrainingInstance(poolId: number): Observable<boolean> {
-    return this.getAccessToken(poolId).pipe(map((accessToken) => !!accessToken));
-  }
-
   lock(pool: Pool): Observable<any> {
-    return this.getAccessToken(pool.id).pipe(
-      switchMap((token) => {
-        if (token) {
-          return this.poolApi.lockPool(pool.id, token).pipe(
-            tap(
-              () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
-              (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
-            )
-          );
-        } else {
-          return of(new Error(`No training instance found for pool ${pool.id}`));
-        }
-      }),
-      catchError((err) => {
-        this.errorHandler.emit(err, `Failed to fetch associated training instance details for pool ${pool.id}`);
-        return of(err);
-      })
+    return this.poolApi.lockPool(pool.id, null).pipe(
+      tap(
+        () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
+        (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
+      )
     );
   }
 
@@ -164,27 +140,6 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       ),
     });
     return dialogRef.afterClosed();
-  }
-
-  /**
-   * Gets access token for a pool already associated with a training instance
-   * by checking both linear and adaptive instances
-   * @param poolId id of the pool
-   * @returns observable of access token or null if no training instance is associated
-   */
-  private getAccessToken(poolId: number): Observable<string | null> {
-    return forkJoin({
-      linear: this.trainingInstanceApi.getTrainingAccessTokenByPoolId(poolId),
-      adaptive: this.adaptiveInstanceApi.getTrainingAccessTokenByPoolId(poolId),
-    }).pipe(
-      map((result) => {
-        return result.linear || result.adaptive || null;
-      }),
-      catchError((err) => {
-        this.errorHandler.emit(err, `Fetching training instance for pool ${poolId}`);
-        return EMPTY;
-      })
-    );
   }
 
   private displayDeleteDialog(pool: Pool, force: boolean): Observable<SentinelDialogResultEnum> {
