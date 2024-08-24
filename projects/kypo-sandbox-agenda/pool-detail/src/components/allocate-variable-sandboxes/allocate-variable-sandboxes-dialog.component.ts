@@ -14,7 +14,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AllocateVariableSandboxesDialogComponent implements OnInit {
   sandboxAllocationFormGroup: SandboxAllocationFormGroup;
-  count: number;
   destroyRef = inject(DestroyRef);
 
   constructor(
@@ -30,9 +29,7 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sandboxAllocationFormGroup.formGroup.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((_) => console.log(_));
+    this.sandboxAllocationFormGroup.formGroup.valueChanges.pipe(takeUntilDestroyed(this.destroyRef));
   }
 
   getSliderValue(event) {
@@ -40,7 +37,18 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
   }
 
   changeAllocationValue(value: number) {
-    this.allocationSize.setValue(this.allocationSize.value + value);
+    this.allocationSize.setValue(this.correctToBounds(this.allocationSize.value + value));
+  }
+
+  onChange(event: Event) {
+    const currentValue = (event.target as HTMLInputElement).valueAsNumber;
+    if (!currentValue) {
+      return;
+    }
+    const valueWithinBounds = this.correctToBounds(currentValue);
+    if (currentValue !== valueWithinBounds) {
+      this.allocationSize.setValue(valueWithinBounds);
+    }
   }
 
   /**
@@ -63,5 +71,14 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
       result: null,
     };
     this.dialogRef.close(result);
+  }
+
+  /**
+   * Corrects the value to be within 1 and the maximum number of sandboxes that can be allocated
+   * @param value the input value
+   * @returns a value within the bounds closest to the input value
+   */
+  private correctToBounds(value: number): number {
+    return Math.min(Math.max(value, 1), this.data);
   }
 }
