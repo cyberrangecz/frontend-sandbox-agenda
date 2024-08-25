@@ -1,3 +1,22 @@
+### 16.2.6 Revert pool locking changes.
+* 15adc29 -- [CI/CD] Update packages.json version based on GitLab tag.
+* 06f7ae5 -- Merge branch 'develop' into 'master'
+*   5914cc9 -- Merge branch 'revert-pool-locking-changes' into 'develop'
+|\  
+| *   cc87974 -- Merge branch 'develop' into 'revert-pool-locking-changes'
+| |\  
+| |/  
+|/|   
+* | 759c750 -- Merge branch 'fix-sandbox-allocation-dialog' into 'develop'
+* | 06a9972 -- Refactor the onChange method
+* | af2c3a0 -- Change the placeholder
+* | 34d8c2b -- Further improve validation and css
+* | 2c93269 -- Remove unused placeholder and console log
+* | 93cb401 -- Add gap before input field
+* | 2a280a5 -- Fix and improve allocate sandboxes dialog
+ /  
+* ca31bba -- Fix version merge conflict
+* 8092d90 -- Revert changes to pool locking
 ### 16.2.4 Fix incorrect training api provisioning.
 * fac658a -- [CI/CD] Update packages.json version based on GitLab tag.
 * 0204975 -- Merge branch 'develop' into 'master'
