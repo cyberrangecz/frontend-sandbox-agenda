@@ -48,11 +48,4 @@ export abstract class PoolOverviewService extends OffsetPaginatedElementsService
   abstract update(pool: Pool): Observable<any>;
 
   abstract updateComment(pool: Pool): Observable<any>;
-
-  /**
-   * Checks whether pool has a training instance associated
-   * @param poolId id of the pool
-   * @returns observable of boolean representing whether pool has training instances
-   */
-  abstract hasTrainingInstance(poolId: number): Observable<boolean>;
 }

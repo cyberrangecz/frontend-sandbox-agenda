@@ -34,10 +34,10 @@ To use the sandbox agenda in your Angular application follow these steps:
     +   defaultPaginationSize
     +   kypoTopologyConfig
 4. Import specific modules containing components (for example `SandboxDefinitionOverviewComponentsModule`) and provide config through `.forRoot()` method.
-5. If you do not override the services, you will also need to provide API service. See [kypo-sandbox-api libraries](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-sandbox-api). Additionally, PoolDetailComponentsModule and PoolOverviewComponentsModule also require provision of [kypo-training-api](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/apis/kypo-training-api).
+5. If you do not override the services, you will also need to provide API service. See [kypo-sandbox-api library](https://gitlab.ics.muni.cz/kypo-crp/frontend-angular/apis/kypo-sandbox-api).
 6. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
 7. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
-8. Optionally, you can override and provide own implementation of services.
+8. Optionally, you can override and provide own implementation of services
 
 For example, you would add `SandboxDefinitionOverviewComponent` like this:
 
@@ -87,11 +87,11 @@ export class SandboxDefinitionOverviewRoutingModule {}
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
-To run the example you need to run [KYPO Sandbox service](https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service), [KYPO Training service](https://gitlab.ics.muni.cz/muni-kypo-crp/backend-java/kypo-training) and [KYPO Adaptive Training service](https://gitlab.ics.muni.cz/muni-kypo-crp/backend-java/kypo-adaptive-training) or have access to a running instances and provide the URLs to the services when importing API modules.
+To run the example you need to run [KYPO Sandbox service](https://gitlab.ics.muni.cz/kypo-crp/backend-python/kypo-sandbox-service) or have access to a running instance and provide the URL to the service in when importing API module.
 
 Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [kypo-trainings](https://gitlab.ics.muni.cz/muni-kypo-crp/frontend-angular/kypo-trainings) project and can be run via `npm run api`.
 
 1. Clone this repository
-1. Run `npm install`
-1. Run `ng serve --configuration local --ssl`
-1. See the app at `https://localhost:4200`
+2. Run `npm install`
+3. Run `ng serve --configuration local --ssl`
+4. See the app at `https://localhost:4200`

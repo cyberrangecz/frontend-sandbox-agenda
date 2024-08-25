@@ -1,15 +1,13 @@
 import { CleanupRequest, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
-import { Column, DeleteAction, Row, RowAction, SentinelTable } from '@sentinel/components/table';
+import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelDateTimeFormatPipe } from '@sentinel/common/pipes';
-import { defer, Observable, of, tap } from 'rxjs';
+import { defer, of } from 'rxjs';
 import { PoolDetailRowAdapter } from './pool-detail-row-adapter';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { AbstractSandbox } from './abstract-sandbox';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
-import { map } from 'rxjs/operators';
-import { PoolDetailService } from '../services/pool/pool-detail.service';
 
 /**
  * @dynamic
@@ -18,7 +16,6 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   constructor(
     resource: PaginatedResource<AbstractSandbox>,
     sandboxInstanceService: SandboxInstanceService,
-    poolService: PoolDetailService,
     navigator: SandboxNavigator
   ) {
     const columns = [
@@ -31,7 +28,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
       new Column('stages', 'stages', false),
     ];
     const rows = resource.elements.map((element) =>
-      PoolDetailTable.createRow(element, sandboxInstanceService, poolService, navigator)
+      PoolDetailTable.createRow(element, sandboxInstanceService, navigator)
     );
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -40,7 +37,6 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   private static createRow(
     data: AbstractSandbox,
     sandboxInstanceService: SandboxInstanceService,
-    poolService: PoolDetailService,
     navigator: SandboxNavigator
   ): Row<PoolDetailRowAdapter> {
     const rowAdapter = new PoolDetailRowAdapter();
@@ -53,17 +49,13 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     rowAdapter.createdBy = data.createdBy;
     rowAdapter.state = data.stateResolver();
     rowAdapter.stages = this.requestStageResolver(data);
-    const row = new Row(rowAdapter, this.createActions(data, sandboxInstanceService, poolService));
+    const row = new Row(rowAdapter, this.createActions(data, sandboxInstanceService));
     row.addLink('name', navigator.toAllocationRequest(data.poolId, data.allocationRequest.id));
     return row;
   }
 
-  private static createActions(
-    data: AbstractSandbox,
-    sandboxInstanceService: SandboxInstanceService,
-    poolService: PoolDetailService
-  ): RowAction[] {
-    const actions = [
+  private static createActions(data: AbstractSandbox, sandboxInstanceService: SandboxInstanceService): RowAction[] {
+    return [
       new DeleteAction(
         'Delete sandbox instance',
         of(data.cleanupRequest != null),
@@ -92,12 +84,9 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         data.locked,
         data.allocationFailed(),
         data.cleanupRunning() || data.allocationRunning(),
-        poolService.hasTrainingInstance(data.poolId),
         sandboxInstanceService
       ),
     ];
-
-    return actions;
   }
 
   private static createLockAction(
@@ -105,7 +94,6 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     locked: boolean,
     allocationFailed: boolean,
     stateChanging: boolean,
-    hasInstanceObservable: Observable<boolean>,
     service: SandboxInstanceService
   ): RowAction {
     if (locked) {
@@ -125,7 +113,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'lock',
         'primary',
         'Lock sandbox instance',
-        hasInstanceObservable.pipe(map((hasInstances) => !hasInstances || locked || stateChanging || allocationFailed)),
+        of(locked || stateChanging || allocationFailed),
         defer(() => service.lock(allocationUnitId))
       );
     }

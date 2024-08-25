@@ -19,8 +19,6 @@ import { PoolDetailTable } from '../model/pool-detail-table';
 import { AbstractSandbox } from '../model/abstract-sandbox';
 import { SelectedStage } from '../model/selected-stage';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PoolDetailService } from '../services/pool/pool-detail.service';
-import { PoolDetailConcreteService } from '../services/pool/pool-detail-concrete.service';
 
 /**
  * Smart component of pool detail page
@@ -35,7 +33,6 @@ import { PoolDetailConcreteService } from '../services/pool/pool-detail-concrete
     { provide: AllocationRequestsService, useClass: AllocationRequestsConcreteService },
     { provide: CleanupRequestsService, useClass: CleanupRequestsConcreteService },
     { provide: SandboxInstanceService, useClass: SandboxInstanceConcreteService },
-    { provide: PoolDetailService, useClass: PoolDetailConcreteService },
   ],
 })
 export class PoolDetailComponent implements OnInit, AfterViewInit {
@@ -47,14 +44,12 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
   commentTrim = 15;
   destroyRef = inject(DestroyRef);
   private subscription: Subscription;
-  private trimSpace = 8;
 
   readonly DEFAULT_SORT_COLUMN = 'id';
   readonly DEFAULT_SORT_DIRECTION = 'asc';
 
   constructor(
     private sandboxInstanceService: SandboxInstanceService,
-    private poolService: PoolDetailService,
     private paginationService: PaginationService,
     private navigator: SandboxNavigator,
     private activeRoute: ActivatedRoute
@@ -126,7 +121,6 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         return new PoolDetailTable(
           new PaginatedResource<AbstractSandbox>(data, resource.pagination),
           this.sandboxInstanceService,
-          this.poolService,
           this.navigator
         );
       })

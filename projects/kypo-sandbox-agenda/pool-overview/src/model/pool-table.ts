@@ -15,7 +15,6 @@ import { PoolRowAdapter } from './pool-row-adapter';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
 import { PoolExpandDetailComponent } from '../components/pool-expand-detail/pool-expand-detail.component';
-import { map } from 'rxjs/operators';
 
 /**
  * Helper class transforming paginated resource to class for common table component
@@ -110,7 +109,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         of(pool.lockState == 'locked'),
         defer(() => abstractPoolService.delete(pool))
       ),
-      this.createLockAction(pool, abstractPoolService.hasTrainingInstances(pool.id), abstractPoolService),
+      this.createLockAction(pool, abstractPoolService),
       new RowAction(
         'download_man_ssh_configs',
         'Get management SSH Configs',
@@ -130,11 +129,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
     } else return 'Allocate a specific number of sandboxes';
   }
 
-  private static createLockAction(
-    pool: Pool,
-    hasInstanceObservable: Observable<boolean>,
-    service: AbstractPoolService
-  ): RowAction {
+  private static createLockAction(pool: Pool, service: AbstractPoolService): RowAction {
     if (pool.isLocked()) {
       return new RowAction(
         'unlock',
@@ -152,7 +147,7 @@ export class PoolTable extends ExpandableSentinelTable<PoolRowAdapter, PoolExpan
         'lock',
         'primary',
         'Lock pool',
-        hasInstanceObservable.pipe(map((hasInstances) => !hasInstances)),
+        of(false),
         defer(() => service.lock(pool))
       );
     }

@@ -45,11 +45,4 @@ export abstract class AbstractPoolService {
   abstract getSshAccess(poolId: number): Observable<boolean>;
 
   abstract updatePool(pool: Pool): Observable<any>;
-
-  /**
-   * Checks whether pool has a training instance associated
-   * @param poolId id of the pool
-   * @returns observable of boolean representing whether pool has training instances
-   */
-  abstract hasTrainingInstances(poolId: number): Observable<boolean>;
 }
