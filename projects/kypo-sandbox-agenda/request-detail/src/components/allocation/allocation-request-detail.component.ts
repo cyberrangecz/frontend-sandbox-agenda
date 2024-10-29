@@ -20,7 +20,7 @@ export class AllocationRequestDetailComponent extends RequestDetailComponent {
   constructor(
     protected activeRoute: ActivatedRoute,
     protected requestStagesService: RequestStagesService,
-    protected stageDetailRegistry: StagesDetailPollRegistry
+    protected stageDetailRegistry: StagesDetailPollRegistry,
   ) {
     super(activeRoute, requestStagesService, stageDetailRegistry);
   }

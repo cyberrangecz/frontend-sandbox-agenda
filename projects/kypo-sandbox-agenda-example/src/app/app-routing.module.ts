@@ -14,7 +14,7 @@ const routes: Routes = [
     path: 'sandbox-definition',
     loadChildren: () =>
       import('./lazy-loaded-modules/sandbox-definition/sandbox-definition-overview.module').then(
-        (m) => m.SandboxDefinitionOverviewModule
+        (m) => m.SandboxDefinitionOverviewModule,
       ),
     data: {
       breadcrumb: 'Definition',

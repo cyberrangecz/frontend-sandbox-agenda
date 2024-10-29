@@ -19,7 +19,7 @@ export class SandboxInstanceResolver implements Resolve<SandboxInstance> {
     private api: SandboxInstanceApi,
     private errorHandler: SandboxErrorHandler,
     private navigator: SandboxNavigator,
-    private router: Router
+    private router: Router,
   ) {}
 
   /**
@@ -43,7 +43,7 @@ export class SandboxInstanceResolver implements Resolve<SandboxInstance> {
         this.errorHandler.emit(err, 'Sandbox instance resolver');
         this.navigateToPool(poolId);
         return EMPTY;
-      })
+      }),
     );
   }
   private navigateToPool(poolId: number): Observable<never> {

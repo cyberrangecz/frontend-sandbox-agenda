@@ -31,7 +31,10 @@ export class ImagesPageComponent implements OnInit {
   readonly DEFAULT_SORT_COLUMN = 'name';
   readonly DEFAULT_SORT_DIRECTION = 'asc';
 
-  constructor(private vmImagesService: VMImagesService, private paginationService: PaginationService) {
+  constructor(
+    private vmImagesService: VMImagesService,
+    private paginationService: PaginationService,
+  ) {
     this.isLoadingImages$ = vmImagesService.isLoading$;
   }
 
@@ -82,7 +85,7 @@ export class ImagesPageComponent implements OnInit {
       0,
       this.paginationService.getPagination(this.paginationId),
       this.DEFAULT_SORT_COLUMN,
-      this.DEFAULT_SORT_DIRECTION
+      this.DEFAULT_SORT_DIRECTION,
     );
   }
 }

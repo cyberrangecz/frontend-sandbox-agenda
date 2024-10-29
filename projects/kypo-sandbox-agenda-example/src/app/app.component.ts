@@ -17,14 +17,18 @@ export class AppComponent {
   agendaContainers$: Observable<AgendaContainer[]>;
   notificationRoute = 'notifications';
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private auth: SentinelAuthService) {
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private auth: SentinelAuthService,
+  ) {
     this.activeUser$ = this.auth.activeUser$;
     this.title$ = this.getTitleFromRouter();
     this.subtitle$ = this.getSubtitleFromRouter();
 
     this.agendaContainers$ = this.auth.activeUser$.pipe(
       filter((user) => user !== null && user !== undefined),
-      map(() => this.buildNav())
+      map(() => this.buildNav()),
     );
   }
 
@@ -40,7 +44,7 @@ export class AppComponent {
       }),
       filter((route) => route.outlet === 'primary'),
       map((route) => route.snapshot),
-      map((snapshot) => snapshot.data.title)
+      map((snapshot) => snapshot.data.title),
     );
   }
 
@@ -56,7 +60,7 @@ export class AppComponent {
       }),
       filter((route) => route.outlet === 'primary'),
       map((route) => route.snapshot),
-      map((snapshot) => snapshot.data.subtitle)
+      map((snapshot) => snapshot.data.subtitle),
     );
   }
 

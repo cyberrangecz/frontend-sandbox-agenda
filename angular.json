@@ -137,21 +137,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "kypo-sandbox-agenda-example:build"
+            "buildTarget": "kypo-sandbox-agenda-example:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "kypo-sandbox-agenda-example:build:production"
+              "buildTarget": "kypo-sandbox-agenda-example:build:production"
             },
             "local": {
-              "browserTarget": "kypo-sandbox-agenda-example:build:local"
+              "buildTarget": "kypo-sandbox-agenda-example:build:local"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "kypo-sandbox-agenda-example:build"
+            "buildTarget": "kypo-sandbox-agenda-example:build"
           }
         },
         "test": {

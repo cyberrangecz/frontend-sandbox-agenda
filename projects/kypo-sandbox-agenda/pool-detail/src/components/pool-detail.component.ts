@@ -52,7 +52,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
     private sandboxInstanceService: SandboxInstanceService,
     private paginationService: PaginationService,
     private navigator: SandboxNavigator,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -107,7 +107,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.DEFAULT_SORT_COLUMN,
-        this.DEFAULT_SORT_DIRECTION
+        this.DEFAULT_SORT_DIRECTION,
       ),
     };
     this.activeRoute.data.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
@@ -121,9 +121,9 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         return new PoolDetailTable(
           new PaginatedResource<AbstractSandbox>(data, resource.pagination),
           this.sandboxInstanceService,
-          this.navigator
+          this.navigator,
         );
-      })
+      }),
     );
   }
 
@@ -133,10 +133,10 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         this.controls = PoolDetailControls.create(
           this.pool,
           resource.elements.map((allocationUnit) => new AbstractSandbox(allocationUnit)),
-          this.sandboxInstanceService
+          this.sandboxInstanceService,
         );
         return resource.elements.map((allocationUnit) => new AbstractSandbox(allocationUnit));
-      })
+      }),
     );
     sandboxes$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }

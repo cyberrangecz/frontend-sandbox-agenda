@@ -31,7 +31,7 @@ export class SandboxDefinitionOverviewComponent implements OnInit {
 
   constructor(
     private sandboxDefinitionService: SandboxDefinitionOverviewService,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +65,7 @@ export class SandboxDefinitionOverviewComponent implements OnInit {
 
   private initTable() {
     this.sandboxDefinitions$ = this.sandboxDefinitionService.resource$.pipe(
-      map((resource) => new SandboxDefinitionTable(resource, this.sandboxDefinitionService))
+      map((resource) => new SandboxDefinitionTable(resource, this.sandboxDefinitionService)),
     );
     this.lastLoadEvent = {
       pagination: new OffsetPaginationEvent(0, this.paginationService.getPagination(this.paginationId), '', 'asc'),

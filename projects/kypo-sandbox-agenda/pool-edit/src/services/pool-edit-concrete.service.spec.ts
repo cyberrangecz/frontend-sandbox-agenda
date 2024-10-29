@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
@@ -23,7 +23,7 @@ describe('PoolEditConcreteService', () => {
   let poolApiSpy: jasmine.SpyObj<PoolApi>;
   let service: PoolEditConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     dialogSpy = createMatDialogSpy();
     navigatorSpy = createNavigatorSpy();
     notificationSpy = createNotificationSpy();

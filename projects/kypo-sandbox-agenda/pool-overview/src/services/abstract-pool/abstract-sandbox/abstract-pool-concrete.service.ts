@@ -13,7 +13,7 @@ export class AbstractPoolConcreteService extends AbstractPoolService {
 
   constructor(
     private poolOverviewService: PoolOverviewService,
-    private sandboxInstanceService: SandboxInstanceService
+    private sandboxInstanceService: SandboxInstanceService,
   ) {
     super();
     this.pools$ = poolOverviewService.resource$;

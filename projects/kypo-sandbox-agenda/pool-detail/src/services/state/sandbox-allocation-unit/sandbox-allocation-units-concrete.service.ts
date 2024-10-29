@@ -30,7 +30,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     private dialog: MatDialog,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super();
     this.unitsSubject$ = new BehaviorSubject(this.initSubject(10));
@@ -58,13 +58,13 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
           });
           return units;
         }),
-        tap((paginatedRequests) => this.unitsSubject$.next(paginatedRequests))
+        tap((paginatedRequests) => this.unitsSubject$.next(paginatedRequests)),
       );
     return this.resourcePollingService.startPolling(observable$, this.poolPeriod, this.retryAttempts).pipe(
       tap(
         (_) => _,
-        (err) => this.onGetAllError(err)
-      )
+        (err) => this.onGetAllError(err),
+      ),
     );
   }
 
@@ -76,8 +76,8 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     return this.sauApi.update(unit).pipe(
       tap(
         () => this.notificationService.emit('success', `Sandbox ${unit.id} updated`),
-        (err) => this.errorHandler.emit(err, `Updating sandbox ${unit.id}`)
-      )
+        (err) => this.errorHandler.emit(err, `Updating sandbox ${unit.id}`),
+      ),
     );
   }
 
@@ -89,8 +89,8 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   cleanupMultiple(poolId: number, force: boolean): Observable<any> {
     return this.displayConfirmationDialog(poolId, 'Create', '').pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, force) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupMultiple(poolId, force) : EMPTY,
+      ),
     );
   }
 
@@ -102,8 +102,8 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   cleanupFailed(poolId: number, force: boolean): Observable<any> {
     return this.displayConfirmationDialog(poolId, 'Create', 'failed ').pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupFailed(poolId, force) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupFailed(poolId, force) : EMPTY,
+      ),
     );
   }
 
@@ -115,8 +115,8 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   cleanupUnlocked(poolId: number, force: boolean): Observable<any> {
     return this.displayConfirmationDialog(poolId, 'Create', 'unlocked ').pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupUnlocked(poolId, force) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCleanupUnlocked(poolId, force) : EMPTY,
+      ),
     );
   }
 
@@ -131,14 +131,14 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
   private displayConfirmationDialog(
     poolId: number,
     title: string,
-    specifier: string
+    specifier: string,
   ): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${title} Cleanup Request`,
         `Do you want to delete all ${specifier}sandboxes for pool ${poolId}?`,
         'Cancel',
-        'Delete'
+        'Delete',
       ),
     });
     return dialogRef.afterClosed();
@@ -148,9 +148,9 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
     return this.sauApi.deleteCleanupRequest(request.allocationUnitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Delete Allocation Units`),
-        (err) => this.errorHandler.emit(err, 'Deleting Allocation Units')
+        (err) => this.errorHandler.emit(err, 'Deleting Allocation Units'),
       ),
-      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination)),
     );
   }
 
@@ -177,7 +177,7 @@ export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnit
         next: () => this.notificationService.emit('success', `Cleanup request for pool ${poolId}`),
         error: (err) => this.errorHandler.emit(err, `Creating cleanup request for pool ${poolId}`),
       }),
-      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination)),
     );
   }
 }

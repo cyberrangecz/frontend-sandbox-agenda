@@ -33,7 +33,7 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
    */
   abstract getAllSandboxes(
     poolId: number,
-    pagination: OffsetPaginationEvent
+    pagination: OffsetPaginationEvent,
   ): Observable<PaginatedResource<SandboxInstance>>;
 
   /**
@@ -43,7 +43,7 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
    */
   abstract getAllUnits(
     poolId: number,
-    pagination: PaginationBaseEvent
+    pagination: PaginationBaseEvent,
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**

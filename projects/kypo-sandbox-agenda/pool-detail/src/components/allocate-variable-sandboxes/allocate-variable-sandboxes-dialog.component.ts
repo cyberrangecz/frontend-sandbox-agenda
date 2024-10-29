@@ -18,7 +18,7 @@ export class AllocateVariableSandboxesDialogComponent implements OnInit {
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: number,
-    public dialogRef: MatDialogRef<AllocateVariableSandboxesDialogComponent>
+    public dialogRef: MatDialogRef<AllocateVariableSandboxesDialogComponent>,
   ) {
     this.sandboxAllocationFormGroup = new SandboxAllocationFormGroup(this.data);
     this.allocationSize.setValue(data);

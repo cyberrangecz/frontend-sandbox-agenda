@@ -38,7 +38,7 @@ export class PoolOverviewComponent implements OnInit {
     private abstractPoolService: AbstractPoolService,
     private sandboxInstanceService: SandboxInstanceService,
     private navigator: SandboxNavigator,
-    private paginationService: PaginationService
+    private paginationService: PaginationService,
   ) {
     this.resources$ = this.sandboxResourcesService.resources$;
   }
@@ -76,7 +76,7 @@ export class PoolOverviewComponent implements OnInit {
         0,
         this.paginationService.getPagination(this.paginationId),
         this.DEFAULT_SORT_COLUMN,
-        this.DEFAULT_SORT_DIRECTION
+        this.DEFAULT_SORT_DIRECTION,
       ),
     };
     this.pools$ = this.abstractPoolService.pools$.pipe(
@@ -87,9 +87,9 @@ export class PoolOverviewComponent implements OnInit {
             this.resources$,
             this.abstractPoolService,
             this.sandboxInstanceService,
-            this.navigator
-          )
-      )
+            this.navigator,
+          ),
+      ),
     );
     this.hasError$ = this.abstractPoolService.poolsHasError$;
     this.onLoadEvent(initialLoadEvent);
@@ -102,7 +102,7 @@ export class PoolOverviewComponent implements OnInit {
         'Create',
         'primary',
         of(false),
-        defer(() => this.abstractPoolService.create())
+        defer(() => this.abstractPoolService.create()),
       ),
     ];
   }

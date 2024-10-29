@@ -19,7 +19,7 @@ export class AllocationStagesConcreteService extends RequestStagesService {
   constructor(
     private api: AllocationRequestsApi,
     private context: SandboxAgendaContext,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super(context.config.pollingPeriod);
   }
@@ -28,7 +28,7 @@ export class AllocationStagesConcreteService extends RequestStagesService {
     return zip(
       this.api.getTerraformStage(request.id),
       this.api.getNetworkingAnsibleStage(request.id),
-      this.api.getUserAnsibleStage(request.id)
+      this.api.getUserAnsibleStage(request.id),
     ).pipe(map((stages) => stages.map((stage) => StageAdapterMapper.fromStage(stage))));
   }
 

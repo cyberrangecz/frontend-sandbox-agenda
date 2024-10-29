@@ -21,7 +21,7 @@ export class PoolResolver implements Resolve<Pool> {
     private api: PoolApi,
     private errorHandler: SandboxErrorHandler,
     private navigator: SandboxNavigator,
-    private router: Router
+    private router: Router,
   ) {}
 
   private poolSubject$: BehaviorSubject<Pool> = new BehaviorSubject(null);
@@ -45,7 +45,7 @@ export class PoolResolver implements Resolve<Pool> {
         catchError((err) => {
           this.errorHandler.emit(err, 'Resolving pool');
           return this.navigateToNew();
-        })
+        }),
       );
     }
     return this.navigateToOverview();

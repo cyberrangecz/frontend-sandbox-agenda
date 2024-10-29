@@ -22,7 +22,7 @@ export class PoolDetailControls {
   static create(
     pool: Pool,
     sandboxes: AbstractSandbox[],
-    sandboxInstanceService: SandboxInstanceService
+    sandboxInstanceService: SandboxInstanceService,
   ): SentinelControlItem[] {
     return [
       new SentinelControlItem(
@@ -30,7 +30,7 @@ export class PoolDetailControls {
         'Allocate sandbox' + (pool.maxSize - sandboxes.length == 1 ? '' : 'es'),
         'primary',
         of(pool.maxSize === sandboxes.length),
-        defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - sandboxes.length))
+        defer(() => sandboxInstanceService.allocateSpecified(pool.id, pool.maxSize - sandboxes.length)),
       ),
       new SentinelExpandableControlItem(
         this.DELETE_ACTION_ID,
@@ -44,7 +44,7 @@ export class PoolDetailControls {
             'warn',
             of(PoolDetailControls.someSandboxHasNoRunningCleanup(sandboxes)),
             defer(() => sandboxInstanceService.cleanupMultiple(pool.id, true)),
-            'delete'
+            'delete',
           ),
           new SentinelControlMenuItem(
             this.DELETE_FAILED_ACTION_ID,
@@ -52,7 +52,7 @@ export class PoolDetailControls {
             'warn',
             of(PoolDetailControls.someSandboxFailedAndHasNoRunningCleanup(sandboxes)),
             defer(() => sandboxInstanceService.cleanupFailed(pool.id, true)),
-            'delete_forever'
+            'delete_forever',
           ),
           new SentinelControlMenuItem(
             this.DELETE_UNLOCKED_ACTION_ID,
@@ -60,9 +60,9 @@ export class PoolDetailControls {
             'warn',
             of(PoolDetailControls.someSandboxUnlockedAndHasNoRunningCleanup(sandboxes)),
             defer(() => sandboxInstanceService.cleanupUnlocked(pool.id, true)),
-            'delete_outline'
+            'delete_outline',
           ),
-        ]
+        ],
       ),
     ];
   }

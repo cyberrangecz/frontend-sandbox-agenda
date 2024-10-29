@@ -14,7 +14,7 @@ export class SandboxDefinitionResolver implements Resolve<SandboxDefinition> {
     private api: SandboxDefinitionApi,
     private errorHandler: SandboxErrorHandler,
     private navigator: SandboxNavigator,
-    private router: Router
+    private router: Router,
   ) {}
 
   /**
@@ -22,7 +22,7 @@ export class SandboxDefinitionResolver implements Resolve<SandboxDefinition> {
    * @param route route snapshot
    */
   resolve(
-    route: ActivatedRouteSnapshot
+    route: ActivatedRouteSnapshot,
   ): Observable<SandboxDefinition> | Promise<SandboxDefinition> | SandboxDefinition {
     if (!route.paramMap.has(SANDBOX_DEFINITION_ID_SELECTOR)) {
       return this.navigateToSandboxDefinitionOverview();
@@ -32,13 +32,13 @@ export class SandboxDefinitionResolver implements Resolve<SandboxDefinition> {
     return this.api.get(sandboxDefinitionId).pipe(
       take(1),
       mergeMap((sandboxDefinition) =>
-        sandboxDefinition ? of(sandboxDefinition) : this.navigateToSandboxDefinitionOverview()
+        sandboxDefinition ? of(sandboxDefinition) : this.navigateToSandboxDefinitionOverview(),
       ),
       catchError((err) => {
         this.errorHandler.emit(err, 'Sandbox definition resolver');
         this.navigateToSandboxDefinitionOverview();
         return EMPTY;
-      })
+      }),
     );
   }
 

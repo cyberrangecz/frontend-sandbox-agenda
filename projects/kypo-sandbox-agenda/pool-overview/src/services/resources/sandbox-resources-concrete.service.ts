@@ -11,7 +11,10 @@ export class SandboxResourcesConcreteService extends SandboxResourcesService {
   private resourcesSubject$: ReplaySubject<Resources> = new ReplaySubject();
   resources$: Observable<Resources> = this.resourcesSubject$.asObservable();
 
-  constructor(private resourcesApi: ResourcesApi, private errorHandler: SandboxErrorHandler) {
+  constructor(
+    private resourcesApi: ResourcesApi,
+    private errorHandler: SandboxErrorHandler,
+  ) {
     super();
   }
 
@@ -23,8 +26,8 @@ export class SandboxResourcesConcreteService extends SandboxResourcesService {
         },
         (err) => {
           this.errorHandler.emit(err, 'Fetching resources');
-        }
-      )
+        },
+      ),
     );
   }
 }
