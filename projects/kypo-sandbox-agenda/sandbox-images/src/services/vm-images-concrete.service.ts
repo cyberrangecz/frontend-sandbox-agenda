@@ -14,7 +14,7 @@ export class VMImagesConcreteService extends VMImagesService {
   constructor(
     private vmImagesApi: VMImagesApi,
     private context: SandboxAgendaContext,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super(context.config.defaultPaginationSize);
   }
@@ -33,7 +33,7 @@ export class VMImagesConcreteService extends VMImagesService {
     onlyKypoImages?: boolean,
     onlyGuiAccess?: boolean,
     cached?: boolean,
-    filter?: string
+    filter?: string,
   ): Observable<PaginatedResource<VirtualImage>> {
     this.isLoadingSubject$.next(true);
     const filters = filter ? [new SentinelFilter('name', filter)] : [];
@@ -47,8 +47,8 @@ export class VMImagesConcreteService extends VMImagesService {
           this.errorHandler.emit(err, 'Fetching images');
           this.hasErrorSubject$.next(true);
           this.isLoadingSubject$.next(false);
-        }
-      )
+        },
+      ),
     );
   }
 }

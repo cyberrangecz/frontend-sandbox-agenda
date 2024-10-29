@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
@@ -34,7 +34,7 @@ describe('SandboxInstanceConcreteService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let service: SandboxInstanceConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     poolApiSpy = createPoolApiSpy();
     sandboxAllocationUnitsServiceSpy = createSandboxAllocationUnitsServiceSpy();
     sandboxInstanceApiSpy = createSiApiSpy();
@@ -96,7 +96,7 @@ describe('SandboxInstanceConcreteService', () => {
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 
@@ -105,18 +105,18 @@ describe('SandboxInstanceConcreteService', () => {
     sandboxInstanceApiSpy.getSandboxes.and.returnValue(throwError(null));
     service.hasError$
       .pipe(
-        skip(2) // we ignore initial value and value emitted before the call is made
+        skip(2), // we ignore initial value and value emitted before the call is made
       )
       .subscribe(
         (hasError) => {
           expect(hasError).toBeTruthy();
           done();
         },
-        () => fail
+        () => fail,
       );
     service.getAllSandboxes(0, pagination).subscribe(
       () => fail,
-      (_) => _
+      (_) => _,
     );
   });
 

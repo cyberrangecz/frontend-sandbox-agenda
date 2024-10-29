@@ -16,7 +16,7 @@ export class ResourcePollingService {
     observable$: Observable<Type>,
     pollingPeriod: number,
     retryAttempts: number,
-    initialDelay?: boolean
+    initialDelay?: boolean,
   ): Observable<Type> {
     let retryAttempt = 1;
     const response$: Observable<any> = of({}).pipe(
@@ -38,7 +38,7 @@ export class ResourcePollingService {
       }),
       // increase delay exponentially on error
       delayWhen(() => (initialDelay ? timer(pollingPeriod * retryAttempt) : timer(0))),
-      repeat()
+      repeat(),
     );
     initialDelay = true;
     return response$;

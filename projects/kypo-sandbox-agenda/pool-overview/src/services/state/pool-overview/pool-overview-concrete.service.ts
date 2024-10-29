@@ -30,7 +30,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     private router: Router,
     private navigator: SandboxNavigator,
     private notificationService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super(context.config.defaultPaginationSize);
   }
@@ -50,8 +50,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         (err) => {
           this.errorHandler.emit(err, 'Fetching pools');
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -70,8 +70,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return allocation$.pipe(
       tap(
         () => this.notificationService.emit('success', `Allocation of pool ${pool.id} started`),
-        (err) => this.errorHandler.emit(err, `Allocation of pool ${pool.id}`)
-      )
+        (err) => this.errorHandler.emit(err, `Allocation of pool ${pool.id}`),
+      ),
     );
   }
 
@@ -83,8 +83,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     const forceDelete = pool.usedSize !== 0;
     return this.displayDeleteDialog(pool, forceDelete).pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool, forceDelete) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(pool, forceDelete) : EMPTY,
+      ),
     );
   }
 
@@ -94,7 +94,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
    */
   clear(pool: Pool): Observable<any> {
     return this.displayConfirmationDialog(pool, 'Clear').pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToClear(pool.id) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToClear(pool.id) : EMPTY)),
     );
   }
 
@@ -110,8 +110,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return this.poolApi.lockPool(pool.id, null).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was locked`),
-        (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`)
-      )
+        (err) => this.errorHandler.emit(err, `Locking pool ${pool.id}`),
+      ),
     );
   }
 
@@ -120,13 +120,13 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
       catchError((err) => {
         this.errorHandler.emit(err, `Management SSH Access for pool: ${poolId}`);
         return EMPTY;
-      })
+      }),
     );
   }
 
   unlock(pool: Pool): Observable<any> {
     return this.displayConfirmationDialog(pool, 'Unlock').pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToUnlock(pool) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToUnlock(pool) : EMPTY)),
     );
   }
 
@@ -136,7 +136,7 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
         `${action} Pool`,
         `Do you want to ${action.toLowerCase()} pool "${pool.id}"?`,
         'Cancel',
-        action
+        action,
       ),
     });
     return dialogRef.afterClosed();
@@ -156,8 +156,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return this.poolApi.deletePool(pool.id, forceDelete).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was deleted`),
-        (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`)
-      )
+        (err) => this.errorHandler.emit(err, `Deleting pool ${pool.id}`),
+      ),
     );
   }
 
@@ -165,9 +165,9 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return this.poolApi.createMultipleCleanupRequests(poolId, true).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool ${poolId} has been cleared`),
-        (err) => this.errorHandler.emit(err, 'Clearing pool ' + poolId.toString())
+        (err) => this.errorHandler.emit(err, 'Clearing pool ' + poolId.toString()),
       ),
-      switchMap(() => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination)),
     );
   }
 
@@ -175,8 +175,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return this.poolApi.unlockPool(pool.id, pool.lockId).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool ${pool.id} was unlocked`),
-        (err) => this.errorHandler.emit(err, `Unlocking pool ${pool.id}`)
-      )
+        (err) => this.errorHandler.emit(err, `Unlocking pool ${pool.id}`),
+      ),
     );
   }
 
@@ -184,8 +184,8 @@ export class PoolOverviewConcreteService extends PoolOverviewService {
     return this.poolApi.updatePool(pool).pipe(
       tap(
         () => this.notificationService.emit('success', `Pool comment for ${pool.id} was updated`),
-        (err) => this.errorHandler.emit(err, 'Editing pool comment')
-      )
+        (err) => this.errorHandler.emit(err, 'Editing pool comment'),
+      ),
     );
   }
 }

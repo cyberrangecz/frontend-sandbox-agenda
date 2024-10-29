@@ -28,7 +28,7 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
     private alertService: SandboxNotificationService,
     private errorHandler: SandboxErrorHandler,
     private context: SandboxAgendaContext,
-    private navigator: SandboxNavigator
+    private navigator: SandboxNavigator,
   ) {
     super(context.config.defaultPaginationSize);
   }
@@ -50,8 +50,8 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
         (err) => {
           this.errorHandler.emit(err, 'Fetching sandbox definitions');
           this.hasErrorSubject$.next(true);
-        }
-      )
+        },
+      ),
     );
   }
 
@@ -66,8 +66,8 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
   delete(sandboxDefinition: SandboxDefinition): Observable<PaginatedResource<SandboxDefinition>> {
     return this.displayDialogToDelete(sandboxDefinition).pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxDefinition) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxDefinition) : EMPTY,
+      ),
     );
   }
 
@@ -77,7 +77,7 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
         'Delete Sandbox Definition',
         `Do you want to delete sandbox definition "${sandboxDefinition.title}"?`,
         'Cancel',
-        'Delete'
+        'Delete',
       ),
     });
     return dialogRef.afterClosed();
@@ -87,9 +87,9 @@ export class SandboxDefinitionOverviewConcreteService extends SandboxDefinitionO
     return this.api.delete(sandboxDefinition.id).pipe(
       tap(
         () => this.alertService.emit('success', 'Sandbox definition was successfully deleted'),
-        (err) => this.errorHandler.emit(err, 'Removing sandbox definition')
+        (err) => this.errorHandler.emit(err, 'Removing sandbox definition'),
       ),
-      switchMap(() => this.getAll(this.lastPagination))
+      switchMap(() => this.getAll(this.lastPagination)),
     );
   }
 

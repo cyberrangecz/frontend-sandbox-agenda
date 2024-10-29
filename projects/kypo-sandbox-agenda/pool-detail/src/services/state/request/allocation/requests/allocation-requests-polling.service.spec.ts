@@ -1,4 +1,4 @@
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
 import { asyncData } from '@sentinel/common/testing';
@@ -33,7 +33,7 @@ describe('PoolAllocationRequestsPollingService', () => {
 
   let service: AllocationRequestsConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     errorHandlerSpy = createErrorHandlerSpy();
     notificationSpy = createNotificationSpy();
     allocationRequestsApiSpy = createAllocationRequestApiSpy();
@@ -72,7 +72,7 @@ describe('PoolAllocationRequestsPollingService', () => {
           expect(poolApiSpy.getAllocationRequests).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail
+        () => fail,
       );
   });
 
@@ -86,7 +86,7 @@ describe('PoolAllocationRequestsPollingService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.getAll(0, pagination).subscribe();
   });
@@ -103,7 +103,7 @@ describe('PoolAllocationRequestsPollingService', () => {
         () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           done();
-        }
+        },
       );
   });
 
@@ -124,7 +124,7 @@ describe('PoolAllocationRequestsPollingService', () => {
           expect(allocationRequestsApiSpy.cancel).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 
@@ -146,7 +146,7 @@ describe('PoolAllocationRequestsPollingService', () => {
           expect(dialogSpy.open).toHaveBeenCalledTimes(1);
           expect(allocationRequestsApiSpy.cancel).toHaveBeenCalledTimes(0);
           done();
-        }
+        },
       );
   });
 
@@ -164,7 +164,7 @@ describe('PoolAllocationRequestsPollingService', () => {
     poolApiSpy.getAllocationRequests.and.returnValues(
       asyncData(mockData),
       asyncData(mockData),
-      throwError({ status: 400 })
+      throwError({ status: 400 }),
     ); // throw error on third call
 
     const subscription = service.resource$.subscribe();
@@ -183,7 +183,7 @@ describe('PoolAllocationRequestsPollingService', () => {
       throwError({ status: 400 }),
       asyncData(mockData),
       asyncData(mockData),
-      asyncData(mockData)
+      asyncData(mockData),
     );
 
     const subscription = service.resource$.subscribe();

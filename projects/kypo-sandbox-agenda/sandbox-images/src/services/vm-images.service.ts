@@ -28,6 +28,6 @@ export abstract class VMImagesService extends OffsetPaginatedElementsService<Vir
     onlyKypoImages?: boolean,
     onlyGuiAccess?: boolean,
     cached?: boolean,
-    filter?: string
+    filter?: string,
   ): Observable<PaginatedResource<VirtualImage>>;
 }

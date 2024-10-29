@@ -76,7 +76,7 @@ describe('SandboxAllocationUnitsService', () => {
           expect(poolApiSpy.getPoolsSandboxes).toHaveBeenCalledTimes(1);
           done();
         },
-        () => fail
+        () => fail,
       );
   });
 
@@ -90,7 +90,7 @@ describe('SandboxAllocationUnitsService', () => {
       (emitted) => {
         expect(emitted).toBe(mockData);
       },
-      () => fail()
+      () => fail(),
     );
     service.getAll(0, pagination).subscribe();
   });
@@ -108,7 +108,7 @@ describe('SandboxAllocationUnitsService', () => {
         () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
           done();
-        }
+        },
       );
   });
 
@@ -125,7 +125,7 @@ describe('SandboxAllocationUnitsService', () => {
           expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(0);
           done();
         },
-        () => fail()
+        () => fail(),
       );
   });
 

@@ -19,7 +19,7 @@ export class PoolCommentResolver implements Resolve<string> {
    */
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> | Promise<string> | string {
     return (this.poolResolver.resolve(route, state) as Observable<Pool>).pipe(
-      map((pool) => `${pool.comment === undefined ? '' : pool.comment}`)
+      map((pool) => `${pool.comment === undefined ? '' : pool.comment}`),
     );
   }
 }

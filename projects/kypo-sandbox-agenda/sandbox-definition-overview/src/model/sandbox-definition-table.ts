@@ -30,7 +30,7 @@ export class SandboxDefinitionTable extends ExpandableSentinelTable<
 
   private static createRow(
     sandboxDefinition: SandboxDefinition,
-    service: SandboxDefinitionOverviewService
+    service: SandboxDefinitionOverviewService,
   ): Row<SandboxDefinitionRowAdapter> {
     const actions = [
       new RowAction(
@@ -40,12 +40,12 @@ export class SandboxDefinitionTable extends ExpandableSentinelTable<
         'primary',
         'Display topology',
         of(false),
-        defer(() => service.showTopology(sandboxDefinition))
+        defer(() => service.showTopology(sandboxDefinition)),
       ),
       new DeleteAction(
         'Delete sandbox definition',
         of(false),
-        defer(() => service.delete(sandboxDefinition))
+        defer(() => service.delete(sandboxDefinition)),
       ),
     ];
     const rowAdapter = sandboxDefinition as SandboxDefinitionRowAdapter;

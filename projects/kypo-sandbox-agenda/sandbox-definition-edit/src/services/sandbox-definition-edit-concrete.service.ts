@@ -14,7 +14,7 @@ export class SandboxDefinitionEditConcreteService extends SandboxDefinitionEditS
     private router: Router,
     private navigator: SandboxNavigator,
     private alertService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super();
   }
@@ -27,9 +27,9 @@ export class SandboxDefinitionEditConcreteService extends SandboxDefinitionEditS
     return this.api.create(sandboxDefinition).pipe(
       tap(
         () => this.alertService.emit('success', 'Sandbox definition was successfully created'),
-        (err) => this.errorHandler.emit(err, 'Creating sandbox definition')
+        (err) => this.errorHandler.emit(err, 'Creating sandbox definition'),
       ),
-      switchMap(() => this.router.navigate([this.navigator.toSandboxDefinitionOverview()]))
+      switchMap(() => this.router.navigate([this.navigator.toSandboxDefinitionOverview()])),
     );
   }
 }

@@ -25,7 +25,10 @@ export class PoolEditComponent {
   canDeactivatePoolEdit = true;
   controls: SentinelControlItem[];
 
-  constructor(private activeRoute: ActivatedRoute, private poolEditService: PoolEditService) {
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private poolEditService: PoolEditService,
+  ) {
     this.activeRoute.data
       .pipe(
         tap((data) => {
@@ -38,7 +41,7 @@ export class PoolEditComponent {
           this.initControls(editMode);
           this.poolFormGroup = new PoolFormGroup(this.pool, editMode);
         }),
-        switchMap(() => this.poolFormGroup.formGroup.valueChanges)
+        switchMap(() => this.poolFormGroup.formGroup.valueChanges),
       )
       .subscribe(() => this.onChanged());
   }
@@ -72,13 +75,15 @@ export class PoolEditComponent {
   }
 
   initControls(isEditMode: boolean): void {
-    this.controls = [new SentinelControlItem(
-      isEditMode ? 'save' : 'create',
-      isEditMode ? 'Save' : 'Create',
-      'primary',
-      this.poolEditService.saveDisabled$,
-      defer(() => this.poolEditService.save())
-    )]
+    this.controls = [
+      new SentinelControlItem(
+        isEditMode ? 'save' : 'create',
+        isEditMode ? 'Save' : 'Create',
+        'primary',
+        this.poolEditService.saveDisabled$,
+        defer(() => this.poolEditService.save()),
+      ),
+    ];
   }
 
   /**

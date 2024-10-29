@@ -13,20 +13,20 @@ export class TerraformOutputsService extends StageDetailService {
   constructor(
     private api: AllocationRequestsApi,
     private context: SandboxAgendaContext,
-    protected pollRegistry: StagesDetailPollRegistry
+    protected pollRegistry: StagesDetailPollRegistry,
   ) {
     super(pollRegistry, Number.MAX_SAFE_INTEGER, context.config.pollingPeriod);
   }
 
   protected callApiToGetStageDetail(
     stage: RequestStage,
-    requestedPagination: OffsetPaginationEvent
+    requestedPagination: OffsetPaginationEvent,
   ): Observable<PaginatedResource<string>> {
     return this.api.getTerraformOutputs(stage.requestId, requestedPagination).pipe(
       map((paginatedResources) => {
         const formattedEvents = paginatedResources.elements.map((event) => `${event.content}`);
         return new PaginatedResource<string>(formattedEvents, paginatedResources.pagination);
-      })
+      }),
     );
   }
 }

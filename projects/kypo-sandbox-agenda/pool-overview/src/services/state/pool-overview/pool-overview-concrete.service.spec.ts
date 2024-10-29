@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
@@ -25,7 +25,7 @@ describe('PoolOverviewConcreteService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let service: PoolOverviewConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     poolApiSpy = createPoolApiSpy();
     dialogSpy = createMatDialogSpy();
     contextSpy = createContextSpy();

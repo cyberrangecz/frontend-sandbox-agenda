@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { asyncData } from '@sentinel/common/testing';
 import { take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -13,7 +13,7 @@ describe('SandboxResourcesConcreteService', () => {
   let resourcesApiSpy: jasmine.SpyObj<ResourcesApi>;
   let service: SandboxResourcesConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     errorHandlerSpy = createErrorHandlerSpy();
     resourcesApiSpy = createResourcesApiSpy();
 
@@ -38,7 +38,7 @@ describe('SandboxResourcesConcreteService', () => {
         expect(resourcesApiSpy.getResources).toHaveBeenCalledTimes(1);
         done();
       },
-      () => fail
+      () => fail,
     );
   });
 
@@ -50,7 +50,7 @@ describe('SandboxResourcesConcreteService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      () => fail()
+      () => fail(),
     );
     service.getResources().subscribe();
   });
@@ -62,7 +62,7 @@ describe('SandboxResourcesConcreteService', () => {
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 

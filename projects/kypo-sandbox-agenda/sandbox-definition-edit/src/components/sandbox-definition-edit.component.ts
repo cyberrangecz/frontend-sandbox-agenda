@@ -55,7 +55,7 @@ export class SandboxDefinitionEditComponent implements OnInit {
         'Create',
         'primary',
         of(!this.sandboxDefinitionFormGroup.formGroup.valid),
-        defer(() => this.sandboxDefinitionService.create(this.sandboxDefinitionFormGroup.createFromValues()))
+        defer(() => this.sandboxDefinitionService.create(this.sandboxDefinitionFormGroup.createFromValues())),
       ),
     ];
   }

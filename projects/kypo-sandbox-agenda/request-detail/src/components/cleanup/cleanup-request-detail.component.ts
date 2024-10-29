@@ -12,7 +12,10 @@ import { ActivatedRoute } from '@angular/router';
   providers: [{ provide: RequestStagesService, useClass: CleanupStagesConcreteService }],
 })
 export class CleanupRequestDetailComponent extends RequestDetailComponent {
-  constructor(protected activeRoute: ActivatedRoute, protected requestStagesService: RequestStagesService) {
+  constructor(
+    protected activeRoute: ActivatedRoute,
+    protected requestStagesService: RequestStagesService,
+  ) {
     super(activeRoute, requestStagesService);
   }
 }

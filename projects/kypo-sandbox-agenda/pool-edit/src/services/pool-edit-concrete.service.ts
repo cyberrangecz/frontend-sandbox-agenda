@@ -18,7 +18,7 @@ export class PoolEditConcreteService extends PoolEditService {
     private navigator: SandboxNavigator,
     private notificationService: SandboxNotificationService,
     private errorHandler: SandboxErrorHandler,
-    private api: PoolApi
+    private api: PoolApi,
   ) {
     super();
   }
@@ -45,9 +45,9 @@ export class PoolEditConcreteService extends PoolEditService {
     return this.api.createPool(this.editedPool).pipe(
       tap(
         () => this.notificationService.emit('success', 'Pool was created'),
-        (err) => this.errorHandler.emit(err, 'Creating pool')
+        (err) => this.errorHandler.emit(err, 'Creating pool'),
       ),
-      switchMap(() => from(this.router.navigate([this.navigator.toPoolOverview()])))
+      switchMap(() => from(this.router.navigate([this.navigator.toPoolOverview()]))),
     );
   }
 
@@ -70,8 +70,8 @@ export class PoolEditConcreteService extends PoolEditService {
           this.notificationService.emit('success', 'Pool was updated');
           this.onSaved();
         },
-        (err) => this.errorHandler.emit(err, 'Editing pool')
-      )
+        (err) => this.errorHandler.emit(err, 'Editing pool'),
+      ),
     );
   }
 
