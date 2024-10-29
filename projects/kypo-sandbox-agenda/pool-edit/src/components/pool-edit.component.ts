@@ -32,7 +32,7 @@ export class PoolEditComponent {
           this.pool = data.pool === undefined ? new Pool() : data.pool;
           this.poolEditService.set(data.pool);
         }),
-        switchMap((data) => this.poolEditService.editMode$),
+        switchMap(() => this.poolEditService.editMode$),
         tap((editMode) => {
           this.editMode = editMode;
           this.initControls(editMode);
@@ -72,18 +72,13 @@ export class PoolEditComponent {
   }
 
   initControls(isEditMode: boolean): void {
-    const saveItem = new SentinelControlItem(
-      'save',
-      'Save',
+    this.controls = [new SentinelControlItem(
+      isEditMode ? 'save' : 'create',
+      isEditMode ? 'Save' : 'Create',
       'primary',
       this.poolEditService.saveDisabled$,
       defer(() => this.poolEditService.save())
-    );
-    if (!isEditMode) {
-      saveItem.id = 'create';
-      saveItem.label = 'Create';
-    }
-    this.controls = [saveItem];
+    )]
   }
 
   /**

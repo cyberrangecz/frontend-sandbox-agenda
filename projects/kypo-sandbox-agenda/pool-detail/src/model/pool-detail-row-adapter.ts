@@ -4,7 +4,7 @@ export class PoolDetailRowAdapter {
   name: string;
   comment: string;
   lock: string;
-  created: Date;
+  created: string;
   createdBy: string;
   state: string;
   stages: string[];
