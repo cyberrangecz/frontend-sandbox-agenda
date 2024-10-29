@@ -1,8 +1,8 @@
 {
-  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["**/e2e/**"],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": ["src/*.ts", "!src/environments/*.ts"],
       "parserOptions": {
         "project": ["projects/kypo-sandbox-agenda-example/tsconfig.*?.json"],
         "createDefaultProgram": true
@@ -19,7 +19,7 @@
       }
     },
     {
-      "files": ["*.component.html"],
+      "files": ["*.component.html", "e2e/*"],
       "rules": {}
     }
   ]

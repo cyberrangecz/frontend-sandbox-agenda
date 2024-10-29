@@ -42,7 +42,7 @@ export abstract class SandboxAllocationUnitsService {
    */
   abstract getAll(
     poolId: number,
-    pagination: OffsetPaginationEvent
+    pagination: OffsetPaginationEvent,
   ): Observable<PaginatedResource<SandboxAllocationUnit>>;
 
   /**

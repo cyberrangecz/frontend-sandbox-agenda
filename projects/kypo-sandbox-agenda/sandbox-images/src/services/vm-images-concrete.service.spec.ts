@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
 import { asyncData } from '@sentinel/common/testing';
 import { skip, take } from 'rxjs/operators';
@@ -20,7 +20,7 @@ describe('VMImagesConcreteService', () => {
   let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
   let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     errorHandlerSpy = createErrorHandlerSpy();
     VMImagesApiSpy = createVMImagesApiSpy();
     contextSpy = createContextSpy();
@@ -49,7 +49,7 @@ describe('VMImagesConcreteService', () => {
         expect(VMImagesApiSpy.getAvailableImages).toHaveBeenCalledTimes(1);
         done();
       },
-      () => fail
+      () => fail,
     );
   });
 
@@ -63,7 +63,7 @@ describe('VMImagesConcreteService', () => {
         expect(emitted).toBe(mockData);
         done();
       },
-      () => fail
+      () => fail,
     );
     service.getAvailableImages(pagination).subscribe();
   });
@@ -77,7 +77,7 @@ describe('VMImagesConcreteService', () => {
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 

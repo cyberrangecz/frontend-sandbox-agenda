@@ -4,7 +4,7 @@ import { TerraformStageAdapter } from '../../../../model/adapters/terraform-stag
 import { Observable } from 'rxjs';
 import { TerraformOutputsService } from '../../../../services/state/detail/terraform-outputs.service';
 import { CloudResourcesService } from '../../../../services/state/detail/cloud-resources.service';
-import { map, takeWhile } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -24,7 +24,10 @@ export class TerraformAllocationStageDetailComponent implements OnChanges {
   hasError$: Observable<boolean>;
   destroyRef = inject(DestroyRef);
 
-  constructor(private outputsService: TerraformOutputsService, private resourcesService: CloudResourcesService) {}
+  constructor(
+    private outputsService: TerraformOutputsService,
+    private resourcesService: CloudResourcesService,
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.stage && 'stage' in changes && changes['stage'].isFirstChange()) {

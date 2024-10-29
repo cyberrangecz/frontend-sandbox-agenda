@@ -38,7 +38,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     private navigator: SandboxNavigator,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
     this.allocationUnits$ = allocationUnitsService.units$;
@@ -56,8 +56,8 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         (paginatedInstances) => {
           this.resourceSubject$.next(paginatedInstances);
         },
-        (err) => this.onGetAllError(err)
-      )
+        (err) => this.onGetAllError(err),
+      ),
     );
   }
 
@@ -79,8 +79,8 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   delete(sandboxInstance: SandboxInstance): Observable<any> {
     return this.displayConfirmationDialog(sandboxInstance.id, 'Delete').pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxInstance) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(sandboxInstance) : EMPTY,
+      ),
     );
   }
 
@@ -92,12 +92,12 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.poolApi.allocateSandboxes(poolId).pipe(
       tap(
         () => this.notificationService.emit('success', `Allocation of pool ${poolId} started`),
-        (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
+        (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`),
       ),
       switchMap(() => {
         this.lastPoolId = this.lastPoolId ?? poolId;
         return this.getAllUnits(this.lastPoolId, this.lastPagination);
-      })
+      }),
     );
   }
 
@@ -119,17 +119,17 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
                 () =>
                   this.notificationService.emit(
                     'success',
-                    `Allocation of specified sandboxes of pool ${poolId} started`
+                    `Allocation of specified sandboxes of pool ${poolId} started`,
                   ),
-                (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`)
+                (err) => this.errorHandler.emit(err, `Allocating pool ${poolId}`),
               ),
               switchMap(() => {
                 this.lastPoolId = this.lastPoolId ?? poolId;
                 return this.getAllUnits(this.lastPoolId, this.lastPagination);
-              })
+              }),
             )
-          : EMPTY
-      )
+          : EMPTY,
+      ),
     );
   }
 
@@ -141,9 +141,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.sandboxAllocationUnitsApi.createRetryRequest(unitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Allocation of sandbox ${unitId} started`),
-        (err) => this.errorHandler.emit(err, `Allocating sandbox ${unitId}`)
+        (err) => this.errorHandler.emit(err, `Allocating sandbox ${unitId}`),
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)),
     );
   }
 
@@ -155,8 +155,8 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
   unlock(allocationUnitId: number): Observable<any> {
     return this.displayConfirmationDialog(allocationUnitId, 'Unlock').pipe(
       switchMap((result) =>
-        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToUnlock(allocationUnitId) : EMPTY
-      )
+        result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToUnlock(allocationUnitId) : EMPTY,
+      ),
     );
   }
 
@@ -169,9 +169,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.sandboxApi.lockSandbox(allocationUnitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Sandbox ${allocationUnitId} was locked`),
-        (err) => this.errorHandler.emit(err, `Locking sandbox ${allocationUnitId}`)
+        (err) => this.errorHandler.emit(err, `Locking sandbox ${allocationUnitId}`),
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)),
     );
   }
 
@@ -184,7 +184,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
       catchError((err) => {
         this.errorHandler.emit(err, `User SSH Access for sandbox: ${sandboxUuid}`);
         return EMPTY;
-      })
+      }),
     );
   }
 
@@ -238,9 +238,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.sandboxAllocationUnitsApi.createCleanupRequest(unitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Sandbox ${unitId} was deleted`),
-        (err) => this.errorHandler.emit(err, `Deleting sandbox ${unitId}`)
+        (err) => this.errorHandler.emit(err, `Deleting sandbox ${unitId}`),
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)),
     );
   }
 
@@ -291,7 +291,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         `${action} sandbox`,
         `Do you want to ${action} sandbox ${id}"?`,
         'Cancel',
-        action
+        action,
       ),
     });
     return dialogRef.afterClosed();
@@ -301,9 +301,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.sandboxApi.unlockSandbox(allocationUnitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Sandbox ${allocationUnitId} was unlocked`),
-        (err) => this.errorHandler.emit(err, `Unlocking sandbox ${allocationUnitId}`)
+        (err) => this.errorHandler.emit(err, `Unlocking sandbox ${allocationUnitId}`),
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)),
     );
   }
 
@@ -311,9 +311,9 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
     return this.sandboxAllocationUnitsApi.createCleanupRequest(sandboxInstance.allocationUnitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Sandbox ${sandboxInstance.id} was deleted`),
-        (err) => this.errorHandler.emit(err, `Deleting sandbox ${sandboxInstance.id}`)
+        (err) => this.errorHandler.emit(err, `Deleting sandbox ${sandboxInstance.id}`),
       ),
-      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAllUnits(this.lastPoolId, this.lastPagination)),
     );
   }
 

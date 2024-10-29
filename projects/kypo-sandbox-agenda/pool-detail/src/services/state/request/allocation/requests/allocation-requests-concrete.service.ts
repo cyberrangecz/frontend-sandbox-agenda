@@ -28,7 +28,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     private dialog: MatDialog,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
   }
@@ -46,8 +46,8 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     return this.poolApi.getAllocationRequests(poolId, pagination).pipe(
       tap(
         (paginatedRequests) => this.resourceSubject$.next(paginatedRequests),
-        (err) => this.onGetAllError(err)
-      )
+        (err) => this.onGetAllError(err),
+      ),
     );
   }
 
@@ -62,7 +62,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
    */
   cancel(request: Request): Observable<any> {
     return this.displayConfirmationDialog(request, 'Cancel', 'No', 'Yes').pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToCancel(request) : EMPTY)),
     );
   }
 
@@ -72,7 +72,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
    */
   delete(request: Request): Observable<any> {
     return this.displayConfirmationDialog(request, 'Delete', 'Cancel', 'Delete').pipe(
-      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY))
+      switchMap((result) => (result === SentinelDialogResultEnum.CONFIRMED ? this.callApiToDelete(request) : EMPTY)),
     );
   }
 
@@ -90,14 +90,14 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     request: Request,
     action: string,
     cancelLabel: string,
-    confirmLabel: string
+    confirmLabel: string,
   ): Observable<SentinelDialogResultEnum> {
     const dialogRef = this.dialog.open(SentinelConfirmationDialogComponent, {
       data: new SentinelConfirmationDialogConfig(
         `${action} allocation request`,
         `Do you want to ${action.toLowerCase()} allocation request "${request.id}"?`,
         cancelLabel,
-        confirmLabel
+        confirmLabel,
       ),
     });
     return dialogRef.afterClosed();
@@ -107,9 +107,9 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     return this.sauApi.createCleanupRequest(request.allocationUnitId).pipe(
       tap(
         () => this.notificationService.emit('success', `Created cleanup request`),
-        (err) => this.errorHandler.emit(err, 'Creating cleanup request')
+        (err) => this.errorHandler.emit(err, 'Creating cleanup request'),
       ),
-      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination)),
     );
   }
 
@@ -117,9 +117,9 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
     return this.allocationRequestsApi.cancel(request.id).pipe(
       tap(
         () => this.notificationService.emit('success', `Allocation request ${request.id} cancelled`),
-        (err) => this.errorHandler.emit(err, 'Cancelling allocation request ' + request.id)
+        (err) => this.errorHandler.emit(err, 'Cancelling allocation request ' + request.id),
       ),
-      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination))
+      switchMap(() => this.getAll(this.lastPoolId, this.lastPagination)),
     );
   }
 

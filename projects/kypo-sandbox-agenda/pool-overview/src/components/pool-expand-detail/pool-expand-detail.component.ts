@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PoolRowAdapter } from '../../model/pool-row-adapter';
 
 @Component({

@@ -12,14 +12,14 @@ export class AnsibleOutputsService extends StageDetailService {
   constructor(
     private api: AllocationRequestsApi,
     private context: SandboxAgendaContext,
-    protected pollRegistry: StagesDetailPollRegistry
+    protected pollRegistry: StagesDetailPollRegistry,
   ) {
     super(pollRegistry, 500, context.config.pollingPeriod);
   }
 
   protected callApiToGetStageDetail(
     stage: RequestStage,
-    requestedPagination: OffsetPaginationEvent
+    requestedPagination: OffsetPaginationEvent,
   ): Observable<PaginatedResource<string>> {
     if (stage.type === RequestStageType.NETWORKING_ANSIBLE_ALLOCATION) {
       return this.api.getNetworkingAnsibleOutputs(stage.requestId, requestedPagination);

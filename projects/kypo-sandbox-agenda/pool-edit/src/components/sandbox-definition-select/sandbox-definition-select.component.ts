@@ -33,7 +33,7 @@ export class SandboxDefinitionSelectComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) public preselected: SandboxDefinition,
     public dialogRef: MatDialogRef<SandboxDefinitionSelectComponent>,
     private paginationService: PaginationService,
-    private definitionService: SandboxDefinitionOverviewService
+    private definitionService: SandboxDefinitionOverviewService,
   ) {
     this.selected = [preselected];
     this.PAGE_SIZE = this.paginationService.getPagination(this.paginationId);
@@ -48,11 +48,11 @@ export class SandboxDefinitionSelectComponent implements OnInit {
       .pipe(
         map((resources) => {
           resources.elements.map(
-            (definition) => (definition.title = `${definition.title} (ID: ${definition.id}, rev: ${definition.rev})`)
+            (definition) => (definition.title = `${definition.title} (ID: ${definition.id}, rev: ${definition.rev})`),
           );
           return resources;
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
@@ -64,11 +64,11 @@ export class SandboxDefinitionSelectComponent implements OnInit {
       .pipe(
         map((resources) => {
           resources.elements.map(
-            (definition) => (definition.title = `${definition.title} (ID: ${definition.id}, rev: ${definition.rev})`)
+            (definition) => (definition.title = `${definition.title} (ID: ${definition.id}, rev: ${definition.rev})`),
           );
           return resources;
         }),
-        takeUntilDestroyed(this.destroyRef)
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }

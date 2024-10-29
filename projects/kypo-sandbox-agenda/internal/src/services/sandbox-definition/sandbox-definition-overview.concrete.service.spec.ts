@@ -70,7 +70,7 @@ describe('SandboxDefinitionOverviewConcreteService', () => {
       () => fail,
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-      }
+      },
     );
     expect(apiSpy.getAll).toHaveBeenCalledTimes(1);
   }));

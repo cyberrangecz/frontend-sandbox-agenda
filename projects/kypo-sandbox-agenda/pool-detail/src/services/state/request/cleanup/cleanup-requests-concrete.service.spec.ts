@@ -1,4 +1,4 @@
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
 import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
@@ -29,7 +29,7 @@ describe('PoolCleanupRequestsConcreteService', () => {
   let dialogSpy: jasmine.SpyObj<MatDialog>;
   let service: CleanupRequestsConcreteService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     errorHandlerSpy = createErrorHandlerSpy();
     notificationSpy = createNotificationSpy();
     poolApiSpy = createPoolApiSpy();
@@ -86,7 +86,7 @@ describe('PoolCleanupRequestsConcreteService', () => {
       () => {
         expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
         done();
-      }
+      },
     );
   });
 
@@ -95,18 +95,18 @@ describe('PoolCleanupRequestsConcreteService', () => {
     poolApiSpy.getCleanupRequests.and.returnValue(throwError(null));
     service.hasError$
       .pipe(
-        skip(2) // we ignore initial value and value emitted before the call is made
+        skip(2), // we ignore initial value and value emitted before the call is made
       )
       .subscribe(
         (hasError) => {
           expect(hasError).toBeTruthy();
           done();
         },
-        () => fail
+        () => fail,
       );
     service.getAll(0, pagination).subscribe(
       () => fail,
-      (_) => _
+      (_) => _,
     );
   });
 
@@ -139,7 +139,7 @@ describe('PoolCleanupRequestsConcreteService', () => {
       throwError(null),
       asyncData(mockData),
       asyncData(mockData),
-      asyncData(mockData)
+      asyncData(mockData),
     );
 
     const subscription = service.resource$.subscribe();

@@ -14,7 +14,7 @@ export class StagesDetailPollRegistry {
   constructor(private stagesService: RequestStagesService) {
     this.polledStageIds$ = stagesService.stages$.pipe(
       map((stages) => this.getIdsOfActiveStages(stages)),
-      switchMap((stages) => this.filterStagesWithDisplayedDetail(stages))
+      switchMap((stages) => this.filterStagesWithDisplayedDetail(stages)),
     );
   }
 
@@ -39,7 +39,7 @@ export class StagesDetailPollRegistry {
 
   private filterStagesWithDisplayedDetail(activeStageIds: number[]): Observable<number[]> {
     return this.displayedDetailIds$.pipe(
-      map((displayedDetailIds) => displayedDetailIds.filter((id) => activeStageIds.includes(id)))
+      map((displayedDetailIds) => displayedDetailIds.filter((id) => activeStageIds.includes(id))),
     );
   }
 }

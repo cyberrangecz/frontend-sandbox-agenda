@@ -65,8 +65,8 @@ export abstract class RequestStagesService {
           this.isLoadingSubject$.next(false);
           this.stagesSubject$.next(stages);
         },
-        (err) => this.onGetAllError(err)
-      )
+        (err) => this.onGetAllError(err),
+      ),
     );
   }
 
@@ -92,7 +92,7 @@ export abstract class RequestStagesService {
       switchMap(() => this.refreshStages()),
       retryWhen(() => this.retryPolling$),
       takeWhile((stageMap) => this.shouldStopPolling(Array.from(stageMap.values())), true),
-      shareReplay(Number.POSITIVE_INFINITY, this.pollPeriod)
+      shareReplay(Number.POSITIVE_INFINITY, this.pollPeriod),
     );
   }
 

@@ -25,7 +25,7 @@ export abstract class RequestDetailComponent {
   protected constructor(
     protected activeRoute: ActivatedRoute,
     protected requestStagesService: RequestStagesService,
-    protected stageDetailRegistry?: StagesDetailPollRegistry
+    protected stageDetailRegistry?: StagesDetailPollRegistry,
   ) {
     this.activeRoute.fragment.subscribe((fragment) => {
       this.fragment = fragment;
@@ -50,7 +50,7 @@ export abstract class RequestDetailComponent {
 
   onStageDetailPanelChange(
     opened: boolean,
-    stage: RequestStage //, order: number
+    stage: RequestStage, //, order: number
   ): void {
     if (opened) {
       // TODO scroll to view
@@ -69,7 +69,7 @@ export abstract class RequestDetailComponent {
               stage.isExpanded = fragment === `stage-${index}`;
             });
             return stages;
-          })
+          }),
         );
       }),
       exhaustMap(() => this.activeRoute.data),
@@ -77,7 +77,7 @@ export abstract class RequestDetailComponent {
         this.request = data[POOL_REQUEST_DATA_ATTRIBUTE_NAME];
       }),
       switchMap((data) => this.requestStagesService.getAll(data[POOL_REQUEST_DATA_ATTRIBUTE_NAME])),
-      takeUntilDestroyed(this.destroyRef)
+      takeUntilDestroyed(this.destroyRef),
     );
     this.hasError$ = this.requestStagesService.hasError$;
     this.isLoading$ = this.requestStagesService.isLoading$;

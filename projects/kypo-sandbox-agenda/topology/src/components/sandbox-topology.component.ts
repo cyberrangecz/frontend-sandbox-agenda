@@ -31,18 +31,18 @@ export class SandboxTopologyComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private topologyErrorService: KypoTopologyErrorService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {}
 
   ngOnInit(): void {
     this.sandboxInstance$ = this.activeRoute.data.pipe(
       takeUntilDestroyed(this.destroyRef),
       map((data) => data[SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME]),
-      tap((data) => (this.sandboxId = data?.id))
+      tap((data) => (this.sandboxId = data?.id)),
     );
     this.sandboxDefinition$ = this.activeRoute.data.pipe(
       takeUntilDestroyed(this.destroyRef),
-      map((data) => data[SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME])
+      map((data) => data[SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME]),
     );
     this.calculateTopologySize();
     this.subscribeToTopologyErrorHandler();

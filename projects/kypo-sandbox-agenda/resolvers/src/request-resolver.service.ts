@@ -22,7 +22,7 @@ export class RequestResolver implements Resolve<Request> {
     private cleanupRequestApi: CleanupRequestsApi,
     private errorHandler: SandboxErrorHandler,
     private navigator: SandboxNavigator,
-    private router: Router
+    private router: Router,
   ) {}
 
   /**
@@ -54,7 +54,7 @@ export class RequestResolver implements Resolve<Request> {
         this.errorHandler.emit(err, 'Pool request resolver');
         this.navigateToPool(poolId);
         return EMPTY;
-      })
+      }),
     );
   }
 

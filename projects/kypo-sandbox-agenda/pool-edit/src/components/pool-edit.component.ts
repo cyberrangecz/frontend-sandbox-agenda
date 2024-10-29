@@ -25,20 +25,23 @@ export class PoolEditComponent {
   canDeactivatePoolEdit = true;
   controls: SentinelControlItem[];
 
-  constructor(private activeRoute: ActivatedRoute, private poolEditService: PoolEditService) {
+  constructor(
+    private activeRoute: ActivatedRoute,
+    private poolEditService: PoolEditService,
+  ) {
     this.activeRoute.data
       .pipe(
         tap((data) => {
           this.pool = data.pool === undefined ? new Pool() : data.pool;
           this.poolEditService.set(data.pool);
         }),
-        switchMap((data) => this.poolEditService.editMode$),
+        switchMap(() => this.poolEditService.editMode$),
         tap((editMode) => {
           this.editMode = editMode;
           this.initControls(editMode);
           this.poolFormGroup = new PoolFormGroup(this.pool, editMode);
         }),
-        switchMap(() => this.poolFormGroup.formGroup.valueChanges)
+        switchMap(() => this.poolFormGroup.formGroup.valueChanges),
       )
       .subscribe(() => this.onChanged());
   }
@@ -72,18 +75,15 @@ export class PoolEditComponent {
   }
 
   initControls(isEditMode: boolean): void {
-    const saveItem = new SentinelControlItem(
-      'save',
-      'Save',
-      'primary',
-      this.poolEditService.saveDisabled$,
-      defer(() => this.poolEditService.save())
-    );
-    if (!isEditMode) {
-      saveItem.id = 'create';
-      saveItem.label = 'Create';
-    }
-    this.controls = [saveItem];
+    this.controls = [
+      new SentinelControlItem(
+        isEditMode ? 'save' : 'create',
+        isEditMode ? 'Save' : 'Create',
+        'primary',
+        this.poolEditService.saveDisabled$,
+        defer(() => this.poolEditService.save()),
+      ),
+    ];
   }
 
   /**

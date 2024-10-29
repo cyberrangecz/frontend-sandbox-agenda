@@ -20,7 +20,7 @@ export class CleanupStagesConcreteService extends RequestStagesService {
     private navigator: SandboxNavigator,
     private context: SandboxAgendaContext,
     private notificationService: SandboxNotificationService,
-    private errorHandler: SandboxErrorHandler
+    private errorHandler: SandboxErrorHandler,
   ) {
     super(context.config.pollingPeriod);
   }
@@ -35,7 +35,7 @@ export class CleanupStagesConcreteService extends RequestStagesService {
     return zip(
       this.api.getTerraformStage(request.id),
       this.api.getNetworkingAnsibleStage(request.id),
-      this.api.getUserAnsibleStage(request.id)
+      this.api.getUserAnsibleStage(request.id),
     ).pipe(map((stages) => stages.map((stage) => StageAdapterMapper.fromStage(stage))));
   }
 

@@ -2,12 +2,12 @@ import { CleanupRequest, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
 import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
 import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { SentinelDateTimeFormatPipe } from '@sentinel/common/pipes';
 import { defer, of } from 'rxjs';
 import { PoolDetailRowAdapter } from './pool-detail-row-adapter';
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { AbstractSandbox } from './abstract-sandbox';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
+import { DatePipe } from '@angular/common';
 
 /**
  * @dynamic
@@ -16,7 +16,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   constructor(
     resource: PaginatedResource<AbstractSandbox>,
     sandboxInstanceService: SandboxInstanceService,
-    navigator: SandboxNavigator
+    navigator: SandboxNavigator,
   ) {
     const columns = [
       new Column('name', 'name', true, 'id'),
@@ -28,7 +28,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
       new Column('stages', 'stages', false),
     ];
     const rows = resource.elements.map((element) =>
-      PoolDetailTable.createRow(element, sandboxInstanceService, navigator)
+      PoolDetailTable.createRow(element, sandboxInstanceService, navigator),
     );
     super(rows, columns);
     this.pagination = resource.pagination;
@@ -37,10 +37,10 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
   private static createRow(
     data: AbstractSandbox,
     sandboxInstanceService: SandboxInstanceService,
-    navigator: SandboxNavigator
+    navigator: SandboxNavigator,
   ): Row<PoolDetailRowAdapter> {
     const rowAdapter = new PoolDetailRowAdapter();
-    const dateFormatter = new SentinelDateTimeFormatPipe('en-US');
+    const dateFormatter = new DatePipe('en-US');
     rowAdapter.unitId = data.allocationRequest.id;
     rowAdapter.name = data.name;
     rowAdapter.comment = data.comment;
@@ -59,7 +59,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
       new DeleteAction(
         'Delete sandbox instance',
         of(data.cleanupRequest != null),
-        defer(() => sandboxInstanceService.createCleanup(data.id))
+        defer(() => sandboxInstanceService.createCleanup(data.id)),
       ),
       new RowAction(
         'topology',
@@ -68,7 +68,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Display topology',
         of(!data.buildFinished()),
-        defer(() => sandboxInstanceService.showTopology(data.poolId, data.uuid))
+        defer(() => sandboxInstanceService.showTopology(data.poolId, data.uuid)),
       ),
       new RowAction(
         'download_user_ssh_config',
@@ -77,14 +77,14 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Download user SSH config',
         of(!data.buildFinished()),
-        defer(() => sandboxInstanceService.getUserSshAccess(data.uuid))
+        defer(() => sandboxInstanceService.getUserSshAccess(data.uuid)),
       ),
       this.createLockAction(
         data.id,
         data.locked,
         data.allocationFailed(),
         data.cleanupRunning() || data.allocationRunning(),
-        sandboxInstanceService
+        sandboxInstanceService,
       ),
     ];
   }
@@ -94,7 +94,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     locked: boolean,
     allocationFailed: boolean,
     stateChanging: boolean,
-    service: SandboxInstanceService
+    service: SandboxInstanceService,
   ): RowAction {
     if (locked) {
       return new RowAction(
@@ -104,7 +104,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Unlock sandbox instance',
         of(!locked || stateChanging),
-        defer(() => service.unlock(allocationUnitId))
+        defer(() => service.unlock(allocationUnitId)),
       );
     } else {
       return new RowAction(
@@ -114,14 +114,14 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
         'primary',
         'Lock sandbox instance',
         of(locked || stateChanging || allocationFailed),
-        defer(() => service.lock(allocationUnitId))
+        defer(() => service.lock(allocationUnitId)),
       );
     }
   }
 
   private static createDeleteCleanupAction(
     cleanupRequest: CleanupRequest,
-    cleanupRequestService: CleanupRequestsService
+    cleanupRequestService: CleanupRequestsService,
   ) {
     return new RowAction(
       'delete_cleanup',
@@ -130,7 +130,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
       'warn',
       'Delete cleanup request',
       of(false),
-      defer(() => cleanupRequestService.delete(cleanupRequest))
+      defer(() => cleanupRequestService.delete(cleanupRequest)),
     );
   }
 
