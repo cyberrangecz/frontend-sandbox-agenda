@@ -1,3 +1,13 @@
+### 18.0.0 Update to Angular 18.
+* 7ad770d -- [CI/CD] Update packages.json version based on GitLab tag.
+* 1dbcc04 -- Merge branch 'develop' into 'master'
+*   160bed7 -- Merge branch '140-update-to-angular-18' into 'develop'
+|\  
+| * 917d5de -- Fix prettier and tests deprecations
+| * 05619d6 -- Update to Angular 18
+|/  
+* 7b67f1b -- Merge branch '141-sandbox-state-doesn-t-show-failed-cleanup' into 'develop'
+* 49a55cf -- Fix cleanup failed message
 ### 16.2.6 Revert pool locking changes.
 * 15adc29 -- [CI/CD] Update packages.json version based on GitLab tag.
 * 06f7ae5 -- Merge branch 'develop' into 'master'
