@@ -33,3 +33,16 @@ mat-card {
   margin-right: 20px;
   padding-bottom: 20px;
 }
+
+.constrained-textarea {
+  padding-top: 10px;
+  max-height: 70%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.constrained-textarea textarea {
+  resize: vertical;
+  max-height: 150px;
+  box-sizing: border-box;
+}
