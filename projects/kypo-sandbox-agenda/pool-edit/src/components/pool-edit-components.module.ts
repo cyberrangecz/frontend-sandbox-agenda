@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
-import { SentinelListComponent } from '@sentinel/components/list';
+import { SentinelListComponent, SentinelListElementDirective } from '@sentinel/components/list';
 import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
 import { PoolEditConcreteService } from '../services/pool-edit-concrete.service';
 import { PoolEditService } from '../services/pool-edit.service';
@@ -22,6 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     ReactiveFormsModule,
     MatTooltipModule,
     MatGridListModule,
+    SentinelListElementDirective,
   ],
   providers: [{ provide: PoolEditService, useClass: PoolEditConcreteService }],
 })

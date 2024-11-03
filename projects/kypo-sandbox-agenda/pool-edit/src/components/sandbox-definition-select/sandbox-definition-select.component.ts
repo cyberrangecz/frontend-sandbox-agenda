@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, Input, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   PaginationService,
-  SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
+  SandboxDefinitionOverviewService,
 } from '@muni-kypo-crp/sandbox-agenda/internal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -87,5 +87,15 @@ export class SandboxDefinitionSelectComponent implements OnInit {
    */
   onSelectionChange(selected: SandboxDefinition[]): void {
     this.selected = selected;
+  }
+
+  /**
+   * Compares two {@link SandboxDefinition} objects by their IDs
+   * @param a first {@link SandboxDefinition} object
+   * @param b second {@link SandboxDefinition} object
+   * @returns true if IDs are equal, false otherwise
+   */
+  sandboxDefinitionIdentity(a: SandboxDefinition, b: SandboxDefinition): boolean {
+    return a.id === b.id;
   }
 }
