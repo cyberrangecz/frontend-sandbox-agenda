@@ -4,7 +4,10 @@
     {
       "files": ["src/*.ts", "!src/environments/*.ts"],
       "parserOptions": {
-        "project": ["projects/kypo-sandbox-agenda-example/tsconfig.*?.json"],
+        "project": [
+          "projects/kypo-sandbox-agenda-example/tsconfig.lint-app.json",
+          "projects/kypo-sandbox-agenda-example/tsconfig.spec.json"
+        ],
         "createDefaultProgram": true
       },
       "rules": {
