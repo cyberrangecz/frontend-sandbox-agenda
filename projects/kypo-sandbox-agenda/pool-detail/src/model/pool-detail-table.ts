@@ -58,7 +58,7 @@ export class PoolDetailTable extends SentinelTable<PoolDetailRowAdapter> {
     return [
       new DeleteAction(
         'Delete sandbox instance',
-        of(data.cleanupRequest != null),
+        of(data.cleanupRunning() || data.locked),
         defer(() => sandboxInstanceService.createCleanup(data.id)),
       ),
       new RowAction(
