@@ -35,6 +35,7 @@
             label="Sandbox Definition"
             searchPlaceholder="Search Sandbox Definitions"
             noResultsLabel="No Sandbox Definitions"
+            [disabled]="editMode"
             [multiSelection]="false"
             [required]="true"
             [resources]="filteredSandboxDefinitions$ | async"
@@ -57,13 +58,13 @@
 
         <div class="form-column">
           <!-- COMMENT field -->
-          <mat-form-field appearance="outline" hintLabel="A description/info regarding your pool" class="description-wrapper">
+          <mat-form-field appearance="outline" hintLabel="A description/info regarding your pool">
             <mat-label>Comment</mat-label>
             <textarea matInput
                       placeholder="Pool comment"
                       type="text" maxlength="256"
                       formControlName="comment"
-                      class="description">
+                      class="comment">
             </textarea>
           </mat-form-field>
           </div>
