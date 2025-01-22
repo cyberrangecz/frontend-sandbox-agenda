@@ -59,7 +59,7 @@ h1 {
   max-height: 220px;
 }
 
-@media screen and (max-width: 724px) {
+@media (max-width: 724px) {
   .form-content {
     flex-direction: column;
   }
