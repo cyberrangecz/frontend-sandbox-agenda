@@ -11,6 +11,8 @@ import { PoolEditMaterialModule } from './pool-edit-material.module';
 import { PoolEditComponent } from './pool-edit.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { SentinelResourceSelectorModule } from '@sentinel/components/resource-selector';
+import { MatExpansionPanelTitle } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [PoolEditComponent, SandboxDefinitionSelectComponent],
@@ -23,6 +25,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatTooltipModule,
     MatGridListModule,
     SentinelListElementDirective,
+    SentinelResourceSelectorModule,
+    MatExpansionPanelTitle,
   ],
   providers: [{ provide: PoolEditService, useClass: PoolEditConcreteService }],
 })
