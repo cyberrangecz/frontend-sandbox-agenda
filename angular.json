@@ -64,9 +64,9 @@
               "projects/kypo-sandbox-agenda-example/src/assets"
             ],
             "styles": [
-              "projects/kypo-sandbox-agenda-example/src/styles.scss",
+              "projects/kypo-sandbox-agenda-example/src/variables.scss",
               "projects/kypo-sandbox-agenda-example/src/theme.scss",
-              "projects/kypo-sandbox-agenda-example/src/variables.scss"
+              "projects/kypo-sandbox-agenda-example/src/styles.scss"
             ],
             "scripts": [],
             "vendorChunk": true,

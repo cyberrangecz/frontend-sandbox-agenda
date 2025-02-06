@@ -2,20 +2,33 @@ h1 {
   text-align: center;
 }
 
-.form-content {
+.card-title{
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
-.form-line {
+.form-content {
+  margin-top: 2rem;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
-  margin: 20px 0;
+  gap: 2rem
 }
 
-mat-card {
-  padding: 16px;
+.form-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+}
+
+.form-column *{
+  width: 100%;
+}
+
+.notify-build {
+  margin-top: 0.5rem;
 }
 
 ::ng-deep .form-content .mat-grid-tile-content {
@@ -24,12 +37,30 @@ mat-card {
   display: block;
 }
 
-.pool-edit-grid .mat-grid-tile {
-  overflow: visible;
-}
-
 .pool-edit-grid .mat-mdc-form-field {
   display: block;
   margin-right: 20px;
   padding-bottom: 20px;
+}
+
+.description-wrapper {
+  min-height: 154px;
+}
+
+.description {
+  width: 100%;
+  min-height: 100px;
+  max-height: 16rem;
+}
+
+.comment {
+  resize: vertical;
+  min-height: 110px;
+  max-height: 220px;
+}
+
+@media (max-width: 724px) {
+  .form-content {
+    flex-direction: column;
+  }
 }

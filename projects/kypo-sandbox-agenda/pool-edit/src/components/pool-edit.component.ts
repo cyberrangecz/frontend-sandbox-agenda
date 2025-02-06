@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { defer, switchMap, tap } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, defer, Observable, switchMap, tap } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { PoolEditService } from '../services/pool-edit.service';
 import { PoolFormGroup } from './pool-form-group';
 import { AbstractControl } from '@angular/forms';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
 import { ActivatedRoute } from '@angular/router';
 import { PoolChangedEvent } from '../model/pool-changed-event';
+import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 
 /**
  * Component with form for creating pool
@@ -18,16 +21,29 @@ import { PoolChangedEvent } from '../model/pool-changed-event';
   styleUrls: ['./pool-edit.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PoolEditComponent {
+export class PoolEditComponent implements OnInit {
   pool: Pool;
   poolFormGroup: PoolFormGroup;
   editMode = false;
   canDeactivatePoolEdit = true;
   controls: SentinelControlItem[];
 
+  destroyRef = inject(DestroyRef);
+
+  currentSandboxDefinitionFilter$: BehaviorSubject<string> = new BehaviorSubject('');
+  filteredSandboxDefinitions$: Observable<SandboxDefinition[]> = combineLatest([
+    this.sandboxDefinitionService.resource$,
+    this.currentSandboxDefinitionFilter$,
+  ]).pipe(
+    map(([definitions, filter]) =>
+      definitions.elements.filter((definition) => this.sandboxDefinitionToDisplayString(definition).includes(filter)),
+    ),
+  );
+
   constructor(
     private activeRoute: ActivatedRoute,
     private poolEditService: PoolEditService,
+    private sandboxDefinitionService: SandboxDefinitionOverviewService,
   ) {
     this.activeRoute.data
       .pipe(
@@ -46,6 +62,13 @@ export class PoolEditComponent {
       .subscribe(() => this.onChanged());
   }
 
+  ngOnInit(): void {
+    this.sandboxDefinitionService
+      .getAll(new OffsetPaginationEvent(0, Number.MAX_SAFE_INTEGER, '', 'asc'))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
+
   get sandboxDefinition(): AbstractControl {
     return this.poolFormGroup.formGroup.get('sandboxDefinition');
   }
@@ -60,18 +83,6 @@ export class PoolEditComponent {
 
   onControlsAction(control: SentinelControlItem): void {
     control.result$.pipe(take(1)).subscribe();
-  }
-
-  selectSandboxDefinition(): void {
-    this.poolEditService
-      .selectDefinition(this.sandboxDefinition.value)
-      .pipe(take(1))
-      .subscribe((result) => {
-        if (result) {
-          this.poolFormGroup.formGroup.markAsDirty();
-          this.sandboxDefinition.setValue(result);
-        }
-      });
   }
 
   initControls(isEditMode: boolean): void {
@@ -90,8 +101,14 @@ export class PoolEditComponent {
    * Check the amount of allocated sandboxes and make sure the user doesn't set the number below.
    */
   getMinimumPoolSize(): number {
-    const amount = this.pool ? this.pool.usedSize : 0;
-    return amount;
+    return this.pool ? this.pool.usedSize : 0;
+  }
+
+  sandboxDefinitionToDisplayString(sandboxDefinition?: SandboxDefinition): string {
+    if (!sandboxDefinition) {
+      return '';
+    }
+    return sandboxDefinition.title + ' [' + sandboxDefinition.rev + ']';
   }
 
   private onChanged() {
@@ -99,5 +116,9 @@ export class PoolEditComponent {
     this.canDeactivatePoolEdit = false;
     const change: PoolChangedEvent = new PoolChangedEvent(this.pool, this.poolFormGroup.formGroup.valid);
     this.poolEditService.change(change);
+  }
+
+  onSandboxDefinitionFilter($event: string) {
+    this.currentSandboxDefinitionFilter$.next($event);
   }
 }
