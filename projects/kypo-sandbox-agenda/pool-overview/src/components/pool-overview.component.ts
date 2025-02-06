@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit }
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
 import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
-import { SentinelTable, TableLoadEvent, TableActionEvent } from '@sentinel/components/table';
+import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';

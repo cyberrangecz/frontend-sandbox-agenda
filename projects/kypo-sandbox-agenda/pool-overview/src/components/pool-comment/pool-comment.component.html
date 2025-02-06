@@ -4,10 +4,10 @@
         [class]="!editionEnabled ? 'readonly edit-pool-comment-container' : 'edit-pool-comment-container'">
     <mat-form-field>
       <input matInput
-             matTooltip="{{ commentElement.comment }}"
+             matTooltip="{{ element.comment }}"
              type="text"
              formControlName="comment"
-             (change)="onChanged()"
+             (change)="onInput()"
              [readonly]="!editionEnabled">
     </mat-form-field>
   </form>

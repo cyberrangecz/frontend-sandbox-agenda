@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { PoolCommentFormGroup } from './pool-comment-form-group';
 import { PoolOverviewService } from '../../services/state/pool-overview/pool-overview.service';
+import { Pool } from '@muni-kypo-crp/sandbox-model';
 
 @Component({
   selector: 'kypo-pool-comment',
   templateUrl: './pool-comment.component.html',
   styleUrls: ['./pool-comment.component.css'],
 })
-export class PoolCommentComponent implements OnInit {
-  @Input() commentElement: any;
+export class PoolCommentComponent implements OnInit, OnChanges {
+  @Input() element: Pool;
   commentFormGroup: PoolCommentFormGroup;
   editOpacity = 0;
   editionEnabled = false;
@@ -16,7 +17,13 @@ export class PoolCommentComponent implements OnInit {
   constructor(private poolOverviewService: PoolOverviewService) {}
 
   ngOnInit() {
-    this.commentFormGroup = new PoolCommentFormGroup(this.commentElement.comment);
+    if (!this.commentFormGroup) {
+      this.initFormGroup();
+    }
+  }
+
+  private initFormGroup() {
+    this.commentFormGroup = new PoolCommentFormGroup(this.element.comment);
   }
 
   toggleEditButton(show: boolean) {
@@ -27,8 +34,16 @@ export class PoolCommentComponent implements OnInit {
     this.editionEnabled = !this.editionEnabled;
   }
 
-  onChanged() {
-    this.commentFormGroup.setValuesToPool(this.commentElement);
-    this.poolOverviewService.updateComment(this.commentElement).subscribe();
+  onInput() {
+    this.commentFormGroup.setValuesToPool(this.element);
+    this.poolOverviewService.updateComment(this.element).subscribe();
+  }
+
+  ngOnChanges() {
+    if (!this.commentFormGroup) {
+      this.initFormGroup();
+    } else {
+      this.commentFormGroup.formGroup.get('comment').setValue(this.element.comment);
+    }
   }
 }

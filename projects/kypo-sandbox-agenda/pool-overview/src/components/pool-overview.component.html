@@ -8,13 +8,14 @@
   [defaultSortDirection]="DEFAULT_SORT_DIRECTION"
   [defaultSortName]="DEFAULT_SORT_COLUMN"
   (rowAction)="onPoolAction($event)"
-  (tableLoad)="onLoadEvent($event)"
-  (refresh)="onLoadEvent($event)">
+  (tableLoad)="onLoadEvent($event)">
   <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
 </sentinel-table>
+
 <ng-template #comment let-row>
-  <kypo-pool-comment [commentElement]="row.element">
-  </kypo-pool-comment>
+  <kypo-pool-comment [element]="row.element"/>
 </ng-template>
+
 <br>
+
 <kypo-quotas [resources]="resources$ | async"></kypo-quotas>

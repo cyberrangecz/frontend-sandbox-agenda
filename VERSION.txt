@@ -1,3 +1,4 @@
+18.0.6 Fix pool note not being updated.
 18.0.5 Replace sandbox definition selector with sentinel resource selector.
 18.0.4 Prevent locked sandboxes from being deleted.
 18.0.3 Un-hide ssh config button from table.
