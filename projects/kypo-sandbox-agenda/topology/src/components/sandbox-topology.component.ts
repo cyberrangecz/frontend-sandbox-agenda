@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SandboxDefinition, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { KypoTopologyErrorService } from '@muni-kypo-crp/topology-graph';
+import { SandboxDefinition, SandboxInstance } from '@cyberrangecz-platform/sandbox-model';
+import { KypoTopologyErrorService } from '@cyberrangecz-platform/topology-graph';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import {
-  SandboxErrorHandler,
-  SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME,
   SANDBOX_DEFINITION_DATA_ATTRIBUTE_NAME,
-} from '@muni-kypo-crp/sandbox-agenda';
+  SANDBOX_INSTANCE_DATA_ATTRIBUTE_NAME,
+  SandboxErrorHandler,
+} from '@cyberrangecz-platform/sandbox-agenda';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 /**

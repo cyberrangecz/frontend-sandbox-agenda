@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { SandboxAllocationUnitsService } from './sandbox-allocation-units.service';
 import { BehaviorSubject, combineLatestWith, EMPTY, Observable } from 'rxjs';
 import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
-import { Request, SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
-import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@cyberrangecz-platform/sandbox-api';
+import { Request, SandboxAllocationUnit } from '@cyberrangecz-platform/sandbox-model';
+import { SandboxErrorHandler, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { ResourcePollingService, SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -14,7 +14,6 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { MatDialog } from '@angular/material/dialog';
-import { ResourcePollingService } from '@muni-kypo-crp/sandbox-agenda/internal';
 
 @Injectable()
 export class SandboxAllocationUnitsConcreteService extends SandboxAllocationUnitsService {

@@ -2,19 +2,19 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SandboxNavigator, SandboxDefaultNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaConfig, SandboxDefaultNavigator, SandboxNavigator } from '@cyberrangecz-platform/sandbox-agenda';
 import {
   PaginationService,
   SandboxAgendaContext,
-  SandboxDefinitionOverviewService,
   SandboxDefinitionOverviewConcreteService,
-} from '@muni-kypo-crp/sandbox-agenda/internal';
+  SandboxDefinitionOverviewService,
+} from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { SandboxDefinitionDetailComponent } from './sandbox-definition-detail/sandbox-definition-detail.component';
 import { SandboxDefinitionOverviewComponent } from './sandbox-definition-overview.component';
 import {
   SandboxDefinitionBreadcrumbResolver,
   SandboxDefinitionResolver,
-} from '@muni-kypo-crp/sandbox-agenda/resolvers';
+} from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 
 /**
  * Module containing components and services for sandbox definition overview page

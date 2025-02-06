@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SandboxTopologyComponentsModule } from '@muni-kypo-crp/sandbox-agenda/topology';
+import { SandboxTopologyComponentsModule } from '@cyberrangecz-platform/sandbox-agenda/topology';
 import { environmentLocal } from '../../../../environments/environment.local';
 import { SandboxDefinitionTopologyRoutingModule } from './sandbox-definition-topology-routing.module';
 

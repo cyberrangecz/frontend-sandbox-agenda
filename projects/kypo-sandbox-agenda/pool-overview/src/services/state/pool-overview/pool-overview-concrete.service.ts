@@ -7,12 +7,12 @@ import {
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
-import { PoolApi } from '@muni-kypo-crp/sandbox-api';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { PoolApi } from '@cyberrangecz-platform/sandbox-api';
+import { Pool } from '@cyberrangecz-platform/sandbox-model';
 import { EMPTY, from, Observable } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { PoolOverviewService } from './pool-overview.service';
 
 /**

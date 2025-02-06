@@ -1,12 +1,12 @@
-import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
-import { VMImagesApi } from '@muni-kypo-crp/sandbox-api';
+import { SandboxErrorHandler } from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
+import { VMImagesApi } from '@cyberrangecz-platform/sandbox-api';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
+import { VirtualImage } from '@cyberrangecz-platform/sandbox-model';
 import { SentinelFilter } from '@sentinel/common/filter';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { VMImagesService } from './vm-images.service';
 
 @Injectable()

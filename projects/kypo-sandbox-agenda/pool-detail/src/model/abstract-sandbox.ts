@@ -3,7 +3,7 @@ import {
   CleanupRequest,
   RequestStageState,
   SandboxAllocationUnit,
-} from '@muni-kypo-crp/sandbox-model';
+} from '@cyberrangecz-platform/sandbox-model';
 import { AbstractSandboxState } from './enums/abstract-sandox-state.enum';
 
 export class AbstractSandbox {

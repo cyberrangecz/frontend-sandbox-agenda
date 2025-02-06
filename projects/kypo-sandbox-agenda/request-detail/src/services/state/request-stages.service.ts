@@ -1,5 +1,4 @@
-import { RequestStage } from '@muni-kypo-crp/sandbox-model';
-import { Request } from '@muni-kypo-crp/sandbox-model';
+import { Request, RequestStage } from '@cyberrangecz-platform/sandbox-model';
 import { BehaviorSubject, merge, Observable, Subject, timer } from 'rxjs';
 import { retryWhen, shareReplay, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';

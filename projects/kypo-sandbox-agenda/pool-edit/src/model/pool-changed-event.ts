@@ -1,4 +1,4 @@
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@cyberrangecz-platform/sandbox-model';
 
 /**
  * Event emitted when edited group-overview is changed

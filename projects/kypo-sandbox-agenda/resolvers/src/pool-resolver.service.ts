@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { PoolApi } from '@muni-kypo-crp/sandbox-api';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { PoolApi } from '@cyberrangecz-platform/sandbox-api';
+import { Pool } from '@cyberrangecz-platform/sandbox-model';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
-  SandboxErrorHandler,
-  SandboxNavigator,
   SANDBOX_POOL_ID_SELECTOR,
   SANDBOX_POOL_NEW_PATH,
   SANDBOX_POOL_PATH,
-} from '@muni-kypo-crp/sandbox-agenda';
+  SandboxErrorHandler,
+  SandboxNavigator,
+} from '@cyberrangecz-platform/sandbox-agenda';
 
 /**
  * Router data provider

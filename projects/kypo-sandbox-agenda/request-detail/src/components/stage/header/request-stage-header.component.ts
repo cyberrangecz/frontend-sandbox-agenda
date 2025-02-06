@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RequestStageState } from '@muni-kypo-crp/sandbox-model';
+import { RequestStageState } from '@cyberrangecz-platform/sandbox-model';
 import { StageAdapter } from '../../../model/adapters/stage-adapter';
 
 @Component({

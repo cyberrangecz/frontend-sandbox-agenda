@@ -1,6 +1,6 @@
 import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@cyberrangecz-platform/sandbox-model';
 
 export abstract class AbstractPoolService {
   protected poolsHasErrorSubject$: BehaviorSubject<boolean> = new BehaviorSubject(false);

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SandboxDefinitionOverviewComponent } from '@muni-kypo-crp/sandbox-agenda/sandbox-definition-overview';
+import { SandboxDefinitionOverviewComponent } from '@cyberrangecz-platform/sandbox-agenda/sandbox-definition-overview';
 import {
   SANDBOX_DEFINITION_ID_SELECTOR,
   SANDBOX_DEFINITION_NEW_PATH,
   SANDBOX_TOPOLOGY_PATH,
-} from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxDefinitionBreadcrumbResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+} from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxDefinitionBreadcrumbResolver } from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {

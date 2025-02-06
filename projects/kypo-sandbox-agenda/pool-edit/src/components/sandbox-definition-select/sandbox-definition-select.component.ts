@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Inject, Input, OnInit, Optional } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   PaginationService,
   SandboxDefinitionOverviewConcreteService,
   SandboxDefinitionOverviewService,
-} from '@muni-kypo-crp/sandbox-agenda/internal';
+} from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

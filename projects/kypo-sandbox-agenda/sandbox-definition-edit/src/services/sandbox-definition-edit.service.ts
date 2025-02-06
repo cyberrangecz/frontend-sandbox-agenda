@@ -1,4 +1,4 @@
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { Observable } from 'rxjs';
 
 export abstract class SandboxDefinitionEditService {

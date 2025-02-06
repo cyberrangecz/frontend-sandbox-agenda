@@ -6,13 +6,13 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
-import { Request } from '@muni-kypo-crp/sandbox-model';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@cyberrangecz-platform/sandbox-api';
+import { Request } from '@cyberrangecz-platform/sandbox-model';
 import { EMPTY, Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SandboxNotificationService, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { AllocationRequestsService } from './allocation-requests.service';
 
 /**
@@ -32,6 +32,7 @@ export class AllocationRequestsConcreteService extends AllocationRequestsService
   ) {
     super(context.config.defaultPaginationSize, context.config.pollingPeriod);
   }
+
   private lastPoolId: number;
 
   protected abstract;

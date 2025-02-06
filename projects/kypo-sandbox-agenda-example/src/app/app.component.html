@@ -4,7 +4,7 @@
                   [notificationsRoute]="notificationRoute"
                   (login)="onLogin()"
                   (logout)="onLogout()">
-  <h1>{{ title$ | async }}</h1>
-  <p class="subtitle">{{ subtitle$ | async }}</p>
-  <router-outlet></router-outlet>
+    <h1>{{ title$ | async }}</h1>
+    <p class="subtitle">{{ subtitle$ | async }}</p>
+    <router-outlet></router-outlet>
 </sentinel-layout1>

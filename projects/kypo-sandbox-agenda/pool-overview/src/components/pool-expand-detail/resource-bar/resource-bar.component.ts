@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { BarData } from '../../../model/bar-data';
-import { Quota } from '@muni-kypo-crp/sandbox-model';
+import { Quota } from '@cyberrangecz-platform/sandbox-model';
 
 @Component({
   selector: 'kypo-resource-bar',

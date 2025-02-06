@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { SandboxErrorHandler, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
+import { SandboxErrorHandler, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@cyberrangecz-platform/sandbox-api';
 import {
   createAllocationRequestApiSpy,
   createContextSpy,

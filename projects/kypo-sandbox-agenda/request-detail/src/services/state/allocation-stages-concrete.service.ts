@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Request } from '@muni-kypo-crp/sandbox-model';
+import { Request } from '@cyberrangecz-platform/sandbox-model';
 import { Observable, zip } from 'rxjs';
-import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxErrorHandler } from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { RequestStagesService } from './request-stages.service';
-import { AllocationRequestsApi } from '@muni-kypo-crp/sandbox-api';
+import { AllocationRequestsApi } from '@cyberrangecz-platform/sandbox-api';
 import { map } from 'rxjs/operators';
 import { StageAdapterMapper } from '../../model/adapters/stage-adapter-mapper';
 import { StageAdapter } from '../../model/adapters/stage-adapter';

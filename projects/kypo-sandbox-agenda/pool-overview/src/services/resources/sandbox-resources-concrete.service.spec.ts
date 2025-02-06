@@ -2,9 +2,9 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { asyncData } from '@sentinel/common/testing';
 import { take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
-import { ResourcesApi } from '@muni-kypo-crp/sandbox-api';
-import { Resources } from '@muni-kypo-crp/sandbox-model';
+import { SandboxErrorHandler } from '@cyberrangecz-platform/sandbox-agenda';
+import { ResourcesApi } from '@cyberrangecz-platform/sandbox-api';
+import { Resources } from '@cyberrangecz-platform/sandbox-model';
 import { SandboxResourcesConcreteService } from './sandbox-resources-concrete.service';
 import { createErrorHandlerSpy, createResourcesApiSpy } from '../../../../internal/src/testing/testing-commons.spec';
 

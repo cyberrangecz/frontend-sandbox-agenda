@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PoolOverviewComponent } from '@muni-kypo-crp/sandbox-agenda/pool-overview';
-import { SANDBOX_POOL_EDIT_PATH, SANDBOX_POOL_ID_SELECTOR, SANDBOX_POOL_NEW_PATH } from '@muni-kypo-crp/sandbox-agenda';
-import { PoolBreadcrumbResolver, PoolResolver, PoolCommentResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+import { PoolOverviewComponent } from '@cyberrangecz-platform/sandbox-agenda/pool-overview';
+import { SANDBOX_POOL_EDIT_PATH, SANDBOX_POOL_ID_SELECTOR, SANDBOX_POOL_NEW_PATH } from '@cyberrangecz-platform/sandbox-agenda';
+import { PoolBreadcrumbResolver, PoolCommentResolver, PoolResolver } from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {

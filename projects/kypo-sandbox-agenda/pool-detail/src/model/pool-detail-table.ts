@@ -1,6 +1,6 @@
-import { CleanupRequest, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
-import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
-import { Column, SentinelTable, Row, RowAction, DeleteAction } from '@sentinel/components/table';
+import { CleanupRequest, SandboxInstance } from '@cyberrangecz-platform/sandbox-model';
+import { SandboxNavigator } from '@cyberrangecz-platform/sandbox-agenda';
+import { Column, DeleteAction, Row, RowAction, SentinelTable } from '@sentinel/components/table';
 import { PaginatedResource } from '@sentinel/common/pagination';
 import { defer, of } from 'rxjs';
 import { PoolDetailRowAdapter } from './pool-detail-row-adapter';

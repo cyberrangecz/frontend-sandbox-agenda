@@ -3,7 +3,7 @@ import {
   SentinelControlMenuItem,
   SentinelExpandableControlItem,
 } from '@sentinel/components/controls';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@cyberrangecz-platform/sandbox-model';
 import { defer, of } from 'rxjs';
 import { AbstractSandbox } from '../model/abstract-sandbox';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';

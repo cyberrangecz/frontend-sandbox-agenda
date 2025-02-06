@@ -1,5 +1,5 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
+import { Pool, Resources } from '@cyberrangecz-platform/sandbox-model';
 import {
   Column,
   DeleteAction,
@@ -10,10 +10,10 @@ import {
   RowExpand,
 } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
-import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxNavigator } from '@cyberrangecz-platform/sandbox-agenda';
 import { PoolRowAdapter } from './pool-row-adapter';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
-import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { SandboxInstanceService } from '@cyberrangecz-platform/sandbox-agenda/pool-detail';
 import { PoolExpandDetailComponent } from '../components/pool-expand-detail/pool-expand-detail.component';
 
 /**

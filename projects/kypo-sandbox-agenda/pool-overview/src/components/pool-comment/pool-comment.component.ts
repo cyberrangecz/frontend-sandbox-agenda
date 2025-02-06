@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { PoolCommentFormGroup } from './pool-comment-form-group';
 import { PoolOverviewService } from '../../services/state/pool-overview/pool-overview.service';
-import { Pool } from '@muni-kypo-crp/sandbox-model';
+import { Pool } from '@cyberrangecz-platform/sandbox-model';
 
 @Component({
   selector: 'kypo-pool-comment',

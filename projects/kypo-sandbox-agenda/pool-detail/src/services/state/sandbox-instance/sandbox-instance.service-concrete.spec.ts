@@ -2,11 +2,11 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
-import { PaginatedResource, OffsetPaginationEvent, OffsetPagination } from '@sentinel/common/pagination';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@cyberrangecz-platform/sandbox-api';
 import { SandboxInstanceConcreteService } from './sandbox-instance-concrete.service';
 import {
   createContextSpy,

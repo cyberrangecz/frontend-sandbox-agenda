@@ -1,6 +1,6 @@
-import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { map } from 'rxjs/operators';
-import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
+import { VirtualImage } from '@cyberrangecz-platform/sandbox-model';
 import { OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';

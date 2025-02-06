@@ -1,36 +1,58 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
-    "declarationMap": true,
-    "declaration": true,
-    "inlineSources": true,
-    "types": [],
-    "lib": [
-      "dom",
-      "es2018"
-    ],
-    "paths": {
-      "@muni-kypo-crp/sandbox-agenda": ["./src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/internal": ["./internal/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/pool-detail": ["./pool-detail/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/pool-edit": ["./pool-edit/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/pool-overview": ["./pool-overview/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/request-detail": ["./request-detail/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/sandbox-resources": ["./sandbox-resources/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/resolvers": ["./resolvers/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/sandbox-definition-edit": ["./sandbox-definition-edit/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/sandbox-definition-overview": ["./sandbox-definition-overview/src/public_api.ts"],
-      "@muni-kypo-crp/sandbox-agenda/topology": ["./topology/src/public_api.ts"]
-    }
-  },
-  "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ]
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/lib",
+        "declarationMap": true,
+        "declaration": true,
+        "inlineSources": true,
+        "types": [],
+        "lib": [
+            "dom",
+            "es2018"
+        ],
+        "paths": {
+            "@cyberrangecz-platform/sandbox-agenda": [
+                "./src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/internal": [
+                "./internal/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/pool-detail": [
+                "./pool-detail/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/pool-edit": [
+                "./pool-edit/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/pool-overview": [
+                "./pool-overview/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/request-detail": [
+                "./request-detail/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/sandbox-resources": [
+                "./sandbox-resources/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/resolvers": [
+                "./resolvers/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/sandbox-definition-edit": [
+                "./sandbox-definition-edit/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/sandbox-definition-overview": [
+                "./sandbox-definition-overview/src/public_api.ts"
+            ],
+            "@cyberrangecz-platform/sandbox-agenda/topology": [
+                "./topology/src/public_api.ts"
+            ]
+        }
+    },
+    "angularCompilerOptions": {
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "enableResourceInlining": true
+    },
+    "exclude": [
+        "test.ts",
+        "**/*.spec.ts"
+    ]
 }

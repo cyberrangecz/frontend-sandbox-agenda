@@ -1,5 +1,5 @@
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
+import { SandboxAllocationUnit } from '@cyberrangecz-platform/sandbox-model';
 
 export class CommentFormGroup {
   formGroup: UntypedFormGroup;

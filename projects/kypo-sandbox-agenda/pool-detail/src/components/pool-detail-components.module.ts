@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaConfig } from '@cyberrangecz-platform/sandbox-agenda';
 import {
-  SandboxInstanceResolver,
-  SandboxInstanceBreadcrumbResolver,
-  RequestResolver,
   RequestBreadcrumbResolver,
-} from '@muni-kypo-crp/sandbox-agenda/resolvers';
+  RequestResolver,
+  SandboxInstanceBreadcrumbResolver,
+  SandboxInstanceResolver,
+} from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 import { PoolDetailMaterialModule } from './pool-detail-material.module';
 import { PoolDetailComponent } from './pool-detail.component';
 import { StageOverviewComponent } from './stage-overview/stage-overview.component';

@@ -1,9 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
-import { Request } from '@muni-kypo-crp/sandbox-model';
-import { RequestStage } from '@muni-kypo-crp/sandbox-model';
+import { Request, RequestStage } from '@cyberrangecz-platform/sandbox-model';
 import { exhaustMap, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
+import { POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@cyberrangecz-platform/sandbox-agenda';
 import { RequestStagesService } from '../../services/state/request-stages.service';
 import { StageAdapter } from '../../model/adapters/stage-adapter';
 import { StagesDetailPollRegistry } from '../../services/state/detail/stages-detail-poll-registry.service';
@@ -32,6 +31,7 @@ export abstract class RequestDetailComponent {
     });
     this.init();
   }
+
   /**
    * Helper method to improve performance of *ngFor directive
    * @param index index of pool request stage

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SANDBOX_TOPOLOGY_PATH } from '@muni-kypo-crp/sandbox-agenda';
+import { SANDBOX_TOPOLOGY_PATH } from '@cyberrangecz-platform/sandbox-agenda';
 import { SandboxDefinitionResolver } from './sandbox-definition-resolver.service';
 
 /**

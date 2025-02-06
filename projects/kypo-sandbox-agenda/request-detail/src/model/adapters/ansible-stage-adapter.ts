@@ -1,5 +1,5 @@
 import { StageAdapter } from './stage-adapter';
-import { UserAnsibleAllocationStage } from '@muni-kypo-crp/sandbox-model';
+import { UserAnsibleAllocationStage } from '@cyberrangecz-platform/sandbox-model';
 
 export class AnsibleStageAdapter extends UserAnsibleAllocationStage implements StageAdapter {
   detailDisabled: boolean;

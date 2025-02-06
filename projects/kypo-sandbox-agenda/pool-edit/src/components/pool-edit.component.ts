@@ -5,10 +5,10 @@ import { map, take } from 'rxjs/operators';
 import { PoolEditService } from '../services/pool-edit.service';
 import { PoolFormGroup } from './pool-form-group';
 import { AbstractControl } from '@angular/forms';
-import { Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { Pool, SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { ActivatedRoute } from '@angular/router';
 import { PoolChangedEvent } from '../model/pool-changed-event';
-import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxDefinitionOverviewService } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 

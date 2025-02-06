@@ -1,6 +1,6 @@
 import { OffsetPaginatedElementsPollingService } from '@sentinel/common';
-import { PaginatedResource, OffsetPaginationEvent, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { OffsetPaginationEvent, PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
+import { SandboxAllocationUnit, SandboxInstance } from '@cyberrangecz-platform/sandbox-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
@@ -65,6 +65,7 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
    * @param total maximum total number of sandboxes that can be allocated
    */
   abstract allocateSpecified(poolId: number, total: number): Observable<PaginatedResource<SandboxAllocationUnit>>;
+
   /**
    * Retries an allocation of a sandbox instance, informs about the result and updates list of requests or handles an error
    * @param unitId id of a unit for which retry will be performed

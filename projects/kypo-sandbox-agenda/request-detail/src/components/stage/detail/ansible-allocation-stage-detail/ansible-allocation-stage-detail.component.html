@@ -2,8 +2,8 @@
 <p>Revision: {{ stage?.rev }}</p>
 
 <h3>Outputs:</h3>
-<sentinel-code-viewer  *ngIf="hasOutputs$ | async else noOutput"
-                       maxHeight="600"
+<sentinel-code-viewer *ngIf="hasOutputs$ | async else noOutput"
+                      maxHeight="600"
                       viewPortItemHeight="20"
                       [resource]="outputs$ | async"
                       [pageSize]="PAGE_SIZE"
@@ -12,5 +12,5 @@
 </sentinel-code-viewer>
 
 <ng-template #noOutput>
-  Stage has no outputs
+    Stage has no outputs
 </ng-template>

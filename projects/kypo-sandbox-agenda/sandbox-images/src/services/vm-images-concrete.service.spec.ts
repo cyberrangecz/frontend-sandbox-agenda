@@ -1,10 +1,10 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
 import { asyncData } from '@sentinel/common/testing';
 import { skip, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
-import { VMImagesApi } from '@muni-kypo-crp/sandbox-api';
+import { SandboxErrorHandler } from '@cyberrangecz-platform/sandbox-agenda';
+import { VMImagesApi } from '@cyberrangecz-platform/sandbox-api';
 import { VMImagesConcreteService } from './vm-images-concrete.service';
 import {
   createContextSpy,

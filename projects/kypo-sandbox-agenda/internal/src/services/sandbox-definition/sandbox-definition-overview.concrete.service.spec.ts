@@ -3,9 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { asyncData } from '@sentinel/common/testing';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
+import { SandboxDefinitionApi } from '@cyberrangecz-platform/sandbox-api';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import {
@@ -17,9 +17,7 @@ import {
   createNotificationSpy,
   createRouterSpy,
 } from '../../testing/testing-commons.spec';
-import { SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
 import { SandboxAgendaContext } from '../sandox-agenda-context.service';
 import { SandboxDefinitionOverviewConcreteService } from './sandbox-definition-overview-concrete.service';
 

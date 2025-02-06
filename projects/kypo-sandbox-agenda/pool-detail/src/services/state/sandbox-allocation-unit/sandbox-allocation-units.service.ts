@@ -1,6 +1,6 @@
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
+import { SandboxAllocationUnit } from '@cyberrangecz-platform/sandbox-model';
 
 export abstract class SandboxAllocationUnitsService {
   /**

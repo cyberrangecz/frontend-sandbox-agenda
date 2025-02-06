@@ -1,9 +1,9 @@
 import { StageDetailService } from './stage-detail.service';
-import { AllocationRequestsApi } from '@muni-kypo-crp/sandbox-api';
-import { RequestStage } from '@muni-kypo-crp/sandbox-model';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
+import { AllocationRequestsApi } from '@cyberrangecz-platform/sandbox-api';
+import { RequestStage } from '@cyberrangecz-platform/sandbox-model';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { Observable } from 'rxjs';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';

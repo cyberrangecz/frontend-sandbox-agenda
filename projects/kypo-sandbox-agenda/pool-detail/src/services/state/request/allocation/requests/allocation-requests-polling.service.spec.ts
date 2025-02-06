@@ -2,18 +2,18 @@ import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { SentinelDialogResultEnum } from '@sentinel/components/dialogs';
 import { asyncData } from '@sentinel/common/testing';
-import { PaginatedResource, OffsetPagination } from '@sentinel/common/pagination';
-import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
-import { AllocationRequest } from '@muni-kypo-crp/sandbox-model';
+import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination';
+import { AllocationRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@cyberrangecz-platform/sandbox-api';
+import { AllocationRequest } from '@cyberrangecz-platform/sandbox-model';
 import { of, throwError } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
 import {
+  createAllocationRequestApiSpy,
   createContextSpy,
   createErrorHandlerSpy,
   createMatDialogSpy,
   createNotificationSpy,
   createPagination,
-  createAllocationRequestApiSpy,
   createPoolApiSpy,
   createSauApiSpy,
 } from '../../../../../../../internal/src/testing/testing-commons.spec';

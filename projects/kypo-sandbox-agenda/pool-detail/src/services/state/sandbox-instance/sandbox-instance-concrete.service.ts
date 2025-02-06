@@ -7,13 +7,13 @@ import {
   SentinelConfirmationDialogConfig,
   SentinelDialogResultEnum,
 } from '@sentinel/components/dialogs';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxAllocationUnit, SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
+import { PoolApi, SandboxAllocationUnitsApi, SandboxInstanceApi } from '@cyberrangecz-platform/sandbox-api';
+import { SandboxAllocationUnit, SandboxInstance } from '@cyberrangecz-platform/sandbox-model';
 import { EMPTY, from, Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxAgendaContext } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxAgendaContext } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { SandboxInstanceService } from './sandbox-instance.service';
 import { SandboxAllocationUnitsService } from '../sandbox-allocation-unit/sandbox-allocation-units.service';
 import { AllocateVariableSandboxesDialogComponent } from '../../../components/allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';

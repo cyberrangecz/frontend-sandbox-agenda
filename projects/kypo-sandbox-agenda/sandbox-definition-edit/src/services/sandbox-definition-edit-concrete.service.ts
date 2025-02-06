@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinitionApi } from '@cyberrangecz-platform/sandbox-api';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { Observable } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
-import { SandboxNotificationService, SandboxNavigator, SandboxErrorHandler } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
 import { SandboxDefinitionEditService } from './sandbox-definition-edit.service';
 
 @Injectable()

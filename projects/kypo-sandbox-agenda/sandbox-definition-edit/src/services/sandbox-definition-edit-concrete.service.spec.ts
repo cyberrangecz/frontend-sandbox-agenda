@@ -2,9 +2,9 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { asyncData } from '@sentinel/common/testing';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { SandboxDefinitionApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { SandboxDefinitionApi } from '@cyberrangecz-platform/sandbox-api';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { SandboxDefinitionEditConcreteService } from './sandbox-definition-edit-concrete.service';
 import {
   createDefinitionApiSpy,

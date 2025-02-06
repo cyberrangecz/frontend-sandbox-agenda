@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { SentinelControlsComponent } from '@sentinel/components/controls';
 import { SentinelTableModule } from '@sentinel/components/table';
-import { SandboxDefaultNavigator, SandboxNavigator, SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
+import { SandboxAgendaConfig, SandboxDefaultNavigator, SandboxNavigator } from '@cyberrangecz-platform/sandbox-agenda';
 import {
-  SandboxAgendaContext,
   PaginationService,
+  ResourcePollingService,
+  SandboxAgendaContext,
   SandboxDefinitionOverviewConcreteService,
   SandboxDefinitionOverviewService,
-  ResourcePollingService,
-} from '@muni-kypo-crp/sandbox-agenda/internal';
-import { PoolResolver, PoolBreadcrumbResolver, PoolCommentResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+} from '@cyberrangecz-platform/sandbox-agenda/internal';
+import { PoolBreadcrumbResolver, PoolCommentResolver, PoolResolver } from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 import { PoolOverviewComponent } from './pool-overview.component';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
 import { AbstractPoolConcreteService } from '../services/abstract-pool/abstract-sandbox/abstract-pool-concrete.service';
@@ -19,9 +19,9 @@ import { PoolOverviewConcreteService } from '../services/state/pool-overview/poo
 import {
   SandboxAllocationUnitsConcreteService,
   SandboxAllocationUnitsService,
+  SandboxInstanceConcreteService,
   SandboxInstanceService,
-} from '@muni-kypo-crp/sandbox-agenda/pool-detail';
-import { SandboxInstanceConcreteService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+} from '@cyberrangecz-platform/sandbox-agenda/pool-detail';
 import { PoolCommentComponent } from './pool-comment/pool-comment.component';
 import { PoolOverviewMaterialModule } from './pool-overview-material.module';
 import { PoolExpandDetailComponent } from './pool-expand-detail/pool-expand-detail.component';
@@ -31,6 +31,7 @@ import { SandboxResourcesService } from '../services/resources/sandbox-resources
 import { QuotasComponent } from './quotas/quotas.component';
 import { QuotaPieChartComponent } from './quotas/quota-pie-chart/quota-pie-chart.component';
 import { MatCardModule } from '@angular/material/card';
+
 /**
  * Module containing components and providers for sandbox pool overview page
  */

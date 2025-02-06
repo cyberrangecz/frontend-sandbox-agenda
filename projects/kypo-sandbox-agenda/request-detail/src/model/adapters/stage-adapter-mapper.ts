@@ -1,4 +1,4 @@
-import { AllocationRequestStage, RequestStage } from '@muni-kypo-crp/sandbox-model';
+import { AllocationRequestStage, RequestStage } from '@cyberrangecz-platform/sandbox-model';
 import {
   ANSIBLE_NETWORKING_TYPES,
   ANSIBLE_STAGE_TYPES,

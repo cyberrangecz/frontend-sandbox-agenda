@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { RequestStageState } from '@muni-kypo-crp/sandbox-model';
+import { RequestStageState } from '@cyberrangecz-platform/sandbox-model';
 import { SelectedStage } from '../../model/selected-stage';
 
 @Component({

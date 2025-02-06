@@ -5,8 +5,8 @@ import {
   KypoTopologyGraphConfig,
   KypoTopologyGraphModule,
   KypoTopologyLegendModule,
-} from '@muni-kypo-crp/topology-graph';
-import { SandboxAgendaConfig } from '@muni-kypo-crp/sandbox-agenda';
+} from '@cyberrangecz-platform/topology-graph';
+import { SandboxAgendaConfig } from '@cyberrangecz-platform/sandbox-agenda';
 import { SandboxTopologyComponent } from './sandbox-topology.component';
 
 /**

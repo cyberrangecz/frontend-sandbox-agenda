@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
+import { Pool, Resources } from '@cyberrangecz-platform/sandbox-model';
 import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { defer, Observable, of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { PoolTable } from '../model/pool-table';
-import { SandboxNavigator } from '@muni-kypo-crp/sandbox-agenda';
-import { PaginationService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxNavigator } from '@cyberrangecz-platform/sandbox-agenda';
+import { PaginationService } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { AbstractPoolService } from '../services/abstract-pool/abstract-sandbox/abstract-pool.service';
-import { SandboxInstanceService } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { SandboxInstanceService } from '@cyberrangecz-platform/sandbox-agenda/pool-detail';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SandboxResourcesService } from '../services/resources/sandbox-resources.service';
 

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommentFormGroup } from './comment-form-group';
 import { SandboxAllocationUnitsService } from '../../services/state/sandbox-allocation-unit/sandbox-allocation-units.service';
 import { SandboxAllocationUnitsConcreteService } from '../../services/state/sandbox-allocation-unit/sandbox-allocation-units-concrete.service';
-import { SandboxAllocationUnit } from '@muni-kypo-crp/sandbox-model';
+import { SandboxAllocationUnit } from '@cyberrangecz-platform/sandbox-model';
 
 @Component({
   selector: 'kypo-comment',

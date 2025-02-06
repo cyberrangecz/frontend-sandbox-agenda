@@ -1,4 +1,4 @@
-import { ImagesPageComponent } from '@muni-kypo-crp/sandbox-agenda/sandbox-images';
+import { ImagesPageComponent } from '@cyberrangecz-platform/sandbox-agenda/sandbox-images';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 

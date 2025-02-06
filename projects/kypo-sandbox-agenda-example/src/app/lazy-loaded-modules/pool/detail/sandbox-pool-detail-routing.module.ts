@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PoolDetailComponent } from '@muni-kypo-crp/sandbox-agenda/pool-detail';
+import { PoolDetailComponent } from '@cyberrangecz-platform/sandbox-agenda/pool-detail';
 import {
-  POOL_DATA_ATTRIBUTE_NAME,
   POOL_ALLOCATION_REQUEST_PATH,
   POOL_CLEANUP_REQUEST_PATH,
+  POOL_DATA_ATTRIBUTE_NAME,
   POOL_REQUEST_ID_SELECTOR,
   SANDBOX_INSTANCE_ID_SELECTOR,
   SANDBOX_INSTANCE_PATH,
   SANDBOX_TOPOLOGY_PATH,
-} from '@muni-kypo-crp/sandbox-agenda';
+} from '@cyberrangecz-platform/sandbox-agenda';
 import {
-  RequestBreadcrumbResolver,
   PoolResolver,
+  RequestBreadcrumbResolver,
   SandboxInstanceBreadcrumbResolver,
-} from '@muni-kypo-crp/sandbox-agenda/resolvers';
+} from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {

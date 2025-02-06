@@ -1,11 +1,11 @@
 {
-  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/kypo-sandbox-agenda",
-  "assets": [
-    "./src/assets/*"
-  ],
-  "keepLifecycleScripts": true,
-  "lib": {
-    "entryFile": "src/public_api.ts"
-  }
+    "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../../dist/kypo-sandbox-agenda",
+    "assets": [
+        "./src/assets/*"
+    ],
+    "keepLifecycleScripts": true,
+    "lib": {
+        "entryFile": "src/public_api.ts"
+    }
 }

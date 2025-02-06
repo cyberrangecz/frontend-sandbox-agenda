@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@muni-kypo-crp/sandbox-agenda';
-import { PoolApi } from '@muni-kypo-crp/sandbox-api';
+import { SandboxErrorHandler, SandboxNavigator, SandboxNotificationService } from '@cyberrangecz-platform/sandbox-agenda';
+import { PoolApi } from '@cyberrangecz-platform/sandbox-api';
 import { PoolOverviewConcreteService } from './pool-overview-concrete.service';
 import { SandboxAgendaContext } from '../../../../../internal/src/services/sandox-agenda-context.service';
 import {

@@ -1,39 +1,39 @@
 .edit-pool-comment-container .mat-mdc-form-field {
-  display: block;
-  height: 51px;
-  width: 70%;
-  float: left;
+    display: block;
+    height: 51px;
+    width: 70%;
+    float: left;
 }
 
 @media screen and (min-width: 2560px) {
-  .edit-pool-comment-container .mat-mdc-form-field {
-    width: 80%;
-  }
+    .edit-pool-comment-container .mat-mdc-form-field {
+        width: 80%;
+    }
 }
 
 ::ng-deep .edit-pool-comment-container .mat-mdc-text-field-wrapper {
-  padding-left: 5px;
-  padding-right: 0;
+    padding-left: 5px;
+    padding-right: 0;
 }
 
 .edit-pool-comment-container input {
-  text-overflow: ellipsis;
+    text-overflow: ellipsis;
 }
 
 ::ng-deep .readonly.edit-pool-comment-container .mat-mdc-text-field-wrapper:not(:hover) {
-  background: rgb(255, 255, 255, 0) !important;
+    background: rgb(255, 255, 255, 0) !important;
 
 }
 
 ::ng-deep .readonly.edit-pool-comment-container .mat-mdc-form-field-focus-overlay {
-  opacity: 0 !important;
+    opacity: 0 !important;
 }
 
 ::ng-deep .mdc-line-ripple::after {
-  border-bottom-width: 0 !important;
+    border-bottom-width: 0 !important;
 }
 
 ::ng-deep .edit-pool-comment-container .mdc-line-ripple {
-  display: none;
+    display: none;
 }
 

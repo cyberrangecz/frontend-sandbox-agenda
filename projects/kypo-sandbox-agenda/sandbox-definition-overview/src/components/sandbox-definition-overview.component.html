@@ -1,8 +1,8 @@
 <sentinel-controls [controls]="controls" (itemClicked)="onControlsActions($event)"></sentinel-controls>
 <sentinel-table
-  [data] ="sandboxDefinitions$ | async"
-  [hasError]="hasError$ | async"
-  (tableLoad)="onLoadEvent($event)"
-  (refresh)="onLoadEvent($event)"
-  (rowAction)="onTableAction($event)">
+    [data]="sandboxDefinitions$ | async"
+    [hasError]="hasError$ | async"
+    (tableLoad)="onLoadEvent($event)"
+    (refresh)="onLoadEvent($event)"
+    (rowAction)="onTableAction($event)">
 </sentinel-table>

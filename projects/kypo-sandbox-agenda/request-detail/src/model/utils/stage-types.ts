@@ -1,4 +1,4 @@
-import { RequestStageType } from '@muni-kypo-crp/sandbox-model';
+import { RequestStageType } from '@cyberrangecz-platform/sandbox-model';
 
 export const TERRAFORM_STAGE_TYPES = [RequestStageType.TERRAFORM_ALLOCATION, RequestStageType.TERRAFORM_CLEANUP];
 export const ANSIBLE_STAGE_TYPES = [

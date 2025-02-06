@@ -1,8 +1,8 @@
 import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { asyncData } from '@sentinel/common/testing';
-import { PaginatedResource, OffsetPagination, OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@muni-kypo-crp/sandbox-api';
+import { OffsetPagination, OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
+import { CleanupRequestsApi, PoolApi, SandboxAllocationUnitsApi } from '@cyberrangecz-platform/sandbox-api';
 import { throwError } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import {

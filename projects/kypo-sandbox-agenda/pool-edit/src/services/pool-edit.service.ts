@@ -1,5 +1,4 @@
-import { Pool } from '@muni-kypo-crp/sandbox-model';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { Pool, SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { Observable } from 'rxjs';
 import { PoolChangedEvent } from '../model/pool-changed-event';
 

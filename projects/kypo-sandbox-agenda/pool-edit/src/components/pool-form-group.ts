@@ -1,5 +1,5 @@
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { Pool, SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { Pool, SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 
 export class PoolFormGroup {
   formGroup: UntypedFormGroup;

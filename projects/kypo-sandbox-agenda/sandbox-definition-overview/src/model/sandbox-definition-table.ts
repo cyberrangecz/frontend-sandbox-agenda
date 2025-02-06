@@ -1,9 +1,9 @@
 import { PaginatedResource } from '@sentinel/common/pagination';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
-import { Column, Row, RowExpand, DeleteAction, RowAction, ExpandableSentinelTable } from '@sentinel/components/table';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
+import { Column, DeleteAction, ExpandableSentinelTable, Row, RowAction, RowExpand } from '@sentinel/components/table';
 import { defer, of } from 'rxjs';
 import { SandboxDefinitionDetailComponent } from '../components/sandbox-definition-detail/sandbox-definition-detail.component';
-import { SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { SandboxDefinitionOverviewService } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { SandboxDefinitionRowAdapter } from './sandbox-definition-row-adapter';
 
 /**

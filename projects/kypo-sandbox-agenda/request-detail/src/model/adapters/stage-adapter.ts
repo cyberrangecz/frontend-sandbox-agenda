@@ -1,4 +1,4 @@
-import { RequestStage } from '@muni-kypo-crp/sandbox-model';
+import { RequestStage } from '@cyberrangecz-platform/sandbox-model';
 
 export interface StageAdapter extends RequestStage {
   logoSrc: string;

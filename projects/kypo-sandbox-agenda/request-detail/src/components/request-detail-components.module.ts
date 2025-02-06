@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SentinelPipesModule } from '@sentinel/common/pipes';
 import { SentinelListComponent } from '@sentinel/components/list';
-import { PoolResolver, RequestResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+import { PoolResolver, RequestResolver } from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 import { RequestDetailMaterialModule } from './request-detail-material.module';
 import { RequestStageDetailComponent } from './stage/detail/request-stage-detail.component';
 import { RequestStageHeaderComponent } from './stage/header/request-stage-header.component';

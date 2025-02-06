@@ -1,4 +1,4 @@
-import { Pool, Resources } from '@muni-kypo-crp/sandbox-model';
+import { Pool, Resources } from '@cyberrangecz-platform/sandbox-model';
 
 export class PoolRowAdapter extends Pool {
   title: string;

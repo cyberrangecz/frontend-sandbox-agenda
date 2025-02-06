@@ -1,12 +1,12 @@
 import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { OffsetPaginationEvent } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { SentinelTable, TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { SandboxDefinitionTable } from '../model/sandbox-definition-table';
-import { PaginationService, SandboxDefinitionOverviewService } from '@muni-kypo-crp/sandbox-agenda/internal';
+import { PaginationService, SandboxDefinitionOverviewService } from '@cyberrangecz-platform/sandbox-agenda/internal';
 import { SandboxDefinitionOverviewControls } from './sandbox-definition-overview-controls';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

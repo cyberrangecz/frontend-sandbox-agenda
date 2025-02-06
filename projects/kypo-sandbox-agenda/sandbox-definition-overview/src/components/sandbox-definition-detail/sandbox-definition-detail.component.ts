@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 
 /**
  * Table detail of expanded row displaying sandbox definition details

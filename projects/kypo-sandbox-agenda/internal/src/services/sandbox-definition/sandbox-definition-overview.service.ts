@@ -1,6 +1,6 @@
 import { OffsetPaginatedElementsService } from '@sentinel/common';
 import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
-import { SandboxDefinition } from '@muni-kypo-crp/sandbox-model';
+import { SandboxDefinition } from '@cyberrangecz-platform/sandbox-model';
 import { Observable } from 'rxjs';
 
 /**

@@ -1,12 +1,13 @@
 import { merge, Observable } from 'rxjs';
 import { OffsetPaginatedElementsPollingService } from '@sentinel/common';
-import { PaginatedResource, OffsetPaginationEvent } from '@sentinel/common/pagination';
-import { RequestStage } from '@muni-kypo-crp/sandbox-model';
+import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
+import { RequestStage } from '@cyberrangecz-platform/sandbox-model';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { StagesDetailPollRegistry } from './stages-detail-poll-registry.service';
 
 export abstract class StageDetailService extends OffsetPaginatedElementsPollingService<string> {
   private lastStage: RequestStage;
+
   protected constructor(
     protected pollRegistry: StagesDetailPollRegistry,
     pageSize: number,
@@ -41,6 +42,7 @@ export abstract class StageDetailService extends OffsetPaginatedElementsPollingS
     super.onManualResourceRefresh(pagination, ...params);
     this.lastStage = params[0];
   }
+
   protected refreshResource(): Observable<PaginatedResource<string>> {
     this.hasErrorSubject$.next(false);
     return this.callApiToGetStageDetail(this.lastStage, this.lastPagination).pipe(

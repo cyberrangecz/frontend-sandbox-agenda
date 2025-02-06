@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import { SandboxInstanceApi } from '@muni-kypo-crp/sandbox-api';
-import { SandboxInstance } from '@muni-kypo-crp/sandbox-model';
+import { SandboxInstanceApi } from '@cyberrangecz-platform/sandbox-api';
+import { SandboxInstance } from '@cyberrangecz-platform/sandbox-model';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, mergeMap, take } from 'rxjs/operators';
 import {
-  SandboxErrorHandler,
-  SandboxNavigator,
   SANDBOX_INSTANCE_ID_SELECTOR,
   SANDBOX_POOL_ID_SELECTOR,
-} from '@muni-kypo-crp/sandbox-agenda';
+  SandboxErrorHandler,
+  SandboxNavigator,
+} from '@cyberrangecz-platform/sandbox-agenda';
+
 /**
  * Router data provider
  */
@@ -46,6 +47,7 @@ export class SandboxInstanceResolver implements Resolve<SandboxInstance> {
       }),
     );
   }
+
   private navigateToPool(poolId: number): Observable<never> {
     this.router.navigate([this.navigator.toPool(poolId)]);
     return EMPTY;

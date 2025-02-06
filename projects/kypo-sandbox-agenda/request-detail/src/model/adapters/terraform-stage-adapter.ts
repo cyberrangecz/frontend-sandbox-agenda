@@ -1,5 +1,5 @@
 import { StageAdapter } from './stage-adapter';
-import { TerraformAllocationStage } from '@muni-kypo-crp/sandbox-model';
+import { TerraformAllocationStage } from '@cyberrangecz-platform/sandbox-model';
 
 export class TerraformStageAdapter extends TerraformAllocationStage implements StageAdapter {
   detailDisabled: boolean;

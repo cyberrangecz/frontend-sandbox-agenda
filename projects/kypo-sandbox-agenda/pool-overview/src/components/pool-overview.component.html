@@ -1,19 +1,19 @@
 <sentinel-controls [controls]="controls" (itemClicked)="onControls($event)"></sentinel-controls>
 <sentinel-table
-  [data]="pools$ | async"
-  [hasError]="hasError$ | async"
-  [titlecasedActions]=false
-  [titlecasedColumnHeaders]=false
-  [displayedActionsCount]="8"
-  [defaultSortDirection]="DEFAULT_SORT_DIRECTION"
-  [defaultSortName]="DEFAULT_SORT_COLUMN"
-  (rowAction)="onPoolAction($event)"
-  (tableLoad)="onLoadEvent($event)">
-  <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
+    [data]="pools$ | async"
+    [hasError]="hasError$ | async"
+    [titlecasedActions]=false
+    [titlecasedColumnHeaders]=false
+    [displayedActionsCount]="8"
+    [defaultSortDirection]="DEFAULT_SORT_DIRECTION"
+    [defaultSortName]="DEFAULT_SORT_COLUMN"
+    (rowAction)="onPoolAction($event)"
+    (tableLoad)="onLoadEvent($event)">
+    <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
 </sentinel-table>
 
 <ng-template #comment let-row>
-  <kypo-pool-comment [element]="row.element"/>
+    <kypo-pool-comment [element]="row.element"/>
 </ng-template>
 
 <br>

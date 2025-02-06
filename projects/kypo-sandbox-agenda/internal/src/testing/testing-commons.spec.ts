@@ -11,8 +11,8 @@ import {
   SandboxDefinitionApi,
   SandboxInstanceApi,
   VMImagesApi,
-} from '@muni-kypo-crp/sandbox-api';
-import { KypoTopologyGraphConfig } from '@muni-kypo-crp/topology-graph';
+} from '@cyberrangecz-platform/sandbox-api';
+import { KypoTopologyGraphConfig } from '@cyberrangecz-platform/topology-graph';
 import { SandboxAgendaConfig } from '../../../src/sandbox-agenda-config';
 import { SandboxErrorHandler } from '../../../src/sandbox-error-handler.service';
 import { SandboxNavigator } from '../../../src/sandbox-navigator.service';

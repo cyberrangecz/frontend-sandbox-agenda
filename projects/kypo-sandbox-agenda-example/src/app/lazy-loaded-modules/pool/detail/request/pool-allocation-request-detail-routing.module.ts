@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AllocationRequestDetailComponent } from '@muni-kypo-crp/sandbox-agenda/request-detail';
-import { POOL_DATA_ATTRIBUTE_NAME, POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@muni-kypo-crp/sandbox-agenda';
-import { RequestResolver, PoolResolver } from '@muni-kypo-crp/sandbox-agenda/resolvers';
+import { AllocationRequestDetailComponent } from '@cyberrangecz-platform/sandbox-agenda/request-detail';
+import { POOL_DATA_ATTRIBUTE_NAME, POOL_REQUEST_DATA_ATTRIBUTE_NAME } from '@cyberrangecz-platform/sandbox-agenda';
+import { PoolResolver, RequestResolver } from '@cyberrangecz-platform/sandbox-agenda/resolvers';
 
 const routes: Routes = [
   {

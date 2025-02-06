@@ -1,4 +1,4 @@
-import { RequestStageType } from '@muni-kypo-crp/sandbox-model';
+import { RequestStageType } from '@cyberrangecz-platform/sandbox-model';
 import { StageDetailComponentEnum } from './stage-detail-component-enum';
 
 export class StageComponentResolver {

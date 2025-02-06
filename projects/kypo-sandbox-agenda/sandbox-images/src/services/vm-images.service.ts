@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { VirtualImage } from '@muni-kypo-crp/sandbox-model';
+import { VirtualImage } from '@cyberrangecz-platform/sandbox-model';
 import { OffsetPaginatedElementsService } from '@sentinel/common';
 import { PaginatedResource, PaginationBaseEvent } from '@sentinel/common/pagination';
 
