@@ -12,6 +12,7 @@ You can modify the behaviour of components by implementing abstract service clas
 * Components and services for managing pools
 * Components and services for managing sandbox instances
 * Components and services for managing sandbox allocation and allocation stages
+* Components for viewing available os images
 * Default routing (overridable)
 * Errors, notifications, and navigation services
 * CanDeactivate interface on all main components
@@ -21,23 +22,23 @@ You can modify the behaviour of components by implementing abstract service clas
 
 To use the sandbox agenda in your Angular application follow these steps:
 
-1. Run `npm install @cyberrangecz-platform/sandbox-agenda`
-2. Install all peer dependencies
-3. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
+1. Run `npm install sandbox-agenda`
+1. Install all peer dependencies
+1. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
     + pollingPeriod
     + defaultPaginationSize
     + topologyConfig
-4. Import specific modules containing components (for example `SandboxDefinitionOverviewComponentsModule`) and provide config through `.forRoot()` method.
-5. If you do not override the services, you will also need to provide API service. See [sandbox-api library]LINK-HERE().
-6. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
-7. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
-8. Optionally, you can override and provide own implementation of services
+1. Import specific modules containing components (for example `SandboxDefinitionOverviewComponentsModule`) and provide config through `.forRoot()` method.
+1. If you do not override the services, you will also need to provide API service. See [sandbox-api library]LINK-HERE().
+1. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
+1. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
+1. Optionally, cou can override and provide own implementation of services
 
 For example, you would add `SandboxDefinitionOverviewComponent` like this:
 
 1. Create feature module `SandboxDefinitionOverviewModule` containing all necessary imports and providers
 
-```
+``
 @NgModule({
   imports: [
     CommonModule,
@@ -51,11 +52,11 @@ For example, you would add `SandboxDefinitionOverviewComponent` like this:
   ],
 })
 export class SandboxDefinitionOverviewModule {}
-```
+``
 
-2. Create routing module importing the `SandboxDefinitionOverviewModule`
+1. Create routing module importing the `SandboxDefinitionOverviewModule`
 
-```
+``
 const routes: Routes = [
   {
     path: '',
@@ -67,25 +68,23 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class SandboxDefinitionOverviewRoutingModule {}
-```
+``
 
-3. Lazy load the module in the parent routing module
+1. Lazy load the module in the parent routing module
 
-```
+``
   {
     path: SANDBOX_DEFINITION_PATH,
     loadChildren: () => import('./lazy-loaded-modules/sandbox-definition/sandbox-definition-overview.module).then((m) => m.SandboxDefinitionOverviewModule)
   }
-```
+``
 
 ## Example
 
 To see the library in work and to see example setup, you can run the example app.
 To run the example you need to run [Sandbox service](https://github.com/cyberrangecz/backend-sandbox-service) or have access to a running instance and provide the URL to the service in when importing API module.
 
-Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [Training portal]LINK-HERE() project and can be run via `npm run api`.
-
 1. Clone this repository
-2. Run `npm install`
-3. Run `ng serve --configuration local --ssl`
-4. See the app at `https://localhost:4200`
+1. Run `npm install`
+1. Run `ng serve --ssl`
+1. See the app at `https://localhost:4200`

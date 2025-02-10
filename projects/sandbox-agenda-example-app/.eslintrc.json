@@ -1,0 +1,45 @@
+{
+    "ignorePatterns": [
+        "**/e2e/**"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "src/*.ts",
+                "!src/environments/*.ts"
+            ],
+            "parserOptions": {
+                "project": [
+                    "projects/sandbox-agenda-example/tsconfig.lint-app.json",
+                    "projects/sandbox-agenda-example/tsconfig.spec.json"
+                ],
+                "createDefaultProgram": true
+            },
+            "rules": {
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "crczp",
+                        "style": "camelCase"
+                    }
+                ],
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "app",
+                        "style": "kebab-case"
+                    }
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.component.html",
+                "e2e/*"
+            ],
+            "rules": {}
+        }
+    ]
+}
