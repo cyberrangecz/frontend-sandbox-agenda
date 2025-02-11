@@ -78,14 +78,20 @@ export class SandboxDefinitionOverviewRoutingModule {}
   }
 ```
 
-## Example
+## Running the demo app locally
 
-To see the library in work and to see example setup, you can run the example app.
-To run the example you need to run [Sandbox service](https://github.com/cyberrangecz/backend-sandbox-service) or have access to a running instance and provide the URL to the service in when importing API module.
+To see the Sandbox agenda in action, you can use the demo app.
 
-Alternatively, you can run a json-server, which provides an example mocked DB with necessary endpoints. It is located in the [Training portal]LINK-HERE() project and can be run via `npm run api`.
+1. Pull and run the dependencies:
+    + [Sandbox service](https://github.com/cyberrangecz/backend-sandbox-service)
+    + [Training service](https://github.com/cyberrangecz/backend-training)
+    + [Adaptive training service](https://github.com/cyberrangecz/backend-adaptive-training)
+    + [User and group service](https://github.com/cyberrangecz/backend-user-and-group)
+    + [Mitre techniques service](https://github.com/cyberrangecz/backend-mitre-technique-service)
 
-1. Clone this repository
-2. Run `npm install`
-3. Run `ng serve --configuration local --ssl`
-4. See the app at `https://localhost:4200`
+    + Or alternatively, you can run the whole [deployment](https://github.com/cyberrangecz/devops-helm).
+2. Configure [environment.local.ts](projects/sandbox-agenda-example-app/src/environments/environment.local.ts), pointing to the services.
+3. Install dependencies by running `npm install`.
+4. Run the project by running `npm run start`.
+5. Navigate to `https://localhost:4200/`. The app will automatically reload if you change any of the source files. The app will be running with a self-signed certificate, so you will need to accept the security exception in the browser.
+

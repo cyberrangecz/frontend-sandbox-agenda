@@ -2,19 +2,15 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// Server url
-export const baseURL = 'https://172.19.0.22';
-// Frontend url
-export const homeURL = 'https://localhost:4200';
-export const sandboxesURL = baseURL + '/sandbox-service/api/v1/';
-export const userAngGroupURL = baseURL + '/user-and-group/api/v1/';
-
-export const trainingURL = baseURL + '/training/api/v1/';
-export const adaptiveTrainingURL = baseURL + '/adaptive-training/api/v1/';
-export const mitreTechniquesURL = baseURL + '/mitre-technique-service/api/v1/';
+// OIDC url
+const OIDC_URL = 'https://172.19.0.22';
+// backend url
+const API_URL = 'https://172.19.0.22';
+// frontend home url
+const HOME_URL = 'https://localhost:4200';
 
 export const topologyConfig = {
-  topologyRestUrl: sandboxesURL,
+  topologyRestUrl: API_URL + '/sandbox-service/api/v1/',
   decoratorsRestUrl: '', // OBSOLETE
   defaultDecoratorRefreshPeriodInSeconds: 3, // OBSOLETE
   useRealTime: false, // OBSOLETE
@@ -22,7 +18,7 @@ export const topologyConfig = {
   pollingPeriod: 5000,
   retryAttempts: 3,
   guacamoleConfig: {
-    url: baseURL + '/guacamole/',
+    url: API_URL + '/guacamole/',
     username: 'guacuser',
     password: 'guacuser',
   },
@@ -37,42 +33,37 @@ export const environment = {
     topologyConfig,
   },
   sandboxApiConfig: {
-    sandboxRestBasePath: sandboxesURL,
+    sandboxRestBasePath: API_URL + '/sandbox-service/api/v1/',
   },
   trainingApiConfig: {
-    trainingBasePath: trainingURL,
-    adaptiveBasePath: adaptiveTrainingURL,
-    mitreTechniqueBasePath: mitreTechniquesURL,
+    trainingBasePath: API_URL + '/training/api/v1/',
+    adaptiveBasePath: API_URL + '/adaptive-training/api/v1/',
+    mitreTechniqueBasePath: API_URL + '/mitre-technique-service/api/v1/',
   },
   authConfig: {
     maxRetryAttempts: 3, // How many attempts to try to get user info from user and group service before emitting error
     guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
     guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
-    tokenInterceptorAllowedUrls: [
-      // all matching urls will have authorization token header
-      baseURL,
-    ],
-    userInfoRestUri: userAngGroupURL,
-    providers: [
-      // OIDC providers
-      {
-        label: 'Login with local issuer',
-        textColor: 'white',
-        backgroundColor: '#002776',
-        tokenRefreshTime: 30000, // how often check if tokens are still valid
-        oidcConfig: {
-          requireHttps: true,
-          issuer: baseURL + '/keycloak/realms/KYPO',
-          clientId: 'KYPO-client',
-          redirectUri: homeURL,
-          scope: 'openid email profile offline_access',
-          logoutUrl: baseURL + '/keycloak/realms/KYPO/protocol/openid-connect/logout',
-          silentRefreshRedirectUri: baseURL + '/silent-refresh.html',
-          postLogoutRedirectUri: homeURL + '/logout-confirmed',
-          clearHashAfterLogin: true,
-        },
-      },
-    ],
+    tokenInterceptorAllowedUrls: [OIDC_URL, API_URL],
+    userInfoRestUri: API_URL + '/user-and-group/api/v1/',
+      providers: [
+          {
+              label: 'Login with local Keycloak',
+              textColor: 'white',
+              backgroundColor: '#1e2173',
+              oidcConfig: {
+                  requireHttps: true,
+                  clearHashAfterLogin: true,
+                  issuer: OIDC_URL + '/keycloak/realms/CRCZP',
+                  clientId: 'CRCZP-client',
+                  redirectUri: HOME_URL,
+                  scope: 'openid email profile offline_access',
+                  logoutUrl: OIDC_URL + '/keycloak/realms/CRCZP/protocol/openid-connect/logout',
+                  silentRefreshRedirectUri: HOME_URL + '/silent-refresh.html',
+                  postLogoutRedirectUri: HOME_URL + '/logout-confirmed'
+              }
+          }
+      ]
   },
 };
 

@@ -1,16 +1,16 @@
 {
     "name": "@cyberrangecz-platform/sandbox-agenda",
-    "version": "18.0.0",
+    "version": "0.0.1",
     "peerDependencies": {
         "@angular/common": "^18.2.13",
         "@angular/core": "^18.2.13",
         "@angular/material": "^18.2.13",
         "@sentinel/common": "^18.0.4",
         "@sentinel/components": "^18.2.7",
-        "@cyberrangecz-platform/sandbox-api": "^18.0.0",
-        "@cyberrangecz-platform/sandbox-model": "^18.0.0",
-        "@cyberrangecz-platform/topology-graph": "^18.0.0",
-        "@cyberrangecz-platform/topology-model": "^18.0.0",
+        "@cyberrangecz-platform/sandbox-api": "0.0.1",
+        "@cyberrangecz-platform/sandbox-model": "0.0.1",
+        "@cyberrangecz-platform/topology-graph": "0.0.1",
+        "@cyberrangecz-platform/topology-model": "0.0.1",
         "file-saver": "^2.0.5"
     },
     "dependencies": {
