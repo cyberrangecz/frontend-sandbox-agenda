@@ -11,25 +11,25 @@ import { MatGridListModule } from '@angular/material/grid-list';
  * Material components imports for sandbox pool detail module
  */
 @NgModule({
-  imports: [
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatInputModule,
-    MatGridListModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  exports: [
-    MatButtonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatInputModule,
-    MatGridListModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatInputModule,
+        MatGridListModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    exports: [
+        MatButtonModule,
+        MatDialogModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatInputModule,
+        MatGridListModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
 })
 export class PoolOverviewMaterialModule {}

@@ -21,14 +21,14 @@ You can modify the behaviour of components by implementing abstract service clas
 
 To use the sandbox agenda in your Angular application follow these steps:
 
-1. Run `npm install @cyberrangecz-platform/sandbox-agenda`
+1. Run `npm install @crczp/sandbox-agenda`
 2. Install all peer dependencies
 3. Create config class extending `SandboxAgendaConfig` from the library. Config contains following options:
     + pollingPeriod
     + defaultPaginationSize
     + topologyConfig
 4. Import specific modules containing components (for example `SandboxDefinitionOverviewComponentsModule`) and provide config through `.forRoot()` method.
-5. If you do not override the services, you will also need to provide API service. See [sandbox-api library]LINK-HERE().
+5. If you do not override the services, you will also need to provide API service. See [Sandbox api](https://github.com/cyberrangecz/frontend-sandbox-api).
 6. You need to provide implementation of abstract services `SandboxErrorHandler` and `SandboxNotificationService` for error handling and notification displaying.
 7. Optionally, you can override `SandboxNavigator` service to provide custom navigation if you do not want to use default routes.
 8. Optionally, you can override and provide own implementation of services

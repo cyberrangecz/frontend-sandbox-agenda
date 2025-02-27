@@ -3,16 +3,16 @@ import { SandboxNotificationService } from '../../../../sandbox-agenda/src/sandb
 import { ClientNotificationService } from './client-notification.service';
 
 describe('ClientNotificationService', () => {
-  let service: ClientNotificationService;
+    let service: ClientNotificationService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: SandboxNotificationService, useClass: ClientNotificationService }],
-    }).compileComponents();
-    service = TestBed.inject(SandboxNotificationService);
-  }));
+    beforeEach(waitForAsync(() => {
+        TestBed.configureTestingModule({
+            providers: [{ provide: SandboxNotificationService, useClass: ClientNotificationService }],
+        }).compileComponents();
+        service = TestBed.inject(SandboxNotificationService);
+    }));
 
-  it('should create', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(service).toBeTruthy();
+    });
 });

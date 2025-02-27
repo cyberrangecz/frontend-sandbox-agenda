@@ -3,85 +3,85 @@ import { OffsetPagination, PaginatedResource } from '@sentinel/common/pagination
 import { asyncData } from '@sentinel/common/testing';
 import { skip, take } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { SandboxErrorHandler } from '@cyberrangecz-platform/sandbox-agenda';
-import { VMImagesApi } from '@cyberrangecz-platform/sandbox-api';
+import { SandboxErrorHandler } from '@crczp/sandbox-agenda';
+import { VMImagesApi } from '@crczp/sandbox-api';
 import { VMImagesConcreteService } from './vm-images-concrete.service';
 import {
-  createContextSpy,
-  createErrorHandlerSpy,
-  createPagination,
-  createVMImagesApiSpy,
+    createContextSpy,
+    createErrorHandlerSpy,
+    createPagination,
+    createVMImagesApiSpy,
 } from '../../../internal/src/testing/testing-commons.spec';
 import { SandboxAgendaContext } from '../../../internal/src/services/sandox-agenda-context.service';
 
 describe('VMImagesConcreteService', () => {
-  let service: VMImagesConcreteService;
-  let VMImagesApiSpy: jasmine.SpyObj<VMImagesApi>;
-  let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
-  let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
+    let service: VMImagesConcreteService;
+    let VMImagesApiSpy: jasmine.SpyObj<VMImagesApi>;
+    let errorHandlerSpy: jasmine.SpyObj<SandboxErrorHandler>;
+    let contextSpy: jasmine.SpyObj<SandboxAgendaContext>;
 
-  beforeEach(waitForAsync(() => {
-    errorHandlerSpy = createErrorHandlerSpy();
-    VMImagesApiSpy = createVMImagesApiSpy();
-    contextSpy = createContextSpy();
+    beforeEach(waitForAsync(() => {
+        errorHandlerSpy = createErrorHandlerSpy();
+        VMImagesApiSpy = createVMImagesApiSpy();
+        contextSpy = createContextSpy();
 
-    TestBed.configureTestingModule({
-      providers: [
-        VMImagesConcreteService,
-        { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
-        { provide: VMImagesApi, useValue: VMImagesApiSpy },
-        { provide: SandboxAgendaContext, useValue: contextSpy },
-      ],
+        TestBed.configureTestingModule({
+            providers: [
+                VMImagesConcreteService,
+                { provide: SandboxErrorHandler, useValue: errorHandlerSpy },
+                { provide: VMImagesApi, useValue: VMImagesApiSpy },
+                { provide: SandboxAgendaContext, useValue: contextSpy },
+            ],
+        });
+        service = TestBed.inject(VMImagesConcreteService);
+    }));
+
+    it('should be created', () => {
+        expect(service).toBeTruthy();
     });
-    service = TestBed.inject(VMImagesConcreteService);
-  }));
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should call api to get available images', (done) => {
+        const pagination = createPagination();
+        VMImagesApiSpy.getAvailableImages.and.returnValue(asyncData(null));
 
-  it('should call api to get available images', (done) => {
-    const pagination = createPagination();
-    VMImagesApiSpy.getAvailableImages.and.returnValue(asyncData(null));
+        service.getAvailableImages(pagination).subscribe(
+            () => {
+                expect(VMImagesApiSpy.getAvailableImages).toHaveBeenCalledTimes(1);
+                done();
+            },
+            () => fail,
+        );
+    });
 
-    service.getAvailableImages(pagination).subscribe(
-      () => {
-        expect(VMImagesApiSpy.getAvailableImages).toHaveBeenCalledTimes(1);
-        done();
-      },
-      () => fail,
-    );
-  });
+    it('should emit next value when data received from api', (done) => {
+        const pagination = createPagination();
+        const mockData = createMock();
+        VMImagesApiSpy.getAvailableImages.and.returnValue(asyncData(mockData));
 
-  it('should emit next value when data received from api', (done) => {
-    const pagination = createPagination();
-    const mockData = createMock();
-    VMImagesApiSpy.getAvailableImages.and.returnValue(asyncData(mockData));
+        service.resource$.pipe(skip(1), take(1)).subscribe(
+            (emitted) => {
+                expect(emitted).toBe(mockData);
+                done();
+            },
+            () => fail,
+        );
+        service.getAvailableImages(pagination).subscribe();
+    });
 
-    service.resource$.pipe(skip(1), take(1)).subscribe(
-      (emitted) => {
-        expect(emitted).toBe(mockData);
-        done();
-      },
-      () => fail,
-    );
-    service.getAvailableImages(pagination).subscribe();
-  });
+    it('should emit error on error state', (done) => {
+        const pagination = createPagination();
+        VMImagesApiSpy.getAvailableImages.and.returnValue(throwError(null));
 
-  it('should emit error on error state', (done) => {
-    const pagination = createPagination();
-    VMImagesApiSpy.getAvailableImages.and.returnValue(throwError(null));
+        service.getAvailableImages(pagination).subscribe(
+            () => fail,
+            () => {
+                expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
+                done();
+            },
+        );
+    });
 
-    service.getAvailableImages(pagination).subscribe(
-      () => fail,
-      () => {
-        expect(errorHandlerSpy.emit).toHaveBeenCalledTimes(1);
-        done();
-      },
-    );
-  });
-
-  function createMock() {
-    return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
-  }
+    function createMock() {
+        return new PaginatedResource([], new OffsetPagination(1, 0, 5, 5, 1));
+    }
 });

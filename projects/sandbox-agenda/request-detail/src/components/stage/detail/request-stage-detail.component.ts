@@ -7,19 +7,19 @@ import { StageComponentResolver } from '../../../model/utils/stage-component-res
  * Component inserting concrete component based on request stage type
  */
 @Component({
-  selector: 'crczp-request-stage-detail',
-  templateUrl: './request-stage-detail.component.html',
-  styleUrls: ['./request-stage-detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'crczp-request-stage-detail',
+    templateUrl: './request-stage-detail.component.html',
+    styleUrls: ['./request-stage-detail.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequestStageDetailComponent implements OnChanges {
-  @Input() stage: StageAdapter;
-  stageComponents = StageDetailComponentEnum;
-  stageComponentToDisplay: StageDetailComponentEnum;
+    @Input() stage: StageAdapter;
+    stageComponents = StageDetailComponentEnum;
+    stageComponentToDisplay: StageDetailComponentEnum;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if ('stage' in changes && this.stage) {
-      this.stageComponentToDisplay = StageComponentResolver.resolve(this.stage?.type);
+    ngOnChanges(changes: SimpleChanges): void {
+        if ('stage' in changes && this.stage) {
+            this.stageComponentToDisplay = StageComponentResolver.resolve(this.stage?.type);
+        }
     }
-  }
 }

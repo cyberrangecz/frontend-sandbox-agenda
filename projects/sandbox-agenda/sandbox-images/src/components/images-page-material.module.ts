@@ -6,7 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
  * Material components import for create sandbox images module
  */
 @NgModule({
-  imports: [MatCardModule, MatCheckboxModule],
-  exports: [MatCardModule, MatCheckboxModule],
+    imports: [MatCardModule, MatCheckboxModule],
+    exports: [MatCardModule, MatCheckboxModule],
 })
 export class ImagesPageMaterialModule {}

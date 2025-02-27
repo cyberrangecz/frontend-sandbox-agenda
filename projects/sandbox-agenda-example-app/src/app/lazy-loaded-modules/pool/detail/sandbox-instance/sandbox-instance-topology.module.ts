@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { SandboxTopologyComponentsModule } from '@cyberrangecz-platform/sandbox-agenda/topology';
-import { environmentLocal } from '../../../../../environments/environment.local';
+import { SandboxTopologyComponentsModule } from '@crczp/sandbox-agenda/topology';
 import { SandboxInstanceTopologyRoutingModule } from './sandbox-instance-topology-routing.module';
+import { environment } from '../../../../../environments/environment';
 
 @NgModule({
-  imports: [
-    SandboxTopologyComponentsModule.forRoot(environmentLocal.sandboxAgendaConfig),
-    SandboxInstanceTopologyRoutingModule,
-  ],
+    imports: [
+        SandboxTopologyComponentsModule.forRoot(environment.sandboxAgendaConfig),
+        SandboxInstanceTopologyRoutingModule,
+    ],
 })
 export class SandboxInstanceTopologyModule {}

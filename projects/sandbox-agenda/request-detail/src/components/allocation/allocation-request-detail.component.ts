@@ -7,21 +7,21 @@ import { StagesDetailPollRegistry } from '../../services/state/detail/stages-det
 import { RequestStageComponent } from '../stage/request-stage.component';
 
 @Component({
-  selector: 'crczp-allocation-request-detail',
-  templateUrl: '../shared/request-detail.component.html',
-  styleUrls: ['../shared/request-detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: RequestStagesService, useClass: AllocationStagesConcreteService }, StagesDetailPollRegistry],
+    selector: 'crczp-allocation-request-detail',
+    templateUrl: '../shared/request-detail.component.html',
+    styleUrls: ['../shared/request-detail.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [{ provide: RequestStagesService, useClass: AllocationStagesConcreteService }, StagesDetailPollRegistry],
 })
 //implements OnInit, AfterViewInit
 export class AllocationRequestDetailComponent extends RequestDetailComponent {
-  @ViewChildren(RequestStageComponent) requestStages: QueryList<RequestStageComponent>;
+    @ViewChildren(RequestStageComponent) requestStages: QueryList<RequestStageComponent>;
 
-  constructor(
-    protected activeRoute: ActivatedRoute,
-    protected requestStagesService: RequestStagesService,
-    protected stageDetailRegistry: StagesDetailPollRegistry,
-  ) {
-    super(activeRoute, requestStagesService, stageDetailRegistry);
-  }
+    constructor(
+        protected activeRoute: ActivatedRoute,
+        protected requestStagesService: RequestStagesService,
+        protected stageDetailRegistry: StagesDetailPollRegistry,
+    ) {
+        super(activeRoute, requestStagesService, stageDetailRegistry);
+    }
 }

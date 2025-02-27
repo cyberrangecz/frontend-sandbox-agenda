@@ -1,4 +1,4 @@
-<sentinel-controls [controls]="controls" (itemClicked)="onControls($event)"></sentinel-controls>
+<sentinel-controls [controls]="controls" (itemClicked)="onControls($event)"/>
 <sentinel-table
     [data]="pools$ | async"
     [hasError]="hasError$ | async"
@@ -9,7 +9,7 @@
     [defaultSortName]="DEFAULT_SORT_COLUMN"
     (rowAction)="onPoolAction($event)"
     (tableLoad)="onLoadEvent($event)">
-    <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
+    <ng-container *sentinelRow="'comment'; template: comment"/>
 </sentinel-table>
 
 <ng-template #comment let-row>
@@ -18,4 +18,4 @@
 
 <br>
 
-<crczp-quotas [resources]="resources$ | async"></crczp-quotas>
+<crczp-quotas [resources]="resources$ | async"/>

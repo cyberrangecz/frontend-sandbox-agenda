@@ -6,16 +6,16 @@ import { StageAdapter } from '../../model/adapters/stage-adapter';
  * Component of request stage basic info
  */
 @Component({
-  selector: 'crczp-request-stage',
-  templateUrl: './request-stage.component.html',
-  styleUrls: ['./request-stage.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'crczp-request-stage',
+    templateUrl: './request-stage.component.html',
+    styleUrls: ['./request-stage.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequestStageComponent {
-  @Input() stage: StageAdapter;
-  @Output() stageDetailPanelChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() stage: StageAdapter;
+    @Output() stageDetailPanelChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onPanelStateChange(opened: boolean): void {
-    this.stageDetailPanelChange.emit(opened);
-  }
+    onPanelStateChange(opened: boolean): void {
+        this.stageDetailPanelChange.emit(opened);
+    }
 }

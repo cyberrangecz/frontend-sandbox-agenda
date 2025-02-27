@@ -8,23 +8,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
-  imports: [
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatCheckboxModule,
-  ],
-  exports: [
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatDividerModule,
-    MatDialogModule,
-    MatCheckboxModule,
-  ],
+    imports: [
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatCheckboxModule,
+    ],
+    exports: [
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCardModule,
+        MatDividerModule,
+        MatDialogModule,
+        MatCheckboxModule,
+    ],
 })
 export class PoolEditMaterialModule {}

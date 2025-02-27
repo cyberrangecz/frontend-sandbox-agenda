@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SentinelPipesModule } from '@sentinel/common/pipes';
 import { SentinelListComponent } from '@sentinel/components/list';
-import { PoolResolver, RequestResolver } from '@cyberrangecz-platform/sandbox-agenda/resolvers';
+import { PoolResolver, RequestResolver } from '@crczp/sandbox-agenda/resolvers';
 import { RequestDetailMaterialModule } from './request-detail-material.module';
 import { RequestStageDetailComponent } from './stage/detail/request-stage-detail.component';
 import { RequestStageHeaderComponent } from './stage/header/request-stage-header.component';
@@ -15,21 +15,21 @@ import { AnsibleAllocationStageDetailComponent } from './stage/detail/ansible-al
  * Contains components and providers for pool request detail page
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    RequestDetailMaterialModule,
-    SentinelPipesModule,
-    SentinelListComponent,
-    SentinelCodeViewerComponent,
-  ],
-  declarations: [
-    RequestStageComponent,
-    RequestStageHeaderComponent,
-    RequestStageDetailComponent,
-    TerraformAllocationStageDetailComponent,
-    AnsibleAllocationStageDetailComponent,
-  ],
-  providers: [PoolResolver, RequestResolver],
-  exports: [RequestStageComponent, RequestDetailMaterialModule],
+    imports: [
+        CommonModule,
+        RequestDetailMaterialModule,
+        SentinelPipesModule,
+        SentinelListComponent,
+        SentinelCodeViewerComponent,
+    ],
+    declarations: [
+        RequestStageComponent,
+        RequestStageHeaderComponent,
+        RequestStageDetailComponent,
+        TerraformAllocationStageDetailComponent,
+        AnsibleAllocationStageDetailComponent,
+    ],
+    providers: [PoolResolver, RequestResolver],
+    exports: [RequestStageComponent, RequestDetailMaterialModule],
 })
 export class RequestDetailComponentsModule {}

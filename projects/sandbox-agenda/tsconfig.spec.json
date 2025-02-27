@@ -8,10 +8,10 @@
         ],
         "baseUrl": "./",
         "paths": {
-            "@cyberrangecz-platform/sandbox-agenda": [
+            "@crczp/sandbox-agenda": [
                 "./src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/*": [
+            "@crczp/sandbox-agenda/*": [
                 "./*/src/public_api.ts"
             ]
         }

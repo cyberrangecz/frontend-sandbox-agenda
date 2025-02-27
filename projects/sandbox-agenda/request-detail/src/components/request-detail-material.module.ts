@@ -11,23 +11,23 @@ import { MatTooltipModule } from '@angular/material/tooltip';
  * Material components for pool request detail module
  */
 @NgModule({
-  imports: [
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    ScrollingModule,
-    MatProgressSpinnerModule,
-  ],
-  exports: [
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatExpansionModule,
-    ScrollingModule,
-    MatProgressSpinnerModule,
-  ],
+    imports: [
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        ScrollingModule,
+        MatProgressSpinnerModule,
+    ],
+    exports: [
+        MatButtonModule,
+        MatCardModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatExpansionModule,
+        ScrollingModule,
+        MatProgressSpinnerModule,
+    ],
 })
 export class RequestDetailMaterialModule {}

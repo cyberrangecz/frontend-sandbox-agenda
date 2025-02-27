@@ -47,26 +47,32 @@
                     "style": "scss"
                 }
             },
-            "root": "projects/sandbox-agenda-example",
-            "sourceRoot": "projects/sandbox-agenda-example/src",
+            "root": "projects/sandbox-agenda-example-app",
+            "sourceRoot": "projects/sandbox-agenda-example-app/src",
             "prefix": "app",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
                         "outputPath": "dist/sandbox-agenda-example",
-                        "index": "projects/sandbox-agenda-example/src/index.html",
-                        "main": "projects/sandbox-agenda-example/src/main.ts",
-                        "polyfills": "projects/sandbox-agenda-example/src/polyfills.ts",
-                        "tsConfig": "projects/sandbox-agenda-example/tsconfig.app.json",
+                        "index": "projects/sandbox-agenda-example-app/src/index.html",
+                        "main": "projects/sandbox-agenda-example-app/src/main.ts",
+                        "polyfills": "projects/sandbox-agenda-example-app/src/polyfills.ts",
+                        "tsConfig": "projects/sandbox-agenda-example-app/tsconfig.app.json",
                         "assets": [
-                            "projects/sandbox-agenda-example/src/favicon.ico",
-                            "projects/sandbox-agenda-example/src/assets"
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@crczp/theme/assets",
+                                "output": "assets/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/sandbox-agenda-example-app/src/assets",
+                                "output": "assets/"
+                            }
                         ],
                         "styles": [
-                            "projects/sandbox-agenda-example/src/variables.scss",
-                            "projects/sandbox-agenda-example/src/theme.scss",
-                            "projects/sandbox-agenda-example/src/styles.scss"
+                            "node_modules/@crczp/theme/theming/apply-all.scss"
                         ],
                         "scripts": [],
                         "vendorChunk": true,
@@ -80,8 +86,8 @@
                         "production": {
                             "fileReplacements": [
                                 {
-                                    "replace": "projects/sandbox-agenda-example/src/environments/environment.ts",
-                                    "with": "projects/sandbox-agenda-example/src/environments/environment.prod.ts"
+                                    "replace": "projects/sandbox-agenda-example-app/src/environments/environment.ts",
+                                    "with": "projects/sandbox-agenda-example-app/src/environments/environment.prod.ts"
                                 }
                             ],
                             "optimization": true,
@@ -107,8 +113,8 @@
                         "local": {
                             "fileReplacements": [
                                 {
-                                    "replace": "projects/sandbox-agenda-example/src/environments/environment.ts",
-                                    "with": "projects/sandbox-agenda-example/src/environments/environment.local.ts"
+                                    "replace": "projects/sandbox-agenda-example-app/src/environments/environment.ts",
+                                    "with": "projects/sandbox-agenda-example-app/src/environments/environment.local.ts"
                                 }
                             ],
                             "optimization": true,
@@ -157,16 +163,24 @@
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/sandbox-agenda-example/src/test.ts",
-                        "polyfills": "projects/sandbox-agenda-example/src/polyfills.ts",
-                        "tsConfig": "projects/sandbox-agenda-example/tsconfig.spec.json",
-                        "karmaConfig": "projects/sandbox-agenda-example/karma.conf.js",
+                        "main": "projects/sandbox-agenda-example-app/src/test.ts",
+                        "polyfills": "projects/sandbox-agenda-example-app/src/polyfills.ts",
+                        "tsConfig": "projects/sandbox-agenda-example-app/tsconfig.spec.json",
+                        "karmaConfig": "projects/sandbox-agenda-example-app/karma.conf.js",
                         "assets": [
-                            "projects/sandbox-agenda-example/src/favicon.ico",
-                            "projects/sandbox-agenda-example/src/assets"
+                            {
+                                "glob": "**/*",
+                                "input": "node_modules/@crczp/theme/assets",
+                                "output": "assets/"
+                            },
+                            {
+                                "glob": "**/*",
+                                "input": "projects/sandbox-agenda-example-app/src/assets",
+                                "output": "assets/"
+                            }
                         ],
                         "styles": [
-                            "projects/sandbox-agenda-example/src/styles.scss"
+                            "node_modules/@crczp/theme/theming/apply-all.scss"
                         ],
                         "scripts": []
                     }
@@ -175,15 +189,15 @@
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "lintFilePatterns": [
-                            "projects/sandbox-agenda-example/**/*.ts",
-                            "projects/sandbox-agenda-example/**/*.component.html"
+                            "projects/sandbox-agenda-example-app/**/*.ts",
+                            "projects/sandbox-agenda-example-app/**/*.component.html"
                         ]
                     }
                 },
                 "e2e": {
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
-                        "protractorConfig": "projects/sandbox-agenda-example/e2e/protractor.conf.js",
+                        "protractorConfig": "projects/sandbox-agenda-example-app/e2e/protractor.conf.js",
                         "devServerTarget": "sandbox-agenda-example:serve"
                     },
                     "configurations": {

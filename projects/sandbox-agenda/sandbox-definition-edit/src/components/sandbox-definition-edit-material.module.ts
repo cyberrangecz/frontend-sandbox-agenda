@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
  * Material components import for create sandbox definition module
  */
 @NgModule({
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
-  exports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
+    imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
+    exports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatDividerModule, MatIconModule, MatCardModule],
 })
 export class CreateSandboxDefinitionMaterial {}

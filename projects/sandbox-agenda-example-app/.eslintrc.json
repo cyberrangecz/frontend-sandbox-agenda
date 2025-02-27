@@ -10,8 +10,8 @@
             ],
             "parserOptions": {
                 "project": [
-                    "projects/sandbox-agenda-example/tsconfig.lint-app.json",
-                    "projects/sandbox-agenda-example/tsconfig.spec.json"
+                    "projects/sandbox-agenda-example-app/tsconfig.lint-app.json",
+                    "projects/sandbox-agenda-example-app/tsconfig.spec.json"
                 ],
                 "createDefaultProgram": true
             },

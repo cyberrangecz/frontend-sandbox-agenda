@@ -1,6 +1,6 @@
 <mat-card appearance="outlined">
     <h3>Sandbox Instances</h3>
-    <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
+    <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"/>
     <sentinel-table [data]="instances$ | async"
                     [hasError]="instancesTableHasError$ | async"
                     [titlecasedActions]=false
@@ -11,19 +11,17 @@
                     (rowAction)="onTableAction($event)"
                     (tableLoad)="onLoadEvent($event)"
                     (refresh)="onLoadEvent($event)">
-        <ng-container *sentinelRow="'stages'; template: stagesTemplate"></ng-container>
-        <ng-container *sentinelRow="'comment'; template: comment"></ng-container>
+        <ng-container *sentinelRow="'stages'; template: stagesTemplate"/>
+        <ng-container *sentinelRow="'comment'; template: comment"/>
     </sentinel-table>
 </mat-card>
 
 <ng-template #stagesTemplate let-row>
     <crczp-stage-overview [stages]="row.element.stages"
                          [unitId]="row.element.unitId"
-                         (stageSelected)="onStageAction($event)">
-    </crczp-stage-overview>
+                         (stageSelected)="onStageAction($event)"/>
 </ng-template>
 
 <ng-template #comment let-row>
-    <crczp-comment [commentElement]="row.element">
-    </crczp-comment>
+    <crczp-comment [commentElement]="row.element"/>
 </ng-template>

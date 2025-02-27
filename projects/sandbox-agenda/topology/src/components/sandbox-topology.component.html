@@ -2,13 +2,8 @@
     <mat-card-content>
         <div class="topology-content">
             <crczp-topology-graph
-                [style.width.px]="topologyWidth"
-                [style.height.px]="topologyHeight"
-                [width]="topologyWidth"
-                [height]="topologyHeight"
                 [sandboxUuid]="(sandboxInstance$ | async)?.id"
-                [sandboxDefinitionId]="(sandboxDefinition$ | async)?.id">
-            </crczp-topology-graph>
+                [sandboxDefinitionId]="(sandboxDefinition$ | async)?.id"/>
         </div>
     </mat-card-content>
 </mat-card>

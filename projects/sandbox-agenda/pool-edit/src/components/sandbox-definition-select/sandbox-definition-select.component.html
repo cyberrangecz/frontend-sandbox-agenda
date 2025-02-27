@@ -5,7 +5,7 @@
 <div class="mat-typography">
     <div class="sandbox-select-container">
         <h1 mat-dialog-title>Select Sandbox Definition</h1>
-        <mat-divider></mat-divider>
+        <mat-divider/>
         <div mat-dialog-content>
             <h3>
                 Sandbox Definitions
@@ -20,7 +20,7 @@
                            [pageSize]="PAGE_SIZE"
                            (fetch)="fetch($event)"
                            (selectionChange)="onSelectionChange($event)">
-                <ng-container [sentinelListElement]="sentinelListElementTemplate"></ng-container>
+                <ng-container [sentinelListElement]="sentinelListElementTemplate"/>
             </sentinel-list>
         </div>
         <div mat-dialog-actions>

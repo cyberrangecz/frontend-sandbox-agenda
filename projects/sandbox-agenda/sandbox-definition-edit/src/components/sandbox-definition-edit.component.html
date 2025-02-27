@@ -1,5 +1,5 @@
 <mat-card appearance="outlined">
-    <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"></sentinel-controls>
+    <sentinel-controls [controls]="controls" (itemClicked)="onControlsAction($event)"/>
 
     <form [formGroup]="sandboxDefinitionFormGroup.formGroup" (keydown)="keyDownAction($event)">
         <div class="content">

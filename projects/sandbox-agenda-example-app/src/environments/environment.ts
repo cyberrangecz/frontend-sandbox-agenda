@@ -9,7 +9,6 @@ const API_URL = 'https://172.19.0.22';
 // frontend home url
 const HOME_URL = 'https://localhost:4200';
 
-
 export const topologyConfig = {
     topologyRestUrl: API_URL + '/sandbox-service/api/v1/',
     pollingPeriod: 5000,
@@ -17,32 +16,32 @@ export const topologyConfig = {
     guacamoleConfig: {
         url: API_URL + '/guacamole/',
         username: 'guacuser',
-        password: 'guacuser'
-    }
+        password: 'guacuser',
+    },
 };
 
-export const environmentLocal = {
+export const environment = {
     production: false,
     sandboxAgendaConfig: {
         pollingPeriod: 10000,
         retryAttempts: 3,
         defaultPaginationSize: 10,
-        topologyConfig
+        topologyConfig,
     },
     sandboxApiConfig: {
-        sandboxRestBasePath: API_URL + '/sandbox-service/api/v1/'
+        sandboxRestBasePath: API_URL + '/sandbox-service/api/v1/',
     },
     trainingApiConfig: {
         trainingBasePath: API_URL + '/adaptive-training/api/v1/',
         adaptiveBasePath: API_URL + '/adaptive-training/api/v1/',
-        mitreTechniqueBasePath: API_URL + '/mitre-technique-service/api/v1/'
+        mitreTechniqueBasePath: API_URL + '/mitre-technique-service/api/v1/',
     },
     authConfig: {
         guardMainPageRedirect: 'home', // Redirect from login page if user is logged in
         guardLoginPageRedirect: 'login', // Redirect to login page if user is not logged in
         interceptorAllowedUrls: [OIDC_URL, API_URL],
         authorizationStrategyConfig: {
-            authorizationUrl: API_URL + '/user-and-group/api/v1/users/info'
+            authorizationUrl: API_URL + '/user-and-group/api/v1/users/info',
         },
         providers: [
             {
@@ -58,11 +57,11 @@ export const environmentLocal = {
                     scope: 'openid email profile offline_access',
                     logoutUrl: OIDC_URL + '/keycloak/realms/CRCZP/protocol/openid-connect/logout',
                     silentRefreshRedirectUri: HOME_URL + '/silent-refresh.html',
-                    postLogoutRedirectUri: HOME_URL + '/logout-confirmed'
-                }
-            }
-        ]
-    }
+                    postLogoutRedirectUri: HOME_URL + '/logout-confirmed',
+                },
+            },
+        ],
+    },
 };
 
 /*

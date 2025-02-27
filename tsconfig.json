@@ -12,34 +12,34 @@
         "importHelpers": true,
         "target": "ES2022",
         "paths": {
-            "@cyberrangecz-platform/sandbox-agenda": [
+            "@crczp/sandbox-agenda": [
                 "./src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/internal": [
+            "@crczp/sandbox-agenda/internal": [
                 "./internal/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/pool-detail": [
+            "@crczp/sandbox-agenda/pool-detail": [
                 "./pool-detail/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/pool-edit": [
+            "@crczp/sandbox-agenda/pool-edit": [
                 "./pool-edit/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/pool-overview": [
+            "@crczp/sandbox-agenda/pool-overview": [
                 "./pool-overview/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/request-detail": [
+            "@crczp/sandbox-agenda/request-detail": [
                 "./request-detail/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/resolvers": [
+            "@crczp/sandbox-agenda/resolvers": [
                 "./resolvers/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/sandbox-definition-edit": [
+            "@crczp/sandbox-agenda/sandbox-definition-edit": [
                 "./sandbox-definition-edit/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/sandbox-definition-overview": [
+            "@crczp/sandbox-agenda/sandbox-definition-overview": [
                 "./sandbox-definition-overview/src/public_api.ts"
             ],
-            "@cyberrangecz-platform/sandbox-agenda/topology": [
+            "@crczp/sandbox-agenda/topology": [
                 "./topology/src/public_api.ts"
             ]
         },

@@ -5,11 +5,11 @@ import { Component, HostBinding, Input } from '@angular/core';
  * Example of expanded row component
  */
 @Component({
-  selector: 'crczp-vm-image-detail',
-  templateUrl: './vm-image-detail.component.html',
-  styleUrls: ['./vm-image-detail.component.css'],
+    selector: 'crczp-vm-image-detail',
+    templateUrl: './vm-image-detail.component.html',
+    styleUrls: ['./vm-image-detail.component.css'],
 })
 export class VMImageDetailComponent {
-  @HostBinding('style.width') width = '100%';
-  @Input() data: VMImagesRowAdapter;
+    @HostBinding('style.width') width = '100%';
+    @Input() data: VMImagesRowAdapter;
 }
