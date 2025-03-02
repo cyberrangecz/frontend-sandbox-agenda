@@ -8,10 +8,10 @@
         "@angular/material": "^18.2.13",
         "@sentinel/common": "^18.0.4",
         "@sentinel/components": "^18.2.7",
-        "@crczp/sandbox-api": "^0.0.1",
-        "@crczp/sandbox-model": "^0.0.1",
-        "@crczp/topology-graph": "^0.0.1",
-        "@crczp/topology-model": "^0.0.1",
+        "@crczp/sandbox-api": "^0.0.3",
+        "@crczp/sandbox-model": "^0.0.2",
+        "@crczp/topology-graph": "^0.0.3",
+        "@crczp/topology-model": "^0.0.2",
         "file-saver": "^2.0.5"
     },
     "dependencies": {

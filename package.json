@@ -34,7 +34,7 @@
         "@angular/router": "^18.2.13",
         "@crczp/sandbox-api": "^0.0.3",
         "@crczp/sandbox-model": "^0.0.2",
-        "@crczp/topology-graph": "^0.0.2",
+        "@crczp/topology-graph": "^0.0.3",
         "@crczp/topology-graph-model": "^0.0.2",
         "@crczp/theme": "^0.0.3",
         "@sentinel/auth": "^18.0.3",
