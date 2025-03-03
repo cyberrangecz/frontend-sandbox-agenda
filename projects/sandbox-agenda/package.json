@@ -11,7 +11,7 @@
         "@crczp/sandbox-api": ">=0.0.1",
         "@crczp/sandbox-model": ">=0.0.1",
         "@crczp/topology-graph": ">=0.0.1",
-        "@crczp/topology-model": ">=0.0.1",
+        "@crczp/topology-graph-model": ">=0.0.1",
         "file-saver": "^2.0.5"
     },
     "dependencies": {
