@@ -30,7 +30,7 @@ import { SandboxResourcesService } from '../services/resources/sandbox-resources
 import { QuotasComponent } from './quotas/quotas.component';
 import { QuotaPieChartComponent } from './quotas/quota-pie-chart/quota-pie-chart.component';
 import { MatCardModule } from '@angular/material/card';
-import { EditableCommentComponent } from '../../../internal/src/components/editable-comment/editable-comment.component';
+import { EditableCommentComponent } from '@crczp/sandbox-agenda/internal';
 
 /**
  * Module containing components and providers for sandbox pool overview page

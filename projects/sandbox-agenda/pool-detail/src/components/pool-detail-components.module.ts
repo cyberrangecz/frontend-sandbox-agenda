@@ -13,7 +13,7 @@ import { PoolDetailMaterialModule } from './pool-detail-material.module';
 import { PoolDetailComponent } from './pool-detail.component';
 import { StageOverviewComponent } from './stage-overview/stage-overview.component';
 import { AllocateVariableSandboxesDialogComponent } from './allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';
-import { EditableCommentComponent } from '../../../internal/src/components/editable-comment/editable-comment.component';
+import { EditableCommentComponent } from '@crczp/sandbox-agenda/internal';
 
 /**
  * Module containing component and providers for sandbox pool detail page
