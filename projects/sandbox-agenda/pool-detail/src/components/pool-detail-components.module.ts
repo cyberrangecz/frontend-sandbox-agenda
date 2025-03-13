@@ -19,11 +19,7 @@ import { EditableCommentComponent } from '../../../internal/src/components/edita
  * Module containing component and providers for sandbox pool detail page
  */
 @NgModule({
-    declarations: [
-        PoolDetailComponent,
-        StageOverviewComponent,
-        AllocateVariableSandboxesDialogComponent
-    ],
+    declarations: [PoolDetailComponent, StageOverviewComponent, AllocateVariableSandboxesDialogComponent],
     imports: [
         CommonModule,
         SentinelTableModule,

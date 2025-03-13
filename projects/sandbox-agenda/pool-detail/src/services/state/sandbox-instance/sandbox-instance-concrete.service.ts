@@ -272,7 +272,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
             tap(
                 () => this.notificationService.emit('success', `Comment for sandbox ${allocationUnit.id} was updated`),
                 (err) => this.errorHandler.emit(err, `Updating comment for sandbox ${allocationUnit.id}`),
-            )
+            ),
         );
     }
 
@@ -287,7 +287,6 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
             .getSandboxes(this.lastPoolId, this.lastPagination)
             .pipe(tap({ error: (err) => this.onGetAllError(err) }));
     }
-
 
     private getNumberOfSandboxes(maximum: number): Observable<AllocateVariableSandboxesDialogResult> {
         const dialogRef = this.dialog.open(AllocateVariableSandboxesDialogComponent, {

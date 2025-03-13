@@ -12,9 +12,7 @@ import { AllocationRequestsService } from '../services/state/request/allocation/
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 import { PoolDetailControls } from './pool-detail-controls';
-import {
-    AllocationRequestsConcreteService
-} from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
+import { AllocationRequestsConcreteService } from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
 import { CleanupRequestsConcreteService } from '../services/state/request/cleanup/cleanup-requests-concrete.service';
 import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
 import { PoolDetailTable } from '../model/pool-detail-table';
@@ -154,7 +152,7 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
     }
 
     updateInstanceComment(row: SandboxAllocationUnit, comment: string) {
-        row.comment = comment
+        row.comment = comment;
         row.id = row['unitId'];
         this.sandboxInstanceService.updateComment(row).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     }
