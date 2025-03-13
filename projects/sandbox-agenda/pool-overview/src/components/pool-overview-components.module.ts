@@ -22,7 +22,6 @@ import {
     SandboxInstanceConcreteService,
     SandboxInstanceService,
 } from '@crczp/sandbox-agenda/pool-detail';
-import { PoolCommentComponent } from './pool-comment/pool-comment.component';
 import { PoolOverviewMaterialModule } from './pool-overview-material.module';
 import { PoolExpandDetailComponent } from './pool-expand-detail/pool-expand-detail.component';
 import { ResourceBarComponent } from './pool-expand-detail/resource-bar/resource-bar.component';
@@ -31,6 +30,7 @@ import { SandboxResourcesService } from '../services/resources/sandbox-resources
 import { QuotasComponent } from './quotas/quotas.component';
 import { QuotaPieChartComponent } from './quotas/quota-pie-chart/quota-pie-chart.component';
 import { MatCardModule } from '@angular/material/card';
+import { EditableCommentComponent } from '../../../internal/src/components/editable-comment/editable-comment.component';
 
 /**
  * Module containing components and providers for sandbox pool overview page
@@ -38,13 +38,19 @@ import { MatCardModule } from '@angular/material/card';
 @NgModule({
     declarations: [
         PoolOverviewComponent,
-        PoolCommentComponent,
         PoolExpandDetailComponent,
         ResourceBarComponent,
         QuotasComponent,
         QuotaPieChartComponent,
     ],
-    imports: [CommonModule, SentinelTableModule, SentinelControlsComponent, PoolOverviewMaterialModule, MatCardModule],
+    imports: [
+        CommonModule,
+        SentinelTableModule,
+        SentinelControlsComponent,
+        PoolOverviewMaterialModule,
+        MatCardModule,
+        EditableCommentComponent,
+    ],
     providers: [
         PoolResolver,
         PaginationService,

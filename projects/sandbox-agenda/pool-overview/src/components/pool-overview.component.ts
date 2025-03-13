@@ -110,4 +110,9 @@ export class PoolOverviewComponent implements OnInit {
     private initResources() {
         this.sandboxResourcesService.getResources().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     }
+
+    updatePoolComment(pool: Pool, newComment: string) {
+        pool.comment = newComment;
+        this.abstractPoolService.updateComment(pool).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+    }
 }

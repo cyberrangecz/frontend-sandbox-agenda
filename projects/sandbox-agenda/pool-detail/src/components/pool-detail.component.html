@@ -9,8 +9,7 @@
                     [defaultSortName]="DEFAULT_SORT_COLUMN"
                     elevation="0"
                     (rowAction)="onTableAction($event)"
-                    (tableLoad)="onLoadEvent($event)"
-                    (refresh)="onLoadEvent($event)">
+                    (tableLoad)="onLoadEvent($event)">
         <ng-container *sentinelRow="'stages'; template: stagesTemplate"/>
         <ng-container *sentinelRow="'comment'; template: comment"/>
     </sentinel-table>
@@ -23,5 +22,7 @@
 </ng-template>
 
 <ng-template #comment let-row>
-    <crczp-comment [commentElement]="row.element"/>
+    <crczp-editable-comment
+        [value]="row.element.comment"
+        (commentChanged)="updateInstanceComment(row.element,$event)"/>
 </ng-template>

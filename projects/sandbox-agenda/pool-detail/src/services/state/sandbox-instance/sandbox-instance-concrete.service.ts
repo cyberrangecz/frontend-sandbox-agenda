@@ -267,6 +267,15 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
         return path !== '' ? from(this.router.navigate([path], { fragment: `stage-${stageOrder}` })) : of(false);
     }
 
+    updateComment(allocationUnit: SandboxAllocationUnit): Observable<SandboxAllocationUnit> {
+        return this.sandboxAllocationUnitsApi.update(allocationUnit).pipe(
+            tap(
+                () => this.notificationService.emit('success', `Comment for sandbox ${allocationUnit.id} was updated`),
+                (err) => this.errorHandler.emit(err, `Updating comment for sandbox ${allocationUnit.id}`),
+            )
+        );
+    }
+
     protected onManualResourceRefresh(pagination: OffsetPaginationEvent, ...params: any[]): void {
         super.onManualResourceRefresh(pagination);
         this.lastPoolId = params[0];
@@ -278,6 +287,7 @@ export class SandboxInstanceConcreteService extends SandboxInstanceService {
             .getSandboxes(this.lastPoolId, this.lastPagination)
             .pipe(tap({ error: (err) => this.onGetAllError(err) }));
     }
+
 
     private getNumberOfSandboxes(maximum: number): Observable<AllocateVariableSandboxesDialogResult> {
         const dialogRef = this.dialog.open(AllocateVariableSandboxesDialogComponent, {

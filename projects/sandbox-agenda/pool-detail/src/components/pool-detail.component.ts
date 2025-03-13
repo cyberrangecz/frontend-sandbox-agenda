@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, inject, 
 import { ActivatedRoute } from '@angular/router';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool, RequestStageState } from '@crczp/sandbox-model';
+import { Pool, RequestStageState, SandboxAllocationUnit } from '@crczp/sandbox-model';
 import { TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -12,7 +12,9 @@ import { AllocationRequestsService } from '../services/state/request/allocation/
 import { CleanupRequestsService } from '../services/state/request/cleanup/cleanup-requests.service';
 import { SandboxInstanceService } from '../services/state/sandbox-instance/sandbox-instance.service';
 import { PoolDetailControls } from './pool-detail-controls';
-import { AllocationRequestsConcreteService } from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
+import {
+    AllocationRequestsConcreteService
+} from '../services/state/request/allocation/requests/allocation-requests-concrete.service';
 import { CleanupRequestsConcreteService } from '../services/state/request/cleanup/cleanup-requests-concrete.service';
 import { SandboxInstanceConcreteService } from '../services/state/sandbox-instance/sandbox-instance-concrete.service';
 import { PoolDetailTable } from '../model/pool-detail-table';
@@ -149,5 +151,11 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         const columnWidth = parseFloat(getComputedStyle(element)['width']);
         const fontSize = 9.5;
         this.commentTrim = +(columnWidth / fontSize).toFixed();
+    }
+
+    updateInstanceComment(row: SandboxAllocationUnit, comment: string) {
+        row.comment = comment
+        row.id = row['unitId'];
+        this.sandboxInstanceService.updateComment(row).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     }
 }

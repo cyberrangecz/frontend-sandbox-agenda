@@ -13,7 +13,7 @@
 </sentinel-table>
 
 <ng-template #comment let-row>
-    <crczp-pool-comment [element]="row.element"/>
+    <crczp-editable-comment [value]="row.element.comment" (commentChanged)="updatePoolComment(row.element,$event)"/>
 </ng-template>
 
 <br>

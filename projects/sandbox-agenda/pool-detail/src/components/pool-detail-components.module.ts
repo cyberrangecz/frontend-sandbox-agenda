@@ -13,7 +13,7 @@ import { PoolDetailMaterialModule } from './pool-detail-material.module';
 import { PoolDetailComponent } from './pool-detail.component';
 import { StageOverviewComponent } from './stage-overview/stage-overview.component';
 import { AllocateVariableSandboxesDialogComponent } from './allocate-variable-sandboxes/allocate-variable-sandboxes-dialog.component';
-import { CommentComponent } from './comment/comment.component';
+import { EditableCommentComponent } from '../../../internal/src/components/editable-comment/editable-comment.component';
 
 /**
  * Module containing component and providers for sandbox pool detail page
@@ -22,10 +22,15 @@ import { CommentComponent } from './comment/comment.component';
     declarations: [
         PoolDetailComponent,
         StageOverviewComponent,
-        AllocateVariableSandboxesDialogComponent,
-        CommentComponent,
+        AllocateVariableSandboxesDialogComponent
     ],
-    imports: [CommonModule, SentinelTableModule, PoolDetailMaterialModule, SentinelControlsComponent],
+    imports: [
+        CommonModule,
+        SentinelTableModule,
+        PoolDetailMaterialModule,
+        SentinelControlsComponent,
+        EditableCommentComponent,
+    ],
     providers: [RequestResolver, RequestBreadcrumbResolver, SandboxInstanceResolver, SandboxInstanceBreadcrumbResolver],
 })
 export class PoolDetailComponentsModule {
