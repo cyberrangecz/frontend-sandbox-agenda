@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, inject, 
 import { ActivatedRoute } from '@angular/router';
 import { OffsetPaginationEvent, PaginatedResource } from '@sentinel/common/pagination';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { Pool, RequestStageState } from '@crczp/sandbox-model';
+import { Pool, RequestStageState, SandboxAllocationUnit } from '@crczp/sandbox-model';
 import { TableActionEvent, TableLoadEvent } from '@sentinel/components/table';
 import { Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
@@ -149,5 +149,11 @@ export class PoolDetailComponent implements OnInit, AfterViewInit {
         const columnWidth = parseFloat(getComputedStyle(element)['width']);
         const fontSize = 9.5;
         this.commentTrim = +(columnWidth / fontSize).toFixed();
+    }
+
+    updateInstanceComment(row: SandboxAllocationUnit, comment: string) {
+        row.comment = comment;
+        row.id = row['unitId'];
+        this.sandboxInstanceService.updateComment(row).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     }
 }

@@ -131,4 +131,11 @@ export abstract class SandboxInstanceService extends OffsetPaginatedElementsPoll
      * @param stageOrder order of desired stage
      */
     abstract navigateToStage(poolId: number, sandboxId: number, stageOrder: number): Observable<boolean>;
+
+    /**
+     * Updates allocation unit and informs about the result or handles an error
+     * Use only for updating comment
+     * @param allocationUnit
+     */
+    abstract updateComment(allocationUnit: SandboxAllocationUnit): Observable<SandboxAllocationUnit>;
 }

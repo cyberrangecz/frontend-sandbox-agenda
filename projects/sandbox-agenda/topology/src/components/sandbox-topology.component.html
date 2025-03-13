@@ -1,10 +1,8 @@
-<mat-card appearance="outlined">
-    <mat-card-content>
-        <div class="topology-content">
-            <crczp-topology-graph
-                [sandboxUuid]="(sandboxInstance$ | async)?.id"
-                [sandboxDefinitionId]="(sandboxDefinition$ | async)?.id"/>
-        </div>
-    </mat-card-content>
-</mat-card>
-
+<div class="center-content">
+    <div class="topology-content">
+        <crczp-topology-graph
+            class="topology-graph"
+            [sandboxUuid]="(sandboxInstance$ | async)?.id"
+            [sandboxDefinitionId]="(sandboxDefinition$ | async)?.id" />
+    </div>
+</div>
