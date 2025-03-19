@@ -7,6 +7,6 @@
     </ng-container>
     <h3>{{ stage?.state }}</h3>
 </div>
-<p *ngIf="stage.start">Started: {{ stage?.start | date:'MMMM d, H:mm:ss (z)' }}</p>
-<p *ngIf="stage.start">Ended: {{ stage?.end | date:'MMMM d, H:mm:ss (z)' }}</p>
+<p *ngIf="stage.start">Started: {{ stage?.start | date:'d MMMM y, H:mm:ss' }}</p>
+<p *ngIf="stage.start">Ended: {{ stage?.end | date:'d MMMM y, H:mm:ss' }}</p>
 <p class="error" *ngIf="stage.errorMessage"> {{ stage.errorMessage }}</p>
