@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SentinelControlItem } from '@sentinel/components/controls';
-import { defer, of } from 'rxjs';
+import { defer } from 'rxjs';
 import { SandboxDefinitionEditService } from '../services/sandbox-definition-edit.service';
 import { SandboxDefinitionFormGroup } from './sandbox-definition-edit-form-group';
 import { AbstractControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 
 /**
  * Component with form for creating new sandbox definition
@@ -54,7 +55,9 @@ export class SandboxDefinitionEditComponent implements OnInit {
                 'create',
                 'Create',
                 'primary',
-                of(!this.sandboxDefinitionFormGroup.formGroup.valid),
+                this.sandboxDefinitionService.isLoading$.pipe(
+                    map((loading) => loading || !this.sandboxDefinitionFormGroup.formGroup.valid),
+                ),
                 defer(() => this.sandboxDefinitionService.create(this.sandboxDefinitionFormGroup.createFromValues())),
             ),
         ];
