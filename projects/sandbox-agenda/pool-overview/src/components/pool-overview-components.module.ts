@@ -31,6 +31,7 @@ import { QuotasComponent } from './quotas/quotas.component';
 import { QuotaPieChartComponent } from './quotas/quota-pie-chart/quota-pie-chart.component';
 import { MatCardModule } from '@angular/material/card';
 import { EditableCommentComponent } from '@crczp/sandbox-agenda/internal';
+import { TableStateCellComponent } from './table-state-cell/table-state-cell.component';
 
 /**
  * Module containing components and providers for sandbox pool overview page
@@ -42,6 +43,7 @@ import { EditableCommentComponent } from '@crczp/sandbox-agenda/internal';
         ResourceBarComponent,
         QuotasComponent,
         QuotaPieChartComponent,
+        TableStateCellComponent,
     ],
     imports: [
         CommonModule,

@@ -115,4 +115,13 @@ export class PoolOverviewComponent implements OnInit {
         pool.comment = newComment;
         this.abstractPoolService.updateComment(pool).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     }
+
+    lockStateToIcon(lockState: 'locked' | 'unlocked'): string | null {
+        if (lockState === 'locked') {
+            return 'lock';
+        } else if (lockState === 'unlocked') {
+            return 'lock_open';
+        }
+        return null;
+    }
 }
