@@ -1,3 +1,5 @@
+> The code from this repository has been integrated to the [frontend-platform monorepo](https://github.com/cyberrangecz/frontend-platform), where development and maintenance continue.
+
 # CyberRangeᶜᶻ Platform Sandbox Agenda
 
 Sandbox Agenda is a library containing components and services to manage sandbox definitions, pools, and sandbox instances.
